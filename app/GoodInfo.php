@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Good_cat extends Model
+class GoodInfo extends Model
 {
-    //
+    protected $table='good_info';
 }
