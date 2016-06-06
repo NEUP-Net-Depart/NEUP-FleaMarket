@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class transId extends Model
+class AuthLog extends Model
 {
-    //
+    protected $table='auth_log';
 }

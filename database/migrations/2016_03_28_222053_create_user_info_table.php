@@ -12,15 +12,14 @@ class CreateUserinfoTable extends Migration
      */
     public function up()
     {
-        Schema::create('userinfo', function (Blueprint $table) {
+        Schema::create('user_info', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('stuid');
-            $table->string('realname');
             $table->string('gender');
+            $table->string('realname');
+            $table->string('tel_num');
             $table->string('address');
-            $table->string('birthday');
-            $table->string('mail');
-            $table->string('phonenumber');
+			$table->string('last_login_ip');
+			$table->string('register_ip');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateUserinfoTable extends Migration
      */
     public function down()
     {
-        Schema::drop('userinfo');
+        Schema::drop('user_info');
     }
 }
