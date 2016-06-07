@@ -14,11 +14,11 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('message_id');
-			$table->integer('cat_id');
-			$table->integer('user_id');
-			$table->integer('good_id');
-			$table->integer('shop_id');
-			$table->string('content');
+            $table->integer('cat_id');
+            $table->integer('user_id');
+            $table->integer('good_id');
+            $table->integer('shop_id');
+            $table->string('content');
             $table->timestamps();
         });
     }

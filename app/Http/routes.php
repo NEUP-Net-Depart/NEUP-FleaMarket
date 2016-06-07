@@ -30,4 +30,6 @@ Route::group(['middleware' => ['web']], function () {
     //
 });
 
-Route::get('/good', 'GoodController@getList');
+Route::get('/good', [
+    "uses" => "GoodController@getList"
+]);

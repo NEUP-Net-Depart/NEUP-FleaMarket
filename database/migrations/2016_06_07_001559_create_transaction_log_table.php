@@ -14,11 +14,11 @@ class CreateTransactionLogTable extends Migration
     {
         Schema::create('transaction_log', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('ip');
-			$table->string('username');
-			$table->integer('trans_id');
-			$table->integer('good_id');
-			$table->integer('event');
+            $table->string('ip');
+            $table->string('username');
+            $table->integer('trans_id');
+            $table->integer('good_id');
+            $table->integer('event');
             $table->timestamps();
         });
     }

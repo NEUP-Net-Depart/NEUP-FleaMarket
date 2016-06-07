@@ -18,8 +18,8 @@ class CreateUserinfoTable extends Migration
             $table->string('realname');
             $table->string('tel_num');
             $table->string('address');
-			$table->string('last_login_ip');
-			$table->string('register_ip');
+            $table->string('last_login_ip');
+            $table->string('register_ip');
             $table->timestamps();
         });
     }
