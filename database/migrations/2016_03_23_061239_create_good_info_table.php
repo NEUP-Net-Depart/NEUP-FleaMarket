@@ -21,7 +21,7 @@ class CreateGoodInfoTable extends Migration
             $table->integer('pricemax');
             $table->integer('type');
             $table->integer('user_id');
-            $table->integer('couts');
+            $table->integer('counts');
             $table->text('good_tag');
             $table->timestamps();
       });
