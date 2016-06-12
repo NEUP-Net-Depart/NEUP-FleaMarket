@@ -30,6 +30,15 @@ Route::group(['middleware' => ['web']], function () {
     //
 });
 
-Route::get('/good', [
-    "uses" => "GoodController@getList"
+Route::post('/adduser', [
+    "uses" => "UserController@adduser"
+]);
+Route::get('/show', [
+    "uses" => "UserController@show"
+]);
+Route::get('/register', [
+    "uses" => "UserController@register"
+]);
+Route::post('/login', [
+    "uses" => "UserController@login"
 ]);
