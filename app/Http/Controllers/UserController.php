@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -50,11 +51,11 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $user = User::where('username',$request->username)->first();
-        echo "ss";
         if($user->password==$request->password)
         {
-            session(['username'=>$request->username]);
-            return redirect('/userinfo');
+            $request->session()->put('userid', $user->id);
+            $request->session()->put('username', $user->username);
+            return redirect('/good');
         }
         else
         {

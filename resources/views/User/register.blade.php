@@ -20,6 +20,7 @@
             <div>
                 学号:<input type="text" name="stuid">
             </div>
+            {!! csrf_field() !!}
             <div>
                 <input type="submit" name="submit" value="注册">
                 </div>

@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,14 +32,53 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::post('/adduser', [
-    "uses" => "UserController@adduser"
+    "uses" => "UserController@adduser",
+    "middleware" => "web"
 ]);
 Route::get('/show', [
-    "uses" => "UserController@show"
+    "uses" => "UserController@show",
+    "middleware" => "web"
 ]);
 Route::get('/register', [
-    "uses" => "UserController@register"
+    "uses" => "UserController@register",
+    "middleware" => "web"
 ]);
 Route::post('/login', [
-    "uses" => "UserController@login"
+    "uses" => "UserController@login",
+    "middleware" => "web"
+]);
+
+Route::get('/good', [
+    "uses" => "GoodController@getList",
+    "middleware" => "web"
+]);
+
+Route::get('/good/addPage', [
+    "uses" => "GoodController@addPage",
+    "middleware" => "web"
+]);
+
+Route::post('/good/add', [
+    "uses" => "GoodController@addGood",
+    "middleware" => "web"
+]);
+
+Route::get('/good/{good_id}/editPage', [
+    "uses" => "GoodController@editPage",
+    "middleware" => "web"
+]);
+
+Route::post('/good/{good_id}/edit', [
+    "uses" => "GoodController@editGood",
+    "middleware" => "web"
+]);
+
+Route::get('/good/{good_id}/delete', [
+    "uses" => "GoodController@deleteGood",
+    "middleware" => "web"
+]);
+
+Route::get('/good/{good_id}', [
+    "uses" => "GoodController@getInfo",
+    "middleware" => "web"
 ]);

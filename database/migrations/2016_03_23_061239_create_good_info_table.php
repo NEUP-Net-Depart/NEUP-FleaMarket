@@ -13,7 +13,7 @@ class CreateGoodInfoTable extends Migration
     public function up()
     {
         Schema::create('good_info',function(Blueprint $table){
-            $table->increments('good_id');
+            $table->increments('id');
             $table->string('good_name');
             $table->integer('cat_id');
             $table->text('description');

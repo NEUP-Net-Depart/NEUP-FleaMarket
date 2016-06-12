@@ -1,4 +1,3 @@
-{!! csrf_field() !!}
 <html>
     <title>登陆</title>
     <body>
@@ -9,6 +8,7 @@
             <div>
                 密码:<input type="text" name="password">
             </div>
+            {!! csrf_field() !!}
             <div>
                 <input type="submit" name="submit" value="登陆">
             </div>

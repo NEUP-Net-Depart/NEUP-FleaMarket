@@ -13,7 +13,7 @@ class CreateGoodCatTable extends Migration
     public function up()
     {
         Schema::create('good_cat',function(Blueprint $table){
-            $table->increments('cat_id');
+            $table->increments('id');
             $table->string('cat_name');
             $table->timestamps();  
         });
