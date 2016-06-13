@@ -13,5 +13,5 @@
 <br/>
 <br/>
 @if($userid!=NULL)
-    <a href='/good/addPage'>Add</a>
+    <a href='/good/add'>Add</a>
 @endif

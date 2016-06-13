@@ -35,14 +35,17 @@ Route::post('/adduser', [
     "uses" => "UserController@adduser",
     "middleware" => "web"
 ]);
+
 Route::get('/show', [
     "uses" => "UserController@show",
     "middleware" => "web"
 ]);
+
 Route::get('/register', [
     "uses" => "UserController@register",
     "middleware" => "web"
 ]);
+
 Route::post('/login', [
     "uses" => "UserController@login",
     "middleware" => "web"
@@ -53,22 +56,12 @@ Route::get('/good', [
     "middleware" => "web"
 ]);
 
-Route::get('/good/addPage', [
-    "uses" => "GoodController@addPage",
-    "middleware" => "web"
-]);
-
-Route::post('/good/add', [
+Route::match(['post', 'get'], '/good/add', [
     "uses" => "GoodController@addGood",
     "middleware" => "web"
 ]);
 
-Route::get('/good/{good_id}/editPage', [
-    "uses" => "GoodController@editPage",
-    "middleware" => "web"
-]);
-
-Route::post('/good/{good_id}/edit', [
+Route::match(['post', 'get'], '/good/{good_id}/edit', [
     "uses" => "GoodController@editGood",
     "middleware" => "web"
 ]);
