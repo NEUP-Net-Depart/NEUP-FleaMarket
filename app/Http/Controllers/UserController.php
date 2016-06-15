@@ -55,6 +55,8 @@ class UserController extends Controller
         {
             $request->session()->put('userid', $user->id);
             $request->session()->put('username', $user->username);
+			if($user->privilege==1)
+				$request->session()->put('isadmin', 1);
             return redirect('/good');
         }
         else
