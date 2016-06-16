@@ -53,10 +53,10 @@ class UserController extends Controller
         $user = User::where('username',$request->username)->first();
         if($user->password==$request->password)
         {
-            $request->session()->put('userid', $user->id);
+            $request->session()->put('user_id', $user->id);
             $request->session()->put('username', $user->username);
-			if($user->privilege==1)
-				$request->session()->put('isadmin', 1);
+			if($user->privilege == 1)
+				$request->session()->put('is_admin', 1);
             return redirect('/good');
         }
         else
