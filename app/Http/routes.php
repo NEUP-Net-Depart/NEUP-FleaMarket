@@ -75,3 +75,6 @@ Route::get('/good/{good_id}', [
     "uses" => "GoodController@getInfo",
     "middleware" => "web"
 ]);
+Route::get('/good/quick_access', [
+	"uses" => "GoodController@quickAccess"
+]);

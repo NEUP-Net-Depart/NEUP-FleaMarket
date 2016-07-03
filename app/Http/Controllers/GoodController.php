@@ -152,4 +152,26 @@ class GoodController extends Controller
         $good->delete();
         return redirect('/good');
     }
+
+	/*
+	 * @function quickAccess
+	 * @input $request (use query)
+	 *
+	 * @return Redirect or View
+	 * @description Process the query and redirect to
+	 *				certain good or list
+	 */
+	public function quickAccess(Request $request)
+	{
+		$data = [];
+		$query = $request->input('query');
+
+		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%")->get();
+
+		foreach ($data['goods'] as $goods)
+		{
+			$goods->cat_id = GoodCat::where('id', $goods->id)->first();
+		}
+		return View::make('good.goodList', $data);
+	}
 }
