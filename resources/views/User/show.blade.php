@@ -6,7 +6,7 @@
                 用户名:<input type="text" name="username">
             </div>
             <div>
-                密码:<input type="text" name="password">
+                密码:<input type="password" name="password">
             </div>
             {!! csrf_field() !!}
             <div>

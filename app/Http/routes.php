@@ -27,10 +27,50 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
 
+Route::group(['middleware' => ['web']],function () {
+
+    Route::get('/good', [
+        "uses" => "GoodController@getList",
+        "middleware" => "auth"
+    ]);
+
+    Route::match(['post', 'get'], '/good/add', [
+        "uses" => "GoodController@addGood",
+        "middleware" => "auth"
+    ]);
+
+    Route::match(['post', 'get'], '/good/{good_id}/edit', [
+        "uses" => "GoodController@editGood",
+        "middleware" => "auth"
+    ]);
+
+    Route::get('/good/{good_id}/delete', [
+        "uses" => "GoodController@deleteGood",
+        "middleware" => "auth"
+    ]);
+
+    Route::get('/good/{good_id}', [
+        "uses" => "GoodController@getInfo",
+        "middleware" => "auth"
+    ]);
+
+    Route::get('/user/{user_id}', [
+        "uses" => "UserController@getList",
+        "middleware" => "auth"
+    ]);
+
+    Route::get('/user/{user_id}/edit', [
+        "uses" => "UserController@showeditpage",
+        "middleware" => "auth"
+    ]);
+
+    Route::post('/user/{user_id}/edit/middle', [
+        "uses" => "UserController@editList",
+        "middleware" => "auth"
+    ]);
+
+});
 Route::post('/adduser', [
     "uses" => "UserController@adduser",
     "middleware" => "web"
@@ -50,6 +90,7 @@ Route::post('/login', [
     "uses" => "UserController@login",
     "middleware" => "web"
 ]);
+<<<<<<< Updated upstream
 
 Route::get('/good', [
     "uses" => "GoodController@getList",
@@ -115,3 +156,5 @@ Route::delete('/cat/{cat_id}/delete', [
     "uses" => "AdminController@deleteCategory",
     "middleware" => "web"
 ]);
+=======
+>>>>>>> Stashed changes

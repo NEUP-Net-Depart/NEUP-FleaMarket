@@ -12,7 +12,7 @@
                 用户名：<input type="text" name="username">
             </div>
             <div>
-                密码：<input type="text" name='password'>
+                密码：<input type="password" name='password'>
             </div>
             <div>
                 邮箱:<input type="email" name="email">

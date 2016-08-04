@@ -10,11 +10,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use App\User;
+use App\UserInfo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
+use Hash;
 
 class UserController extends Controller
 {
@@ -27,6 +30,7 @@ class UserController extends Controller
             'stuid'=>'required|max:8',
             'nickname'=>'required|max:20',
         ]);
+        $input = $request->all();
         $test = User::where('username',$request->username)->first();
         if($test!=NULL)
         {
@@ -34,11 +38,12 @@ class UserController extends Controller
             echo "用户名已存在！";
         }
         $user=new User;
-        $user->username=$request->username;
-        $user->password=$request->password;
-        $user->email=$request->email;
-        $user->stuid=$request->stuid;
-        $user->nickname=$request->nickname;
+        $user->username = $input['username'];
+        $user->password = Hash::make($request->password);
+        //$user->password = $input['password'];
+        $user->email = $input['email'];
+        $user->stuid = $input['stuid'];
+        $user->nickname = $input['nickname'];
         if($user->save())
         {
             return redirect('/show');
@@ -48,10 +53,16 @@ class UserController extends Controller
             return redirect()->back()->withInput()->withErrors('注册失败！');
         }
     }
+
     public function login(Request $request)
     {
+        $input = $request->all();
         $user = User::where('username',$request->username)->first();
+<<<<<<< Updated upstream
         if($user->password==$request->password&&$user->baned==0)
+=======
+        if(Hash::check($request->password, $user->password))
+>>>>>>> Stashed changes
         {
             $request->session()->put('user_id', $user->id);
             $request->session()->put('username', $user->username);
@@ -64,12 +75,39 @@ class UserController extends Controller
             return redirect()->back()->withInput()->withErrors('用户名或者密码错误！');
         }
     }
+
     public  function register(Request $request)
     {
-        return view('User.register');
+        return View::make('User.register');
     }
+
     public  function show(Request $request)
     {
-        return view('User.show');
+        return View::make('User.show');
+    }
+
+    public function getList(Request $request, $user_id)
+    {
+        $data = [];
+        $data['user'] = UserInfo::find($user_id);
+        return View::make('User.userinfo')->with($data);
+    }
+    public function editList(Request $request, $user_id)
+    {
+        $input = $request->all();
+        $user = UserInfo::find($user_id);
+        $user->gender = $input['gender'];
+        $user->realname = $input['realname'];
+        $user->tel_num = $input['tel_num'];
+        $user->address = $input['address'];
+        $user->update();
+        return redirect('/user/'.$user_id);
+    }
+
+    public function showeditpage(Request $request, $user_id)
+    {
+        $data = [];
+        $data['user'] = UserInfo::find($user_id);
+        return View::make('User.editinfo')->with($data);
     }
 }
