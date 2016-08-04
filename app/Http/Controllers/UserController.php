@@ -51,7 +51,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $user = User::where('username',$request->username)->first();
-        if($user->password==$request->password)
+        if($user->password==$request->password&&$user->baned==0)
         {
             $request->session()->put('user_id', $user->id);
             $request->session()->put('username', $user->username);

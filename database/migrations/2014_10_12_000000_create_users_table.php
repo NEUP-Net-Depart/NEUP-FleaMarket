@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('nickname');
             $table->string('email')->unique();
             $table->integer('role_id');
+            $table->integer('baned');
             $table->timestamps();
         });
     }

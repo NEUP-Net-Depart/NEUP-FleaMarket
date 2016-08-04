@@ -12,14 +12,14 @@ use App\Http\Controllers\Controller;
 
 class GoodController extends Controller
 {
+    /**
+     * @function GoodController@getList
+     * @input Request $request
+     * @return View
+     * @description Get the list of all goods.
+     */
     public function getList(Request $request)
     {
-      /**
-       * @function GoodController@getList
-       * @input Request $request
-       * @return Response
-       * @description Get the list of all goods.
-       */
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
         $data['goods'] = GoodInfo::orderby('id', 'asc')->get();
@@ -34,14 +34,14 @@ class GoodController extends Controller
         return view::make('good.goodList')->with($data);
     }
 
+    /**
+     * @function GoodController@getInfo
+     * @input Request $request, $good_id
+     * @return View
+     * @description Get the information of a specify goods.
+     */
     public function getInfo(Request $request, $good_id)
     {
-      /**
-       * @function GoodController@getInfo
-       * @input Request $request, $good_id
-       * @return Response
-       * @description Get the information of a specify goods.
-       */
         $data = [];
         $data['goods'] = GoodInfo::where('id', $good_id)->get();
 		if($request->session()->has('user_id')) 
@@ -55,15 +55,15 @@ class GoodController extends Controller
         return view::make('good.goodInfo')->with($data);
     }
 
+    /**
+     * @function GoodController@addGood
+     * @input Request $request
+     * @return Redirect
+     * @description Add a new good.
+     */
     public function addGood(Request $request)
     {
-      /**
-       * @function GoodController@addGood
-       * @input Request $request
-       * @return Response
-       * @description Add a new good.
-       */
-        if($request->method()=="GET"){
+        if($request->method() == "GET"){
             $data = [];
 			if(!$request->session()->has('user_id')) 
 			    return Redirect::back();
@@ -81,28 +81,29 @@ class GoodController extends Controller
             ]);
             $input = $request->all();
             $good = new GoodInfo;
-            $good->good_name=$input['good_name'];
-            $good->cat_id=$input['cat_id'];
-            $good->description=$input['description'];
-            $good->pricemin=$input['pricemin'];
-            $good->pricemax=$input['pricemax'];
-            $good->type=$input['type'];
-            $good->counts=$input['counts'];
-            $good->good_tag=$input['good_tag'];
+            $good->good_name = $input['good_name'];
+            $good->cat_id = $input['cat_id'];
+            $good->description = $input['description'];
+            $good->pricemin = $input['pricemin'];
+            $good->pricemax = $input['pricemax'];
+            $good->type = $input['type'];
+            $good->counts = $input['counts'];
+            $good->good_tag = $input['good_tag'];
+            $good->user_id = $request->session()->get('user_id');
             $good->save();
-            return redirect('/good/add');
+            return Redirect::to('/good/add');
         }
     }
 
+    /**
+     * @function GoodController@editGood
+     * @input Request $request, $good_id
+     * @return Redirect
+     * @description Edit a specify good.
+     */
     public function editGood(Request $request, $good_id)
     {
-      /**
-       * @function GoodController@editGood
-       * @input Request $request, $good_id
-       * @return Response
-       * @description Edit a specify good.
-       */
-        if($request->method()=="GET"){
+        if($request->method() == "GET"){
             $data = [];
             $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
             $data['goods'] = GoodInfo::where('id', $good_id)->get();
@@ -136,21 +137,21 @@ class GoodController extends Controller
         }
     }
 
+    /**
+     * @function GoodController@deleteGood
+     * @input Request $request, $good_id
+     * @return Redirect
+     * @description Delete a specify good.
+     */
     public function deleteGood(Request $request, $good_id)
     {
-      /**
-       * @function GoodController@deleteGood
-       * @input Request $request, $good_id
-       * @return Response
-       * @description Delete a specify good.
-       */
-		if(!$request->session()->has('user_id')) 
-		    return Redirect::back();
+        if(!$request->session()->has('user_id'))
+            return Redirect::back();
         $good = GoodInfo::find($good_id);
-		if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin')) 
-		    return Redirect::back();
+        if($request->session()->get('user_id')!=$good->user_id)
+            return Redirect::back();
         $good->delete();
-        return redirect('/good');
+        return Redirect::to('/good');
     }
 
 	/*
@@ -165,13 +166,16 @@ class GoodController extends Controller
 	{
 		$data = [];
 		$query = $request->input('query');
-
-		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%")->get();
-
-		foreach ($data['goods'] as $goods)
-		{
-			$goods->cat_id = GoodCat::where('id', $goods->id)->first();
-		}
-		return View::make('good.goodList', $data);
+        $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
+		$data['goods'] = GoodInfo::where('good_name', 'like', $query)->get();
+		if($request->session()->has('user_id')) 
+		    $data['user_id'] = $request->session()->get('user_id');
+		else 
+		    $data['user_id'] = NULL;
+		if($request->session()->has('is_admin'))
+	        $data['is_admin'] = $request->session()->get('is_admin');
+		else 
+		    $data['is_admin'] = NULL;
+        return view::make('good.goodList')->with($data);
 	}
 }

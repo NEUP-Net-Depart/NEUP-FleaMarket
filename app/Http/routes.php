@@ -56,6 +56,11 @@ Route::get('/good', [
     "middleware" => "web"
 ]);
 
+Route::get('/good/quick_access', [
+	"uses" => "GoodController@quickAccess",
+    "middleware" => "web"
+]);
+
 Route::match(['post', 'get'], '/good/add', [
     "uses" => "GoodController@addGood",
     "middleware" => "web"
@@ -66,8 +71,13 @@ Route::match(['post', 'get'], '/good/{good_id}/edit', [
     "middleware" => "web"
 ]);
 
-Route::get('/good/{good_id}/delete', [
+Route::delete('/good/{good_id}/delete', [
     "uses" => "GoodController@deleteGood",
+    "middleware" => "web"
+]);
+
+Route::get('/good/{good_id}/check', [
+    "uses" => "AdminController@checkGood",
     "middleware" => "web"
 ]);
 
@@ -75,6 +85,33 @@ Route::get('/good/{good_id}', [
     "uses" => "GoodController@getInfo",
     "middleware" => "web"
 ]);
-Route::get('/good/quick_access', [
-	"uses" => "GoodController@quickAccess"
+
+Route::get('/admin', [
+    "uses" => "AdminController@adminIndex",
+    "middleware" => "web"
+]);
+
+Route::post('/user/{user_id}/updatePriv', [
+    "uses" => "AdminController@updateUserPriv",
+    "middleware" => "web"
+]);
+
+Route::post('/user/{user_id}/updateRole', [
+    "uses" => "AdminController@updateUserRole",
+    "middleware" => "web"
+]);
+
+Route::post('/cat/add', [
+    "uses" => "AdminController@addCategory", 
+    "middleware" => "web"
+]);
+
+Route::post('/cat/{cat_id}/edit', [
+    "uses" => "AdminController@editCategory",
+    "middleware" => "web"
+]);
+
+Route::delete('/cat/{cat_id}/delete', [
+    "uses" => "AdminController@deleteCategory",
+    "middleware" => "web"
 ]);

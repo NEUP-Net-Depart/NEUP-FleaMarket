@@ -7,11 +7,10 @@
 <br/>
 <form action="/good/quick_access">
 	<span>Quick Access: </span>
-	<div class="search-container">
-		<input class="form-control search-title good-id" name="query" placeholder="Input GoodID or Good Name to Search" type="text" autocomplete="off" />
-		<div class="search-option hidden"></div>
+	<div>
+		<input name="query" placeholder="Input Keyword to Search"/>
 	</div>
-	<input class="btn btn-info" type="submit" value="&nbsp;&nbsp;Go&nbsp;&nbsp;" />
+	<input type="submit" value="Go"/>
 </form>
 <br/>
 @foreach($goods as $good)

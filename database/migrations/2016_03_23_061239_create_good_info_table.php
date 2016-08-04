@@ -23,6 +23,7 @@ class CreateGoodInfoTable extends Migration
             $table->integer('user_id');
             $table->integer('counts');
             $table->text('good_tag');
+            $table->integer('checked');
             $table->timestamps();
       });
     }
