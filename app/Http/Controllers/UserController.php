@@ -58,11 +58,8 @@ class UserController extends Controller
     {
         $input = $request->all();
         $user = User::where('username',$request->username)->first();
-<<<<<<< Updated upstream
-        if($user->password==$request->password&&$user->baned==0)
-=======
+       // if($user->password==$request->password&&$user->baned==0)
         if(Hash::check($request->password, $user->password))
->>>>>>> Stashed changes
         {
             $request->session()->put('user_id', $user->id);
             $request->session()->put('username', $user->username);
