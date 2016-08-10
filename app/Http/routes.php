@@ -12,9 +12,6 @@
 */
 use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +26,10 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => ['web']],function () {
+
+    Route::get('/', [
+        "uses" => "ContentController@Mainpage",
+    ]);
 
     Route::get('/good', [
         "uses" => "GoodController@getList",
@@ -45,7 +46,7 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
-    Route::get('/good/{good_id}/delete', [
+    Route::delete('/good/{good_id}/delete', [
         "uses" => "GoodController@deleteGood",
         "middleware" => "auth"
     ]);
@@ -55,13 +56,8 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
-    Route::get('/user/{user_id}', [
-        "uses" => "UserController@getList",
-        "middleware" => "auth"
-    ]);
-
     Route::get('/user/{user_id}/edit', [
-        "uses" => "UserController@showeditpage",
+        "uses" => "UserController@showEditPage",
         "middleware" => "auth"
     ]);
 
@@ -82,7 +78,7 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::get('/good/{good_id}/check', [
         "uses" => "AdminController@checkGood",
-        "middleware" => "auth"
+        "middleware" => "admin"
     ]);
 
     Route::get('/admin', [
@@ -100,6 +96,19 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "admin"
     ]);
 
+    Route::get('/user/{user_id}/sendCheckLetter', [
+        "uses" => "UserController@sendCheckLetter"
+    ]);
+
+    Route::get('/user/checkEmail/{token}', [
+        "uses" => "UserController@checkEmail"
+    ]);
+
+    Route::get('/user/{user_id}', [
+        "uses" => "UserController@getList",
+        "middleware" => "auth"
+    ]);
+
     Route::post('/cat/{cat_id}/edit', [
         "uses" => "AdminController@editCategory",
         "middleware" => "admin"
@@ -115,24 +124,20 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "admin"
     ]);
 
+    Route::post('/adduser', [
+        "uses" => "UserController@adduser"
+    ]);
+
+    Route::get('/show', [
+        "uses" => "UserController@show"
+    ]);
+
+    Route::get('/register', [
+        "uses" => "UserController@register"
+    ]);
+
+    Route::post('/login', [
+        "uses" => "UserController@login"
+    ]);
+
 });
-Route::post('/adduser', [
-    "uses" => "UserController@adduser",
-    "middleware" => "web"
-]);
-
-Route::get('/show', [
-    "uses" => "UserController@show",
-    "middleware" => "web"
-]);
-
-Route::get('/register', [
-    "uses" => "UserController@register",
-    "middleware" => "web"
-]);
-
-Route::post('/login', [
-    "uses" => "UserController@login",
-    "middleware" => "web"
-]);
-
