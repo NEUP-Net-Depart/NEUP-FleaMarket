@@ -178,4 +178,23 @@ class GoodController extends Controller
 		    $data['is_admin'] = NULL;
         return view::make('good.goodList')->with($data);
 	}
+
+	/*
+	 * @funtion addFavlist
+	 * @input $request (use query)
+	 *
+	 * @return Redirect or View
+	 * @description Process the query and add to certain
+	 *				user's favorite list
+     */
+	public function addFavlist(Request $request, $good_id)
+	{
+		if(!$request->session()->has('user_id'))
+			return Redirect::back();
+		$fav = new FavList;
+		$fav->user_id = $request->session()->get('user_id');
+		$fav->good_id = $good_id;
+		$fav->save();
+		return Redirect::to('/good');
+	}
 }

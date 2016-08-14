@@ -75,6 +75,11 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
+	Route::get('/good/{good_id}/add_favlist', [
+		"uses" => "GoodController@addFavlist",
+		"middleware" => "auth"
+	]);
+
     Route::get('/good/{good_id}/check', [
         "uses" => "AdminController@checkGood",
         "middleware" => "auth"
