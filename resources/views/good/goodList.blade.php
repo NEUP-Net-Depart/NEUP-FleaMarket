@@ -22,3 +22,6 @@
 @if($user_id != NULL)
     <a href='/good/add'>Add</a>
 @endif
+@if($user_id != NULL)
+	<a href='/good/mygood'>my good</a>
+@endif

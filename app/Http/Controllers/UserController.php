@@ -39,7 +39,7 @@ class UserController extends Controller
             return redirect()->back()->withInput()->withErrors('用户名已存在！');
             echo "用户名已存在！";
         }
-        $user=new User;
+        $user = new User;
         $user->username = $input['username'];
         $user->password = Hash::make($request->password);
         //$user->password = $input['password'];
