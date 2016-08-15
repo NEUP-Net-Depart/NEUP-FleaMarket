@@ -1,3 +1,9 @@
+@include('includes.head')
+    <title>先锋市场</title>
+</head>
+<body>
+@include('layout.header')
+<div class="page-content">
 Unchecked goods:
 @foreach($goods as $good)
     <div class="cat{{$good->cat_id}}"><a href="/good/{{$good->id}}">{{$good->good_name}}</a> <a href="/good/{{$good->id}}/check">Pass</a></div>
@@ -53,3 +59,6 @@ All goods:
     {!! csrf_field() !!}
     <input type="submit"/>
 </form>
+</div>
+@include('layout.footer')
+@include('includes.foot')

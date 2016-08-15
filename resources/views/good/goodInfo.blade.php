@@ -1,3 +1,9 @@
+@include('includes.head')
+    <title>先锋市场</title>
+</head>
+<body>
+@include('layout.header')
+<div class="page-content">
 @foreach($goods as $good)
     {{$good->description}}<br/>
     @if($user_id==$good->user_id)
@@ -10,3 +16,6 @@
     @endif
 @endforeach
 <a href='/good'>GoodList</a>
+</div>
+@include('layout.footer')
+@include('includes.foot')

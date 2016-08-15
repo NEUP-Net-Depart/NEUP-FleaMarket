@@ -1,25 +1,36 @@
+@include('includes.head')
+    <title>添加出售 - 先锋市场</title>
+</head>
+<body>
+@include('layout.header')
+<div class="page-content">
 <form action="/good/add" method="POST">
-    good_name:<input name="good_name"/><br/>
-    cat:<select name="cat_id">
+    <input type="text" name="good_name" placeholder="商品名称"/>
+    <select name="cat_id">
         @foreach($cats as $cat)
             <option value="{{$cat->id}}">{{$cat->cat_name}}</option>
         @endforeach
-    </select><br/>
-    description:<textarea name="description"></textarea><br/>
-    pricemin:<input name="pricemin"/><br/>
-    pricemax:<input name="pricemax"/><br/>
-    type:<select name="type">
-        <option value="0">normal</option>
-        <option value="1">auction</option>
-    </select><br/>
-    counts:<input name="counts"/><br/>
-    good_tag:<input name="good_tag"/><br/>
+    </select>
+    <textarea name="description" placeholder="商品描述（此处应支持HTML）"></textarea>
+    <input type="number" name="pricemin" placeholder="最低价格"/>
+    <input type="number" name="pricemax" placeholder="最高价格"/>
+    <select name="type">
+        <option value="0">普通商品</option>
+        <option value="1">拍卖商品</option>
+    </select>
+    <input type="number" name="counts" placeholder="库存"/>
+    <input type="text" name="good_tag" placeholder="TAG"/>
+    <label for="goodTitleUpload" class="button">上传封面</label>
+    <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic"/><br/>
     {!! csrf_field() !!}
-    <input type="submit"/>
+    <input type="submit" class="button" value="添加"/>
 </form>
 @if(count($errors) > 0)
     @foreach($errors as $error)
         {{$error}}
     @endforeach
 @endif
-<a href='/good'>GoodList</a>
+<a href='/good'>商品列表</a>
+</div>
+@include('layout.footer')
+@include('includes.foot')

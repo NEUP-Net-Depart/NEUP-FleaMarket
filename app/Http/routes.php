@@ -51,6 +51,11 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
+    Route::get('/good/quick_access', [
+        "uses" => "GoodController@quickAccess",
+        "middleware" => "auth"
+    ]);
+
     Route::get('/good/{good_id}', [
         "uses" => "GoodController@getInfo",
         "middleware" => "auth"
@@ -63,11 +68,6 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::post('/user/{user_id}/edit/middle', [
         "uses" => "UserController@editList",
-        "middleware" => "auth"
-    ]);
-
-    Route::get('/good/quick_access', [
-        "uses" => "GoodController@quickAccess",
         "middleware" => "auth"
     ]);
 
@@ -135,4 +135,15 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "UserController@login"
     ]);
 
+    Route::get('/logout', [
+        "uses" => "UserController@logOut"
+    ]);
+
+    Route::match(['post', 'get'], '/iforgotit', [
+        "uses" => "UserController@passwordReset"
+    ]);
+
+    Route::match(['post', 'get'], '/passwordReset/{token}', [
+        "uses" => "UserController@resetPassword"
+    ]);
 });
