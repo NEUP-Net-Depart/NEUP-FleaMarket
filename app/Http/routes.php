@@ -41,6 +41,21 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
+    Route::match(['post', 'get'], '/good/mygood', [
+        "uses" => "GoodController@mygood",
+        "middleware" => "auth"
+    ]);
+
+    Route::match(['post', 'get'], '/good/check', [
+        "uses" => "GoodController@check",
+        "middleware" => "auth"
+    ]);
+
+    Route::match(['post', 'get'], '/good/end', [
+        "uses" => "GoodController@end",
+        "middleware" => "auth"
+    ]);
+    
     Route::match(['post', 'get'], '/good/{good_id}/edit', [
         "uses" => "GoodController@editGood",
         "middleware" => "auth"
@@ -48,6 +63,16 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::delete('/good/{good_id}/delete', [
         "uses" => "GoodController@deleteGood",
+        "middleware" => "auth"
+    ]);
+
+    Route::post('/good/{good_id}/buy', [
+        "uses" => "GoodController@getGood",
+        "middleware" => "auth"
+    ]);
+
+    Route::post('/good/{good_id}/{id}', [
+        "uses" => "GoodController@allow",
         "middleware" => "auth"
     ]);
 
@@ -70,6 +95,11 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "UserController@editList",
         "middleware" => "auth"
     ]);
+
+	Route::get('/good/{good_id}/add_favlist', [
+		"uses" => "GoodController@addFavlist",
+		"middleware" => "auth"
+	]);
 
     Route::get('/good/{good_id}/check', [
         "uses" => "AdminController@checkGood",

@@ -18,6 +18,7 @@
 <br/>
 @if($user_id != NULL)
     <a href='/good/add'>Add</a>
+	<a href='/good/mygood'>my good</a>
 @endif
 </div>
 @include('layout.footer')
