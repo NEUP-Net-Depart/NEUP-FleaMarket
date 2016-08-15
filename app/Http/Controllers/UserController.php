@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\View;
 use App\User;
 use App\UserInfo;
 use App\CheckEmail;
+use App\PasswordReset;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Session;
@@ -29,8 +30,7 @@ class UserController extends Controller
             'username'=>'required|max:20',
             'email'=>'required|email|max:20',
             'password'=>'required|max:20',
-            'stuid'=>'required|max:8',
-            'nickname'=>'required|max:20',
+            'nickname'=>'max:20',  
         ]);
         $input = $request->all();
         $test = User::where('username',$request->username)->first();
@@ -41,13 +41,13 @@ class UserController extends Controller
         }
         $user = new User;
         $user->username = $input['username'];
-        $user->password = Hash::make($request->password);
-        //$user->password = $input['password'];
+        $user->password = sha1($input['password']);
         $user->email = "#".$input['email'];
-        $user->stuid = $input['stuid'];
         $user->nickname = $input['nickname'];
+        $userinfo=new UserInfo;
         if($user->save())
         {
+            $userinfo->save();
             $new_user = User::where('username', $user->username)->first();
             return redirect('/user/'.$new_user->id.'/sendCheckLetter');
         }
@@ -60,16 +60,17 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $input = $request->all();
-        $user = User::where('username',$request->username)->first();
+        $user = User::where('username',$input['username'])->first();
        // if($user->password==$request->password&&$user->baned==0)
-        if(Hash::check($request->password, $user->password))
+        if(sha1($input['password'])==$user->password)
         {
             if($user->email[0]=='#') return redirect()->back()->withInput()->withErrors('未验证您的邮箱，请查收您的电子邮箱或<a href\"/user/'.$user->id.'/sendCheckLetter\">重新发送一封</a>'); 
             $request->session()->put('user_id', $user->id);
             $request->session()->put('username', $user->username);
-			if($user->privilege == 1)
+            $request->session()->put('nickname', $user->nickname);
+			if($user->privilege == 2)
 				$request->session()->put('is_admin', 1);
-            return redirect('/good');
+            return redirect('/');
         }
         else
         {
@@ -93,6 +94,16 @@ class UserController extends Controller
         $data['user'] = UserInfo::find($user_id);
         return View::make('user.userinfo')->with($data);
     }
+
+    public function logOut(Request $request)
+    {
+        $request->session()->forget('user_id');
+        $request->session()->forget('username');
+        $request->session()->forget('nickname');
+        $request->session()->forget('is_admin');
+        return redirect('/');
+    }
+
     public function editList(Request $request, $user_id)
     {
         $input = $request->all();
@@ -148,5 +159,65 @@ class UserController extends Controller
         $user->update();
         $check_email->delete();
         return redirect('/show');
+    }
+
+    public function passwordReset(Request $request)
+    {
+        if($request->method() == 'GET'){
+            $data['method']='GET';
+            return View::make('user.passwordReset')->with($data);
+        }else{
+            $data['method']='POST';
+            $data['sentence']='';
+            $input = $request->all();
+            $user = User::where('username', $input['username'])->first();
+            if($user==NULL||$user->email!=$input['email']){
+                $data['sentence']='无法验证你的身份，请检查用户名与邮箱是否有误';
+            }else{
+                $data['sentence']='已向你的邮箱发送一份包含重置密码的链接的邮件。';
+                $password_reset = PasswordReset::where('user_id',$user->id)->first();
+                $email = $user->email;
+                $token = sha1($email.time());
+                if($password_reset!=NULL){
+                    $token = $password_reset->token;
+                }else{
+                    $new_password_reset = new PasswordReset;
+                    $new_password_reset->user_id = $user->id;
+                    $new_password_reset->token = $token;
+                    $new_password_reset->save();
+                }
+                $data['token'] = $token;
+                $data['host'] = $request->server("HTTP_HOST");
+                Mail::send('user.resetLetter', $data, function ($m) use ($user, $email) {
+                    $m->from('519418441@qq.com', 'Catsworld');
+                    $m->to($email, $user->username)->subject('');
+                });
+            }
+            return View::make('user.passwordReset')->with($data);
+        }
+    }
+
+    public function resetPassword(Request $request, $token)
+    {
+        if($request->method() == 'GET'){
+            $data['method'] = 'GET';
+            $data['token'] = $token;
+            return view::make('user.resetPassword')->with($data);
+        }else{
+            $data['method'] = 'POST';
+            $data['sentence'] = '';
+            $password_reset = PasswordReset::where('token', $token)->first();
+            if($password_reset==NULL){
+                $data['sentence'] = '未知的Token';
+                return View::make('user.resetPassword')->with($data);
+            }
+            $input = $request->all();
+            $user = User::find($password_reset->user_id);
+            $user->password = sha1($input['password']);
+            $user->update();
+            $password_reset->delete();
+            $data['sentence'] = '成功重置密码！';
+            return View::make('user.resetPassword')->with($data);
+        }
     }
 }

@@ -1,3 +1,9 @@
+@include('includes.head')
+    <title>先锋市场</title>
+</head>
+<body>
+@include('layout.header')
+<div class="page-content">
 @foreach($goods as $good)
     <form action="/good/{{$good->id}}/edit" method="POST">
         good_name:<input name="good_name" value="{{$good->good_name}}"/><br/>
@@ -25,3 +31,6 @@
     @endforeach
 @endif
 <a href='/good/{{$good->id}}'>GoodInfo</a>
+</div>
+@include('layout.footer')
+@include('includes.foot')

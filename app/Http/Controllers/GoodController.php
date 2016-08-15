@@ -12,6 +12,7 @@ use App\GoodInfo;
 use App\Transaction;
 use App\TransactionLog;
 use App\Http\Controllers\Controller;
+use Storage;
 
 class GoodController extends Controller
 {
@@ -69,6 +70,7 @@ class GoodController extends Controller
 		    $data['is_admin'] = $request->session()->get('is_admin');
 		else 
 		    $data['is_admin'] = NULL;
+        $good = GoodInfo::where('id', $good_id)->first();
         return view::make('good.goodInfo')->with($data);
     }
 
@@ -145,6 +147,11 @@ class GoodController extends Controller
             $good->good_tag = $input['good_tag'];
             $good->user_id = $request->session()->get('user_id');
             $good->save();
+            $new_good = GoodInfo::orderby('id', 'dsc')->first();
+            Storage::put(
+                'good/title/'.$new_good->id,
+                file_get_contents($request->file('goodTitlePic')->getRealPath())
+            );
             return Redirect::to('/good/add');
         }
     }
@@ -219,9 +226,10 @@ class GoodController extends Controller
 	public function quickAccess(Request $request)
 	{
 		$data = [];
-		$query = $request->input('query');
+        $input = $request->all();
+		$query = $input['query'];
         $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
-		$data['goods'] = GoodInfo::where('good_name', 'like', $query)->get();
+		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%")->get();
 		if($request->session()->has('user_id')) 
 		    $data['user_id'] = $request->session()->get('user_id');
 		else 

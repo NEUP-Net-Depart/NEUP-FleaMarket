@@ -1,3 +1,9 @@
+@include('includes.head')
+    <title>先锋市场</title>
+</head>
+<body>
+@include('layout.header')
+<div class="page-content">
 性别：{{$user->gender}}
 </br>
 </br>
@@ -11,4 +17,7 @@
 </br>
 </br>
 <a href='/user/{{$user->id}}/edit'>Edit</a><br/>
-
+<a href='/logout'>Log Out</a><br/>
+</div>
+@include('layout.footer')
+@include('includes.foot')

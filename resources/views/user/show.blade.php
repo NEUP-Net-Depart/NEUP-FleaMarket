@@ -1,6 +1,9 @@
-<html>
+@include('includes.head')
     <title>登陆</title>
-    <body>
+</head>
+<body>
+@include('layout.header')
+<div class="page-content">
         <form action="/login" method="POST">
             <div>
                 用户名:<input type="text" name="username">
@@ -13,5 +16,7 @@
                 <input type="submit" name="submit" value="登陆">
             </div>
         </form>
-    </body>
-</html>
+        <a href='/iforgotit'>忘记密码</a><br/>
+</div>
+@include('layout.footer')
+@include('includes.foot')

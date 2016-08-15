@@ -1,9 +1,9 @@
-{!! csrf_field() !!}
-<html>
-<head>
+@include('includes.head')
     <title>修改个人信息</title>
 </head>
 <body>
+@include('layout.header')
+<div class="page-content">
 <form action="/user/{{$user->id}}/edit/middle" method="POST">
     <div>
         性别:<select name="gender">
@@ -29,5 +29,6 @@
         <input type="submit" name="submit" value="修改">
     </div>
 </form>
-</body>
-</html>
+</div>
+@include('layout.footer')
+@include('includes.foot')
