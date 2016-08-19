@@ -1,0 +1,17 @@
+/*addpage.style*/
+.page-content .row{
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.page-content{
+    font-family: "微软雅黑 Light";
+    font-size: 100%;
+}
+.page-content label{
+    font-family: "微软雅黑 Light";
+    font-size: 100%;
+}
+.form-control{
+    margin-bottom: 0;
+}

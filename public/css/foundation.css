@@ -1746,7 +1746,7 @@ legend {
     margin-left: -0.1875rem; }
 
 select {
-  height: 2.4375rem;
+  /*height: 2.4375rem;*/
   padding: 0.5rem;
   border: 1px solid #cacaca;
   margin: 0 0 1rem;
