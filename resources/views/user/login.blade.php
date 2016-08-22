@@ -4,6 +4,13 @@
 <body>
 @include('layout.header')
 <div class="page-content">
+    @if (count($errors) > 0)
+        @foreach ($errors->all() as $error)
+            <label>
+                <span class="form-error is-visible">{{ $error }}</span>
+            </label>
+        @endforeach
+    @endif
         <form action="/login" method="POST">
             <div>
                 用户名:<input type="text" name="username">

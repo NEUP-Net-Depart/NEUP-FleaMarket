@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('SSO');
             $table->string('nickname');
             $table->string('email')->unique();
+            $table->boolean('havecheckedemail');
             $table->integer('role_id');
             $table->integer('baned');
             $table->timestamps();

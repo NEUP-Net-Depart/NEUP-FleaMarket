@@ -76,6 +76,10 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
+    Route::get('/good/titlepic/{good_id}', [
+        "uses" => "GoodController@getTitlePic"
+    ]);
+
     Route::get('/good/quick_access', [
         "uses" => "GoodController@quickAccess",
         "middleware" => "auth"
@@ -149,19 +153,11 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "admin"
     ]);
 
-    Route::post('/adduser', [
-        "uses" => "UserController@adduser"
-    ]);
-
-    Route::get('/show', [
-        "uses" => "UserController@show"
-    ]);
-
-    Route::get('/register', [
+    Route::match(['post', 'get'], '/register', [
         "uses" => "UserController@register"
     ]);
 
-    Route::post('/login', [
+    Route::match(['post', 'get'], '/login', [
         "uses" => "UserController@login"
     ]);
 

@@ -18,8 +18,7 @@
         <li><a href="/good/add" class="button">出售</a></li>
         @else
         <li><a href="/register">注册</a></li>
-        <li><a href="/show">登录</a></li>
-        <li><a href="/good/add" class="button">出售</a></li>
+        <li><a href="/login">登录</a></li>
         @endif
       </ul>
     </div>

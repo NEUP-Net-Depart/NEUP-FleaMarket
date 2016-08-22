@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Response;
 use App\GoodCat;
 use App\GoodInfo;
 use App\Transaction;
@@ -59,9 +60,9 @@ class GoodController extends Controller
     public function getInfo(Request $request, $good_id)
     {
         $data = [];
-        $data['goods'] = GoodInfo::where('id', $good_id)->first();
-        $data['users'] = UserInfo::where('id',$data['goods']->user_id)->first();
-        $data['sells'] = Transaction::where('good_id',$good_id)->first();
+        $data['good'] = GoodInfo::where('id', $good_id)->first();
+        $data['user'] = UserInfo::where('id',$data['good']->user_id)->first();
+        $data['sell'] = Transaction::where('good_id',$good_id)->first();
 		if($request->session()->has('user_id')) 
 		    $data['user_id'] = $request->session()->get('user_id');
 		else 
@@ -149,7 +150,7 @@ class GoodController extends Controller
             $good->save();
             $new_good = GoodInfo::orderby('id', 'dsc')->first();
             Storage::put(
-                'good/title/'.$new_good->id,
+                'good/titlepic/'.$new_good->id,
                 file_get_contents($request->file('goodTitlePic')->getRealPath())
             );
             return Redirect::to('/good/add');
@@ -259,4 +260,11 @@ class GoodController extends Controller
 		$fav->save();
 		return Redirect::to('/good');
 	}
+
+    public function getTitlePic(Request $request, $good_id)
+    {
+        $image = Storage::get('good/titlepic/'.$good_id);
+        $response = Response::make($image);
+        return $response;
+    }
 }

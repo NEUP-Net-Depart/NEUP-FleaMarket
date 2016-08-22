@@ -15,7 +15,7 @@ class Check
         }
         else
         {
-            return Redirect::to('/show');
+            return Redirect::to('/login');
         }
     }
 }

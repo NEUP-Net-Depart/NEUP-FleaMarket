@@ -23,7 +23,7 @@ class Authenticate
         }
         else
         {
-            return Redirect::to('/show');
+            return Redirect::to('/login');
         }
     }
 }

@@ -5,7 +5,7 @@
 <body>
 @include('layout.header')
 <div class="page-content">
-    <form class="form-horizontal" action="/good/add" method="POST">
+    <form class="form-horizontal" action="/good/add" method="POST" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="form-group ">
@@ -63,14 +63,14 @@
                         <input type="text" class="form-control" placeholder="TAG" name="good_tag">
                     </div>
                 </div>
-                <div class="form-group ">
+                <div class="form-group">
                     <label for="goodTitleUpload"  class="col-md-2 col-sm-offset-5 button">上传封面</label>
                     <div class="col-sm-10">
                         <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic" style="margin: 0;" onchange="preview(this)">
                         {!! csrf_field() !!}
                     </div>
                 </div>
-                <div class="form-group ">
+                <div class="form-group">
                     <label class="col-sm-2 control-label">封面预览:</label>
                     <div class="col-sm-10">
                         <div id="preview" style="max-width: 50%;margin-left: 25%"></div>
