@@ -85,8 +85,53 @@ body{
     position: relative;
     top: 30px;
 }
-.page-content{
-    position: relative;
-    z-index: 50;
-    margin-top: 120px;
+.show{
+	position:relative;
+	top:250px;
+	width:500px;
+	height:300px;
+	margin: 0 auto;
+	background-color:#E8E8E8;
+}
+.show1{
+	position:absolute;
+	top:15%;
+	left:15%;
+	width:70%;
+	height:25%;
+}
+.show2{
+	position:absolute;
+	top:40%;
+	left:15%;
+	width:70%;
+	height:25%;
+}
+.show3{
+	position:absolute;
+	top:55%;
+	left:15%;
+	width:70%;
+	height:25%;
+}
+.show3a{
+	position:absolute;
+	top:25%;
+	height:70%;
+	width:50%;
+	float:left;
+}
+.show3b{
+	position:absolute;
+	top:25%;
+	height:70%;
+	width:50%;
+	right:0;
+}
+.show4{
+	position:absolute;
+	top:75%;
+	left:15%;
+	width:70%;
+	height:25%;
 }
