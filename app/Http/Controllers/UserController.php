@@ -22,17 +22,18 @@ use App\Http\Controllers\Controller;
 use Hash;
 use Mail;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         if($request->method()=='GET'){
             return View::make('user.login');
         }else{
             $input = $request->all();
             $user = User::where('username',$input['username'])->first();
-            if(sha1($input['password'])==$user->password&&(!$user->baned))
+            if($user!=NULL&&sha1($input['password'])==$user->password&&(!$user->baned))
             {
                 if(!$user->havecheckedemail) return Redirect::back()->withInput()->withErrors('未验证您的邮箱，请查收您的电子邮箱或<a href\"/user/'.$user->id.'/sendCheckLetter\">重新发送一封</a>'); 
                 $request->session()->put('user_id', $user->id);

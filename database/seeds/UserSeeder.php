@@ -14,10 +14,11 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'priviledge' => 2,
             'username' => 'admin',
-            'password' => sha1('admin'),
+            'password' => sha1('administrator'),
             'nickname' => '超级管理员',
             'email' => 'admin@admin',
-            'stuid' => '00000000'
+            'stuid' => '00000000',
+            'havecheckedemail' => 1
         ]);
         DB::table('user_info')->insert([
             'realname' => '超级管理员'

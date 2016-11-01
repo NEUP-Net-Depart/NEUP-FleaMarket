@@ -161,7 +161,5 @@
             </div>
         </div>
     </div>
-
-</div>
 @include('layout.footer')
 @include('includes.foot')
