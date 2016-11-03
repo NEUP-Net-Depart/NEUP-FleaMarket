@@ -27,10 +27,9 @@
 <div class="row banner">
     <div class="banner-content">
         <div class="row">
-            <div class="small-2 columns">　</div>
-            <div class="small-1 columns"><a href="/"><img src="/img/logo.png" class="banner-logo"></img></a></div>
-            @include('layout.search')
-            <div class="small-3 columns">　</div>
+            <div class="large-6 large-centered small-10 small-centered columns">
+                @include('layout.search')
+            </div>
         </div>
     </div>
 </div>

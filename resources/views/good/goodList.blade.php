@@ -121,7 +121,7 @@
 </script>
 <div class="page-content">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="medium-6 columns">
             <div class="form-group">
                 <label class="col-sm-2 control-label">选择分类:</label>
                 <div class="col-sm-10">
