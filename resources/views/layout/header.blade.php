@@ -6,6 +6,7 @@
     </div>
     <div class="top-bar-left">
       <ul class="dropdown menu" data-dropdown-menu>
+        <li><a href="/">主页</a></li>
         <li><a href="/good">商品</a></li>
       </ul>
     </div>

@@ -41,8 +41,8 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
-    Route::match(['post', 'get'], '/good/mygood', [
-        "uses" => "GoodController@mygood",
+    Route::match(['post', 'get'], '/good/my', [
+        "uses" => "GoodController@myGood",
         "middleware" => "auth"
     ]);
 

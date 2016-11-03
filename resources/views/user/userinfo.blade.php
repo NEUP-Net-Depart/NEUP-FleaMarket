@@ -18,6 +18,7 @@
 </br>
 <a href='/user/{{$user->id}}/edit'>Edit</a><br/>
 <a href='/logout'>Log Out</a><br/>
+<a href='/good/check'>Check</a><br/>
 </div>
 @include('layout.footer')
 @include('includes.foot')
