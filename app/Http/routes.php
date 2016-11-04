@@ -153,6 +153,21 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "admin"
     ]);
 
+    Route::match(['post','get'],'/message',[
+        "uses" => "MessageController@getMessage",
+        "middleware" => "auth"
+    ]);
+
+    Route::match(['post','get'],'/message/sendmessagepage',[
+        "uses" => "MessageController@sendMessagepage",
+        "middleware" => "auth"
+    ]);
+
+    Route::match(['post','get'],'/message/send',[
+        "uses" => "MessageController@sendAllow",
+        "middleware" => "auth"
+    ]);
+
     Route::match(['post', 'get'], '/register', [
         "uses" => "UserController@register"
     ]);

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransactionsTable extends Migration
+class CreateMessageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,12 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('message', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('trans_id');
-            $table->integer('buyer_id');
-            $table->integer('seller_id');
-            $table->integer('good_id');
-            $table->integer('number');
-            $table->integer('status');
+            $table->text('title');
+            $table->integer('sender_id');
+            $table->integer('receiver_id');
+            $table->text('content');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('transactions');
+        Schema::drop('message');
     }
 }
