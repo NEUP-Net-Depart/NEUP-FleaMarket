@@ -35,7 +35,7 @@ class UserController extends Controller
             $user = User::where('username',$input['username'])->first();
             if($user!=NULL&&sha1($input['password'])==$user->password&&(!$user->baned))
             {
-                if(!$user->havecheckedemail) return Redirect::back()->withInput()->withErrors('未验证您的邮箱，请查收您的电子邮箱或<a href\"/user/'.$user->id.'/sendCheckLetter\">重新发送一封</a>'); 
+                if(!$user->havecheckedemail) return Redirect::back()->withInput()->withErrors('未验证您的邮箱，请查收您的电子邮箱或<a href="/user/'.$user->id.'/sendCheckLetter\>重新发送一封</a>'); 
                 $request->session()->put('user_id', $user->id);
                 $request->session()->put('username', $user->username);
                 $request->session()->put('nickname', $user->nickname);
@@ -45,7 +45,7 @@ class UserController extends Controller
             }
             else
             {
-                return Redirect::back()->withInput()->withErrors('用户名或者密码错误！');
+                return Redirect::back()->withInput()->withErrors('用户名或者密码错误！<a href="/iforgotit">忘记密码？</a>');
             }
         }
     }

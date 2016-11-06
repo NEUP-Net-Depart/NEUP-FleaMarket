@@ -5,7 +5,7 @@
 @include('layout.header')
 <div class="page-content">
     <div class="row">
-        <div class="small-4 small-centered columns">
+        <div class="small-8 small-centered medium-4 medium-centered columns">
     		@if (count($errors) > 0)
         		<label>
 		            <span class="form-error is-visible">{!! $errors->first() !!}</span>
@@ -15,7 +15,7 @@
 		        <input type="text" name="username" placeholder="用户名">
 		        <input type="password" id="password" name="password" placeholder="密码">
 		        {!! csrf_field() !!}
-                <div class="row"><div class="small-3 small-centered columns"><input type="submit" class="button" value="登录"></div></div>
+                <input type="submit" class="button" value="登录">
 		    </form>
 		</div>
 	</div>

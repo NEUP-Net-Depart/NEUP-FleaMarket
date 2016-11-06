@@ -105,12 +105,12 @@ class GoodController extends Controller
         return Redirect::to('/good');
     }
 
-    public function mygood(Request $request)
+    public function myGood(Request $request)
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
-        $data['mygoods'] = GoodInfo::where('user_id',$user_id)->get();
-        return view::make('good.mygood')->with($data);
+        $data['goods'] = GoodInfo::where('user_id',$user_id)->get();
+        return view::make('good.myGood')->with($data);
     }
     /**
      * @function GoodController@addGood
