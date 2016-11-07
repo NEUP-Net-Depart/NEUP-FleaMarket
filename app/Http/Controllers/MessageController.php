@@ -41,7 +41,7 @@ class MessageController extends Controller
         $message->content = $input['content'];
         $receiver = $input['receiver'];
         $message->sender_id = $user_id;
-        $user = User::where('username',$receiver)->first();
+        $user = User::where('nickname',$receiver)->first();
         $message->receiver_id = $user->id;
         $message->save();
         return Redirect::to('/message');
