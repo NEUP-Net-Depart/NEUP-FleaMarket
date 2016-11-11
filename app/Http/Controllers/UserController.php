@@ -15,6 +15,8 @@ use App\User;
 use App\UserInfo;
 use App\CheckEmail;
 use App\PasswordReset;
+use App\FavList;
+use App\GoodInfo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Session;
@@ -204,5 +206,47 @@ class UserController extends Controller
             $data['sentence'] = '成功重置密码！';
             return View::make('user.resetPassword')->with($data);
         }
-    }
+	}
+
+	public function getFavlist(Request $request)
+	{
+		$data = [];
+		$data['user_id'] = $request->session()->get('user_id');
+		$data['goods'] = FavList::orderby('id', 'asc')->where('user_id', $data['user_id'])->get();
+		$data['good_info'] = GoodInfo::orderBy('id', 'asc')->get()->keyBy('id');
+		return view::make('user.favlist')->with($data);
+	}
+
+	public function editFavlist(Request $request)
+	{
+		$data = [];
+		$data['user_id'] = $request->session()->get('user_id');
+		$data['goods'] = FavList::orderBy('id', 'asc')->where('user_id', $data['user_id'])->get();
+		$data['good_info'] = GoodInfo::orderBy('id', 'asc')->get()->keyBy('id');
+		return view::make('user.editFavlist')->with($data);
+	}
+
+	public function delFavlist(Request $request)
+	{
+		$user_id = $request->session()->get('user_id');
+		$input = $request->all();
+//		var_dump($input['del_goods']);
+		if(!isset($input['del_goods']))
+			return Redirect::to('/user/edit_favlist');
+		foreach($input['del_goods'] as $del_good)
+		{
+//			if($del_good == 0) continue;
+			$item = FavList::where('user_id', $user_id)->where('good_id', $del_good)->get();
+//			var_dump($del_good);
+//			var_dump($item);
+			foreach($item as $it)
+			{
+				$del_id = FavList::find($it->id);
+//				var_dump($it->id);
+			}
+			$del_id->delete();
+		}
+//		return Redirect::to('/user/edit_favlist');
+	}
+
 }
