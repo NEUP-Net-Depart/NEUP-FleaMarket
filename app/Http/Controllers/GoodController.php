@@ -12,6 +12,7 @@ use App\GoodCat;
 use App\GoodInfo;
 use App\Transaction;
 use App\TransactionLog;
+use App\FavList;
 use App\Http\Controllers\Controller;
 use Storage;
 
@@ -35,7 +36,7 @@ class GoodController extends Controller
 		if($request->session()->has('is_admin'))
 	        $data['is_admin'] = $request->session()->get('is_admin');
 		else 
-		    $data['is_admin'] = NULL;
+			$data['is_admin'] = NULL;
         return view::make('good.goodList')->with($data);
     }
 
@@ -61,10 +62,13 @@ class GoodController extends Controller
     {
         $data = [];
         $data['good'] = GoodInfo::where('id', $good_id)->first();
-        $data['user'] = UserInfo::where('id',$data['good']->user_id)->first();
+        $data['user'] = UserInfo::where('id', $data['good']->user_id)->first();
         $data['sell'] = Transaction::where('good_id',$good_id)->first();
 		if($request->session()->has('user_id')) 
-		    $data['user_id'] = $request->session()->get('user_id');
+		{
+			$data['user_id'] = $request->session()->get('user_id');
+			$data['inFvlst'] = FavList::where('user_id', $data['user_id'])->where('good_id', $good_id)->get();
+		}
 		else 
 		    $data['user_id'] = NULL;
 		if($request->session()->has('is_admin'))
@@ -75,14 +79,14 @@ class GoodController extends Controller
         return view::make('good.goodInfo')->with($data);
     }
 
-    public function allow(Request $request, $id)
+    public function allow(Request $request, $trans_id)
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
         $data['buyers'] = Transaction::where('id',$id)->first();
-        $good = Transaction::find($id);
+        $good = Transaction::find($trans_id);
         if($good->status==1)
-        $good->status = 2;
+			$good->status = 2;
         else if($good->status==2&&$user_id==$good->seller_id)
             $good->status==3;
         else if($good->status==2&&user_id==$good->buyer_id)
@@ -210,7 +214,7 @@ class GoodController extends Controller
         if(!$request->session()->has('user_id'))
             return Redirect::back();
         $good = GoodInfo::find($good_id);
-        if($request->session()->get('user_id')!=$good->user_id)
+        if($request->session()->get('user_id') != $good->user_id)
             return Redirect::back();
         $good->delete();
         return Redirect::to('/good');
@@ -243,13 +247,15 @@ class GoodController extends Controller
 	}
 
 	/*
-	 * @funtion addFavlist
-	 * @input $request (use query)
+	 * @funtion about Favlist
+	 * @input $request (use query) $good_id
 	 *
 	 * @return Redirect or View
-	 * @description Process the query and add to certain
-	 *				user's favorite list
-     */
+	 * @description Process the query and add good to certain user's
+	 *				favorite list or delete good from certain user's
+	 *				favorite list
+	 */
+
 	public function addFavlist(Request $request, $good_id)
 	{
 		if(!$request->session()->has('user_id'))
@@ -258,7 +264,18 @@ class GoodController extends Controller
 		$fav->user_id = $request->session()->get('user_id');
 		$fav->good_id = $good_id;
 		$fav->save();
-		return Redirect::to('/good');
+		return Redirect::to('/good/'.$good_id);
+	}
+
+	public function delFavlist(Request $request, $good_id)
+	{
+		if(!$request->session()->has('user_id'))
+			return Redirect::back();
+		$user_id = $request->session()->get('user_id');
+		$items = FavList::where('user_id', $user_id)->where('good_id', $good_id)->get();
+		foreach($items as $item) $del_id = FavList::find($item->id);
+		$del_id->delete();
+		return Redirect::to('/good/'.$good_id);
 	}
 
     public function getTitlePic(Request $request, $good_id)
@@ -267,4 +284,5 @@ class GoodController extends Controller
         $response = Response::make($image);
         return $response;
     }
+
 }
