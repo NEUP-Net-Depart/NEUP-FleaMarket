@@ -27,8 +27,17 @@ class GoodController extends Controller
     public function getList(Request $request)
     {
         $data = [];
+        $input = $request->all();
+		$query = "";
+        if(isset($input['query'])) $query = $input['query'];
         $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
-        $data['goods'] = GoodInfo::orderby('id', 'asc')->get();
+		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%");
+        $data['cat_id'] = 0;
+        if(isset($input['cat_id'])){
+            $data['goods'] = GoodInfo::where('cat_id', $input['cat_id']);
+            $data['cat_id'] = $input['cat_id'];
+        }
+        $data['goods'] = $data['goods']->orderby('id', 'asc')->get();
 		if($request->session()->has('user_id')) 
 		    $data['user_id'] = $request->session()->get('user_id');
 		else 
@@ -62,6 +71,7 @@ class GoodController extends Controller
     {
         $data = [];
         $data['good'] = GoodInfo::where('id', $good_id)->first();
+        if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         $data['user'] = UserInfo::where('id', $data['good']->user_id)->first();
         $data['sell'] = Transaction::where('good_id',$good_id)->first();
 		if($request->session()->has('user_id')) 
@@ -89,7 +99,7 @@ class GoodController extends Controller
 			$good->status = 2;
         else if($good->status==2&&$user_id==$good->seller_id)
             $good->status==3;
-        else if($good->status==2&&user_id==$good->buyer_id)
+        else if($good->status==2&&$user_id==$good->buyer_id)
             $good->status==4;
         else if($good->status==4||$good->status==3)
             $good->status=5;
@@ -151,6 +161,7 @@ class GoodController extends Controller
             $good->counts = $input['counts'];
             $good->good_tag = $input['good_tag'];
             $good->user_id = $request->session()->get('user_id');
+            $good->checked = '1';
             $good->save();
             $new_good = GoodInfo::orderby('id', 'dsc')->first();
             Storage::put(
@@ -221,6 +232,7 @@ class GoodController extends Controller
     }
 
 	/*
+<<<<<<< Updated upstream
 	 * @function quickAccess
 	 * @input $request (use query)
 	 *
@@ -249,6 +261,10 @@ class GoodController extends Controller
 	/*
 	 * @funtion about Favlist
 	 * @input $request (use query) $good_id
+=======
+	 * @funtion addFavlist
+	 * @input $request (use query)
+>>>>>>> Stashed changes
 	 *
 	 * @return Redirect or View
 	 * @description Process the query and add good to certain user's

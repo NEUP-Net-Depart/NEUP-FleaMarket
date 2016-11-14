@@ -8,7 +8,7 @@
     {{$information->title}}<br/>
     {{$information->content}}<br/>
     {{$information->created_at}}<br/>
-    {{$information->sender_id}}<br/>
+    {{$users[$information->sender_id]->nickname}}<br/>
     @endforeach
 </div>
 @include('layout.footer')

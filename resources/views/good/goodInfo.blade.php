@@ -5,6 +5,7 @@
 @include('layout.header')
 <div class = "page-content">
     {{ $good->description }}<br/>
+    <img src = "/good/{{ $good->id }}/titlepic"/>
     @if($user_id == $good->user_id)
         <a href = '/good/{{ $good->id }}/edit'>Edit</a><br/>
         <form action = '/good/{{ $good->id }}/delete' method = 'POST'>

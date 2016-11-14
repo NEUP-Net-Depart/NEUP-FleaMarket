@@ -1,5 +1,4 @@
 @include('includes.head')
-@include('includes.good')
 	<title>先锋市场</title>
 	<script>
 		function setValue($good_id)

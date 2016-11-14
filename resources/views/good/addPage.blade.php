@@ -1,11 +1,10 @@
 @include('includes.head')
-@include('includes.good')
 <title>添加出售 - 先锋市场</title>
 </head>
 <body>
 @include('layout.header')
 <div class="page-content">
-    <form action="/good/add" method="POST">
+    <form action="/good/add" method="POST" enctype="multipart/form-data">
         <table border="0" align="center" cellpadding="0" cellspacing="0" style="width: 50%;margin-bottom: 0">
             <tr>
                 <td style="width: 20%" align="middle">
