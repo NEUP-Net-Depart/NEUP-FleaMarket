@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Database\Eloquent\Collection;
 use App\GoodCat;
 use App\GoodInfo;
 use App\Transaction;
@@ -24,6 +25,7 @@ class MessageController extends Controller
         $data = [];
         $user_id = $request->session()->get('user_id');
         $data['informations'] = Messages::where('receiver_id',$user_id)->get();
+        $data['users'] = User::orderBy('id', 'asc')->get()->keyBy('id');
         return view::make('message.getMessage')->with($data);
     }
 

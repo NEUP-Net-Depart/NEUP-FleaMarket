@@ -230,23 +230,18 @@ class UserController extends Controller
 	{
 		$user_id = $request->session()->get('user_id');
 		$input = $request->all();
-//		var_dump($input['del_goods']);
 		if(!isset($input['del_goods']))
 			return Redirect::to('/user/edit_favlist');
 		foreach($input['del_goods'] as $del_good)
 		{
-//			if($del_good == 0) continue;
 			$item = FavList::where('user_id', $user_id)->where('good_id', $del_good)->get();
-//			var_dump($del_good);
-//			var_dump($item);
 			foreach($item as $it)
 			{
 				$del_id = FavList::find($it->id);
-//				var_dump($it->id);
 			}
 			$del_id->delete();
 		}
-//		return Redirect::to('/user/edit_favlist');
+		return Redirect::to('/user/edit_favlist');
 	}
 
 }

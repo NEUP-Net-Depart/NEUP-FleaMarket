@@ -1,6 +1,6 @@
 @font-face {
-    font-family: msyhl;
-    src: url('/font/msyhl.ttf');
+    font-family: main;
+    src: url('/font/main.otf') format("opentype");
 }
 
 html {
@@ -8,7 +8,10 @@ html {
 }
 
 body {
-    font-family: msyhl;
+    background-image: url('/img/pagebg.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    font-family: Arial;
 }
 
 .button {
@@ -17,28 +20,36 @@ body {
     border-radius: 3px;
 }
 
+.button:active {
+    transition: background-color 0.15 ease-out;
+    background-color: #37A5EE;
+}
+
 .top-bar {
     box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-family: main;
 }
 
 .top-bar .menu {
     background: none;
 }
 
-.top-bar .menu a {
-    color: black;
+.top-bar-list {
+    color: #FEFEFE!IMPORTANT;
+    padding: 1.2rem 1rem!IMPORTANT;
+    transition: background 0.25s ease-out;
+    margin-right: 0.5rem;
 }
 
-.top-bar .menu a:hover {
-    color: white;
+.top-bar-list:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
-.top-bar .menu a:active {
-    color: grey;
-}
-
-.top-bar .menu .button {
-    color: white!IMPORTANT;
+.top-bar-list:active {
+    transition: background 0.15s ease-out;
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .top-bar,
@@ -64,11 +75,11 @@ body {
     width: 100%;
     height: 100%;
     z-index: 100;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 .top-bar-bg {
-    background-image: url('/img/banner.jpg');
+    background-image: url('/img/pagebg.jpg');
     background-size: 100%;
     background-repeat: no-repeat;
     position: absolute;
@@ -83,25 +94,7 @@ body {
 }
 
 .banner {
-    background-image: url('/img/banner.jpg');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    width: 105%;
-    max-width: 150%;
-    height: 100%;
-}
-
-.banner-content {
-    margin: 69px auto 10px;
-}
-
-.banner-logo {
-    width: 100px;
-    height: 100px;
-    max-width: 100px;
+    font-family: main;
 }
 
 #top-bar-quick-access {
@@ -112,5 +105,5 @@ body {
 .page-content {
     position: relative;
     z-index: 50;
-    margin-top: 120px;
+    margin-top: 2.8rem;
 }

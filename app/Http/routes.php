@@ -80,11 +80,6 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "GoodController@getTitlePic"
     ]);
 
-    Route::get('/good/quick_access', [
-        "uses" => "GoodController@quickAccess",
-        "middleware" => "auth"
-    ]);
-
     Route::get('/good/{good_id}', [
         "uses" => "GoodController@getInfo",
         "middleware" => "auth"
