@@ -17,6 +17,7 @@
     @if($user_id != $good->user_id)
         <form action = '/good/{{ $good->id }}/buy' method = 'POST'>
             {!! csrf_field() !!}
+           购买数量 ：<input type = "number" name = "counts" ><br/>
             <input type = "submit" name = "sumbit2" value = "Buy" >
         </form>
     @endif

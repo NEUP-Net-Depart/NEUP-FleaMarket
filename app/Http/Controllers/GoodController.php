@@ -93,28 +93,35 @@ class GoodController extends Controller
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
-        $data['buyers'] = Transaction::where('id',$id)->first();
+        $data['buyers'] = Transaction::where('id',$trans_id)->first();
         $good = Transaction::find($trans_id);
         if($good->status==1)
 			$good->status = 2;
         else if($good->status==2&&$user_id==$good->seller_id)
-            $good->status==3;
+            $good->status = 3;
         else if($good->status==2&&$user_id==$good->buyer_id)
-            $good->status==4;
+            $good->status = 4;
         else if($good->status==4||$good->status==3)
+        {
             $good->status=5;
+            $goodinfo = GoodInfo::find($good->good_id);
+            $goodinfo->counts = $goodinfo->counts-$good->number;
+            $goodinfo->save();
+        }
         $good->save();
         return Redirect::to('/good');
     }
 
     public function getGood(Request $request, $good_id)
     {
+        $input = $request->all();
         $data = GoodInfo::find($good_id);
         $buy = new Transaction;
         $buy->good_id = $good_id;
         $buy->buyer_id = $request->session()->get('user_id');
         $buy->seller_id = $data->user_id;
         $buy->status = 1;
+        $buy->number = $input['counts'];
         $buy->save();
         return Redirect::to('/good');
     }
