@@ -24,7 +24,7 @@ class MessageController extends Controller
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
-        $data['informations'] = Messages::where('receiver_id',$user_id)->get();
+        $data['informations'] = Messages::Orderby('id','dsc')->where('receiver_id',$user_id)->get();
         $data['users'] = User::orderBy('id', 'asc')->get()->keyBy('id');
         return view::make('message.getMessage')->with($data);
     }
@@ -32,6 +32,22 @@ class MessageController extends Controller
     public function sendMessagepage(Request $request)
     {
         return view::make('message.sendMessage');
+    }
+
+    public function editMessagepage(Request $request)
+    {
+        $data = [];
+        $user_id = $request->session()->get('user_id');
+        $data['informations'] = Messages::Orderby('id','dsc')->where('receiver_id',$user_id)->get();
+        $data['users'] = User::orderBy('id', 'asc')->get()->keyBy('id');
+        return view::make('message.editMessage')->with($data);
+    }
+
+    public function deleteMessage(Request $request,$message_id)
+    {
+        $data = Messages::find($message_id);
+        $data->delete();
+        return Redirect::to('/message/editmessage');
     }
 
     public function sendAllow(Request $request)
@@ -47,5 +63,5 @@ class MessageController extends Controller
         $message->receiver_id = $user->id;
         $message->save();
         return Redirect::to('/message');
-    } 
+    }
 }

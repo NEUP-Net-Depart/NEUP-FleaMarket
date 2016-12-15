@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\UserInfo;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
@@ -12,6 +13,7 @@ use App\GoodCat;
 use App\GoodInfo;
 use App\Transaction;
 use App\TransactionLog;
+use App\Messages;
 use App\FavList;
 use App\Http\Controllers\Controller;
 use Storage;
@@ -116,6 +118,8 @@ class GoodController extends Controller
     {
         $input = $request->all();
         $data = GoodInfo::find($good_id);
+        if($input['counts']<=0||$input['counts']>$data->counts)
+        return Redirect::to('/good/'.$good_id)->withErrors('购买数量不符合规范');
         $buy = new Transaction;
         $buy->good_id = $good_id;
         $buy->buyer_id = $request->session()->get('user_id');
@@ -123,6 +127,14 @@ class GoodController extends Controller
         $buy->status = 1;
         $buy->number = $input['counts'];
         $buy->save();
+        $buyername = User::find($data->user_id);
+        $goodname = GoodInfo::where('id',$good_id)->first();
+        $message = new Messages;
+        $message->sender_id = 0;
+        $message->receiver_id = $data->user_id;
+        $message->content = '您好！名叫'.$buyername->username.'购买了你的'.$goodname->good_name.'请及时前往确认。';
+        $message->title = '您有一个新的交♂易';
+        $message->save();
         return Redirect::to('/good');
     }
 
