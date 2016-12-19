@@ -1,118 +1,114 @@
 @include('includes.head')
 <title>添加出售 - 先锋市场</title>
+<style>
+    label {
+        text-align: right;
+        font-size: medium;
+        color: #ffffff;
+        min-width: 80px;
+        max-width: 100px;
+        float: right;
+    }
+</style>
 </head>
 <body>
 @include('layout.header')
 <div class="page-content">
-    <form action="/good/add" method="POST" enctype="multipart/form-data">
-        <table border="0" align="center" cellpadding="0" cellspacing="0" style="width: 50%;margin-bottom: 0">
-            <tr>
-                <td style="width: 20%" align="middle">
-                    <p style="margin: 0">商品名称:</p>
-                </td>
-                <td style="width: 80%">
-                    <input type="text" name="good_name" placeholder="商品名称"  align="middle" style="margin: 0;" />
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%" align="middle">
-                    <p style="margin: 0">商品分类:</p>
-                </td>
-                <td>
-                    <select name="cat_id" style="margin: 0;">
+    <div class="large-8 large-offset-2 small-10 small-offset-1 columns">
+        <form action="/good/add" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="small-2 columns">
+                    <label class="right inline">商品名称:</label>
+                </div>
+                <div class="small-10 columns">
+                    <input type="text" name="good_name" placeholder="商品名称">
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-2 columns">
+                    <label class="right inline">商品分类:</label>
+                </div>
+                <div class="small-10 columns">
+                    <select name="cat_id">
                         @foreach($cats as $cat)
                             <option value="{{$cat->id}}">{{$cat->cat_name}}</option>
                         @endforeach
                     </select>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%" align="middle">
-                    <p style="margin: 0">商品描述:</p>
-                </td>
-                <td>
-                    <textarea style="margin: 0;" name="description" placeholder="商品描述（此处应支持HTML）"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%" align="middle">
-                    <p style="margin: 0">最低价格:</p>
-                </td>
-                <td>
-                    <input type="number" name="pricemin" placeholder="最低价格" style="margin: 0;"/>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%" align="middle">
-                    <p style="margin: 0">最高价格:</p>
-                </td>
-                <td>
-                    <input type="number" name="pricemax" placeholder="最高价格" style="margin: 0;"/>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%" align="middle">
-                    <p style="margin: 0">商品类型:</p>
-                </td>
-                <td>
-                    <select name="type" style="margin: 0;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-2 columns">
+                    <label class="right inline">商品描述:</label>
+                </div>
+                <div class="small-10 columns">
+                    <textarea name="description" placeholder="商品描述（此处应支持HTML）"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-2 columns">
+                    <label class="right inline">最低价格:</label>
+                </div>
+                <div class="small-10 columns">
+                    <input type="number" name="pricemin" placeholder="最低价格">
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-2 columns">
+                    <label class="right inline">最高价格:</label>
+                </div>
+                <div class="small-10 columns">
+                    <input type="number" name="pricemax" placeholder="最高价格">
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-2 columns">
+                    <label class="right inline">商品类型:</label>
+                </div>
+                <div class="small-10 columns">
+                    <select name="type">
                         <option value="0">普通商品</option>
                         <option value="1">拍卖商品</option>
                     </select>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%" align="middle">
-                    <p style="margin: 0">商品数量:</p>
-                </td>
-                <td>
-                    <input type="number" name="counts" placeholder="库存" style="margin: 0;"/>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 20%" align="middle">
-                    <p style="margin: 0">商品标签:</p>
-                </td>
-                <td>
-                    <input type="text" name="good_tag" placeholder="TAG" style="margin: 0;"/>
-                </td>
-            </tr>
-        </table>
-        <table border="0" align="center" cellpadding="0" cellspacing="0" style="width: 50%;margin-bottom: 0">
-            <tr>
-                <td>
-                    <table border="0" align="center" cellpadding="0" cellspacing="0" style="margin-bottom: 0;border-collapse: separate">
-                        <tr>
-                            <td style="width: 20%">
-                                <label for="goodTitleUpload" class="button" style="margin: 0;">上传封面</label>
-                                <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic" style="margin: 0;" onchange="preview(this)"/><br/>
-                                {!! csrf_field() !!}
-                            </td>
-                            <td>
-                                <div id="preview" style="max-width: 50%;margin-left: 25%"></div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    <table border="0" align="center" cellpadding="0" cellspacing="0" style="margin-bottom: 0;border-collapse: separate;border-right:none; border-left:none;">
-                        <tr>
-                            <td style="width: 50%" align="right">
-                                <input type="submit" class="button" value="添加" style="margin: 0;"/>
-                            </td>
-                            <td>
-                                <a href='/good' class="button">商品列表</a>
-                            </td>
-                        </tr>
-                    </table>
-
-                </td>
-
-            </tr>
-        </table>
-    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-2 columns">
+                    <label class="right inline">商品数量:</label>
+                </div>
+                <div class="small-10 columns">
+                    <input type="number" name="counts" placeholder="库存">
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-2 columns">
+                    <label class="right inline">商品标签:</label>
+                </div>
+                <div class="small-10 columns">
+                    <input type="text" name="good_tag" placeholder="TAG">
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-4 columns">
+                    <label for="goodTitleUpload" class="button right inline">上传封面</label>
+                </div>
+                <div id="preview" class="small-8 columns"></div>
+                <div style="display: none">
+                    <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic"
+                           onchange="preview(this)"/>
+                </div>
+            </div>
+            <p></p>
+            <div class="row">
+                <div class="small-2 small-offset-3 columns">
+                    <input type="submit" class="button" value="添加" style="margin: 0;"/>
+                </div>
+                <div class="small-4 columns">
+                    <a href='/good' class="button">商品列表</a>
+                </div>
+            </div>
+            {!! csrf_field() !!}
+        </form>
+    </div>
     @if(count($errors) > 0)
         @foreach($errors as $error)
             {{$error}}

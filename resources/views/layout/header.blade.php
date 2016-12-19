@@ -26,7 +26,5 @@
   </div>
 </div>
 <div class="banner row">
-    <div class="medium-3 medium-offset-9 small-10 small-centered columns">
-        @include('layout.search')
-    </div>
+  @include('layout.search')
 </div>
