@@ -3,10 +3,10 @@
 </head>
 <body>
 @include('layout.header')
-<a href = "/message/editmessage" >Edit</a><br/>
 <div class="page-content">
-    @foreach($informations as $information)
-
+@foreach($informations as $information)
+    <form action="/message/deletemessage/{{$information->id}}" method="POST">
+    {!! csrf_field() !!}
     {{$information->title}}<br/>
     {{$information->content}}<br/>
     {{$information->created_at}}<br/>
@@ -15,8 +15,10 @@
     @endif
     @if($information->sender_id ==0)
     系统通知<br/>
+    <br/>
     @endif
-    
+    <input type = "submit" value = "Delete"><br/>
+    </form>
     @endforeach
 </div>
 @include('layout.footer')

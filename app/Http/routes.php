@@ -185,6 +185,16 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
+    Route::match(['post','get'],'/message/editmessage',[
+        "uses" => "MessageController@editMessagepage",
+        "middleware" => "auth"
+    ]);
+
+    Route::match(['post','get'],'/message/deletemessage/{message_id}',[
+        "uses" => "MessageController@deleteMessage",
+        "middleware" => "auth"
+    ]);
+
     Route::match(['post', 'get'], '/register', [
         "uses" => "UserController@register"
     ]);
