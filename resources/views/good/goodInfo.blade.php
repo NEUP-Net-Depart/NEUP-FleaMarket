@@ -14,7 +14,7 @@
             {{ $good->description }}</p>
         <div class="row">
             <p>
-                <img src="/good/{{ $good->id }}/titlepic"/>
+                <img src="/good/{{ sha1($good->id) }}/titlepic"/>
             </p>
         </div>
         <div class="row">

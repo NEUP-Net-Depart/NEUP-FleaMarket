@@ -184,7 +184,7 @@ class GoodController extends Controller
             $good->save();
             $new_good = GoodInfo::orderby('id', 'dsc')->first();
             Storage::put(
-                'good/titlepic/'.$new_good->id,
+                'good/titlepic/'.sha1($new_good->id),
                 file_get_contents($request->file('goodTitlePic')->getRealPath())
             );
             return Redirect::to('/good/add');
