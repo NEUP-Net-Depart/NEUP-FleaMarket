@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\GoodCat;
 use App\GoodInfo;
 use App\User;
+use App\Announcement;
 use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
@@ -113,4 +114,40 @@ class AdminController extends Controller
         $cat->update();
         return Redirect::to('/admin');
     }
+
+    public function sendAnnouncement(Request $request)
+    {
+        return View::make('admin.sendannouncement');
+    }
+
+        /**
+     * @function AdminController@sendAnnouncement
+     * @input Request $request
+     * @return View
+     * @description admin send annoucement.
+     */
+
+     public function checkAnnouncement(Request $request)
+     {
+        $input = $request->all();
+        $announcement = new Announcement;
+        $announcement->title = $input['title'];
+        $announcement->content = $input['content'];
+        $announcement->save();
+        return Redirect::to('/sendannouncement');
+     }
+
+             /**
+     * @function AdminController@checkAnnouncement
+     * @input Request $request
+     * @return Redirect
+     * @description a function send announcement
+     */
+
+     public function getAnnouncement(Request $request)
+     {
+        $data = [];
+        $data['announcements'] = Announcement::Orderby('id','dsc')->get();
+        return View::make('admin.announcement')->with($data);
+     }
 }
