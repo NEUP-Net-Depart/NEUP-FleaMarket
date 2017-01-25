@@ -214,4 +214,19 @@ Route::group(['middleware' => ['web']],function () {
     Route::match(['post', 'get'], '/passwordReset/{token}', [
         "uses" => "UserController@resetPassword"
     ]);
+
+    Route::match(['post','get'],'/sendannouncement',[
+        "uses" => "AdminController@sendAnnouncement",
+        "middleware" => "admin"
+    ]);
+
+    Route::match(['post','get'],'/sendannouncement/send',[
+        "uses" => "AdminController@checkAnnouncement",
+        "middleware" => "admin"
+    ]);
+
+    Route::match(['post','get'],'/announcement',[
+        "uses" => "AdminController@getAnnouncement",
+        "middleware" => "auth"
+    ]);
 });
