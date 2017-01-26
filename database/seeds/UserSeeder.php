@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'priviledge' => 2,
+            'privilege' => 2,
             'username' => 'admin',
             'password' => sha1('administrator'),
             'nickname' => '超级管理员',

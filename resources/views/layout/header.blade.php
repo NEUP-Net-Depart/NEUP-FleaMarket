@@ -1,13 +1,17 @@
+</head>
+<body>
 <div class="top-bar">
   <div id="responsive-menu">
     <div class="top-bar-back">
         <div class="top-bar-bg"></div>
         <div class="top-bar-filter"></div>
     </div>
+    <div class="row">
+    <div class="medium-10 medium-offset-1 columns">
     <div class="top-bar-left">
       <ul class="dropdown menu" data-dropdown-menu>
-        <li><a class="top-bar-list" href="/">主页</a></li>
-        <li><a class="top-bar-list" href="/good">商品</a></li>
+        <li><a class="top-bar-list" href="/">首页</a></li>
+        <li><a class="top-bar-list" href="/good">市场</a></li>
       </ul>
     </div>
     <div class="top-bar-right">
@@ -23,8 +27,16 @@
         @endif
       </ul>
     </div>
+    </div>
+    </div>
   </div>
 </div>
-<div class="banner row">
-  @include('layout.search')
+<div class="banner">
 </div>
+<div class="row">
+<div class="medium-10 medium-centered columns">
+@include('layout.search')
+</div>
+</div>
+<div class="page-content row">
+<div class="medium-10 medium-centered columns">
