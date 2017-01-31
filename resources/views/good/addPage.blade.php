@@ -9,6 +9,9 @@
         max-width: 100px;
         float: right;
     }
+    .goodimgpreview {
+        max-width: 100%;
+    }
 </style>
 </head>
 <body>
@@ -123,8 +126,21 @@
         {
             var reader = new FileReader();
             reader.onload = function(evt){
-                prevDiv.innerHTML = '<img src="' + evt.target.result + '" />';
-            }
+                prevDiv.innerHTML = '<img id="goodimgpreview" src="' + evt.target.result + '" />';
+                $('#goodimgpreview').cropper({
+                    aspectRatio: 16 / 9,
+                    crop: function(e) {
+                        // Output the result data for cropping image.
+                        console.log(e.x);
+                        console.log(e.y);
+                        console.log(e.width);
+                        console.log(e.height);
+                        console.log(e.rotate);
+                        console.log(e.scaleX);
+                        console.log(e.scaleY);
+                    }
+                });
+            };
             reader.readAsDataURL(file.files[0]);
         }
         else
