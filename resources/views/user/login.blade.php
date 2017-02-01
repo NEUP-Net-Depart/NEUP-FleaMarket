@@ -3,22 +3,25 @@
 </head>
 <body>
 @include('layout.header')
-<div class="page-content">
-    <div class="row">
-        <div class="small-8 small-centered medium-4 medium-centered columns">
+    <div class="row align-middle">
+        <div class="hide-for-small-only medium-7 columns thumbnail">
+            <img src="/img/loginpic.jpg"/>
+        </div>
+        <div class="small-10 offset-1 medium-4 medium-offset-1 columns card">
+            <div class="card-section">
     		@if (count($errors) > 0)
         		<label>
 		            <span class="form-error is-visible">{!! $errors->first() !!}</span>
 		        </label>
     		@endif
     		<form action="/login" method="POST" data-abide novalidate>
-		        <input type="text" name="username" placeholder="用户名">
-		        <input type="password" id="password" name="password" placeholder="密码">
+		        <label>用户名<input type="text" name="username"></label>
+		        <label>密码<input type="password" id="password" name="password"></label>
 		        {!! csrf_field() !!}
-                <input type="submit" class="button" value="登录">
+                <input type="submit" class="hollow button" value="登录">
 		    </form>
+            </div>
 		</div>
 	</div>
-</div>
 @include('layout.footer')
 @include('includes.foot')

@@ -34,9 +34,9 @@
 <div class="banner">
 </div>
 <div class="row">
-<div class="medium-10 medium-centered columns">
-@include('layout.search')
-</div>
+    <div class="medium-10 medium-centered columns">
+        @include('layout.search')
+    </div>
 </div>
 <div class="page-content row">
-<div class="medium-10 medium-centered columns">
+    <div class="medium-10 medium-centered columns">

@@ -12,16 +12,16 @@ class GoodCatSeeder extends Seeder
     public function run()
     {
         DB::table('good_cat')->insert([
-            'cat_name' => '我是分类1'
+            'cat_name' => '书籍'
         ]);
         DB::table('good_cat')->insert([
-            'cat_name' => '我是分类2'
+            'cat_name' => '日用品'
         ]);
         DB::table('good_cat')->insert([
-            'cat_name' => '我是滑稽'
+            'cat_name' => '其他'
         ]);
         DB::table('good_cat')->insert([
-            'cat_name' => '我是分类4'
+            'cat_name' => '滑稽'
         ]);
     }
 }

@@ -1,7 +1,3 @@
-
-# NEUP-FleaMarket
-====
-
 ### Todolist (Progress)
 
 * Appearances
@@ -19,7 +15,5 @@
     * [ ] Mail
 
 * Functions of admin
-
-
 
 **Made By NEUP-Net-Depart**

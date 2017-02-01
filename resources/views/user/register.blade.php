@@ -3,25 +3,23 @@
 </head>
 <body>
 @include('layout.header')
-<div class="page-content">
-    <div class="row">
-        <div class="medium-4 medium-centered small-8 small-centered columns">
+    <div class="row card">
+        <div class="medium-4 medium-centered small-8 small-centered columns card-section">
             @if (count($errors) > 0)
                 <label>
                     <span class="form-error is-visible">{!! $errors->first() !!}</span>
                 </label>
             @endif
             <form action="/register" method="POST" data-abide novalidate>
-                <input type="text" name="username" placeholder="用户名（必填，3-64）">
-                <input type="password" id="password" name="password" placeholder="密码（必填，6-128）">
-                <input type="password" name="password_confirmation" placeholder="确认密码（必填）">
-                <input type="text" name="email" placeholder="邮箱（必填）">
-                <input type="text" name="nickname" placeholder="昵称（<=128）">
+                <label>用户名<input type="text" name="username" placeholder="必填，3-64"></label>
+                <label>密码<input type="password" id="password" name="password" placeholder="必填，6-128"></label>
+                <label>确认密码<input type="password" name="password_confirmation" placeholder="必填"></label>
+                <label>邮箱<input type="text" name="email" placeholder="必填"></label>
+                <label>昵称<input type="text" name="nickname" placeholder="<=128"></label>
                 {!! csrf_field() !!}
-                <input type="submit" class="button" value="注册">
+                <input type="submit" class="hollow button" value="注册">
             </form>
         </div>
     </div>
-</div>
 @include('layout.footer')
 @include('includes.foot')

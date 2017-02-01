@@ -1,42 +1,39 @@
 @include('includes.head')
     <title>先锋市场</title>
 @include('layout.header')
-<style>
-    #slides {
-        display:none;
-    }
-</style>
 <div class="row">
     <div class="small-12 medium-8 columns">
-    <div id="slides">
+    <div class="orbit" role="region" aria-label="热销商品" data-orbit>
+        <ul class="orbit-container">
+        @if(count($hotgoods) > 1)
+        <button class="orbit-previous"><span class="show-for-sr">←</span>&#9664;&#xFE0E;</button>
+        <button class="orbit-next"><span class="show-for-sr">→</span>&#9654;&#xFE0E;</button>
+        @endif
         @foreach($hotgoods as $good)
-            <a href="/good/{{ $good->id }}"><img src="/good/{{ sha1($good->id) }}/titlepic"/></a>
+            <li class="orbit-slide">
+                <a href="/good/{{ $good->id }}"><img class="orbit-image" src="/good/{{ sha1($good->id) }}/titlepic" alt="{{ $good->name }}"/>
+                <figcaption class="orbit-caption">{{ $good->good_name }}</figcaption></a>
+            </li>
         @endforeach
+        </ul>
     </div>
     </div>
     <div class="small-12 medium-4 columns">
-        <div class="medium-8 medium-offset-4 columns" style="background-color:#66ccff">
-        公告的位置
+        <div class="medium-10 medium-offset-2 columns">
+            <h3>公告</h3>
+            <ul class="accordion" data-accordion data-allow-all-closed="true" data-multi-expand="true">
+                @foreach($announces as $announce)
+                <li class="accordion-item" data-accordion-item>
+                    <a href="#" class="accordion-title">{{ $announce->title }}</a>
+                    <div class="accordion-content" data-tab-content>
+                        {{ $announce->summary }}<br/>
+                        <a href="/announcement/{{ $announce->id }}" class="button tiny">More</a>
+                    </div>
+                </li>
+                @endforeach
+            </ul>
         </div>
     </div>
 </div>
-<script>
-    $(function(){
-        $("#slides").slidesjs({
-            navigation: {
-                active: false,
-            },
-            play: {
-                active: false,
-                effect: "slide",
-                interval: 5000,
-                auto: true,
-                swap: true,
-                pauseOnHover: false,
-                restartDelay: 2500
-            }
-        });
-    });
-</script>
 @include('layout.footer')
 @include('includes.foot')
