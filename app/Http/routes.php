@@ -31,9 +31,12 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "ContentController@Mainpage",
     ]);
 
+    Route::get('/announcement/{announcement_id}', [
+        "uses" => "ContentController@announcementPage",
+    ]);
+
     Route::get('/good', [
         "uses" => "GoodController@getList",
-        "middleware" => "auth"
     ]);
 
     Route::match(['post', 'get'], '/good/add', [
@@ -77,12 +80,15 @@ Route::group(['middleware' => ['web']],function () {
     ]);
 
     Route::get('/good/{good_id}/titlepic', [
-        "uses" => "GoodController@getTitlePic"
+        "uses" => "GoodController@getSimpleTitlePic",
+    ]);
+
+    Route::get('/good/{good_id}/titlepic/{width}/{height}', [
+        "uses" => "GoodController@getTitlePic",
     ]);
 
     Route::get('/good/{good_id}', [
         "uses" => "GoodController@getInfo",
-        "middleware" => "auth"
     ]);
 
     Route::get('/user/{user_id}/edit', [

@@ -3,7 +3,7 @@ html {
 }
 
 .banner {
-    background-image: url('/img/pagebg.jpg');
+    background-image: url('/img/banner.jpg');
     background-size: 100%;
     background-repeat: no-repeat;
     position: absolute;
@@ -12,16 +12,6 @@ html {
     width: 105%;
     max-width: 150%;
     height: 160px;
-}
-
-.button {
-    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset;
-    border: none;
-}
-
-.button:active {
-    transition: background-color 0.15 ease-out;
-    background-color: #37A5EE;
 }
 
 .top-bar {
@@ -77,7 +67,7 @@ html {
 }
 
 .top-bar-bg {
-    background-image: url('/img/pagebg.jpg');
+    background-image: url('/img/banner.jpg');
     background-size: 100%;
     background-repeat: no-repeat;
     position: absolute;
@@ -101,50 +91,3 @@ html {
     z-index: 50;
     margin-top: 60px;
 }
-
-#slides {
-  display:none;
-}
-
-#slides .slidesjs-container {
-  margin-bottom:10px;
-}
-
-#slides .slidesjs-previous {
-  margin-right: 5px;
-  float:left;
-}
-#slides .slidesjs-next {
-  margin-right: 5px;
-  float:left;
-}
-
-.slidesjs-pagination {
-    margin:6px 0 0;
-    float: right;
-    list-style: none;
-}
-
-.slidesjs-pagination li {
-    float: left;
-    margin: 0 1px;
-}
-
-.slidesjs-pagination li a {
-    display: block;
-    width: 13px;
-    height: 0;
-    padding-top: 13px;
-    background-image: url(/img/pagination.png);
-    background-position: 0 0;
-    float: left;
-    overflow: hidden;
-}
-
-.slidesjs-pagination li a.active, .slidesjs-pagination li a:hover.active { background-position: 0 -13px }
-
-.slidesjs-pagination li a:hover { background-position: 0 -26px }
-
-#slides a:link, #slides a:visited { color: #333 }
-
-#slides a:hover, #slides a:active { color: #9e2020 }
