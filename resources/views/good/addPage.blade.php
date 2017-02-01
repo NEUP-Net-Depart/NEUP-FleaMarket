@@ -1,14 +1,6 @@
 @include('includes.head')
 <title>添加出售 - 先锋市场</title>
 <style>
-    label {
-        text-align: right;
-        font-size: medium;
-        color: #ffffff;
-        min-width: 80px;
-        max-width: 100px;
-        float: right;
-    }
     .goodimgpreview {
         max-width: 100%;
     }

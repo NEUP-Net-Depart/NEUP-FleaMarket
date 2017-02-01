@@ -17,6 +17,7 @@ use App\Messages;
 use App\FavList;
 use App\Http\Controllers\Controller;
 use Storage;
+use Image;
 
 class GoodController extends Controller
 {
@@ -39,7 +40,7 @@ class GoodController extends Controller
             $data['goods'] = GoodInfo::where('cat_id', $input['cat_id']);
             $data['cat_id'] = $input['cat_id'];
         }
-        $data['goods'] = $data['goods']->orderby('id', 'asc')->get();
+        $data['goods'] = $data['goods']->orderby('id', 'asc')->paginate(16);
 		if($request->session()->has('user_id')) 
 		    $data['user_id'] = $request->session()->get('user_id');
 		else 
@@ -48,6 +49,8 @@ class GoodController extends Controller
 	        $data['is_admin'] = $request->session()->get('is_admin');
 		else 
 			$data['is_admin'] = NULL;
+        $data['page'] = 1;
+        if(isset($input['page'])) $data['page'] = $input['page'];
         return view::make('good.goodList')->with($data);
     }
 
@@ -183,10 +186,7 @@ class GoodController extends Controller
             $good->checked = '1';
             $good->save();
             $new_good = GoodInfo::orderby('id', 'dsc')->first();
-            Storage::put(
-                'good/titlepic/'.sha1($new_good->id),
-                file_get_contents($request->file('goodTitlePic')->getRealPath())
-            );
+            $image = Image::make($request->file('goodTitlePic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->save(storage_path('app/good/titlepic/'.sha1($new_good->id)));
             return Redirect::to('/good/add');
         }
     }
@@ -313,11 +313,18 @@ class GoodController extends Controller
 		return Redirect::to('/good/'.$good_id);
 	}
 
-    public function getTitlePic(Request $request, $good_id)
+    public function getSimpleTitlePic(Request $request, $good_id)
     {
-        $image = Storage::get('good/titlepic/'.$good_id);
-        $response = Response::make($image);
-        return $response;
+        $file = Storage::get('good/titlepic/'.$good_id);
+        $image = Image::make($file)->resize(800, 450);
+        return $image->response('jpg');
+    }
+
+    public function getTitlePic(Request $request, $good_id, $width, $height)
+    {
+        $file = Storage::get('good/titlepic/'.$good_id);
+        $image = Image::make($file)->resize($width, $height);
+        return $image->response('jpg');
     }
 
 }
