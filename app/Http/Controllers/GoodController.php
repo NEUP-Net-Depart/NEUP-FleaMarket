@@ -185,9 +185,11 @@ class GoodController extends Controller
             $good->user_id = $request->session()->get('user_id');
             $good->checked = '1';
             $good->save();
-            $new_good = GoodInfo::orderby('id', 'dsc')->first();
-            $image = Image::make($request->file('goodTitlePic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->save(storage_path('app/good/titlepic/'.sha1($new_good->id)));
-            return Redirect::to('/good/add');
+            Storage::put(
+                'good/titlepic/'.sha1($good->id),
+                Image::make($request->file('goodTitlePic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->encode('data-url')
+            );
+            return Redirect::to('/good/'.$good->id);
         }
     }
 
