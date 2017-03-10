@@ -5,6 +5,7 @@
 @include('layout.header')
 <div class="page-content">
 Unchecked goods:
+{{ count($goods) }}
 @foreach($goods as $good)
     <div class="cat{{$good->cat_id}}"><a href="/good/{{$good->id}}">{{$good->good_name}}</a> <a href="/good/{{$good->id}}/check">Pass</a></div>
 @endforeach

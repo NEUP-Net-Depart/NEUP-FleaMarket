@@ -1,10 +1,14 @@
-html {
+body {
     overflow-x: hidden;
+}
+
+hr {
+    margin: 0;
 }
 
 .banner {
     background-image: url('/img/banner.jpg');
-    background-size: 100%;
+    background-position: top center;
     background-repeat: no-repeat;
     position: absolute;
     top: -5px;
@@ -68,14 +72,14 @@ html {
 
 .top-bar-bg {
     background-image: url('/img/banner.jpg');
-    background-size: 100%;
+    background-position: top center;
     background-repeat: no-repeat;
     position: absolute;
     height: 130%;
     top: -5px;
     left: -5px;
     width: 105%;
-    -webkit-filter: blur(5px);
+    -webki-filter: blur(5px);
     -ms-filter: blur(5px);
     filter: blur(5px);
     z-index: 50;
@@ -86,8 +90,35 @@ html {
     top: 30px;
 }
 
+#top-bar-avatar {
+    padding: 0!IMPORTANT;
+    transition: box-shadow 0.25s;
+}
+
+#top-bar-avatar:hover {
+    box-shadow: 0 0 10px white;
+}
+
+#top-bar-avatar:active {
+    box-shadow: 0 0 20px white;
+    transition: box-shadow 0.15s;
+}
+
+#top-bar-avatar img {
+    margin-right: 0;
+}
+
 .page-content {
     position: relative;
     z-index: 50;
     margin-top: 60px;
+}
+
+.one-line-text {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card-divider {
+    margin-bottom: 0;
 }

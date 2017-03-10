@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Hash;
 use Mail;
+use Image;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 
@@ -97,6 +98,10 @@ class UserController extends Controller
         $user->tel_num = $input['tel_num'];
         $user->address = $input['address'];
         $user->update();
+        Storage::put(
+            'avatar/'.$user_id,
+            Image::make($request->file('avatarPic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->encode('data-url')
+        );
         return Redirect::to('/user/'.$user_id);
     }
 
@@ -244,4 +249,23 @@ class UserController extends Controller
 		return Redirect::to('/user/edit_favlist');
 	}
 
+    public function getSimpleAvatar(Request $request, $user_id)
+    {
+        if(!Storage::exists('avatar/'.$user_id))
+            $file = Storage::get('public/avatar.jpg');
+        else
+            $file = Storage::get('avatar/'.$user_id);
+        $image = Image::make($file)->resize(600, 600);
+        return $image->response('jpg');
+    }
+
+    public function getAvatar(Request $request, $user_id, $width, $height)
+    {
+        if(!Storage::exists('avatar/'.$user_id))
+            $file = Storage::get('public/avatar.jpg');
+        else
+            $file = Storage::get('avatar/'.$user_id);
+        $image = Image::make($file)->resize($width, $height);
+        return $image->response('jpg');
+    }
 }

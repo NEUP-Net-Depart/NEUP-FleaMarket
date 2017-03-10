@@ -18,6 +18,7 @@ use App\FavList;
 use App\Http\Controllers\Controller;
 use Storage;
 use Image;
+use App\Http\Requests\addGoodRequest;
 
 class GoodController extends Controller
 {
@@ -33,14 +34,14 @@ class GoodController extends Controller
         $input = $request->all();
 		$query = "";
         if(isset($input['query'])) $query = $input['query'];
-        $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
+        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
 		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%");
         $data['cat_id'] = 0;
         if(isset($input['cat_id'])){
             $data['goods'] = GoodInfo::where('cat_id', $input['cat_id']);
             $data['cat_id'] = $input['cat_id'];
         }
-        $data['goods'] = $data['goods']->orderby('id', 'asc')->paginate(16);
+        $data['goods'] = $data['goods']->orderby('id', 'asc')->where('checked', 1)->paginate(16);
 		if($request->session()->has('user_id')) 
 		    $data['user_id'] = $request->session()->get('user_id');
 		else 
@@ -154,13 +155,13 @@ class GoodController extends Controller
      * @return Redirect
      * @description Add a new good.
      */
-    public function addGood(Request $request)
+    public function addGood(addGoodRequest $request)
     {
         if($request->method() == "GET"){
             $data = [];
 			if(!$request->session()->has('user_id')) 
 			    return Redirect::back();
-            $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
+            $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
             return view::make('good.addPage')->with($data);
         }else{
 			if(!$request->session()->has('user_id')) 
@@ -203,7 +204,7 @@ class GoodController extends Controller
     {
         if($request->method() == "GET"){
             $data = [];
-            $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
+            $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
             $data['goods'] = GoodInfo::where('id', $good_id)->get();
             return view::make('good.editPage')->with($data);
         }else{
@@ -253,7 +254,6 @@ class GoodController extends Controller
     }
 
 	/*
-<<<<<<< Updated upstream
 	 * @function quickAccess
 	 * @input $request (use query)
 	 *
@@ -266,7 +266,7 @@ class GoodController extends Controller
 		$data = [];
         $input = $request->all();
 		$query = $input['query'];
-        $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
+        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
 		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%")->get();
 		if($request->session()->has('user_id')) 
 		    $data['user_id'] = $request->session()->get('user_id');

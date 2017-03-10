@@ -87,6 +87,14 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "GoodController@getTitlePic",
     ]);
 
+    Route::get('/avatar/{user_id}', [
+        "uses" => "UserController@getSimpleAvatar",
+    ]);
+
+    Route::get('/avatar/{user_id}/{width}/{height}', [
+        "uses" => "UserController@getAvatar",
+    ]);
+
     Route::get('/good/{good_id}', [
         "uses" => "GoodController@getInfo",
     ]);
