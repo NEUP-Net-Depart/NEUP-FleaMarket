@@ -10,6 +10,11 @@
 @include('layout.header')
 <div class="page-content">
     <div class="large-8 large-offset-2 small-10 small-offset-1 columns">
+		@if (count($errors) > 0)
+			<label>
+				<span class="form-error is-visible">{!! $errors->first() !!}</span>
+			</label>
+		@endif
         <form action="/good/add" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="small-2 columns">
@@ -108,11 +113,6 @@
             {!! csrf_field() !!}
         </form>
     </div>
-    @if(count($errors) > 0)
-        @foreach($errors as $error)
-            {{$error}}
-        @endforeach
-    @endif
 </div>
 <script type="text/javascript">
     function preview(file)

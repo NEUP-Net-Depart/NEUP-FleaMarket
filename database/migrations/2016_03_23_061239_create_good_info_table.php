@@ -24,8 +24,7 @@ class CreateGoodInfoTable extends Migration
             $table->integer('counts');
             $table->text('good_tag');
             $table->integer('checked');
-            $table->integer('sold_total');
-            $table->integer('sold_month');
+            $table->integer('stared');
             $table->timestamps();
       });
     }

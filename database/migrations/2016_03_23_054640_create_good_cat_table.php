@@ -15,6 +15,7 @@ class CreateGoodCatTable extends Migration
         Schema::create('good_cat',function(Blueprint $table){
             $table->increments('id');
             $table->string('cat_name');
+            $table->integer('cat_index');
             $table->timestamps();  
         });
     }

@@ -132,7 +132,6 @@ class AdminController extends Controller
         $input = $request->all();
         $announcement = new Announcement;
         $announcement->title = $input['title'];
-        $announcement->summary = $input['summary'];
         $announcement->content = $input['content'];
         $announcement->save();
         return Redirect::to('/sendannouncement');
