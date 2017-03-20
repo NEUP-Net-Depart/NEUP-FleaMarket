@@ -1,19 +1,10 @@
-### Todolist (Progress)
+# NEUP Flea Market
 
-* Appearances
-    * [x] Header
-    * [ ] Homepage
+[![Build Status](https://travis-ci.org/NEUP-Net-Depart/NEUP-FleaMarket.svg?branch=master)](https://travis-ci.org/NEUP-Net-Depart/NEUP-FleaMarket)
+[![Coverage Status](https://coveralls.io/repos/github/NEUP-Net-Depart/NEUP-FleaMarket/badge.svg?branch=master)](https://coveralls.io/github/NEUP-Net-Depart/NEUP-FleaMarket?branch=master)
 
-* Functions of good
-    * [ ] GoodList (Frontend)
-    * [ ] Manage goods (Frontend)
-    * [ ] FavList (Frontend)
-    * [ ] Transaction
+## Todolist (Progress)
 
-* Functions of user
-    * [ ] Basic user function (Frontend)
-    * [ ] Mail
-
-* Functions of admin
+[Check it here!](https://github.com/NEUP-Net-Depart/NEUP-FleaMarket/wiki)
 
 **Made By NEUP-Net-Depart**

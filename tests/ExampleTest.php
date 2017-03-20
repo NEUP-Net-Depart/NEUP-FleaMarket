@@ -3,8 +3,9 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\BrowserKitTestCase;
 
-class ExampleTest extends TestCase
+class ExampleTest extends BrowserKitTestCase
 {
     /**
      * A basic functional test example.
@@ -14,6 +15,6 @@ class ExampleTest extends TestCase
     public function testBasicExample()
     {
         $this->visit('/')
-             ->see('Laravel 5');
+             ->see('市场');
     }
 }

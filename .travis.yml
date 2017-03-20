@@ -1,0 +1,37 @@
+language: php
+
+php:
+  - 5.6
+  - 5.5
+  - 5.4
+  - 7.0
+  - 7.1
+  - hhvm
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: 5.5
+    - php: 5.4
+    - php: hhvm
+    - php: nightly
+
+before_script:
+  - mkdir -p bootstrap/cache
+  - cp .env.travis .env
+  - mysql -e 'create database homestead;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate
+  - php artisan db:seed
+
+script:
+  - mkdir -p build/logs
+  - vendor/bin/phpunit -c phpunit.xml.dist
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
+
+notifications:
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
