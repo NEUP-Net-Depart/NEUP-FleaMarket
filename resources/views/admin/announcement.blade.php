@@ -1,8 +1,9 @@
-@include('includes.head')
-    <title>先锋市场</title>
-</head>
-<body>
-@include('layout.header')
+@extends('layout.master')
+
+@section('title', "通知")
+
+@section('content')
+
 <div class="page-content">
     @foreach($announcements as $announcement)
     {{$announcement->title}}</br>
@@ -10,5 +11,5 @@
     {{$announcement->created_at}}<br>
     @endforeach
 </div>
-@include('layout.footer')
-@include('includes.foot')
+
+@endsection

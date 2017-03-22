@@ -1,8 +1,9 @@
-@include('includes.head')
-    <title>先锋市场</title>
-</head>
-<body>
-@include('layout.header')
+@extends('layout.master')
+
+@section('title', "发布通知")
+
+@section('content')
+
 <div class="page-content">
     <form action="/sendannouncement/send" method="post">
         Title:<input type="text" name="title"><br/>
@@ -11,5 +12,6 @@
         <input type="submit" value="Send"><br/>        
     </form>
 </div>
-@include('layout.footer')
-@include('includes.foot')
+
+
+@endsection

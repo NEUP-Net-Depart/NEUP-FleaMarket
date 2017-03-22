@@ -97,3 +97,7 @@ function isPng(data) {
     console.log('PNG')
     return arrayEquals(data, pngMagic);
 }
+
+$(document).ready(function () {
+    $.fn.cropper();
+})

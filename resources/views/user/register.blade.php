@@ -1,8 +1,9 @@
-@include('includes.head')
-    <title>注册 - 先锋市场</title>
-</head>
-<body>
-@include('layout.header')
+@extends('layout.master')
+
+@section('title', "注册")
+
+@section('content')
+
     <div class="row card">
         <div class="medium-4 medium-centered small-8 small-centered columns card-section">
             @if (count($errors) > 0)
@@ -21,5 +22,5 @@
             </form>
         </div>
     </div>
-@include('layout.footer')
-@include('includes.foot')
+
+@endsection

@@ -1,13 +1,17 @@
-@include('includes.head')
-<title>先锋市场</title>
+@extends('layout.master')
+
+@section('title', "我的商品")
+
+@section('asset')
 <style>
     h5 {
         color: #ffffff;
     }
 </style>
-</head>
-<body>
-@include('layout.header')
+@endsection
+
+@section('content')
+
 <div class="page-content">
     <div class="row">
         <h5>商品列表</h5>
@@ -30,5 +34,5 @@
         <a href="/good/add" class="button">添加商品</a>
     </div>
 </div>
-@include('layout.footer')
-@include('includes.foot')
+
+@endsection
