@@ -8,7 +8,7 @@
         @if($method=="GET")
             <form action="/passwordReset/{{$token}}" method="POST">
                 Password: <input type="password" name="password"></input>
-                Again: <input type="password"></input>
+                Again: <input type="password" name="password_confirmation"></input>
                 {!! csrf_field() !!}
                 <input type="submit" class="button"></input>
             </form>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -14,7 +15,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'privilege' => 2,
             'username' => 'admin',
-            'password' => sha1('administrator'),
+            'password' => Hash::make('administrator'),
             'nickname' => '超级管理员',
             'email' => 'admin@admin',
             'stuid' => '00000000',

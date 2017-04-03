@@ -27,6 +27,22 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['web']],function () {
 
+    Route::get('/login', "AuthController@showLogin");
+    Route::post('/login', "AuthController@login");
+    Route::get('/register', "AuthController@showRegister");
+    Route::post('/register', "AuthController@register");
+    Route::get('/logout', "AuthController@logOut");
+
+    Route::get('/user/{user_id}/sendCheckLetter', "AuthController@sendCheckLetter");
+    Route::get('/user/checkEmail/{token}', "AuthController@checkEmail");
+
+    Route::get('/iforgotit', "AuthController@showPasswordForget");
+    Route::post('/iforgotit', "AuthController@sendPasswordResetMail");
+    Route::get('/passwordReset/{token}', "AuthController@showPasswordReset");
+    Route::post('/passwordReset/{token}', "AuthController@resetPassword");
+
+    //------Above are tested function
+
     Route::get('/', [
         "uses" => "ContentController@Mainpage",
     ]);
@@ -140,15 +156,6 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "admin"
     ]);
 
-    Route::get('/user/{user_id}/sendCheckLetter', [
-        "uses" => "UserController@sendCheckLetter"
-    ]);
-
-    Route::get('/user/checkEmail/{token}', [
-        "uses" => "UserController@checkEmail"
-    ]);
-
-
 	Route::get('/user/get_favlist', [
 		"uses" => "UserController@getFavlist",
 		"middleware" => "auth"
@@ -207,26 +214,6 @@ Route::group(['middleware' => ['web']],function () {
     Route::match(['post','get'],'/message/deletemessage/{message_id}',[
         "uses" => "MessageController@deleteMessage",
         "middleware" => "auth"
-    ]);
-
-    Route::match(['post', 'get'], '/register', [
-        "uses" => "UserController@register"
-    ]);
-
-    Route::match(['post', 'get'], '/login', [
-        "uses" => "UserController@login"
-    ]);
-
-    Route::get('/logout', [
-        "uses" => "UserController@logOut"
-    ]);
-
-    Route::match(['post', 'get'], '/iforgotit', [
-        "uses" => "UserController@passwordReset"
-    ]);
-
-    Route::match(['post', 'get'], '/passwordReset/{token}', [
-        "uses" => "UserController@resetPassword"
     ]);
 
     Route::match(['post','get'],'/sendannouncement',[

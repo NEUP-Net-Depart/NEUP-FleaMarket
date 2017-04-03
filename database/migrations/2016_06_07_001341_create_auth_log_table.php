@@ -15,8 +15,8 @@ class CreateAuthLogTable extends Migration
         Schema::create('auth_log', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ip');
-            $table->string('username');
-            $table->integer('event');
+            $table->integer('user_id');
+            $table->smallInteger('event');
             $table->timestamps();
         });
     }

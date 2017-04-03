@@ -14,12 +14,12 @@ class CreateUserInfoTable extends Migration
     {
         Schema::create('user_info', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('gender');
+            $table->boolean('gender')->nullable();
             $table->string('realname');
-            $table->string('tel_num');
-            $table->string('address');
-            $table->string('last_login_ip');
-            $table->string('register_ip');
+            $table->string('tel_num')->nullable();
+            $table->string('QQ')->nullable();
+            $table->string('wechat')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

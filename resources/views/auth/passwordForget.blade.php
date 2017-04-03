@@ -7,7 +7,6 @@
     <div class="page-content">
         @if($method=="GET")
             <form action="/iforgotit" method="POST">
-                Username: <input type="text" name="username"></input>
                 Email: <input type="email" name="email"></input>
                 {!! csrf_field() !!}
                 <input type="submit" class="button"></input>
