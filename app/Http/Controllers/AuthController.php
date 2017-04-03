@@ -137,7 +137,7 @@ class AuthController extends Controller
     {
         $data = [];
         $user = User::where('id', $user_id)->first();
-        if($user == NULL)
+        if ($user == NULL)
             abort(404);
         if ($user->havecheckedemail)
             return Redirect::to('/')->withErrors('该用户已经验证过邮箱。');
@@ -157,10 +157,11 @@ class AuthController extends Controller
         $time = time();
         $data['token'] = base64_encode($token . "@" . $time . "@" . substr(sha1($time . env('APP_KEY')), 0, 6));
         $data['host'] = $request->server("HTTP_HOST");
-        Mail::send('auth.checkLetter', $data, function ($m) use ($user, $email) {
-            $m->from(env('MAIL_USERNAME'), "先锋市场");
-            $m->to($email, $user->username)->subject('验证你的邮箱');
-        });
+        if (env('APP_ENV') != "testing")
+            Mail::send('auth.checkLetter', $data, function ($m) use ($user, $email) {
+                $m->from(env('MAIL_USERNAME'), "先锋市场");
+                $m->to($email, $user->username)->subject('验证你的邮箱');
+            });
 
         // log start
         $log = new AuthLog();
@@ -223,10 +224,11 @@ class AuthController extends Controller
             $time = time();
             $data['token'] = base64_encode($token . "@" . $time . "@" . substr(sha1($time . env('APP_KEY')), 0, 6));
             $data['host'] = $request->server("HTTP_HOST");
-            Mail::send('auth.resetLetter', $data, function ($m) use ($user, $email) {
-                $m->from(env('MAIL_USERNAME'), '先锋市场');
-                $m->to($email, $user->username)->subject('重置密码');
-            });
+            if (env('APP_ENV') != "testing")
+                Mail::send('auth.resetLetter', $data, function ($m) use ($user, $email) {
+                    $m->from(env('MAIL_USERNAME'), '先锋市场');
+                    $m->to($email, $user->username)->subject('重置密码');
+                });
             // log start
             $log = new AuthLog();
             $log->user_id = $user->id;
@@ -260,8 +262,7 @@ class AuthController extends Controller
             $log->save();
             // log end
             return View::make('user.resetPassword')->with($data);
-        }
-        else if(time() - $token[1] > 48 * 60 * 60) {
+        } else if (time() - $token[1] > 48 * 60 * 60) {
             $data['sentence'] = '此链接已过期';
             // log start
             $log = new AuthLog();
