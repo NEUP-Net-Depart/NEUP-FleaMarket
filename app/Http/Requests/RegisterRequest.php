@@ -26,8 +26,8 @@ class RegisterRequest extends Request
         if($this->method()=='GET') return [];
         return [
             //'username'=>'required|alpha_dash|between:3,64|unique:users,username',
-            'password'=>'required|confirmed|between:6,128',
             'email'=>'required|email|unique:users,email|max:64',
+            'password'=>'required|confirmed|between:6,128',
             //'nickname'=>'max:128',
         ];
     }
