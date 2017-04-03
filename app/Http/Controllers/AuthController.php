@@ -13,6 +13,7 @@ use App\User;
 use App\CheckEmail;
 use App\PasswordReset;
 use Mail;
+use App\AuthLog;
 
 class AuthController extends Controller
 {
@@ -27,9 +28,16 @@ class AuthController extends Controller
 
         if (filter_var($input['username'], FILTER_VALIDATE_EMAIL)) {
             $user = User::where('email', $input['username'])->first();
-            if (!$user->havecheckedemail)
+            if (!$user->havecheckedemail) {
+                // log start
+                $log = new AuthLog();
+                $log->user_id = $user->id;
+                $log->ip = $request->ip();
+                $log->event = "login_uncheckedmail";
+                $log->save();
+                // log end
                 return Redirect::back()->withInput()->withErrors('未验证您的邮箱，请查收您的电子邮箱或<a href="/user/' . $user->id . '/sendCheckLetter">重新发送一封</a>');
-
+            }
         } else {
             $user = User::where('username', $input['username'])->first();
         }
@@ -41,11 +49,26 @@ class AuthController extends Controller
             }
 
             if ($user->baned) {
+                // log start
+                $log = new AuthLog();
+                $log->user_id = $user->id;
+                $log->ip = $request->ip();
+                $log->event = "login_banned";
+                $log->save();
+                // log end
                 //
                 return Redirect::back()->withInput()->withErrors('You\'re banned!');
             }
 
             //Successfully logged in
+
+            // log start
+            $log = new AuthLog();
+            $log->user_id = $user->id;
+            $log->ip = $request->ip();
+            $log->event = "login_success";
+            $log->save();
+            // log end
 
             $request->session()->put('user_id', $user->id);
             $request->session()->put('username', $user->username);
@@ -54,6 +77,13 @@ class AuthController extends Controller
                 $request->session()->put('is_admin', 1);
             return Redirect::to('/');
         } else {
+            // log start
+            $log = new AuthLog();
+            $log->username = $input['username'];
+            $log->ip = $request->ip();
+            $log->event = "login_authfail";
+            $log->save();
+            // log end
             return Redirect::back()->withInput()->withErrors('用户名或者密码错误！<a href="/iforgotit">忘记密码？</a>');
         }
     }
@@ -75,15 +105,31 @@ class AuthController extends Controller
         $user->havecheckedemail = false;
         $user->save();
 
+        // log start
+        $log = new AuthLog();
+        $log->user_id = $user->id;
+        $log->ip = $request->ip();
+        $log->event = "reg_success";
+        $log->save();
+        // log end
         return Redirect::to('/user/' . $user->id . '/sendCheckLetter');
     }
 
     public function logOut(Request $request)
     {
+        // log start
+        $log = new AuthLog();
+        $log->user_id = $request->session()->get('user_id');
+        $log->ip = $request->ip();
+        $log->event = "logout";
+        $log->save();
+        // log end
+
         $request->session()->forget('user_id');
         $request->session()->forget('username');
         $request->session()->forget('nickname');
         $request->session()->forget('is_admin');
+
         return Redirect::to('/');
     }
 
@@ -91,6 +137,8 @@ class AuthController extends Controller
     {
         $data = [];
         $user = User::where('id', $user_id)->first();
+        if($user == NULL)
+            abort(404);
         if ($user->havecheckedemail)
             return Redirect::to('/')->withErrors('该用户已经验证过邮箱。');
         $email = $user->email;
@@ -113,6 +161,14 @@ class AuthController extends Controller
             $m->from(env('MAIL_USERNAME'), "先锋市场");
             $m->to($email, $user->username)->subject('验证你的邮箱');
         });
+
+        // log start
+        $log = new AuthLog();
+        $log->user_id = $user_id;
+        $log->ip = $request->ip();
+        $log->event = "sendcheckletter";
+        $log->save();
+        // log end
         return Redirect::to('/login')->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可登录先锋市场。');
     }
 
@@ -126,6 +182,14 @@ class AuthController extends Controller
         $user->havecheckedemail = true;
         $user->update();
         $check_email->delete();
+
+        // log start
+        $log = new AuthLog();
+        $log->user_id = $user->id;
+        $log->ip = $request->ip();
+        $log->event = "checkemail";
+        $log->save();
+        // log end
         return Redirect::to('/login')->withErrors('已验证您的邮箱！现在你可以登录并完善更多信息啦！');
     }
 
@@ -163,6 +227,13 @@ class AuthController extends Controller
                 $m->from(env('MAIL_USERNAME'), '先锋市场');
                 $m->to($email, $user->username)->subject('重置密码');
             });
+            // log start
+            $log = new AuthLog();
+            $log->user_id = $user->id;
+            $log->ip = $request->ip();
+            $log->event = "sendpwdresetletter";
+            $log->save();
+            // log end
         }
         return View::make('auth.passwordForget')->with($data);
     }
@@ -182,10 +253,22 @@ class AuthController extends Controller
         $password_reset = PasswordReset::where('token', $token[0])->first();
         if ($password_reset == NULL || substr(sha1($token[1] . env('APP_KEY')), 0, 6) != $token[2]) {
             $data['sentence'] = '无效的链接';
+            // log start
+            $log = new AuthLog();
+            $log->ip = $request->ip();
+            $log->event = "resetpwd_invalid";
+            $log->save();
+            // log end
             return View::make('user.resetPassword')->with($data);
         }
         else if(time() - $token[1] > 48 * 60 * 60) {
             $data['sentence'] = '此链接已过期';
+            // log start
+            $log = new AuthLog();
+            $log->ip = $request->ip();
+            $log->event = "resetpwd_expired";
+            $log->save();
+            // log end
             return View::make('user.resetPassword')->with($data);
         }
         $input = $request->all();
@@ -194,6 +277,14 @@ class AuthController extends Controller
         $user->update();
         $password_reset->delete();
         $data['sentence'] = '成功重置密码！';
+
+        // log start
+        $log = new AuthLog();
+        $log->user_id = $user->id;
+        $log->ip = $request->ip();
+        $log->event = "resetpwd_success";
+        $log->save();
+        // log end
         return View::make('auth.resetPassword')->with($data);
     }
 }
