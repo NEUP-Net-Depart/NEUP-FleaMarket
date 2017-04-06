@@ -23,6 +23,13 @@ class AuthTest extends BrowserKitTestCase
             ->press('登录')
             ->see("用户名或者密码错误");
 
+        $this->visit('/login')
+            ->see('用户名')
+            ->type('sometestwrongmail@invalid.fake', 'username')
+            ->type('sometestuselesspassword', 'password')
+            ->press('登录')
+            ->see("用户名或者密码错误");
+
         //test register
         $this->visit('/register')
             ->see('邮箱')

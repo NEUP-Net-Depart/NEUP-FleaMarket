@@ -28,7 +28,7 @@ class AuthController extends Controller
 
         if (filter_var($input['username'], FILTER_VALIDATE_EMAIL)) {
             $user = User::where('email', $input['username'])->first();
-            if (!$user->havecheckedemail) {
+            if ($user != NULL && !$user->havecheckedemail) {
                 // log start
                 $log = new AuthLog();
                 $log->user_id = $user->id;
