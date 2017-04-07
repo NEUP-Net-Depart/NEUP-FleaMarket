@@ -75,7 +75,11 @@ class AuthController extends Controller
             $request->session()->put('nickname', $user->nickname);
             if ($user->privilege == 2)
                 $request->session()->put('is_admin', 1);
-            return Redirect::to('/');
+
+            if ($user->registerCompletion() != 0)
+                return Redirect::to('/register/' . $user->registerCompletion());
+            else
+                return Redirect::to('/');
         } else {
             // log start
             $log = new AuthLog();

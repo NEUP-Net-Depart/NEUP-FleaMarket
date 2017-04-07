@@ -1,28 +1,32 @@
 @extends('layout.master')
 
-@section('title', "编辑用户")
-
-@section('asset')
-
-    <style>
-        .avatarpreview {
-            max-width: 100%;
-        }
-    </style>
-
-@endsection
+@section('title', "注册")
 
 @section('content')
 
-    <div class="page-content">
-        <form action="/user/{{$user->id}}/edit/middle" method="POST" enctype="multipart/form-data">
-            <ul class="tabs" data-tabs id="editinfo">
-                <li class="tabs-title is-active"><a href="#avatar" aria-selected="true">个人信息</a></li>
-                <li class="tabs-title"><a href="#studentid">用户帐户</a></li>
-                <li class="tabs-title"><a href="#userinfo">联系方式</a></li>
-            </ul>
-            <div class="tabs-content" data-tabs-content="editinfo">
-                <div class="tabs-panel" id="avatar">
+    <div class="row card">
+        <div class="row">
+            <div class="small-offset-11 small-1">
+                <a href="/register/3">跳过</a>
+            </div>
+        </div>
+        <div class="medium-4 medium-centered small-8 small-centered columns card-section">
+            @if (count($errors) > 0)
+                <label>
+                    <span class="form-error is-visible">{!! $errors->first() !!}</span>
+                </label>
+            @endif
+            <form action="/register/2" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    @if(isset($user->nickname))
+                        <label>昵称<input type="text" name="nickname" value="{{ $user->nickname }}"></label>
+                    @else
+                        <label>昵称<input type="text" name="nickname"></label>
+                    @endif
+                    {!! csrf_field() !!}
+                    <input type="submit" class="hollow button" value="保存">
+                </div>
+                <div class="row">
                     <label for="avatarUpload" class="button right inline">上传头像</label>
                     <div id="preview"></div>
                     <div style="display: none">
@@ -34,18 +38,9 @@
                     <input id="avatarUploadCpX" type="hidden" name="crop_x">
                     <input id="avatarUploadCpY" type="hidden" name="crop_y">
                     <input class="button" type="submit" name="submit" value="上传">
-                    <br>
-                    昵称:
-                    <input type="text" name="nickname">
-                    {!! csrf_field() !!}
-                    <input class="button" type="submit" name="submit" value="修改">
                 </div>
-                <div class="tabs-panel" id="studentid">
-                </div>
-                <div class="tabs-panel" id="userinfo">
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
     <script>
         function preview(file) {
@@ -81,5 +76,4 @@
             }
         }
     </script>
-
 @endsection

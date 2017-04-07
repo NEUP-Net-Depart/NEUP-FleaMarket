@@ -27,21 +27,65 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['web']],function () {
 
-    Route::get('/login', "AuthController@showLogin");
-    Route::post('/login', "AuthController@login");
-    Route::get('/register', "AuthController@showRegister");
-    Route::post('/register', "AuthController@register");
-    Route::get('/logout', "AuthController@logOut");
+    Route::group(['middleware' => ['authredirect']], function() {
+        Route::get('/login', "AuthController@showLogin");
+        Route::post('/login', "AuthController@login");
+        Route::get('/register', "AuthController@showRegister");
+        Route::post('/register', "AuthController@register");
 
-    Route::get('/user/{user_id}/sendCheckLetter', "AuthController@sendCheckLetter");
-    Route::get('/user/checkEmail/{token}', "AuthController@checkEmail");
+        Route::get('/user/{user_id}/sendCheckLetter', "AuthController@sendCheckLetter");
+        Route::get('/user/checkEmail/{token}', "AuthController@checkEmail");
 
-    Route::get('/iforgotit', "AuthController@showPasswordForget");
-    Route::post('/iforgotit', "AuthController@sendPasswordResetMail");
-    Route::get('/passwordReset/{token}', "AuthController@showPasswordReset");
-    Route::post('/passwordReset/{token}', "AuthController@resetPassword");
+        Route::get('/iforgotit', "AuthController@showPasswordForget");
+        Route::post('/iforgotit', "AuthController@sendPasswordResetMail");
+        Route::get('/passwordReset/{token}', "AuthController@showPasswordReset");
+        Route::post('/passwordReset/{token}', "AuthController@resetPassword");
+    });
+
+    Route::get('/logout', "AuthController@logOut")->middleware('auth');
 
     //------Above are tested function
+
+    Route::get('/register/2', "UserController@showCompleteInfo")->middleware('auth');
+    Route::post('/register/2', "UserController@completeInfo")->middleware('auth');
+
+    Route::get('/avatar/{user_id}', [
+        "uses" => "UserController@getSimpleAvatar",
+    ]);
+
+    Route::get('/avatar/{user_id}/{width}/{height}', [
+        "uses" => "UserController@getAvatar",
+    ]);
+
+    Route::get('/user/{user_id}/edit', [
+        "uses" => "UserController@showEditPage",
+        "middleware" => "auth"
+    ]);
+
+    Route::post('/user/{user_id}/edit/middle', [
+        "uses" => "UserController@editList",
+        "middleware" => "auth"
+    ]);
+
+    Route::get('/user/get_favlist', [
+        "uses" => "UserController@getFavlist",
+        "middleware" => "auth"
+    ]);
+
+    Route::get('/user/edit_favlist', [
+        "uses" => "UserController@editFavlist",
+        "middleware" => "auth"
+    ]);
+
+    Route::delete('/user/del_favlist', [
+        "uses" => "UserController@delFavlist",
+        "middleware" => "auth"
+    ]);
+
+    Route::get('/user/{user_id}', [
+        "uses" => "UserController@getList",
+        "middleware" => "auth"
+    ]);
 
     Route::get('/', [
         "uses" => "ContentController@Mainpage",
@@ -53,6 +97,10 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::get('/good', [
         "uses" => "GoodController@getList",
+    ]);
+
+    Route::get('/good/{good_id}', [
+        "uses" => "GoodController@getInfo",
     ]);
 
     Route::match(['post', 'get'], '/good/add', [
@@ -103,29 +151,6 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "GoodController@getTitlePic",
     ]);
 
-    Route::get('/avatar/{user_id}', [
-        "uses" => "UserController@getSimpleAvatar",
-    ]);
-
-    Route::get('/avatar/{user_id}/{width}/{height}', [
-        "uses" => "UserController@getAvatar",
-    ]);
-
-    Route::get('/good/{good_id}', [
-        "uses" => "GoodController@getInfo",
-    ]);
-
-    Route::get('/user/{user_id}/edit', [
-        "uses" => "UserController@showEditPage",
-        "middleware" => "auth"
-    ]);
-
-    Route::post('/user/{user_id}/edit/middle', [
-        "uses" => "UserController@editList",
-        "middleware" => "auth"
-    ]);
-
-
 	Route::get('/good/{good_id}/add_favlist', [
 		"uses" => "GoodController@addFavlist",
 		"middleware" => "auth"
@@ -155,26 +180,6 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "AdminController@updateUserRole",
         "middleware" => "admin"
     ]);
-
-	Route::get('/user/get_favlist', [
-		"uses" => "UserController@getFavlist",
-		"middleware" => "auth"
-	]);
-
-	Route::get('/user/edit_favlist', [
-		"uses" => "UserController@editFavlist",
-		"middleware" => "auth"
-	]);
-
-	Route::delete('/user/del_favlist', [
-		"uses" => "UserController@delFavlist",
-		"middleware" => "auth"
-	]);
-
-	Route::get('/user/{user_id}', [
-		"uses" => "UserController@getList",
-		"middleware" => "auth"
-	]);
 
     Route::post('/cat/{cat_id}/edit', [
         "uses" => "AdminController@editCategory",
