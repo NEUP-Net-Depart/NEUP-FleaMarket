@@ -21,8 +21,5 @@ class UserSeeder extends Seeder
             'stuid' => '00000000',
             'havecheckedemail' => 1
         ]);
-        DB::table('user_info')->insert([
-            'realname' => '超级管理员'
-        ]);
     }
 }

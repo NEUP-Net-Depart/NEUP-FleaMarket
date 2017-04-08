@@ -14,6 +14,7 @@ class CreateUserInfoTable extends Migration
     {
         Schema::create('user_info', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->boolean('gender')->nullable();
             $table->string('realname');
             $table->string('tel_num')->nullable();

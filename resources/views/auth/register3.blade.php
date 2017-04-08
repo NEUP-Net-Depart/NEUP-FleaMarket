@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', "完善个人信息")
+@section('title', "添加联系方式")
 
 @section('content')
 
@@ -16,8 +16,8 @@
                     <span class="form-error is-visible">{!! $errors->first() !!}</span>
                 </label>
             @endif
-            <form action="/register/2" method="POST" enctype="multipart/form-data">
-                @include('user.editUserExtra')
+            <form action="/register/3" method="POST" enctype="multipart/form-data">
+                @include('user.userInfo')
             </form>
         </div>
     </div>

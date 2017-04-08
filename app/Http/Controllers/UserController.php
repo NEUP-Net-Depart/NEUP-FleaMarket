@@ -26,14 +26,14 @@ use Image;
 
 class UserController extends Controller
 {
-    public function showCompleteInfo(Request $request)
+    public function showCompleteUser(Request $request)
     {
         $user = User::find($request->session()->get('user_id'));
         $data['user'] = $user;
         return View::make('auth.register2')->with($data);
     }
 
-    public function completeInfo(Request $request)
+    public function completeUser(Request $request)
     {
         $input = $request->all();
         $user = User::find($request->session()->get('user_id'));
@@ -51,11 +51,17 @@ class UserController extends Controller
             return Redirect::to('/');
     }
 
+    public function regUserInfo()
+    {
+        $data = [];
+        return View::make('auth.register3')->with($data);
+    }
+
     public function getList(Request $request, $user_id)
     {
         $data = [];
         $data['user'] = User::find($user_id);
-        return View::make('user.userinfo')->with($data);
+        return View::make('user.user')->with($data);
     }
 
     public function editList(Request $request, $user_id)

@@ -67,7 +67,10 @@ class AuthTest extends BrowserKitTestCase
         $user = User::where('email', 'test@example.com')->first();
         $user->havecheckedemail = true;
         $user->save();
+    }
 
+    public function testAfterReg()
+    {
         $this->visit('/login')
             ->type('test@example.com', 'username')
             ->type('test@example.com', 'password')
@@ -87,6 +90,11 @@ class AuthTest extends BrowserKitTestCase
         $this->visit('logout')
             ->dontSee('出售');
 
-
+        touch( __DIR__ . '/../storage/app/avatar/1' );
+        $this->visit('/login')
+            ->type('test@example.com', 'username')
+            ->type('test@example.com', 'password')
+            ->press('登录')
+            ->seePageIs('/register/3');
     }
 }

@@ -46,8 +46,12 @@ Route::group(['middleware' => ['web']],function () {
 
     //------Above are tested function
 
-    Route::get('/register/2', "UserController@showCompleteInfo")->middleware('auth');
-    Route::post('/register/2', "UserController@completeInfo")->middleware('auth');
+    Route::get('/register/2', "UserController@showCompleteUser")->middleware('auth');
+    Route::post('/register/2', "UserController@completeUser")->middleware('auth');
+    Route::get('/register/3', "UserController@regUserInfo")->middleware('auth');
+
+    Route::get('/user/userinfo/create', "UserController@createUserInfo")->middleware('auth');
+    Route::post('user/userinfo', "UserController@storeUserInfo")->middleware('auth');
 
     Route::get('/avatar/{user_id}', [
         "uses" => "UserController@getSimpleAvatar",
