@@ -74,11 +74,9 @@
                     <div class="card">
                         <h4 class="card-divider">公告</h4>
                         @foreach($announces as $announce)
-                            <a href="/announcement/{{ $announce->id }}">
+                            <a href="/announcement/{{ $announce->id }}" class="card-item">
                                 <div class="card-section">{{ $announce->title }}</div>
                             </a>
-                            @if($announce != $announces->last())
-                                <hr>@endif
                         @endforeach
                     </div>
                 </div>

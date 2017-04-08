@@ -29,8 +29,8 @@ hr {
 }
 
 .top-bar-list {
-    color: #FEFEFE!IMPORTANT;
-    padding: 1.2rem 1rem!IMPORTANT;
+    color: #FEFEFE !IMPORTANT;
+    padding: 1.2rem 1rem !IMPORTANT;
     transition: background 0.25s ease-out;
     margin-right: 0.5rem;
 }
@@ -91,7 +91,7 @@ hr {
 }
 
 #top-bar-avatar {
-    padding: 0!IMPORTANT;
+    padding: 0 !IMPORTANT;
     transition: box-shadow 0.25s;
 }
 
@@ -121,4 +121,27 @@ hr {
 
 .card-divider {
     margin-bottom: 0;
+}
+
+.card-item, .card-item div {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.card-item:last-child, .card-item:last-child div {
+    border-bottom: 0;
+}
+
+table.card-table {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+table.card-table th, table.card-table td {
+    padding: 0.75em;
+    border-bottom: 1px solid #e6e6e6;
+    background: #fefefe;
+    text-align: center;
+}
+
+.card-table.card-section {
+    padding: 0;
 }

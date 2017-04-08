@@ -5,6 +5,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\BrowserKitTestCase;
 use App\User;
+use App\UserInfo;
 
 class AuthTest extends BrowserKitTestCase
 {
@@ -71,6 +72,7 @@ class AuthTest extends BrowserKitTestCase
 
     public function testAfterReg()
     {
+        //test 2
         $this->visit('/login')
             ->type('test@example.com', 'username')
             ->type('test@example.com', 'password')
@@ -88,8 +90,10 @@ class AuthTest extends BrowserKitTestCase
 
         //test logout
         $this->visit('logout')
-            ->dontSee('出售');
+            ->dontSee('出售')
+            ->assertSessionMissing('user_id');
 
+        //test 3
         mkdir(__DIR__ . '/../storage/app/avatar');
         touch(__DIR__ . '/../storage/app/avatar/1');
         $this->visit('/login')
@@ -97,5 +101,19 @@ class AuthTest extends BrowserKitTestCase
             ->type('test@example.com', 'password')
             ->press('登录')
             ->seePageIs('/register/3');
+
+        //test 0
+        $this->visit('logout');
+        $userinfo = new UserInfo();
+        $userinfo->user_id = 1;
+        $userinfo->realname = "unreal";
+        $userinfo->tel_num = "12323232323";
+        $userinfo->save();
+        $this->visit('/login')
+            ->type('test@example.com', 'username')
+            ->type('test@example.com', 'password')
+            ->press('登录')
+            ->seePageIs('/');
+
     }
 }

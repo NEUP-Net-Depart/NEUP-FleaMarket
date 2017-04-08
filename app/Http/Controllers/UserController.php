@@ -52,10 +52,18 @@ class UserController extends Controller
             return Redirect::to('/');
     }
 
-    public function regUserInfo()
+    public function regUserInfo(Request $request)
     {
         $data = [];
+        $data['userinfos'] = UserInfo::where('user_id', $request->session()->get('user_id'))->get();
         return View::make('auth.register3')->with($data);
+    }
+
+    public function userInfo(Request $request)
+    {
+        $data = [];
+        $data['userinfos'] = UserInfo::where('user_id', $request->session()->get('user_id'))->get();
+        return View::make('user.userInfo')->with($data);
     }
 
     public function createUserInfo()
@@ -92,6 +100,7 @@ class UserController extends Controller
     {
         $data = [];
         $data['user'] = User::find($user_id);
+        $data['userinfos'] = UserInfo::where('user_id', $user_id)->get();
         return View::make('user.user')->with($data);
     }
 

@@ -10,6 +10,14 @@ class UserTest extends BrowserKitTestCase
     public function testUserInfo()
     {
         $this->withSession(['user_id' => 1])
+            ->visit('/user/userinfo')
+            ->see('æ·»å èç³»æ¹å¼'); //添加联系方式
+
+        $this->withSession(['user_id' => 1])
+            ->visit('/user/userinfo/create')
+            ->see('ä¿å­'); //保存
+
+        $this->withSession(['user_id' => 1])
             ->json('POST', '/user/userinfo', [
                 'realname' => 'test',
                 'tel_num' => '13333333333',

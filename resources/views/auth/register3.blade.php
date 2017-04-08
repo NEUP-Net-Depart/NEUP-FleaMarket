@@ -7,18 +7,50 @@
     <div class="row card">
         <div class="row">
             <div class="small-offset-11 small-1">
-                <a href="/register/3">跳过</a>
+                <a href="/">跳过</a>
             </div>
         </div>
-        <div class="medium-4 medium-centered small-8 small-centered columns card-section">
+        <div class="small-10 small-centered columns card-section">
             @if (count($errors) > 0)
                 <label>
                     <span class="form-error is-visible">{!! $errors->first() !!}</span>
                 </label>
             @endif
-            <form action="/register/3" method="POST" enctype="multipart/form-data">
+            <div id="userinfo-container">
                 @include('user.userInfo')
-            </form>
+            </div>
         </div>
     </div>
+
+    <script>
+        function createUserInfo() {
+            $.ajax({
+                type: "GET",
+                url: "/user/userinfo/create",
+                success: function (msg) {
+                    $('#userinfo-container').html(msg);
+                }
+            })
+        }
+        function addUserInfo() {
+            var str_data = $("#create_user_info_form input,#create_user_info_form textarea").map(function () {
+                return ($(this).attr("name") + '=' + encodeURIComponent($(this).val()));
+            }).get().join("&");
+            $.ajax({
+                type: "POST",
+                url: "/user/userinfo",
+                data: str_data,
+                success: function (msg) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/user/userinfo",
+                        success: function (msg) {
+                            window.location.href = "/";
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+
 @endsection

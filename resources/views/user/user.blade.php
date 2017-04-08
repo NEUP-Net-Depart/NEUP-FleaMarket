@@ -31,10 +31,10 @@
             <div class="tabs-panel" id="account">
             </div>
             <div class="tabs-panel" id="userinfo">
-                <div class="card-section">
+                <div id="userinfo-container" class="card-section">
                     @include('user.userInfo')
+                </div>
             </div>
         </div>
-    </div>
 
 @endsection

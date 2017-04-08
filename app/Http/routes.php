@@ -50,6 +50,7 @@ Route::group(['middleware' => ['web']],function () {
     Route::post('/register/2', "UserController@completeUser")->middleware('auth');
     Route::get('/register/3', "UserController@regUserInfo")->middleware('auth');
 
+    Route::get('user/userinfo', "UserController@userInfo")->middleware('auth');
     Route::get('/user/userinfo/create', "UserController@createUserInfo")->middleware('auth');
     Route::post('user/userinfo', "UserController@storeUserInfo")->middleware('auth');
 
