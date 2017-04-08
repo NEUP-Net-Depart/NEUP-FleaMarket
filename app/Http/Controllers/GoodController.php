@@ -18,7 +18,7 @@ use App\FavList;
 use App\Http\Controllers\Controller;
 use Storage;
 use Image;
-use App\Http\Requests\addGoodRequest;
+use App\Http\Requests\AddGoodRequest;
 
 class GoodController extends Controller
 {
@@ -155,7 +155,7 @@ class GoodController extends Controller
      * @return Redirect
      * @description Add a new good.
      */
-    public function addGood(addGoodRequest $request)
+    public function addGood(AddGoodRequest $request)
     {
         if($request->method() == "GET"){
             $data = [];

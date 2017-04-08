@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserInfoRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -55,6 +56,36 @@ class UserController extends Controller
     {
         $data = [];
         return View::make('auth.register3')->with($data);
+    }
+
+    public function createUserInfo()
+    {
+        return View::make('user.createUserInfo');
+    }
+
+    public function storeUserInfo(StoreUserInfoRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user_info = new UserInfo();
+        $user_info->user_id = $user_id;
+        $user_info->realname = $input['realname'];
+        if (isset($input['gender']))
+            $user_info->gender = $input['gender'];
+        if (isset($input['tel_num']))
+            $user_info->tel_num = $input['tel_num'];
+        if (isset($input['QQ']))
+            $user_info->tel_num = $input['QQ'];
+        if (isset($input['wechat']))
+            $user_info->tel_num = $input['wechat'];
+        if (isset($input['address']))
+            $user_info->tel_num = $input['address'];
+        $user_info->save();
+
+        return json_encode([
+            'result' => 'true',
+            'msg' => 'success'
+        ]);
     }
 
     public function getList(Request $request, $user_id)

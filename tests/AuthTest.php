@@ -90,7 +90,8 @@ class AuthTest extends BrowserKitTestCase
         $this->visit('logout')
             ->dontSee('出售');
 
-        touch( __DIR__ . '/../storage/app/avatar/1' );
+        mkdir(__DIR__ . '/../storage/app/avatar');
+        touch(__DIR__ . '/../storage/app/avatar/1');
         $this->visit('/login')
             ->type('test@example.com', 'username')
             ->type('test@example.com', 'password')
