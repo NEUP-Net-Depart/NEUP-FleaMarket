@@ -2,19 +2,10 @@ language: php
 
 php:
   - 5.6
-  - 5.5
-  - 5.4
   - 7.0
   - 7.1
-  - hhvm
-  - nightly
 
-matrix:
-  allow_failures:
-    - php: 5.5
-    - php: 5.4
-    - php: hhvm
-    - php: nightly
+sudo: required
 
 before_script:
   - mkdir -p bootstrap/cache
@@ -22,12 +13,12 @@ before_script:
   - mysql -e 'create database homestead;'
   - composer self-update
   - composer install --no-interaction
+  - sudo chmod -R 777 storage && sudo chmod -R 777 bootstrap/cache
   - php artisan key:generate
   - php artisan migrate
-  - php artisan db:seed
+  - mkdir -p build/logs
 
 script:
-  - mkdir -p build/logs
   - vendor/bin/phpunit -c phpunit.xml.dist
 
 after_success:
