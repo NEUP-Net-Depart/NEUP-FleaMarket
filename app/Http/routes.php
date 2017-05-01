@@ -104,10 +104,6 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "GoodController@getList",
     ]);
 
-    Route::get('/good/{good_id}', [
-        "uses" => "GoodController@getInfo",
-    ]);
-
     Route::match(['post', 'get'], '/good/add', [
         "uses" => "GoodController@addGood",
         "middleware" => "auth"
@@ -169,6 +165,10 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/good/{good_id}/check', [
         "uses" => "AdminController@checkGood",
         "middleware" => "admin"
+    ]);
+
+    Route::get('/good/{good_id}', [
+        "uses" => "GoodController@getInfo",
     ]);
 
     Route::get('/admin', [

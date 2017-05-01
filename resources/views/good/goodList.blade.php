@@ -28,17 +28,19 @@
                                     <div style="color: #cc4b37;" class="one-line-text"><b>￥{{ $good->pricemin }} -
                                             ￥{{ $good->pricemax }}</b></div>
                                     @if($good->counts==0)
-                                        <div style="color: #ffae00;" class="one-line-text">无库存QAQ @else
-                                                <div class="one-line-text">库存：{{ $good->counts }}@endif</div>
-                                        </div>
+                                        <div style="color: #ffae00;" class="one-line-text">无库存QAQ</div>
+                                    @else
+                                        <div class="one-line-text">库存：{{ $good->counts }}</div>
+                                    @endif
                                 </div>
                             </div>
                         </a>
                     </div>
                 @endforeach
             </div>
-            {{ $goods->links() }}
         </div>
+        {{ $goods->links() }}
+    </div>
     </div>
 
 @endsection
