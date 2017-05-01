@@ -34,11 +34,11 @@
         </form>
     </div>
     <script>
-        function setValue($good_id) {
-            if (document.getElementById("box" + $good_id).value == $good_id)
-                document.getElementById("box" + $good_id).value = 0;
+        function setValue(good_id) {
+            if (document.getElementById("box" + good_id).value == good_id)
+                document.getElementById("box" + good_id).value = 0;
             else
-                document.getElementById("box" + $good_id).value = $good_id;
+                document.getElementById("box" + good_id).value = good_id;
         }
     </script>
 

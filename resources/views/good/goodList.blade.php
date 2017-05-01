@@ -41,6 +41,5 @@
         </div>
         {{ $goods->links() }}
     </div>
-    </div>
 
 @endsection

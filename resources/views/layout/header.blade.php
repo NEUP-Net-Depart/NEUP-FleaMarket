@@ -22,7 +22,7 @@
               @endif
               <li><a class="top-bar-list" id="top-bar-avatar"
                      href="/user/{{Session::get('user_id')}}"><img
-                          src="/avatar/{{ Session::get('user_id') }}/54/54"></img></a></li>
+                          src="/avatar/{{ Session::get('user_id') }}/54/54"></a></li>
               <li><a class="top-bar-list" href="/message">消息</a></li>
               <li><a class="top-bar-list" href="/user/get_favlist">收藏夹</a></li>
               <li><a href="/good/add" class="button">出售</a></li>

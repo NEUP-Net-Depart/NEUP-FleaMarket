@@ -7,10 +7,10 @@
     <div class="page-content">
         @if($method=="GET")
             <form action="/passwordReset/{{$token}}" method="POST">
-                Password: <input type="password" name="password"></input>
-                Again: <input type="password" name="password_confirmation"></input>
+                Password: <input type="password" name="password">
+                Again: <input type="password" name="password_confirmation">
                 {!! csrf_field() !!}
-                <input type="submit" class="button"></input>
+                <input type="submit" class="button">
             </form>
         @else
             {{$sentence}}
