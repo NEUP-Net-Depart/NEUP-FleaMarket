@@ -17,7 +17,8 @@
         <div class="small-12 medium-10 columns">
             <div class="row small-up-1 medium-up-2 large-up-4" data-equalizer data-equalize-by-row>
                 @foreach($goods as $good)
-                    <div class="columns">
+                    <div class="columns" id="good{{ $good->id }}">
+                        <div class="good">
                         <a href="/good/{{ $good->id }}">
                             <div class="card">
                                 <div class="card-divider">
@@ -35,11 +36,21 @@
                                 </div>
                             </div>
                         </a>
+                        </div>
                     </div>
                 @endforeach
             </div>
         </div>
         {{ $goods->links() }}
     </div>
+    <script>
+        $(".good").mouseenter(function(){
+            $(this).animate({opacity:'0.5'},10.0);
+        });
+        $(".good").mouseleave(function(){
+            $(".good").animate({opacity:'1.0'},10.0);
+        });
+    </script>
+
 
 @endsection
