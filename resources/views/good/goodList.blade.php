@@ -9,7 +9,7 @@
             <ul class="menu vertical">
                 <li @if($cat_id == 0) class="active" @endif><a href="/good">*</a></li>
                 @foreach($cats as $cat)
-                    <li @if($cat_id == $cat->id) class="active" @endif><a
+                    <li @if($cat_id == $cat->id) class="active" @else class="cat" @endif><a
                                 href="/good?cat_id={{ $cat->id }}">{{ $cat->cat_name }}</a></li>
                 @endforeach
             </ul>
@@ -43,14 +43,8 @@
         </div>
         {{ $goods->links() }}
     </div>
-    <script>
-        $(".good").mouseenter(function(){
-            $(this).animate({opacity:'0.5'},10.0);
-        });
-        $(".good").mouseleave(function(){
-            $(".good").animate({opacity:'1.0'},10.0);
-        });
-    </script>
+    <script src="/js/good/good_list.js"></script>
+    <script src="/js/jquery.color.js"></script>
 
 
 @endsection
