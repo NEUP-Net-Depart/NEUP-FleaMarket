@@ -32,15 +32,22 @@
         {{ $good->description }}
     </div>
     <div class="row">
-        <form id="fav">
-            {!! csrf_field() !!}
-            @if(count($inFvlst) == 0)
-                <input id="fav_smt" class="button" type="button"  name="submit1" onclick="add_favlist()" value="收藏OvO"/>
-            @endif
-            @if(count($inFvlst) != 0)
-                <input id="fav_smt" class="button" type="button" name="submit1" onclick="del_favlist()" value="取消收藏QAQ"/>
-            @endif
-        </form>
+        @if(isset($inFvlst))
+            <form id="fav">
+                {!! csrf_field() !!}
+                @if(count($inFvlst) == 0)
+                    <input id="fav_smt" class="button" type="button" name="submit1" onclick="add_favlist()"
+                           value="收藏OvO"/>
+                @endif
+                @if(count($inFvlst) != 0)
+                    <input id="fav_smt" class="button" type="button" name="submit1" onclick="del_favlist()"
+                           value="取消收藏QAQ"/>
+                @endif
+            </form>
+        @else
+            <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
+                   value="收藏OvO"/>
+        @endif
     </div>
     <script>
         function add_favlist() {
@@ -53,7 +60,7 @@
                 data: str_data,
                 success: function (msg) {
                     $('#fav_smt').val('取消收藏QAQ');
-                    $('#fav_smt').attr('onclick','del_favlist()');
+                    $('#fav_smt').attr('onclick', 'del_favlist()');
                 }
             });
         }
@@ -67,8 +74,8 @@
                 url: "/good/{{ $good->id }}/del_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('#fav_smt').val('收藏QAQ');
-                    $('#fav_smt').attr('onclick','add_favlist()');
+                    $('#fav_smt').val('收藏OvO');
+                    $('#fav_smt').attr('onclick', 'add_favlist()');
                 }
             });
         }
