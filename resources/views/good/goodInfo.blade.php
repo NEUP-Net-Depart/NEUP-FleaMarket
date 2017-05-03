@@ -31,5 +31,53 @@
     <div class="row">
         {{ $good->description }}
     </div>
-
+    <div class="row">
+        @if(isset($inFvlst))
+            <form id="fav">
+                {!! csrf_field() !!}
+                @if(count($inFvlst) == 0)
+                    <input id="fav_smt" class="button" type="button" name="submit1" onclick="add_favlist()"
+                           value="收藏OvO"/>
+                @endif
+                @if(count($inFvlst) != 0)
+                    <input id="fav_smt" class="button" type="button" name="submit1" onclick="del_favlist()"
+                           value="取消收藏QAQ"/>
+                @endif
+            </form>
+        @else
+            <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
+                   value="收藏OvO"/>
+        @endif
+    </div>
+    <script>
+        function add_favlist() {
+            var str_data = $("#fav input").map(function () {
+                return ($(this).attr("name") + '=' + $(this).val());
+            }).get().join("&");
+            $.ajax({
+                type: "GET",
+                url: "/good/{{ $good->id }}/add_favlist",
+                data: str_data,
+                success: function (msg) {
+                    $('#fav_smt').val('取消收藏QAQ');
+                    $('#fav_smt').attr('onclick', 'del_favlist()');
+                }
+            });
+        }
+        function del_favlist() {
+            var str_data1 = $("#fav input").map(function () {
+                return ($(this).attr("name") + '=' + $(this).val());
+            }).get().join("&");
+            var str_data = str_data1 + '&_method=DELETE';
+            $.ajax({
+                type: "POST",
+                url: "/good/{{ $good->id }}/del_favlist",
+                data: str_data,
+                success: function (msg) {
+                    $('#fav_smt').val('收藏OvO');
+                    $('#fav_smt').attr('onclick', 'add_favlist()');
+                }
+            });
+        }
+    </script>
 @endsection

@@ -14,7 +14,7 @@
             @if($information->sender_id != 0)
                 {{$users[$information->sender_id]->nickname}}<br/>
             @endif
-            @if($information->sender_id ==0)
+            @if($information->sender_id == 0)
                 系统通知<br/>
             @endif
 

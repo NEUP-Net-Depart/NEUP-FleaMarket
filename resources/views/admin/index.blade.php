@@ -33,7 +33,7 @@
                         <input type="submit"/>
                     </select>
                 </form>
-                <a href="/user/{{$user->id}}/ban">@if($user->baned==0) Ban@else Unban@endif</a><br/>
+                <a href="/user/{{$user->id}}/ban">@if($user->baned==0) Ban @else Unban @endif</a><br/>
                 =============================
             </div>
         @endforeach
