@@ -232,7 +232,7 @@ class GoodController extends Controller
             $good->counts=$input['counts'];
             $good->good_tag=$input['good_tag'];
             $good->update();
-            return Redirect::to('/good/'.$good_id.'/edit');
+            return Redirect::to('/good/'.$good_id);
         }
     }
 

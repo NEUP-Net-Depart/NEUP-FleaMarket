@@ -13,7 +13,7 @@
             <h4 style="color: #cc4b37"><b>￥{{ $good->pricemin }} - ￥{{ $good->pricemax }}</b></h4>
             <div class="row">
                 <div class="small-5 columns">
-                    @if($good->seller) != Session::get('user_id'))
+                    @if($good->user_id != Session::get('user_id'))
                     <form action="/good/{{ $good->id }}/buy" method="post">
                         <div class="input-group">
                             <input type="number" name="counts" value="1" class="input-group-field"/>
@@ -47,6 +47,16 @@
         @else
             <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
                    value="收藏OvO"/>
+        @endif
+        @if($good->user_id == Session::get('user_id'))
+            <form action="/good/{{ $good->id }}/edit">
+                <input type="submit" class="button" value="修改">
+            </form>
+            <form action="/good/{{ $good->id }}/delete" method="POST">
+                {!! csrf_field() !!}
+                {!! method_field('DELETE') !!}
+                <input type="submit" class="button" value="删除">
+            </form>
         @endif
     </div>
     <script>
