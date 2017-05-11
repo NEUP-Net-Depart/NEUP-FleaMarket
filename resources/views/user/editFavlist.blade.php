@@ -29,7 +29,7 @@
                     </tr>
                 @endforeach
             </table>
-            <input type="submit" name="submit1" value="删除选中商品"/>
+            <input type="submit" name="submit1"class="button" value="删除选中商品"/>
         </form>
     </div>
     <script>

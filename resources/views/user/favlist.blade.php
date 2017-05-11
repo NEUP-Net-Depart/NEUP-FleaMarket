@@ -8,6 +8,17 @@
         h5 {
             color: #ffffff;
         }
+        .pic{
+            display:none;
+            height:110px;
+            width:200px;
+        }
+        .active{
+            display:block;
+        }
+        .list{
+            table-layout:fixed;
+        }
     </style>
 
 @endsection
@@ -25,9 +36,9 @@
                     <td>最高价格</td>
                 </tr>
                 @foreach($goods as $good)
-                    <tr>
+                    <tr class="list">
                         <td>{{ $good->good_id }}</td>
-                        <td><a href="/good/{{$good->good_id}}">{{ $good_info[$good->good_id]->good_name }}</a></td>
+                        <td class="name"><a href="/good/{{$good->good_id}}">{{ $good_info[$good->good_id]->good_name }}</a><img src="/good/{{ sha1($good->good_id) }}/titlepic" class="pic" /></td>
                         <td>{{ $good_info[$good->good_id]->pricemin }}</td>
                         <td>{{ $good_info[$good->good_id]->pricemax }}</td>
                     </tr>
@@ -36,5 +47,5 @@
             <a href="/user/edit_favlist" class="button">编辑收藏夹</a>
         </div>
     </div>
-
+    <script src="/js/good/favorlist.js"></script>
 @endsection
