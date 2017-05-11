@@ -8,7 +8,6 @@
         label {
             text-align: right;
             font-size: medium;
-            color: #ffffff;
             min-width: 80px;
             max-width: 100px;
             float: right;

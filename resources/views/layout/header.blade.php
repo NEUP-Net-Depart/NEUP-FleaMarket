@@ -12,6 +12,9 @@
           <ul class="dropdown menu hide-for-medium-only hide-for-small-only" data-dropdown-menu>
             <li><a class="top-bar-list" href="/">首页</a></li>
             <li><a class="top-bar-list" href="/good">市场</a></li>
+            @if(Session::has('user_id'))
+              <li><a class="top-bar-list" href="/good/my">我的商品</a></li>
+            @endif
           </ul>
         </div>
         <div class="top-bar-right">
