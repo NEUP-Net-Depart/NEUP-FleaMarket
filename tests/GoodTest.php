@@ -11,8 +11,8 @@ class GoodTest extends BrowserKitTestCase
     {
         //login
         $this->visit('/login')
-            ->type('test', 'username')
-            ->type('test', 'password')
+            ->type('test@example.com', 'username')
+            ->type('test@example.com', 'password')
             ->press('登录');
 
         //test add good
