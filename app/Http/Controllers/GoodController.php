@@ -21,6 +21,7 @@ use App\Http\Controllers\Controller;
 use Storage;
 use Image;
 use App\Http\Requests\AddGoodRequest;
+use App\Http\Requests\EditGoodRequest;
 
 class GoodController extends Controller
 {
@@ -157,11 +158,9 @@ class GoodController extends Controller
      * @return Redirect
      * @description Add a new good.
      */
-    public function showAddGood(AddGoodRequest $request)
+    public function showAddGood(Request $request)
     {
         $data = [];
-        if(!$request->session()->has('user_id')) 
-            return Redirect::back();
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         //$data['tags'] = Tag::orderby('id', 'asc')->get();
         return view::make('good.addPage')->with($data);
@@ -169,15 +168,6 @@ class GoodController extends Controller
 
     public function addGood(AddGoodRequest $request)
     {
-        if(!$request->session()->has('user_id')) 
-            return Redirect::back();
-        $this->validate($request, [
-            'good_name' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'count' => 'required',
-            //'good_tag' => 'required',
-        ]);
         $input = $request->all();
         $good = new GoodInfo;
         $good->good_name = $input['good_name'];
@@ -233,19 +223,8 @@ class GoodController extends Controller
         return view::make('good.editPage')->with($data);
     }
 
-    public function editGood(Request $request, $good_id)
+    public function editGood(EditGoodRequest $request, $good_id)
     {
-        if(!$request->session()->has('user_id')) 
-            return Redirect::back();
-        $this->validate($request, [
-            'good_name' => 'required',
-            'cat_id' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'type' => 'required',
-            'count' => 'required',
-            //'good_tag' => 'required',
-        ]);
         $input = $request->all();
         $good = GoodInfo::find($good_id);
         if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin')) 
@@ -290,8 +269,6 @@ class GoodController extends Controller
      */
     public function deleteGood(Request $request, $good_id)
     {
-        if(!$request->session()->has('user_id'))
-            return Redirect::back();
         $good = GoodInfo::find($good_id);
         if($request->session()->get('user_id') != $good->user_id)
             return Redirect::back();

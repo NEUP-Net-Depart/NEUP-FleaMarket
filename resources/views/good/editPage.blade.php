@@ -6,11 +6,9 @@
 
     <style>
         label {
-            text-align: right;
             font-size: medium;
             min-width: 80px;
             max-width: 100px;
-            float: right;
         }
     </style>
 
@@ -20,6 +18,11 @@
 
     <div class="page-content">
         <div class="large-8 large-offset-2 small-10 small-offset-1 columns">
+            @if (count($errors) > 0)
+                <label>
+                    <span class="form-error is-visible">{!! $errors->first() !!}</span>
+                </label>
+            @endif
             @foreach($goods as $good)
                 <form action="/good/{{$good->id}}/edit" method="POST">
                     <div class="row">
