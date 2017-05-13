@@ -27,13 +27,13 @@
         <div class="small-12 medium-6 medium-offset-1 columns">
             <h1>{{ $good->good_name }}</h1>
             <div><!-- 放tag 和更多图片缩略图 --></div>
-            <h4 style="color: #cc4b37"><b>￥{{ $good->pricemin }} - ￥{{ $good->pricemax }}</b></h4>
+            <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             <div class="row">
                 <div class="small-5 columns">
                     @if(($good->user_id) != Session::get('user_id'))
                         <form action="/good/{{ $good->id }}/buy" method="post">
                             <div class="input-group">
-                                <input type="number" name="counts" value="1" class="input-group-field"/>
+                                <input type="number" name="count" value="1" class="input-group-field"/>
                                 {!! csrf_field() !!}
                                 <div class="input-group-button">
                                     <input type="submit" class="button" value="购买"/>
@@ -51,8 +51,8 @@
                                 {!! csrf_field() !!}
                                 {!! method_field('DELETE') !!}
                                 <input type="submit" class="button" value="删除">
-                            </form>
-                        @endif
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -65,21 +65,21 @@
     </div>
     <div class="row">
         <div class="small-12 medium-6 medium-offset-6 columns">
-            @if(isset($inFvlst))
+        @if(isset($inFvlst))
                 <form id="fav">
                     {!! csrf_field() !!}
                     @if(count($inFvlst) == 0)
                         <input id="fav_smt" class="button" type="button" name="submit1" onclick="add_favlist()"
-                               value="收藏OvO"/>
+                            value="收藏OvO"/>
                     @endif
                     @if(count($inFvlst) != 0)
                         <input id="fav_smt" class="button" type="button" name="submit1" onclick="del_favlist()"
-                               value="取消收藏QAQ"/>
+                            value="取消收藏QAQ"/>
                     @endif
                 </form>
             @else
                 <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
-                       value="收藏OvO"/>
+                    value="收藏OvO"/>
             @endif
         </div>
     </div>

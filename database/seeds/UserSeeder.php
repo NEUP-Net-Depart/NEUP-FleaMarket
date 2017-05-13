@@ -21,5 +21,14 @@ class UserSeeder extends Seeder
             'stuid' => '00000000',
             'havecheckedemail' => 1
         ]);
+        DB::table('users')->insert([
+            'privilege' => 0,
+            'username' => 'test',
+            'password' => Hash::make('test'),
+            'nickname' => 'test',
+            'email' => 'test@test',
+            'stuid' => '00000001',
+            'havecheckedemail' => 1
+        ]);
     }
 }

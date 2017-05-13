@@ -38,15 +38,13 @@
                 <tr>
                     <td>#</td>
                     <td>商品名称</td>
-                    <td>最低价格</td>
-                    <td>最高价格</td>
+                    <td>商品价格</td>
                 </tr>
                 @foreach($goods as $good)
                     <tr class="list">
                         <td>{{ $good->good_id }}</td>
                         <td class="name"><a href="/good/{{$good->good_id}}" onMouseOver="toolTip('<img src=/good/{{ sha1($good->good_id) }}/titlepic>')" onMouseOut="toolTip()">{{ $good_info[$good->good_id]->good_name }}</a><img src="/good/{{ sha1($good->good_id) }}/titlepic" class="pic" /></td>
-                        <td>{{ $good_info[$good->good_id]->pricemin }}</td>
-                        <td>{{ $good_info[$good->good_id]->pricemax }}</td>
+                        <td>{{ $good_info[$good->good_id]->price }}</td>
                     </tr>
                 @endforeach
             </table>

@@ -100,19 +100,16 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "ContentController@announcementPage",
     ]);
 
-    Route::get('/good', [
-        "uses" => "GoodController@getList",
-    ]);
+    Route::get('/good', "GoodController@getList");
+    Route::get('/good/my', "GoodController@myGood")->middleware('auth');
 
-    Route::match(['post', 'get'], '/good/add', [
-        "uses" => "GoodController@addGood",
-        "middleware" => "auth"
-    ]);
+    Route::get('/good/add', "GoodController@showAddGood")->middleware('auth');
+    Route::post('/good/add', "GoodController@addGood")->middleware('auth');
 
-    Route::match(['post', 'get'], '/good/my', [
-        "uses" => "GoodController@myGood",
-        "middleware" => "auth"
-    ]);
+    Route::get('/good/{good_id}/edit', "GoodController@showEditGood")->middleware('auth');
+    Route::post('/good/{good_id}/edit', "GoodController@editGood")->middleware('auth');
+    
+    Route::delete('/good/{good_id}/delete', "GoodController@deleteGood")->middleware('auth');
 
     Route::match(['post', 'get'], '/good/check', [
         "uses" => "GoodController@check",
@@ -121,16 +118,6 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::match(['post', 'get'], '/good/end', [
         "uses" => "GoodController@end",
-        "middleware" => "auth"
-    ]);
-    
-    Route::match(['post', 'get'], '/good/{good_id}/edit', [
-        "uses" => "GoodController@editGood",
-        "middleware" => "auth"
-    ]);
-
-    Route::delete('/good/{good_id}/delete', [
-        "uses" => "GoodController@deleteGood",
         "middleware" => "auth"
     ]);
 

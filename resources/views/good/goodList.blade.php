@@ -26,12 +26,11 @@
                                 </div>
                                 <div class="card-section">
                                     <div class="one-line-text">{{ $good->good_name }}</div>
-                                    <div style="color: #cc4b37;" class="one-line-text"><b>￥{{ $good->pricemin }} -
-                                            ￥{{ $good->pricemax }}</b></div>
-                                    @if($good->counts==0)
+                                    <div style="color: #cc4b37;" class="one-line-text"><b>￥{{ $good->price }}</b></div>
+                                    @if($good->count==0)
                                         <div style="color: #ffae00;" class="one-line-text">无库存QAQ</div>
                                     @else
-                                        <div class="one-line-text">库存：{{ $good->counts }}</div>
+                                        <div class="one-line-text">库存：{{ $good->count }}</div>
                                     @endif
                                 </div>
                             </div>
@@ -45,6 +44,6 @@
     </div>
     <script src="/js/good/good_list.js"></script>
     <script src="/js/jquery.color.js"></script>
-
+    
 
 @endsection

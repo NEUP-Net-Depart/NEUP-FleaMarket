@@ -17,14 +17,12 @@ class CreateGoodInfoTable extends Migration
             $table->string('good_name');
             $table->integer('cat_id');
             $table->text('description');
-            $table->integer('pricemin');
-            $table->integer('pricemax');
-            $table->integer('type');
+            $table->bigInteger('price');
+            $table->tinyInteger('type');
             $table->integer('user_id');
-            $table->integer('counts');
-            $table->text('good_tag');
-            $table->integer('checked');
-            $table->integer('stared');
+            $table->integer('count');
+            $table->boolean('baned');
+            $table->boolean('stared');
             $table->timestamps();
       });
     }
