@@ -75,6 +75,20 @@ class GoodTest extends BrowserKitTestCase
             ->seeHeader('Content-Type', 'image/jpeg');
     }
 
+    public function testListGood()
+    {
+        $this->visit('/logout')
+            ->visit('/good')
+            ->see('算法竞赛入门经典')
+            ->visit('/good?cat_id=1')
+            ->see('算法竞赛入门经典')
+            ->visit('/good?cat_id=2')
+            ->dontSee('算法竞赛入门经典')
+            ->visit('/good/1')
+            ->see('算法竞赛入门经典')
+            ->dontSee('修改');
+    }
+
     public function testEditGood()
     {
         //test edit good
@@ -109,7 +123,7 @@ class GoodTest extends BrowserKitTestCase
             ->seeHeader('Content-Type', 'image/jpeg');
     }
 
-    
+
 
     public function testUnauthorized()
     {
@@ -124,7 +138,7 @@ class GoodTest extends BrowserKitTestCase
             ->seeStatusCode(302)
             ->post('/good/1/edit', ['good_name' => '111', 'description' => '111', 'price' => 111, 'count' => 111])
             ->seeStatusCode(302);
-            
+
         $this->withSession(['user_id' => 2, 'is_admin' => 1])
             ->visit('/good/1')
             ->dontSee('修改')
