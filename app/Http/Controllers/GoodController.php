@@ -220,7 +220,7 @@ class GoodController extends Controller
         if($good == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         $data['goods'] = [];
         array_push($data['goods'], $good);
-        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
+        if($request->session()->get('user_id')!=$good->user_id && $request->session()->get('is_admin')!=2)
             return Redirect::to('/good/'.$good_id);
         /*$data['tags'] = Tag::orderby('id', 'asc')->get();
         $collection = GoodTag::where('good_id', $good_id)->pluck('tag_id');
@@ -233,7 +233,7 @@ class GoodController extends Controller
         $input = $request->all();
         $good = GoodInfo::find($good_id);
         if($good == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
-        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
+        if($request->session()->get('user_id')!=$good->user_id && $request->session()->get('is_admin')!=2)
             return Redirect::to('/good/'.$good_id);
         $good->good_name=$input['good_name'];
         $good->cat_id=$input['cat_id'];
@@ -280,7 +280,7 @@ class GoodController extends Controller
     public function deleteGood(Request $request, $good_id)
     {
         $good = GoodInfo::find($good_id);
-        if($request->session()->get('user_id') != $good->user_id && !$request->session()->has('is_admin'))
+        if($request->session()->get('user_id') != $good->user_id && $request->session()->get('is_admin')!=2)
             return Redirect::to('/good/'.$good_id);
         Storage::delete('good/titlepic/'.sha1($good->id));
         $good->delete();

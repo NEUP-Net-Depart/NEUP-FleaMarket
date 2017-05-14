@@ -152,16 +152,11 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::post('/user/{user_id}/updatePriv', [
         "uses" => "AdminController@updateUserPriv",
-        "middleware" => "admin"
+        "middleware" => "su"
     ]);
 
     Route::post('/user/{user_id}/updateRole', [
         "uses" => "AdminController@updateUserRole",
-        "middleware" => "admin"
-    ]);
-
-    Route::post('/cat/{cat_id}/edit', [
-        "uses" => "AdminController@editCategory",
         "middleware" => "admin"
     ]);
 
