@@ -52,6 +52,9 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/user/userinfo/create', "UserController@createUserInfo")->middleware('auth');
     Route::post('user/userinfo', "UserController@storeUserInfo")->middleware('auth');
 
+    Route::get('/avatar/{user_id}', "UserController@getSimpleAvatar");
+    Route::get('/avatar/{user_id}/{width}/{height}', "UserController@getAvatar");
+
     Route::get('/good', "GoodController@getList");
     Route::get('/good/my', "GoodController@myGood")->middleware('auth');
 
@@ -65,18 +68,9 @@ Route::group(['middleware' => ['web']],function () {
     Route::delete('/good/{good_id}/delete', "GoodController@deleteGood")->middleware('auth');
 
     Route::get('/good/{good_id}/titlepic', "GoodController@getSimpleTitlePic");
-
     Route::get('/good/{good_id}/titlepic/{width}/{height}', "GoodController@getTitlePic");
 
     //------Above are tested function
-
-    Route::get('/avatar/{user_id}', [
-        "uses" => "UserController@getSimpleAvatar",
-    ]);
-
-    Route::get('/avatar/{user_id}/{width}/{height}', [
-        "uses" => "UserController@getAvatar",
-    ]);
 
     Route::get('/user/{user_id}/edit', [
         "uses" => "UserController@showEditPage",

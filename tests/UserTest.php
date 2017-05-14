@@ -30,4 +30,13 @@ class UserTest extends BrowserKitTestCase
                 'msg' => 'success'
             ]);
     }
+
+    public function testAvatar()
+    {
+        // show
+        $this->visit('/avatar/1')
+            ->seeHeader('Content-Type', 'image/jpeg')
+            ->visit('/avatar/1/64/64')
+            ->seeHeader('Content-Type', 'image/jpeg');
+    }
 }
