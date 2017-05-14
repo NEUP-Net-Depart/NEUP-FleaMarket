@@ -6,9 +6,11 @@
 
     <style>
         label {
+            text-align: right;
             font-size: medium;
             min-width: 80px;
             max-width: 100px;
+            float: right;
         }
     </style>
 
