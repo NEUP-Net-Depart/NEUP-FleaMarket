@@ -13,7 +13,7 @@ class GoodTest extends BrowserKitTestCase
         //add good_cat
         $cat = new GoodCat;
         $cat->cat_name = '测试';
-        $cat->cat_index = '1';
+        $cat->cat_index = '0';
         $cat->save();
 
         //test add good
@@ -115,16 +115,23 @@ class GoodTest extends BrowserKitTestCase
             ->seeStatusCode(302);
     }
 
-    public function testDeleteGood()
+    public function testSuperAdmin()
     {
-
-        //test delete good 
-        $this->withSession(['user_id' => 1])
+        //test super administrator access and delete good
+        $this->withSession(['user_id' => 2, 'is_admin' => 1])
+            ->visit('/good/1')
+            ->see('修改')
+            ->see('删除')
+            ->press('修改')
+            ->type('算竞入经', 'good_name')
+            ->press('更改')
+            ->see('算竞入经')
             ->visit('/good/1')
             ->press('删除')
-            ->dontSee('算法竞赛入门经典')
+            ->dontSee('算竞入经')
             ->visit('/good/1')
+            ->see('商品ID错误')
+            ->visit('/good/1/edit')
             ->see('商品ID错误');
     }
-
 }

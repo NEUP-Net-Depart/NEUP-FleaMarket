@@ -43,7 +43,7 @@
                     @endif
                 </br>
                 </br>
-                        @if($good->user_id == Session::get('user_id'))
+                        @if($good->user_id == Session::get('user_id') || Session::has('is_admin'))
                             <form action="/good/{{ $good->id }}/edit" style="margin:0px;display:inline;">
                                 <input type="submit" class="button" value="修改">
                             </form>

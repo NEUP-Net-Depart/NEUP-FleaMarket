@@ -217,6 +217,7 @@ class GoodController extends Controller
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $good = GoodInfo::find($good_id);
+        if($good == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         $data['goods'] = [];
         array_push($data['goods'], $good);
         if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
@@ -231,6 +232,7 @@ class GoodController extends Controller
     {
         $input = $request->all();
         $good = GoodInfo::find($good_id);
+        if($good == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
             return Redirect::to('/good/'.$good_id);
         $good->good_name=$input['good_name'];
@@ -241,9 +243,9 @@ class GoodController extends Controller
         $good->count=$input['count'];
         $good->update();
 
+        /*
         $deleteoldtags = GoodTag::where('good_id', $good_id)->delete();
-
-        /*$good_tags = $input['good_tag'];
+        $good_tags = $input['good_tag'];
         foreach($good_tags as $tag_id)
         {
             $tag = new GoodTag;
@@ -261,7 +263,11 @@ class GoodController extends Controller
             $tag->good_id = $good->id;
             $tag->save();
         }*/
-
+        if($request->hasFile('goodTitlePic'))
+            Storage::put(
+                'good/titlepic/'.sha1($good->id),
+                Image::make($request->file('goodTitlePic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->encode('data-url')
+            );
         return Redirect::to('/good/'.$good_id);
     }
 
@@ -274,8 +280,9 @@ class GoodController extends Controller
     public function deleteGood(Request $request, $good_id)
     {
         $good = GoodInfo::find($good_id);
-        if($request->session()->get('user_id') != $good->user_id)
+        if($request->session()->get('user_id') != $good->user_id && !$request->session()->has('is_admin'))
             return Redirect::to('/good/'.$good_id);
+        Storage::delete('good/titlepic/'.sha1($good->id));
         $good->delete();
         //$deleteGoodTag = GoodTag::where('good_id', $good_id)->delete();
         $deleteFavList = Favlist::where('good_id', $good_id)->delete();
