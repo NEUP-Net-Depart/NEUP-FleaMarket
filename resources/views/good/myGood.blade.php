@@ -31,7 +31,9 @@
                 <td>删除商品</td>
             </tr>
             @foreach($goods as $good)
+
                 <tr id="good{{ $good->id }}">
+
                     <td>{{ $good->id }}</td>
                     <td><a href="/good/{{$good->id}}" onMouseOver="toolTip('<img src=/good/{{ sha1($good->id) }}/titlepic>')" onMouseOut="toolTip()">{{ $good->good_name }}</a></td>
                     <td>{{ $good->pricemin }}</td>
@@ -43,18 +45,36 @@
                     </td>
                     <td>
 
-                        <form action="/good/{{ $good->id }}/delete" method="POST"  onsubmit="return confirm('确定删除吗？');">
+                        <form  method="POST"   id="delform">
                             {!! csrf_field() !!}
                             {!! method_field('DELETE') !!}
-                            <input type="submit" class="button" value="删除" style="margin: 0;">
+
                         </form>
+                        <input type="submit" class="button" value="删除" style="margin: 0;" id="delbutton" onclick="del_good({{ $good->id }})">
                     </td>
+
                 </tr>
+
             @endforeach
         </table>
         <a href="/good/add" class="button">添加商品</a>
     </div>
 </div>
 <script src="/js/good/ToolTip.js"></script>
-
+<script>
+    function del_good(goodid) {
+        if(confirm('确定删除吗？')){
+        var str_data1 = $('#delform').serialize();
+        var str_data = str_data1 + '&_method=DELETE';
+        $.ajax({
+            type: "POST",
+            url: "/good/"+goodid+"/delete",
+            data: str_data,
+            success: function (msg) {
+                $('#good'+goodid).slideUp();
+            }
+        });
+    }
+    }
+</script>
 @endsection

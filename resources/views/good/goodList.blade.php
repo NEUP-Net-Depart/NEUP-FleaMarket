@@ -7,7 +7,7 @@
     <div class="row">
         <div class="small-0 medium-2 columns">
             <ul class="menu vertical">
-                <li @if($cat_id == 0) class="active" @endif><a href="/good">*</a></li>
+                <li @if($cat_id == 0) class="active" @else class="cat" @endif><a href="/good">*</a></li>
                 @foreach($cats as $cat)
                     <li @if($cat_id == $cat->id) class="active" @else class="cat" @endif><a
                                 href="/good?cat_id={{ $cat->id }}">{{ $cat->cat_name }}</a></li>

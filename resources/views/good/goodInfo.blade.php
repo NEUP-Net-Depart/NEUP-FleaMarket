@@ -19,7 +19,7 @@
 
     <div class="row">
         <div class="small-12 medium-5 columns thumbnail">
-            <a id="pic" title="</br>" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" src="/good/{{ sha1($good->id) }}/titlepic" /></a>
+            <a id="pic" title="" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" src="/good/{{ sha1($good->id) }}/titlepic" /></a>
 
 
 
@@ -41,8 +41,7 @@
                             </div>
                         </form>
                     @endif
-                </br>
-                </br>
+
                         @if($good->user_id == Session::get('user_id'))
                             <form action="/good/{{ $good->id }}/edit" style="margin:0px;display:inline;">
                                 <input type="submit" class="button" value="修改">
@@ -60,7 +59,7 @@
     <div class="row">
         <div class="small-12 medium-6 columns">
             {{ $good->description }}
-            </br></br>
+
         </div>
     </div>
     <div class="row">

@@ -2,6 +2,33 @@
 
 @section('title', "编辑收藏")
 
+@section('asset')
+
+    <style>
+        h5 {
+            color: #ffffff;
+        }
+        .pic{
+            display:none;
+            height:110px;
+            width:200px;
+        }
+        .active{
+            display:block;
+        }
+        .list{
+            table-layout:fixed;
+        }
+        .trans_msg
+        {
+            filter:alpha(opacity=100) revealTrans(duration=.2,transition=1) blendtrans(duration=.2);
+            width:400px;
+            height:200px;
+        }
+    </style>
+
+@endsection
+
 @section('content')
 
     <div class="page-content">
@@ -21,7 +48,7 @@
                 @foreach($goods as $good)
                     <tr>
                         <td>{{ $good->good_id }}</td>
-                        <td><a href="/good/{{$good->good_id}}">{{ $good_info[$good->good_id]->good_name }}</a></td>
+                        <td><a href="/good/{{$good->good_id}}" onMouseOver="toolTip('<img src=/good/{{ sha1($good->good_id) }}/titlepic>')" onMouseOut="toolTip()">{{ $good_info[$good->good_id]->good_name }}</a><img src="/good/{{ sha1($good->good_id) }}/titlepic" class="pic" /></td>
                         <td>{{ $good_info[$good->good_id]->pricemin }}</td>
                         <td>{{ $good_info[$good->good_id]->pricemax }}</td>
                         <td><input type="checkBox" name="del_goods[]" value="0" id="box{{ $good->good_id }}"
@@ -40,5 +67,5 @@
                 document.getElementById("box" + good_id).value = good_id;
         }
     </script>
-
+    <script src="/js/good/ToolTip.js"></script>
 @endsection
