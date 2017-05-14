@@ -124,7 +124,7 @@
                 var reader = new FileReader();
                 reader.onload = function (evt) {
                     prevDiv.innerHTML = '<img id="goodimgpreview" src="' + evt.target.result + '" />';
-                    $('#goodimgpreview').cropper({
+                    $jQuery_FOUNDATION('#goodimgpreview').cropper({
                         aspectRatio: 16 / 9,
                         crop: function (e) {
                             $("#goodTitleUploadCpX").val(e.x);

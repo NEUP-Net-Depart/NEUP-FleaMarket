@@ -52,6 +52,10 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/user/userinfo/create', "UserController@createUserInfo")->middleware('auth');
     Route::post('user/userinfo', "UserController@storeUserInfo")->middleware('auth');
 
+    Route::get('/user/fav', "UserController@getFavlist")->middleware('auth');
+    Route::get('/user/fav/edit', "UserController@editFavlist")->middleware('auth');
+    Route::delete('/user/fav/del', "UserController@delFavlist")->middleware('auth');
+
     Route::get('/avatar/{user_id}', "UserController@getSimpleAvatar");
     Route::get('/avatar/{user_id}/{width}/{height}', "UserController@getAvatar");
 
@@ -70,6 +74,9 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/good/{good_id}/titlepic', "GoodController@getSimpleTitlePic");
     Route::get('/good/{good_id}/titlepic/{width}/{height}', "GoodController@getTitlePic");
 
+    Route::post('/good/{good_id}/add_favlist', "GoodController@addFavlist")->middleware('auth');
+    Route::delete('/good/{good_id}/del_favlist', "GoodController@delFavList")->middleware('auth');
+
     //------Above are tested function
 
     Route::get('/user/{user_id}/edit', [
@@ -79,21 +86,6 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::post('/user/{user_id}/edit/middle', [
         "uses" => "UserController@editList",
-        "middleware" => "auth"
-    ]);
-
-    Route::get('/user/get_favlist', [
-        "uses" => "UserController@getFavlist",
-        "middleware" => "auth"
-    ]);
-
-    Route::get('/user/edit_favlist', [
-        "uses" => "UserController@editFavlist",
-        "middleware" => "auth"
-    ]);
-
-    Route::delete('/user/del_favlist', [
-        "uses" => "UserController@delFavlist",
         "middleware" => "auth"
     ]);
 
@@ -130,16 +122,6 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
-	Route::get('/good/{good_id}/add_favlist', [
-		"uses" => "GoodController@addFavlist",
-		"middleware" => "auth"
-	]);
-
-	Route::delete('/good/{good_id}/del_favlist', [
-		"uses" => "GoodController@delFavList",
-		"middleware" => "auth"
-	]);
-
     Route::get('/good/{good_id}/check', [
         "uses" => "AdminController@checkGood",
         "middleware" => "admin"
@@ -152,16 +134,11 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::post('/user/{user_id}/updatePriv', [
         "uses" => "AdminController@updateUserPriv",
-        "middleware" => "admin"
+        "middleware" => "su"
     ]);
 
     Route::post('/user/{user_id}/updateRole', [
         "uses" => "AdminController@updateUserRole",
-        "middleware" => "admin"
-    ]);
-
-    Route::post('/cat/{cat_id}/edit', [
-        "uses" => "AdminController@editCategory",
         "middleware" => "admin"
     ]);
 

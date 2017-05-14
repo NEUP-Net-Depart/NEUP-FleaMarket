@@ -6,11 +6,18 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class CheckAdmin
+class CheckSu
 {
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('username')&&$request->session()->has('is_admin'))
+        if($request->session()->has('username')&&$request->session()->get('is_admin')==2)
         {
             return $next($request);
         }

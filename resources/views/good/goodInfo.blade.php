@@ -3,14 +3,19 @@
 @section('title', "商品详情")
 
 @section('asset')
-<link rel="stylesheet" href="/css/lrtk.css" />
+    <link rel="stylesheet" href="/css/lrtk.css" />
 @endsection
 
 @section('content')
-    <script type="text/javascript" src="/js/good/imgbox/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+       <script type="text/javascript">
+               var $jQuery_NEW = $.noConflict(true);
+           </script>
+       <!--Pop new version of jQuery and 向黑恶势力低头-->
+       <script src="https://cdn.bootcss.com/jquery/1.3.1/jquery.min.js"></script>
     <script src="/js/good/imgbox/jquery.imgbox.pack.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#pic").imgbox({
                 'speedIn'		: 0,
                 'speedOut'		: 0,
@@ -44,14 +49,14 @@
                         (库存:{{ $good->count }}件)
                     @endif
 
-                        @if($good->user_id == Session::get('user_id'))
-                            <form action="/good/{{ $good->id }}/edit" style="margin:0px;display:inline;">
-                                <input type="submit" class="button" value="修改">
-                            </form>
-                            <form action="/good/{{ $good->id }}/delete" method="POST" style="margin:0px;display:inline;" id="del" onsubmit="return confirm('确定删除吗？');">
-                                {!! csrf_field() !!}
-                                {!! method_field('DELETE') !!}
-                                <input type="submit" class="button" value="删除">
+                    @if($good->user_id == Session::get('user_id'))
+                        <form action="/good/{{ $good->id }}/edit" style="margin:0px;display:inline;">
+                            <input type="submit" class="button" value="修改">
+                        </form>
+                        <form action="/good/{{ $good->id }}/delete" method="POST" style="margin:0px;display:inline;" id="del" onsubmit="return confirm('确定删除吗？');">
+                            {!! csrf_field() !!}
+                            {!! method_field('DELETE') !!}
+                            <input type="submit" class="button" value="删除">
                         </form>
                     @endif
                 </div>
@@ -60,27 +65,27 @@
     </div>
     <div class="row">
         <div class="small-12 medium-6 medium-offset-6 columns">
-        @if(isset($inFvlst))
+            @if(isset($inFvlst))
                 <form id="fav">
                     {!! csrf_field() !!}
                     @if(count($inFvlst) == 0)
                         <input id="fav_smt" class="button" type="button" name="submit1" onclick="add_favlist()"
-                            value="收藏OvO"/>
+                               value="收藏OvO"/>
                     @endif
                     @if(count($inFvlst) != 0)
                         <input id="fav_smt" class="button" type="button" name="submit1" onclick="del_favlist()"
-                            value="取消收藏QAQ"/>
+                               value="取消收藏QAQ"/>
                     @endif
                 </form>
             @else
                 <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
-                    value="收藏OvO"/>
+                       value="收藏OvO"/>
             @endif
         </div>
     </div>
     <div class="row">
         <div class="small-12 medium-12 columns">
-           <h3>商品介绍: </h3>
+            <h3>商品介绍: </h3>
             <p>{{ $good->description }}</p>
         </div>
     </div>
@@ -90,12 +95,12 @@
                 return ($(this).attr("name") + '=' + $(this).val());
             }).get().join("&");
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/good/{{ $good->id }}/add_favlist",
                 data: str_data,
                 success: function (msg) {
                     $('#fav_smt').val('取消收藏QAQ');
-                    $('#fav_smt').attr('onclick', 'del_favlist()');
+                    $jQuery_NEW('#fav_smt').attr('onclick', 'del_favlist()');
                 }
             });
         }
@@ -110,7 +115,7 @@
                 data: str_data,
                 success: function (msg) {
                     $('#fav_smt').val('收藏OvO');
-                    $('#fav_smt').attr('onclick', 'add_favlist()');
+                    $jQuery_NEW('#fav_smt').attr('onclick', 'add_favlist()');
                 }
             });
         }

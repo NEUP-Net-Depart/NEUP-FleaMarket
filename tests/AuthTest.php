@@ -100,10 +100,10 @@ class AuthTest extends BrowserKitTestCase
             ->press('登录')
             ->seePageIs('/register/2')
             ->attach(__DIR__ . '/resources/good.jpg', 'avatarPic')
-            ->type('400', 'crop_width')
-            ->type('225', 'crop_height')
-            ->type('50', 'crop_x')
-            ->type('137.5', 'crop_y')
+            ->type('500', 'crop_width')
+            ->type('500', 'crop_height')
+            ->type('0', 'crop_x')
+            ->type('0', 'crop_y')
             ->press('保存')
             ->seePageIs('/register/3');
 

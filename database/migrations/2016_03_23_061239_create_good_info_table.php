@@ -23,6 +23,7 @@ class CreateGoodInfoTable extends Migration
             $table->integer('count');
             $table->boolean('baned');
             $table->boolean('stared');
+            $table->integer('fav_num')->default(0);
             $table->timestamps();
       });
     }

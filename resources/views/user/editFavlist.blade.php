@@ -32,8 +32,8 @@
 @section('content')
 
     <div class="page-content">
-        <a href="/user/get_favlist" class="button">返回收藏夹</a>
-        <form action="/user/del_favlist" method="POST">
+        <a href="/user/fav" class="button">返回收藏夹</a>
+        <form action="/user/fav/del" method="POST">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
             <label>收藏商品</label>
@@ -54,7 +54,7 @@
                     </tr>
                 @endforeach
             </table>
-            <input type="submit" name="submit1" class="button" value="删除选中商品"/>
+            <input type="submit" name="del_submit" class="button" value="删除选中商品"/>
         </form>
     </div>
     <script>

@@ -6,9 +6,11 @@
 
     <style>
         label {
+            text-align: right;
             font-size: medium;
             min-width: 80px;
             max-width: 100px;
+            float: right;
         }
     </style>
 
@@ -24,7 +26,7 @@
                 </label>
             @endif
             @foreach($goods as $good)
-                <form action="/good/{{$good->id}}/edit" method="POST">
+                <form action="/good/{{$good->id}}/edit" method="POST" enctype="multipart/form-data">
                     <div class="row">
                         <div class="small-2 columns">
                             <label class="right inline">商品名称:</label>
@@ -99,17 +101,21 @@
                         </div>
                     </div>
                     --}}
-                    {{--            <div class="row">
-                                    <div class="small-4 columns">
-                                        <label for="goodTitleUpload" class="button right inline">上传封面</label>
-                                    </div>
-                                    <div id="preview" class="small-8 columns"></div>
-                                    <div style="display: none">
-                                        <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic"
-                                               onchange="preview(this)"/>
-                                    </div>
-                                </div>
-                                <p></p>--}}
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <label for="goodTitleUpload" class="button right inline">更改封面</label>
+                        </div>
+                        <div id="preview" class="small-8 columns"></div>
+                        <div style="display: none">
+                            <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic"
+                                onchange="preview(this)"/>
+                            <input id="goodTitleUploadCpWidth" type="hidden" name="crop_width">
+                            <input id="goodTitleUploadCpHeight" type="hidden" name="crop_height">
+                            <input id="goodTitleUploadCpX" type="hidden" name="crop_x">
+                            <input id="goodTitleUploadCpY" type="hidden" name="crop_y">
+                        </div>
+                    </div>
+                    <p></p>
                     <div class="row">
                         <div class="small-2 small-offset-3 columns">
                             <input type="submit" class="button" value="更改" style="margin: 0;"/>
@@ -121,11 +127,43 @@
                     {!! csrf_field() !!}
                 </form>
             @endforeach
-            @if(count($errors) > 0)
-                @foreach($errors as $error)
-                    {{$error}}
-                @endforeach
-            @endif
         </div>
     </div>
+    <script type="text/javascript">
+        function preview(file) {
+            var prevDiv = document.getElementById('preview');
+            if (file.files && file.files[0]) {
+                var prreader = new FileReader();
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    prevDiv.innerHTML = '<img id="goodimgpreview" src="' + evt.target.result + '" />';
+                    $jQuery_FOUNDATION('#goodimgpreview').cropper({
+                        aspectRatio: 16 / 9,
+                        crop: function (e) {
+                            $("#goodTitleUploadCpX").val(e.x);
+                            $("#goodTitleUploadCpY").val(e.y);
+                            $("#goodTitleUploadCpWidth").val(e.width);
+                            $("#goodTitleUploadCpHeight").val(e.height);
+                        }
+                    });
+                };
+                prreader.onload = function (evt) {
+                    var fileBuf = new Uint8Array(evt.target.result.slice(0, 11));
+                    var mime = isImage(fileBuf);
+                    if (mime == null) {
+                        //This should be modified
+                        alert("Please open image!");
+                        return;
+                    }
+                    else {
+                        reader.readAsDataURL(file.files[0]);
+                    }
+                };
+                prreader.readAsArrayBuffer(file.files[0]);
+            }
+            else {
+                prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+            }
+        }
+    </script>
 @endsection

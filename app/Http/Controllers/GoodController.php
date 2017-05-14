@@ -217,9 +217,10 @@ class GoodController extends Controller
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $good = GoodInfo::find($good_id);
+        if($good == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         $data['goods'] = [];
         array_push($data['goods'], $good);
-        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
+        if($request->session()->get('user_id')!=$good->user_id && $request->session()->get('is_admin')!=2)
             return Redirect::to('/good/'.$good_id);
         /*$data['tags'] = Tag::orderby('id', 'asc')->get();
         $collection = GoodTag::where('good_id', $good_id)->pluck('tag_id');
@@ -231,7 +232,8 @@ class GoodController extends Controller
     {
         $input = $request->all();
         $good = GoodInfo::find($good_id);
-        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
+        if($good == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
+        if($request->session()->get('user_id')!=$good->user_id && $request->session()->get('is_admin')!=2)
             return Redirect::to('/good/'.$good_id);
         $good->good_name=$input['good_name'];
         $good->cat_id=$input['cat_id'];
@@ -241,9 +243,9 @@ class GoodController extends Controller
         $good->count=$input['count'];
         $good->update();
 
+        /*
         $deleteoldtags = GoodTag::where('good_id', $good_id)->delete();
-
-        /*$good_tags = $input['good_tag'];
+        $good_tags = $input['good_tag'];
         foreach($good_tags as $tag_id)
         {
             $tag = new GoodTag;
@@ -261,7 +263,11 @@ class GoodController extends Controller
             $tag->good_id = $good->id;
             $tag->save();
         }*/
-
+        if($request->hasFile('goodTitlePic'))
+            Storage::put(
+                'good/titlepic/'.sha1($good->id),
+                Image::make($request->file('goodTitlePic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->encode('data-url')
+            );
         return Redirect::to('/good/'.$good_id);
     }
 
@@ -274,8 +280,9 @@ class GoodController extends Controller
     public function deleteGood(Request $request, $good_id)
     {
         $good = GoodInfo::find($good_id);
-        if($request->session()->get('user_id') != $good->user_id)
+        if($request->session()->get('user_id') != $good->user_id && $request->session()->get('is_admin')!=2)
             return Redirect::to('/good/'.$good_id);
+        Storage::delete('good/titlepic/'.sha1($good->id));
         $good->delete();
         //$deleteGoodTag = GoodTag::where('good_id', $good_id)->delete();
         $deleteFavList = Favlist::where('good_id', $good_id)->delete();
@@ -308,40 +315,26 @@ class GoodController extends Controller
         return view::make('good.goodList')->with($data);
 	}
 
-	/*
-	 * @funtion about Favlist
-	 * @input $request (use query) $good_id
-=======
-	 * @funtion addFavlist
-	 * @input $request (use query)
->>>>>>> Stashed changes
-	 *
-	 * @return Redirect or View
-	 * @description Process the query and add good to certain user's
-	 *				favorite list or delete good from certain user's
-	 *				favorite list
-	 */
-
 	public function addFavlist(Request $request, $good_id)
 	{
-		if(!$request->session()->has('user_id'))
-			return Redirect::back();
 		$fav = new FavList;
 		$fav->user_id = $request->session()->get('user_id');
 		$fav->good_id = $good_id;
 		$fav->save();
-		return Redirect::to('/good/'.$good_id);
+		$good = GoodInfo::find($good_id);
+		$good->fav_num++;
+		$good->save();
+		return json_encode(['msg' => 'success']);
 	}
 
 	public function delFavlist(Request $request, $good_id)
 	{
-		if(!$request->session()->has('user_id'))
-			return Redirect::back();
 		$user_id = $request->session()->get('user_id');
-		$items = FavList::where('user_id', $user_id)->where('good_id', $good_id)->get();
-		foreach($items as $item) $del_id = FavList::find($item->id);
-		$del_id->delete();
-		return Redirect::to('/good/'.$good_id);
+		FavList::where('user_id', $user_id)->where('good_id', $good_id)->delete();
+        $good = GoodInfo::find($good_id);
+        $good->fav_num--;
+        $good->save();
+		return json_encode(['msg' => 'success']);
 	}
 
     public function getSimpleTitlePic(Request $request, $good_id)
