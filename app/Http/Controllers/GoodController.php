@@ -44,7 +44,48 @@ class GoodController extends Controller
             $data['goods'] = GoodInfo::where('cat_id', $input['cat_id']);
             $data['cat_id'] = $input['cat_id'];
         }
-        $data['goods'] = $data['goods']->orderby('id', 'asc')->where('baned', 0)->paginate(16);
+        //同时给定价格上下限
+        if(isset($input['start_price']) && isset($input['end_price'])){
+            //确保上限大于下限
+            if($input['start_price'] > $input['end_price']){
+              $temp = $input['start_price'];
+              $input['start_price'] = $input['end_price'];
+              $input['end_price'] = $temp;
+            }
+            $data['goods'] = $data['goods']->where([
+                                ['price', '>=', $input['start_price']],
+                                ['price', '<=', $input['end_price']]
+                              ]);
+        }
+        //只设上限或下限时
+        else{
+            if(isset($input['start_price']))
+                $data['goods'] = $data['goods']->where('price', '>=', $input['start_price']);
+            if(isset($input['end_price']))
+                $data['goods'] = $data['goods']->where('price', '<=', $input['end_price']);
+            }
+        //对数量筛选只设下限
+        if(isset($input['start_count']))
+            $data['goods'] = $data['goods']->where('count', '>=', $input['start_count']);
+        // 最后在排序筛选baned==0以及paginate分页
+        // p为价格，c为数量，d为倒序
+        if(isset($input['sort'])){
+            if ($input['sort'] == 'p'){
+              $data['goods'] = $data['goods']->orderby('price', 'asc')->where('baned', 0)->paginate(16);
+            }
+            elseif ($input['sort'] == 'pd') {
+              $data['goods'] = $data['goods']->orderby('price', 'desc')->where('baned', 0)->paginate(16);
+            }
+            elseif ($input['sort'] == 'c') {
+              $data['goods'] = $data['goods']->orderby('count', 'asc')->where('baned', 0)->paginate(16);
+            }
+            elseif ($input['sort'] == 'cd') {
+              $data['goods'] = $data['goods']->orderby('count', 'desc')->where('baned', 0)->paginate(16);
+            }
+        }
+        //未指定排序规则时按id正序排序
+        else
+          $data['goods'] = $data['goods']->orderby('id', 'asc')->where('baned', 0)->paginate(16);
 		if($request->session()->has('user_id'))
 		    $data['user_id'] = $request->session()->get('user_id');
 		else
