@@ -315,40 +315,26 @@ class GoodController extends Controller
         return view::make('good.goodList')->with($data);
 	}
 
-	/*
-	 * @funtion about Favlist
-	 * @input $request (use query) $good_id
-=======
-	 * @funtion addFavlist
-	 * @input $request (use query)
->>>>>>> Stashed changes
-	 *
-	 * @return Redirect or View
-	 * @description Process the query and add good to certain user's
-	 *				favorite list or delete good from certain user's
-	 *				favorite list
-	 */
-
 	public function addFavlist(Request $request, $good_id)
 	{
-		if(!$request->session()->has('user_id'))
-			return Redirect::back();
 		$fav = new FavList;
 		$fav->user_id = $request->session()->get('user_id');
 		$fav->good_id = $good_id;
 		$fav->save();
-		return Redirect::to('/good/'.$good_id);
+		$good = GoodInfo::find($good_id);
+		$good->fav_num++;
+		$good->save();
+		return json_encode(['msg' => 'success']);
 	}
 
 	public function delFavlist(Request $request, $good_id)
 	{
-		if(!$request->session()->has('user_id'))
-			return Redirect::back();
 		$user_id = $request->session()->get('user_id');
-		$items = FavList::where('user_id', $user_id)->where('good_id', $good_id)->get();
-		foreach($items as $item) $del_id = FavList::find($item->id);
-		$del_id->delete();
-		return Redirect::to('/good/'.$good_id);
+		FavList::where('user_id', $user_id)->where('good_id', $good_id)->delete();
+        $good = GoodInfo::find($good_id);
+        $good->fav_num--;
+        $good->save();
+		return json_encode(['msg' => 'success']);
 	}
 
     public function getSimpleTitlePic(Request $request, $good_id)

@@ -89,6 +89,15 @@ class GoodTest extends BrowserKitTestCase
             ->dontSee('修改');
     }
 
+    public function testFavList()
+    {
+        $this->withSession(['user_id' => 1])
+            ->post('/good/1/add_favlist')
+            ->see('success')
+            ->delete('/good/1/del_favlist')
+            ->see('success');
+    }
+
     public function testEditGood()
     {
         //test edit good
@@ -170,4 +179,5 @@ class GoodTest extends BrowserKitTestCase
             ->visit('/good/1/edit')
             ->see('商品ID错误');
     }
+
 }

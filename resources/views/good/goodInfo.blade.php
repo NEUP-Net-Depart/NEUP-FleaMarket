@@ -89,7 +89,7 @@
                 return ($(this).attr("name") + '=' + $(this).val());
             }).get().join("&");
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/good/{{ $good->id }}/add_favlist",
                 data: str_data,
                 success: function (msg) {

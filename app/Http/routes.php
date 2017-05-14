@@ -70,6 +70,9 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/good/{good_id}/titlepic', "GoodController@getSimpleTitlePic");
     Route::get('/good/{good_id}/titlepic/{width}/{height}', "GoodController@getTitlePic");
 
+    Route::post('/good/{good_id}/add_favlist', "GoodController@addFavlist")->middleware('auth');
+    Route::delete('/good/{good_id}/del_favlist', "GoodController@delFavList")->middleware('auth');
+
     //------Above are tested function
 
     Route::get('/user/{user_id}/edit', [
@@ -129,16 +132,6 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "GoodController@allow",
         "middleware" => "auth"
     ]);
-
-	Route::get('/good/{good_id}/add_favlist', [
-		"uses" => "GoodController@addFavlist",
-		"middleware" => "auth"
-	]);
-
-	Route::delete('/good/{good_id}/del_favlist', [
-		"uses" => "GoodController@delFavList",
-		"middleware" => "auth"
-	]);
 
     Route::get('/good/{good_id}/check', [
         "uses" => "AdminController@checkGood",
