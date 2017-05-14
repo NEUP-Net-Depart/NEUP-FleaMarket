@@ -2,8 +2,12 @@
 
 @section('title', "商品详情")
 
+@section('asset')
+<link rel="stylesheet" href="/css/lrtk.css" />
+@endsection
+
 @section('content')
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/good/imgbox/jquery.min.js"></script>
     <script src="/js/good/imgbox/jquery.imgbox.pack.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -19,27 +23,25 @@
 
     <div class="row">
         <div class="small-12 medium-5 columns thumbnail">
-            <a id="pic" title="" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" src="/good/{{ sha1($good->id) }}/titlepic" /></a>
-
-
-
+            <a id="pic" title="<br/>" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" src="/good/{{ sha1($good->id) }}/titlepic" /></a>
         </div>
         <div class="small-12 medium-6 medium-offset-1 columns">
             <h1>{{ $good->good_name }}</h1>
             <div><!-- 放tag 和更多图片缩略图 --></div>
-            <h4 style="color: #cc4b37"><b>￥{{ $good->pricemin }} - ￥{{ $good->pricemax }}</b></h4>
+            <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             <div class="row">
                 <div class="small-5 columns">
                     @if(($good->user_id) != Session::get('user_id'))
                         <form action="/good/{{ $good->id }}/buy" method="post">
                             <div class="input-group">
-                                <input type="number" name="counts" value="1" class="input-group-field"/>
+                                <input type="number" name="count" value="1" class="input-group-field"/>
                                 {!! csrf_field() !!}
                                 <div class="input-group-button">
                                     <input type="submit" class="button" value="购买"/>
                                 </div>
                             </div>
                         </form>
+                        (库存:{{ $good->count }}件)
                     @endif
 
                         @if($good->user_id == Session::get('user_id'))
@@ -50,36 +52,36 @@
                                 {!! csrf_field() !!}
                                 {!! method_field('DELETE') !!}
                                 <input type="submit" class="button" value="删除">
-                            </form>
-                        @endif
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="small-12 medium-6 columns">
-            {{ $good->description }}
-
-        </div>
-    </div>
-    <div class="row">
         <div class="small-12 medium-6 medium-offset-6 columns">
-            @if(isset($inFvlst))
+        @if(isset($inFvlst))
                 <form id="fav">
                     {!! csrf_field() !!}
                     @if(count($inFvlst) == 0)
                         <input id="fav_smt" class="button" type="button" name="submit1" onclick="add_favlist()"
-                               value="收藏OvO"/>
+                            value="收藏OvO"/>
                     @endif
                     @if(count($inFvlst) != 0)
                         <input id="fav_smt" class="button" type="button" name="submit1" onclick="del_favlist()"
-                               value="取消收藏QAQ"/>
+                            value="取消收藏QAQ"/>
                     @endif
                 </form>
             @else
                 <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
-                       value="收藏OvO"/>
+                    value="收藏OvO"/>
             @endif
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-12 columns">
+           <h3>商品介绍: </h3>
+            <p>{{ $good->description }}</p>
         </div>
     </div>
     <script>

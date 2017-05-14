@@ -41,22 +41,20 @@
                 <tr>
                     <td>#</td>
                     <td>商品名称</td>
-                    <td>最低价格</td>
-                    <td>最高价格</td>
+                    <td>商品价格</td>
                     <td>选择</td>
                 </tr>
                 @foreach($goods as $good)
                     <tr>
                         <td>{{ $good->good_id }}</td>
                         <td><a href="/good/{{$good->good_id}}" onMouseOver="toolTip('<img src=/good/{{ sha1($good->good_id) }}/titlepic>')" onMouseOut="toolTip()">{{ $good_info[$good->good_id]->good_name }}</a><img src="/good/{{ sha1($good->good_id) }}/titlepic" class="pic" /></td>
-                        <td>{{ $good_info[$good->good_id]->pricemin }}</td>
-                        <td>{{ $good_info[$good->good_id]->pricemax }}</td>
+                        <td>{{ $good_info[$good->good_id]->price }}</td>
                         <td><input type="checkBox" name="del_goods[]" value="0" id="box{{ $good->good_id }}"
                                    onclick="{setValue({{ $good->good_id }})}"/></td>
                     </tr>
                 @endforeach
             </table>
-            <input type="submit" name="submit1"class="button" value="删除选中商品"/>
+            <input type="submit" name="submit1" class="button" value="删除选中商品"/>
         </form>
     </div>
     <script>

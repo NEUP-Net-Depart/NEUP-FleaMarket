@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/css/foundation.css"/>
     <link rel="stylesheet" href="/css/app.css"/>
     <link rel="stylesheet" href="/css/cropper.min.css"/>
-    <link rel="stylesheet" href="/js/good/imgbox/imgbox.css" />
     @yield('asset')
     <script src="/js/jquery.min.js"></script>
     <script src="/js/vendor/jquery.min.js"></script>

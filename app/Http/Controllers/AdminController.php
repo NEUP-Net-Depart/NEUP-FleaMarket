@@ -22,7 +22,7 @@ class AdminController extends Controller
     public function adminIndex(Request $request)
     {
         $data = [];
-        $data['goods'] = GoodInfo::where('checked', '0')->orderby('id', 'asc')->get();
+        $data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
         $data['users'] = User::orderby('id', 'asc')->get();
         $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
         return View::make('admin.index')->with($data);
@@ -37,7 +37,7 @@ class AdminController extends Controller
     public function checkGood(Request $request, $good_id)
     {
         $good = GoodInfo::find($good_id);
-        $good->checked = 1;
+        $good->baned = 0;
         $good->update();
         return Redirect::to('/admin');
     }

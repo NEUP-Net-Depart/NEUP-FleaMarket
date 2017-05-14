@@ -50,18 +50,10 @@
                 </div>
                 <div class="row">
                     <div class="small-2 columns">
-                        <label class="right inline">最低价格:</label>
+                        <label class="right inline">商品价格:</label>
                     </div>
                     <div class="small-10 columns">
-                        <input type="number" name="pricemin" placeholder="最低价格">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-2 columns">
-                        <label class="right inline">最高价格:</label>
-                    </div>
-                    <div class="small-10 columns">
-                        <input type="number" name="pricemax" placeholder="最高价格">
+                        <input type="number" name="price" placeholder="商品价格">
                     </div>
                 </div>
                 <div class="row">
@@ -80,17 +72,23 @@
                         <label class="right inline">商品数量:</label>
                     </div>
                     <div class="small-10 columns">
-                        <input type="number" name="counts" placeholder="库存">
+                        <input type="number" name="count" placeholder="库存">
                     </div>
                 </div>
+                {{--
                 <div class="row">
                     <div class="small-2 columns">
                         <label class="right inline">商品标签:</label>
                     </div>
                     <div class="small-10 columns">
-                        <input type="text" name="good_tag" placeholder="TAG">
+                        @foreach($tags as $tag)
+                            <label><input type="checkbox" name="good_tag[]" value="{{$tag->id}}">{{$tag->tag_name}}</label>
+                        @endforeach
+                        <label><input type="checkbox" name="good_tag[]" value="0">自定义
+                            <input type="text" name="other_tag" value="" placeholder="自定义标签请在这里输入"></label>
                     </div>
                 </div>
+                --}}
                 <div class="row">
                     <div class="small-4 columns">
                         <label for="goodTitleUpload" class="button right inline">上传封面</label>

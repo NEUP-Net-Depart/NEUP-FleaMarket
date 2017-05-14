@@ -93,10 +93,23 @@ class AuthTest extends BrowserKitTestCase
             ->dontSee('出售')
             ->assertSessionMissing('user_id');
 
-        //test 3
-        mkdir(__DIR__ . '/../storage/app/avatar');
-        touch(__DIR__ . '/../storage/app/avatar/1');
+        //test 2 avatar
         $this->visit('/login')
+            ->type('test@example.com', 'username')
+            ->type('test@example.com', 'password')
+            ->press('登录')
+            ->seePageIs('/register/2')
+            ->attach(__DIR__ . '/resources/good.jpg', 'avatarPic')
+            ->type('400', 'crop_width')
+            ->type('225', 'crop_height')
+            ->type('50', 'crop_x')
+            ->type('137.5', 'crop_y')
+            ->press('保存')
+            ->seePageIs('/register/3');
+
+        //test 3
+        $this->visit('logout')
+            ->visit('/login')
             ->type('test@example.com', 'username')
             ->type('test@example.com', 'password')
             ->press('登录')

@@ -11,14 +11,17 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\GoodCat;
 use App\GoodInfo;
+use App\GoodTag;
 use App\Transaction;
 use App\TransactionLog;
 use App\Messages;
+use App\Tag;
 use App\FavList;
 use App\Http\Controllers\Controller;
 use Storage;
 use Image;
 use App\Http\Requests\AddGoodRequest;
+use App\Http\Requests\EditGoodRequest;
 
 class GoodController extends Controller
 {
@@ -41,14 +44,14 @@ class GoodController extends Controller
             $data['goods'] = GoodInfo::where('cat_id', $input['cat_id']);
             $data['cat_id'] = $input['cat_id'];
         }
-        $data['goods'] = $data['goods']->orderby('id', 'asc')->where('checked', 1)->paginate(16);
-		if($request->session()->has('user_id')) 
+        $data['goods'] = $data['goods']->orderby('id', 'asc')->where('baned', 0)->paginate(16);
+		if($request->session()->has('user_id'))
 		    $data['user_id'] = $request->session()->get('user_id');
-		else 
+		else
 		    $data['user_id'] = NULL;
 		if($request->session()->has('is_admin'))
 	        $data['is_admin'] = $request->session()->get('is_admin');
-		else 
+		else
 			$data['is_admin'] = NULL;
         $data['page'] = 1;
         if(isset($input['page'])) $data['page'] = $input['page'];
@@ -80,16 +83,16 @@ class GoodController extends Controller
         if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         $data['user'] = UserInfo::where('id', $data['good']->user_id)->first();
         $data['sell'] = Transaction::where('good_id',$good_id)->first();
-		if($request->session()->has('user_id')) 
+		if($request->session()->has('user_id'))
 		{
 			$data['user_id'] = $request->session()->get('user_id');
 			$data['inFvlst'] = FavList::where('user_id', $data['user_id'])->where('good_id', $good_id)->get();
 		}
-		else 
+		else
 		    $data['user_id'] = NULL;
 		if($request->session()->has('is_admin'))
 		    $data['is_admin'] = $request->session()->get('is_admin');
-		else 
+		else
 		    $data['is_admin'] = NULL;
         $good = GoodInfo::where('id', $good_id)->first();
         return view::make('good.goodInfo')->with($data);
@@ -111,7 +114,7 @@ class GoodController extends Controller
         {
             $good->status=5;
             $goodinfo = GoodInfo::find($good->good_id);
-            $goodinfo->counts = $goodinfo->counts-$good->number;
+            $goodinfo->count = $goodinfo->count-$good->number;
             $goodinfo->save();
         }
         $good->save();
@@ -122,14 +125,14 @@ class GoodController extends Controller
     {
         $input = $request->all();
         $data = GoodInfo::find($good_id);
-        if($input['counts']<=0||$input['counts']>$data->counts)
+        if($input['count']<=0||$input['count']>$data->count)
         return Redirect::to('/good/'.$good_id)->withErrors('购买数量不符合规范');
         $buy = new Transaction;
         $buy->good_id = $good_id;
         $buy->buyer_id = $request->session()->get('user_id');
         $buy->seller_id = $data->user_id;
         $buy->status = 1;
-        $buy->number = $input['counts'];
+        $buy->number = $input['count'];
         $buy->save();
         $buyername = User::find($data->user_id);
         $goodname = GoodInfo::where('id',$good_id)->first();
@@ -155,43 +158,52 @@ class GoodController extends Controller
      * @return Redirect
      * @description Add a new good.
      */
+    public function showAddGood(Request $request)
+    {
+        $data = [];
+        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
+        //$data['tags'] = Tag::orderby('id', 'asc')->get();
+        return view::make('good.addPage')->with($data);
+    }
+
     public function addGood(AddGoodRequest $request)
     {
-        if($request->method() == "GET"){
-            $data = [];
-			if(!$request->session()->has('user_id')) 
-			    return Redirect::back();
-            $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
-            return view::make('good.addPage')->with($data);
-        }else{
-			if(!$request->session()->has('user_id')) 
-		        return Redirect::back();
-            $this->validate($request, [
-                'good_name' => 'required',
-                'description' => 'required',
-                'pricemin' => 'required',
-                'pricemax' => 'required',
-                'counts' => 'required',
-            ]);
-            $input = $request->all();
-            $good = new GoodInfo;
-            $good->good_name = $input['good_name'];
-            $good->cat_id = $input['cat_id'];
-            $good->description = $input['description'];
-            $good->pricemin = $input['pricemin'];
-            $good->pricemax = $input['pricemax'];
-            $good->type = $input['type'];
-            $good->counts = $input['counts'];
-            $good->good_tag = $input['good_tag'];
-            $good->user_id = $request->session()->get('user_id');
-            $good->checked = '1';
-            $good->save();
-            Storage::put(
-                'good/titlepic/'.sha1($good->id),
-                Image::make($request->file('goodTitlePic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->encode('data-url')
-            );
-            return Redirect::to('/good/'.$good->id);
-        }
+        $input = $request->all();
+        $good = new GoodInfo;
+        $good->good_name = $input['good_name'];
+        $good->cat_id = $input['cat_id'];
+        $good->description = $input['description'];
+        $good->price = $input['price'];
+        $good->type = $input['type'];
+        $good->count = $input['count'];
+        $good->user_id = $request->session()->get('user_id');
+        $good->baned = '0';
+        $good->save();
+
+        /*$good_tags = $input['good_tag'];
+        foreach($good_tags as $tag_id)
+        {
+            $tag = new GoodTag;
+            if(!$tag_id)
+            {
+                $otherTag = new Tag;
+                $otherTag->tag_name = $input['other_tag'];
+                $otherTag->save();
+                $tag->tag_id = $otherTag->id;
+            }
+            else if($tag_id)
+            {
+                $tag->tag_id = $tag_id;
+            }
+            $tag->good_id = $good->id;
+            $tag->save();
+        }*/
+
+        Storage::put(
+            'good/titlepic/'.sha1($good->id),
+            Image::make($request->file('goodTitlePic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->encode('data-url')
+        );
+        return Redirect::to('/good/'.$good->id);
     }
 
     /**
@@ -200,40 +212,57 @@ class GoodController extends Controller
      * @return Redirect
      * @description Edit a specify good.
      */
-    public function editGood(Request $request, $good_id)
+    public function showEditGood(Request $request, $good_id)
     {
-        if($request->method() == "GET"){
-            $data = [];
-            $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
-            $data['goods'] = GoodInfo::where('id', $good_id)->get();
-            return view::make('good.editPage')->with($data);
-        }else{
-			if(!$request->session()->has('user_id')) 
-			    return Redirect::back();
-            $this->validate($request, [
-                'good_name' => 'required',
-                'cat_id' => 'required',
-                'description' => 'required',
-                'pricemin' => 'required',
-                'pricemax' => 'required',
-                'type' => 'required',
-                'counts' => 'required',
-            ]);
-            $input = $request->all();
-            $good = GoodInfo::find($good_id);
-			if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin')) 
-		        return Redirect::back();
-            $good->good_name=$input['good_name'];
-            $good->cat_id=$input['cat_id'];
-            $good->description=$input['description'];
-            $good->pricemin=$input['pricemin'];
-            $good->pricemax=$input['pricemax'];
-            $good->type=$input['type'];
-            $good->counts=$input['counts'];
-            $good->good_tag=$input['good_tag'];
-            $good->update();
+        $data = [];
+        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
+        $good = GoodInfo::find($good_id);
+        $data['goods'] = [];
+        array_push($data['goods'], $good);
+        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
             return Redirect::to('/good/'.$good_id);
-        }
+        /*$data['tags'] = Tag::orderby('id', 'asc')->get();
+        $collection = GoodTag::where('good_id', $good_id)->pluck('tag_id');
+        $data['this_good_tags'] = $collection->toArray();*/
+        return view::make('good.editPage')->with($data);
+    }
+
+    public function editGood(EditGoodRequest $request, $good_id)
+    {
+        $input = $request->all();
+        $good = GoodInfo::find($good_id);
+        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
+            return Redirect::to('/good/'.$good_id);
+        $good->good_name=$input['good_name'];
+        $good->cat_id=$input['cat_id'];
+        $good->description=$input['description'];
+        $good->price=$input['price'];
+        $good->type=$input['type'];
+        $good->count=$input['count'];
+        $good->update();
+
+        $deleteoldtags = GoodTag::where('good_id', $good_id)->delete();
+
+        /*$good_tags = $input['good_tag'];
+        foreach($good_tags as $tag_id)
+        {
+            $tag = new GoodTag;
+            if(!$tag_id)
+            {
+                $otherTag = new Tag;
+                $otherTag->tag_name = $input['other_tag'];
+                $otherTag->save();
+                $tag->tag_id = $otherTag->id;
+            }
+            else if($tag_id)
+            {
+                $tag->tag_id = $tag_id;
+            }
+            $tag->good_id = $good->id;
+            $tag->save();
+        }*/
+
+        return Redirect::to('/good/'.$good_id);
     }
 
     /**
@@ -244,12 +273,12 @@ class GoodController extends Controller
      */
     public function deleteGood(Request $request, $good_id)
     {
-        if(!$request->session()->has('user_id'))
-            return Redirect::back();
         $good = GoodInfo::find($good_id);
         if($request->session()->get('user_id') != $good->user_id)
-            return Redirect::back();
+            return Redirect::to('/good/'.$good_id);
         $good->delete();
+        //$deleteGoodTag = GoodTag::where('good_id', $good_id)->delete();
+        $deleteFavList = Favlist::where('good_id', $good_id)->delete();
         return Redirect::to('/good');
     }
 
@@ -268,13 +297,13 @@ class GoodController extends Controller
 		$query = $input['query'];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
 		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%")->get();
-		if($request->session()->has('user_id')) 
+		if($request->session()->has('user_id'))
 		    $data['user_id'] = $request->session()->get('user_id');
-		else 
+		else
 		    $data['user_id'] = NULL;
 		if($request->session()->has('is_admin'))
 	        $data['is_admin'] = $request->session()->get('is_admin');
-		else 
+		else
 		    $data['is_admin'] = NULL;
         return view::make('good.goodList')->with($data);
 	}

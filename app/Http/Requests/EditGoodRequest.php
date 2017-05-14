@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class addGoodRequest extends Request
+class EditGoodRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,11 +30,6 @@ class addGoodRequest extends Request
 			'count'=>'required|max:2147483647',
             //'good_tag'=>'required',
             //'other_tag'=>'max:128',
-			'goodTitlePic'=>'required',
-            'crop_width'=>'required',
-            'crop_height'=>'required',
-            'crop_x'=>'required',
-            'crop_y'=>'required',
         ];
     }
 
@@ -50,11 +45,6 @@ class addGoodRequest extends Request
 			'count.max' => '库存数不能超过2147483647！',
             //'good_tag.required' => '商品标签不能为空！',
             //'other_tag.max' => '自定义标签不能多于2048个字符！',
-			'goodTitlePic.required' => '必须为商品上传一张图片！',
-            'crop_width.required' => '请按要求裁剪图片',
-            'crop_height.required' => '请按要求裁剪图片',
-            'crop_x.required' => '请按要求裁剪图片',
-            'crop_y.required' => '请按要求裁剪图片',
         ];
     }
 }
