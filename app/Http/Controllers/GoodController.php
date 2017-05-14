@@ -45,13 +45,13 @@ class GoodController extends Controller
             $data['cat_id'] = $input['cat_id'];
         }
         $data['goods'] = $data['goods']->orderby('id', 'asc')->where('baned', 0)->paginate(16);
-		if($request->session()->has('user_id')) 
+		if($request->session()->has('user_id'))
 		    $data['user_id'] = $request->session()->get('user_id');
-		else 
+		else
 		    $data['user_id'] = NULL;
 		if($request->session()->has('is_admin'))
 	        $data['is_admin'] = $request->session()->get('is_admin');
-		else 
+		else
 			$data['is_admin'] = NULL;
         $data['page'] = 1;
         if(isset($input['page'])) $data['page'] = $input['page'];
@@ -83,16 +83,16 @@ class GoodController extends Controller
         if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         $data['user'] = UserInfo::where('id', $data['good']->user_id)->first();
         $data['sell'] = Transaction::where('good_id',$good_id)->first();
-		if($request->session()->has('user_id')) 
+		if($request->session()->has('user_id'))
 		{
 			$data['user_id'] = $request->session()->get('user_id');
 			$data['inFvlst'] = FavList::where('user_id', $data['user_id'])->where('good_id', $good_id)->get();
 		}
-		else 
+		else
 		    $data['user_id'] = NULL;
 		if($request->session()->has('is_admin'))
 		    $data['is_admin'] = $request->session()->get('is_admin');
-		else 
+		else
 		    $data['is_admin'] = NULL;
         $good = GoodInfo::where('id', $good_id)->first();
         return view::make('good.goodInfo')->with($data);
@@ -179,7 +179,7 @@ class GoodController extends Controller
         $good->user_id = $request->session()->get('user_id');
         $good->baned = '0';
         $good->save();
-        
+
         /*$good_tags = $input['good_tag'];
         foreach($good_tags as $tag_id)
         {
@@ -198,7 +198,7 @@ class GoodController extends Controller
             $tag->good_id = $good->id;
             $tag->save();
         }*/
-        
+
         Storage::put(
             'good/titlepic/'.sha1($good->id),
             Image::make($request->file('goodTitlePic'))->crop(round($input['crop_width']),round($input['crop_height']),round($input['crop_x']),round($input['crop_y']))->resize(800, 450)->encode('data-url')
@@ -216,10 +216,14 @@ class GoodController extends Controller
     {
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
-        $data['goods'] = GoodInfo::where('id', $good_id)->get();
+        $good = GoodInfo::find($good_id);
+        $data['goods'] = [];
+        array_push($data['goods'], $good);
+        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
+            return Redirect::to('/good/'.$good_id);
         /*$data['tags'] = Tag::orderby('id', 'asc')->get();
         $collection = GoodTag::where('good_id', $good_id)->pluck('tag_id');
-        $data['this_good_tags'] = $collection->toArray();*/ 
+        $data['this_good_tags'] = $collection->toArray();*/
         return view::make('good.editPage')->with($data);
     }
 
@@ -227,8 +231,8 @@ class GoodController extends Controller
     {
         $input = $request->all();
         $good = GoodInfo::find($good_id);
-        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin')) 
-            return Redirect::back();
+        if($request->session()->get('user_id')!=$good->user_id && !$request->session()->has('is_admin'))
+            return Redirect::to('/good/'.$good_id);
         $good->good_name=$input['good_name'];
         $good->cat_id=$input['cat_id'];
         $good->description=$input['description'];
@@ -271,7 +275,7 @@ class GoodController extends Controller
     {
         $good = GoodInfo::find($good_id);
         if($request->session()->get('user_id') != $good->user_id)
-            return Redirect::back();
+            return Redirect::to('/good/'.$good_id);
         $good->delete();
         //$deleteGoodTag = GoodTag::where('good_id', $good_id)->delete();
         $deleteFavList = Favlist::where('good_id', $good_id)->delete();
@@ -293,13 +297,13 @@ class GoodController extends Controller
 		$query = $input['query'];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
 		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%")->get();
-		if($request->session()->has('user_id')) 
+		if($request->session()->has('user_id'))
 		    $data['user_id'] = $request->session()->get('user_id');
-		else 
+		else
 		    $data['user_id'] = NULL;
 		if($request->session()->has('is_admin'))
 	        $data['is_admin'] = $request->session()->get('is_admin');
-		else 
+		else
 		    $data['is_admin'] = NULL;
         return view::make('good.goodList')->with($data);
 	}

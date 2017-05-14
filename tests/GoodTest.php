@@ -49,7 +49,7 @@ class GoodTest extends BrowserKitTestCase
             ->type('65', 'price')
             ->select('1', 'type')
             ->type('10', 'count')
-            ->attach(__DIR__.'/resources/good.jpg', 'goodTitlePic')
+            ->attach(__DIR__ . '/resources/good.jpg', 'goodTitlePic')
             ->press('添加')
             ->see('请按要求裁剪图片')
             ->type('算法竞赛入门经典', 'good_name')
@@ -58,7 +58,7 @@ class GoodTest extends BrowserKitTestCase
             ->type('65', 'price')
             ->select('1', 'type')
             ->type('10', 'count')
-            ->attach(__DIR__.'/resources/good.jpg', 'goodTitlePic')
+            ->attach(__DIR__ . '/resources/good.jpg', 'goodTitlePic')
             ->type('400', 'crop_width')
             ->type('225', 'crop_height')
             ->type('50', 'crop_x')
@@ -92,6 +92,29 @@ class GoodTest extends BrowserKitTestCase
             ->see('汝佳大法好');
     }
 
+    public function testGoodPic()
+    {
+        $this->visit('/good/'. sha1(1) .'/titlepic')
+            ->seeHeader('Content-Type', 'image/jpeg')
+            ->visit('/good/'. sha1(1) .'/titlepic/640/480')
+            ->seeHeader('Content-Type', 'image/jpeg');
+    }
+
+    public function testUnauthorized()
+    {
+        //test unauthorized access
+        $this->withSession(['user_id' => 2])
+            ->visit('/good/1')
+            ->dontSee('修改')
+            ->dontSee('删除')
+            ->visit('/good/1/edit')
+            ->seePageIs('/good/1')
+            ->delete('/good/1/delete')
+            ->seeStatusCode(302)
+            ->post('/good/1/edit', ['good_name' => '111', 'description' => '111', 'price' => 111, 'count' => 111])
+            ->seeStatusCode(302);
+    }
+
     public function testDeleteGood()
     {
 
@@ -103,4 +126,5 @@ class GoodTest extends BrowserKitTestCase
             ->visit('/good/1')
             ->see('商品ID错误');
     }
+
 }

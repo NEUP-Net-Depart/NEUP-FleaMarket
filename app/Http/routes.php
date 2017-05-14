@@ -44,8 +44,6 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::get('/logout', "AuthController@logOut")->middleware('auth');
 
-    //------Above are tested function
-
     Route::get('/register/2', "UserController@showCompleteUser")->middleware('auth');
     Route::post('/register/2', "UserController@completeUser")->middleware('auth');
     Route::get('/register/3', "UserController@regUserInfo")->middleware('auth');
@@ -53,6 +51,24 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('user/userinfo', "UserController@userInfo")->middleware('auth');
     Route::get('/user/userinfo/create', "UserController@createUserInfo")->middleware('auth');
     Route::post('user/userinfo', "UserController@storeUserInfo")->middleware('auth');
+
+    Route::get('/good', "GoodController@getList");
+    Route::get('/good/my', "GoodController@myGood")->middleware('auth');
+
+    Route::get('/good/add', "GoodController@showAddGood")->middleware('auth');
+    Route::post('/good/add', "GoodController@addGood")->middleware('auth');
+
+    Route::get('/good/{good_id}', "GoodController@getInfo");
+    Route::get('/good/{good_id}/edit', "GoodController@showEditGood")->middleware('auth');
+    Route::post('/good/{good_id}/edit', "GoodController@editGood")->middleware('auth');
+
+    Route::delete('/good/{good_id}/delete', "GoodController@deleteGood")->middleware('auth');
+
+    Route::get('/good/{good_id}/titlepic', "GoodController@getSimpleTitlePic");
+
+    Route::get('/good/{good_id}/titlepic/{width}/{height}', "GoodController@getTitlePic");
+
+    //------Above are tested function
 
     Route::get('/avatar/{user_id}', [
         "uses" => "UserController@getSimpleAvatar",
@@ -100,17 +116,6 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "ContentController@announcementPage",
     ]);
 
-    Route::get('/good', "GoodController@getList");
-    Route::get('/good/my', "GoodController@myGood")->middleware('auth');
-
-    Route::get('/good/add', "GoodController@showAddGood")->middleware('auth');
-    Route::post('/good/add', "GoodController@addGood")->middleware('auth');
-
-    Route::get('/good/{good_id}/edit', "GoodController@showEditGood")->middleware('auth');
-    Route::post('/good/{good_id}/edit', "GoodController@editGood")->middleware('auth');
-    
-    Route::delete('/good/{good_id}/delete', "GoodController@deleteGood")->middleware('auth');
-
     Route::match(['post', 'get'], '/good/check', [
         "uses" => "GoodController@check",
         "middleware" => "auth"
@@ -131,14 +136,6 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "auth"
     ]);
 
-    Route::get('/good/{good_id}/titlepic', [
-        "uses" => "GoodController@getSimpleTitlePic",
-    ]);
-
-    Route::get('/good/{good_id}/titlepic/{width}/{height}', [
-        "uses" => "GoodController@getTitlePic",
-    ]);
-
 	Route::get('/good/{good_id}/add_favlist', [
 		"uses" => "GoodController@addFavlist",
 		"middleware" => "auth"
@@ -152,10 +149,6 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/good/{good_id}/check', [
         "uses" => "AdminController@checkGood",
         "middleware" => "admin"
-    ]);
-
-    Route::get('/good/{good_id}', [
-        "uses" => "GoodController@getInfo",
     ]);
 
     Route::get('/admin', [
