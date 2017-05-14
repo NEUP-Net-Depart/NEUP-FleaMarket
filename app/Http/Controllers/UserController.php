@@ -149,15 +149,11 @@ class UserController extends Controller
         $user_id = $request->session()->get('user_id');
         $input = $request->all();
         if (!isset($input['del_goods']))
-            return Redirect::to('/user/edit_favlist');
+            return Redirect::to('/user/fav/edit');
         foreach ($input['del_goods'] as $del_good) {
-            $item = FavList::where('user_id', $user_id)->where('good_id', $del_good)->get();
-            foreach ($item as $it) {
-                $del_id = FavList::find($it->id);
-            }
-            $del_id->delete();
+            FavList::where('user_id', $user_id)->where('good_id', $del_good)->delete();
         }
-        return Redirect::to('/user/edit_favlist');
+        return Redirect::to('/user/fav/edit');
     }
 
     public function getSimpleAvatar(Request $request, $user_id)

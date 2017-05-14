@@ -52,6 +52,10 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/user/userinfo/create', "UserController@createUserInfo")->middleware('auth');
     Route::post('user/userinfo', "UserController@storeUserInfo")->middleware('auth');
 
+    Route::get('/user/fav', "UserController@getFavlist")->middleware('auth');
+    Route::get('/user/fav/edit', "UserController@editFavlist")->middleware('auth');
+    Route::delete('/user/fav/del', "UserController@delFavlist")->middleware('auth');
+
     Route::get('/avatar/{user_id}', "UserController@getSimpleAvatar");
     Route::get('/avatar/{user_id}/{width}/{height}', "UserController@getAvatar");
 
@@ -82,21 +86,6 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::post('/user/{user_id}/edit/middle', [
         "uses" => "UserController@editList",
-        "middleware" => "auth"
-    ]);
-
-    Route::get('/user/get_favlist', [
-        "uses" => "UserController@getFavlist",
-        "middleware" => "auth"
-    ]);
-
-    Route::get('/user/edit_favlist', [
-        "uses" => "UserController@editFavlist",
-        "middleware" => "auth"
-    ]);
-
-    Route::delete('/user/del_favlist', [
-        "uses" => "UserController@delFavlist",
         "middleware" => "auth"
     ]);
 

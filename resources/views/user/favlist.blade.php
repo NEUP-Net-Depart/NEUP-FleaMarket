@@ -48,7 +48,7 @@
                     </tr>
                 @endforeach
             </table>
-            <a href="/user/edit_favlist" class="button">编辑收藏夹</a>
+            <a href="/user/fav/edit" class="button">编辑收藏夹</a>
         </div>
     </div>
     <script src="/js/good/ToolTip.js"></script>
