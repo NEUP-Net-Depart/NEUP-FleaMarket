@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $(document).foundation();
-    $.fn.cropper();
+    $jQuery_FOUNDATION(document).foundation();
+    $jQuery_FOUNDATION.fn.cropper();
 });
 
 var pngMagic = [
@@ -97,7 +97,3 @@ function isPng(data) {
     console.log('PNG')
     return arrayEquals(data, pngMagic);
 }
-
-$(document).ready(function () {
-    $.fn.cropper();
-})

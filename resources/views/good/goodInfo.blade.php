@@ -3,16 +3,21 @@
 @section('title', "商品详情")
 
 @section('content')
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var $jQuery_NEW = $.noConflict(true);
+    </script>
+    <!--Pop new version of jQuery and 向黑恶势力低头-->
+    <script src="https://cdn.bootcss.com/jquery/1.3.1/jquery.min.js"></script>
     <script src="/js/good/imgbox/jquery.imgbox.pack.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#pic").imgbox({
-                'speedIn'		: 0,
-                'speedOut'		: 0,
-                'alignment'		: 'center',
-                'overlayShow'	: true,
-                'allowMultiple'	: false
+                'speedIn': 0,
+                'speedOut': 0,
+                'alignment': 'center',
+                'overlayShow': true,
+                'allowMultiple': false
             });
         });
     </script>
@@ -41,8 +46,8 @@
                             </div>
                         </form>
                     @endif
-                </br>
-                </br>
+                <br>
+                <br>
                         @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
                             <form action="/good/{{ $good->id }}/edit" style="margin:0px;display:inline;">
                                 <input type="submit" class="button" value="修改">
@@ -60,7 +65,7 @@
     <div class="row">
         <div class="small-12 medium-6 columns">
             {{ $good->description }}
-            </br></br>
+            <br><br>
         </div>
     </div>
     <div class="row">
@@ -94,7 +99,7 @@
                 data: str_data,
                 success: function (msg) {
                     $('#fav_smt').val('取消收藏QAQ');
-                    $('#fav_smt').attr('onclick', 'del_favlist()');
+                    $jQuery_NEW('#fav_smt').attr('onclick', 'del_favlist()');
                 }
             });
         }
@@ -109,7 +114,7 @@
                 data: str_data,
                 success: function (msg) {
                     $('#fav_smt').val('收藏OvO');
-                    $('#fav_smt').attr('onclick', 'add_favlist()');
+                    $jQuery_NEW('#fav_smt').attr('onclick', 'add_favlist()');
                 }
             });
         }
