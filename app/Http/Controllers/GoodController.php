@@ -70,8 +70,8 @@ class GoodController extends Controller
         // 最后在排序筛选baned==0以及paginate分页
         // p为价格，c为数量，d为倒序，值相同时按id倒序排列
         if(isset($input['sort'])){
-            if ($input['sort'] == 'new'){
-              $data['goods'] = $data['goods']->orderby('created_at', 'desc')->where('baned', 0)->paginate(16);
+            if ($input['sort'] == 'old'){
+              $data['goods'] = $data['goods']->orderby('id', 'asc')->where('baned', 0)->paginate(16);
             }
             elseif ($input['sort'] == 'p'){
               $data['goods'] = $data['goods']->orderby('price', 'asc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
