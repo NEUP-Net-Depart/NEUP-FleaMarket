@@ -129,6 +129,9 @@ class GoodTest extends BrowserKitTestCase
             ->see('第二版')
             ->visit('/good?sort=cd')
             ->see('算法竞赛入门经典')
+            ->see('第二版')
+            ->visit('/good?sort=new')
+            ->see('算法竞赛入门经典')
             ->see('第二版');
     }
 

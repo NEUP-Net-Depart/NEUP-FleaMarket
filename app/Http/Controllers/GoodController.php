@@ -68,24 +68,27 @@ class GoodController extends Controller
         if(isset($input['start_count']))
             $data['goods'] = $data['goods']->where('count', '>=', $input['start_count']);
         // 最后在排序筛选baned==0以及paginate分页
-        // p为价格，c为数量，d为倒序
+        // p为价格，c为数量，d为倒序，值相同时按id倒序排列
         if(isset($input['sort'])){
-            if ($input['sort'] == 'p'){
-              $data['goods'] = $data['goods']->orderby('price', 'asc')->where('baned', 0)->paginate(16);
+            if ($input['sort'] == 'new'){
+              $data['goods'] = $data['goods']->orderby('created_at', 'desc')->where('baned', 0)->paginate(16);
+            }
+            elseif ($input['sort'] == 'p'){
+              $data['goods'] = $data['goods']->orderby('price', 'asc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
             }
             elseif ($input['sort'] == 'pd') {
-              $data['goods'] = $data['goods']->orderby('price', 'desc')->where('baned', 0)->paginate(16);
+              $data['goods'] = $data['goods']->orderby('price', 'desc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
             }
             elseif ($input['sort'] == 'c') {
-              $data['goods'] = $data['goods']->orderby('count', 'asc')->where('baned', 0)->paginate(16);
+              $data['goods'] = $data['goods']->orderby('count', 'asc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
             }
             elseif ($input['sort'] == 'cd') {
-              $data['goods'] = $data['goods']->orderby('count', 'desc')->where('baned', 0)->paginate(16);
+              $data['goods'] = $data['goods']->orderby('count', 'desc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
             }
         }
-        //未指定排序规则时按id正序排序
+        //未指定排序规则时按id倒序排序
         else
-          $data['goods'] = $data['goods']->orderby('id', 'asc')->where('baned', 0)->paginate(16);
+          $data['goods'] = $data['goods']->orderby('id', 'desc')->where('baned', 0)->paginate(16);
 		if($request->session()->has('user_id'))
 		    $data['user_id'] = $request->session()->get('user_id');
 		else
