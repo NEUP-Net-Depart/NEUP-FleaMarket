@@ -24,8 +24,8 @@ class EditGoodRequest extends Request
     public function rules()
     {
         return [
-			'good_name'=>'required|between:3,128',
-			'description'=>'required|max:2048',
+			'good_name'=>'required|max:128',
+			'description'=>'max:2048',
 			'price'=>'required|max:9223372036854775807',
 			'count'=>'required|max:2147483647',
             //'good_tag'=>'required',
@@ -36,8 +36,7 @@ class EditGoodRequest extends Request
     public function messages(){
         return [
 			'good_name.required' => '商品名不能为空！',
-			'good_name.between' => '商品名必须为3=128个字符！',
-            'description.required' => '商品描述不能为空！',
+			'good_name.between' => '商品名不能多于128个字符！',
 			'description.max' => '商品描述不能多于2048个字符！',
 			'price.required' => '商品价格不能为空！',
 			'price.max' => '商品价格不能超过9223372036854775807！',

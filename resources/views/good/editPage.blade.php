@@ -32,7 +32,7 @@
                             <label class="right inline">商品名称:</label>
                         </div>
                         <div class="small-10 columns">
-                            <input type="text" name="good_name" value="{{$good->good_name}}" placeholder="商品名称">
+                            <input type="text" name="good_name" value="{{count($errors) ? old('good_name') : $good->good_name}}" placeholder="商品名称">
                         </div>
                     </div>
                     <div class="row">
@@ -42,8 +42,8 @@
                         <div class="small-10 columns">
                             <select name="cat_id">
                                 @foreach($cats as $cat)
-                                    <option value="{{$cat->id}}"
-                                            @if($good->cat_id==$cat->id) selected="selected" @endif>{{$cat->cat_name}}</option>
+                                    <option value="{{$cat->id}}" @if(($good->cat_id==$cat->id&&!count($errors))||(old('cat_id')==$cat->id&&count($errors))) 
+                                        selected="selected" @endif>{{$cat->cat_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -53,7 +53,7 @@
                             <label class="right inline">商品描述:</label>
                         </div>
                         <div class="small-10 columns">
-                            <textarea name="description" placeholder="商品描述（此处应支持HTML）">{{$good->description}}</textarea>
+                            <textarea name="description" placeholder="商品描述（此处应支持HTML）">{{count($errors) ? old('description') : $good->description}}</textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -61,7 +61,7 @@
                             <label class="right inline">商品价格:</label>
                         </div>
                         <div class="small-10 columns">
-                            <input type="number" name="price" value="{{$good->price}}" placeholder="商品价格">
+                            <input type="number" name="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格">
                         </div>
                     </div>
                     <div class="row">
@@ -70,8 +70,8 @@
                         </div>
                         <div class="small-10 columns">
                             <select name="type">
-                                <option value="0" @if($good->type==0) selected="selected" @endif>普通商品</option>
-                                <option value="1" @if($good->type==1) selected="selected" @endif>拍卖商品</option>
+                                <option value="0" @if(($good->type==0&&!count($errors))||(old('type')==0&&count($errors))) selected="selected" @endif>普通商品</option>
+                                <option value="1" @if(($good->type==1&&!count($errors))||(old('type')==1&&count($errors))) selected="selected" @endif>拍卖商品</option>
                             </select>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             <label class="right inline">商品数量:</label>
                         </div>
                         <div class="small-10 columns">
-                            <input type="number" name="count" value="{{$good->count}}" placeholder="库存">
+                            <input type="number" name="count" value="{{count($errors) ? old('count') : $good->count}}" placeholder="库存">
                         </div>
                     </div>
                     {{--
