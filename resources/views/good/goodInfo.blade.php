@@ -46,10 +46,8 @@
                                 </div>
                             </div>
                         </form>
-                        (库存:{{ $good->count }}件)
                     @endif
-
-                    @if($good->user_id == Session::get('user_id'))
+                        @if($good->user_id == Session::get('user_id'))
                             <input type="button" class="button" data-open="exampleModal1" value="修改">
                         <form action="/good/{{ $good->id }}/delete" method="POST" style="margin:0px;display:inline;" id="del" onsubmit="return confirm('确定删除吗？');">
                             {!! csrf_field() !!}
@@ -167,7 +165,7 @@
                         </div>
                         --}}
                         <div class="row">
-                            <div class="small-4 columns">
+                            <div class="small-4 small-offset-1 columns">
                                 <label for="goodTitleUpload" class="button right inline">更改封面</label>
                             </div>
                             <div id="preview" class="small-8 columns"></div>
@@ -182,12 +180,10 @@
                         </div>
                         <p></p>
                         <div class="row">
-                            <div class="small-2 small-offset-3 columns">
+                            <div class="small-2 small-offset-6 columns">
                                 <input type="submit" class="button" value="更改" style="margin: 0;"/>
                             </div>
-                            <div class="small-4 columns">
-                                <a href='/good/{{$good->id}}' class="button">商品信息</a>
-                            </div>
+
                         </div>
                         {!! csrf_field() !!}
                     </form>
