@@ -46,10 +46,13 @@
                                 </div>
                             </div>
                         </form>
-                        (库存:{{ $good->count }}件)
                     @endif
-
-                    @if($good->user_id == Session::get('user_id'))
+                        (库存:{{ $good->count }}件)
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-5 columns">
+                    @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
                         <form action="/good/{{ $good->id }}/edit" style="margin:0px;display:inline;">
                             <input type="submit" class="button" value="修改">
                         </form>

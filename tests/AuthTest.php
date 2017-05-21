@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\BrowserKitTestCase;
 use App\User;
 use App\UserInfo;
+use Illuminate\Support\Facades\Hash;
 
 class AuthTest extends BrowserKitTestCase
 {
@@ -126,7 +127,27 @@ class AuthTest extends BrowserKitTestCase
             ->type('test@example.com', 'username')
             ->type('test@example.com', 'password')
             ->press('登录')
-            ->seePageIs('/');
+            ->seePageIs('/')
+            ->seeInSession('user_id');
+    }
 
+    public function testSuperAdmin()
+    {
+        $user = new User();
+        $user->privilege = 2;
+        $user->password = Hash::make('admin@example.com');
+        $user->email = "admin@example.com";
+        $user->havecheckedemail = 1;
+        $user->save();
+
+        $this->visit('logout')
+            ->seePageIs('/login')
+            ->assertSessionMissing('user_id');
+
+        $this->visit('login')
+            ->type('admin@example.com', 'username')
+            ->type('admin@example.com', 'password')
+            ->press('登录')
+            ->seeInSession('is_admin', 2);
     }
 }
