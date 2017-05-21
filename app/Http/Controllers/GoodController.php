@@ -123,6 +123,7 @@ class GoodController extends Controller
     public function getInfo(Request $request, $good_id)
     {
         $data = [];
+        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = GoodInfo::where('id', $good_id)->first();
         if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         $data['user'] = UserInfo::where('id', $data['good']->user_id)->first();

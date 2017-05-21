@@ -31,16 +31,28 @@
                 <div class="row small-up-1 medium-up-2 large-up-4">
                     @foreach($newgoods as $good)
                         <div class="columns">
+                            <div class="good">
                             <a href="/good/{{ $good->id }}">
                                 <div class="card">
-                                    <div class="card-divider" style="padding:5%;">
+                                    <div class="card-divider" style="padding:0;">
                                         <img src="/good/{{ sha1($good->id) }}/titlepic"/>
                                     </div>
                                     <div class="card-section">
                                         {{ $good->good_name }}
                                     </div>
                                 </div>
+                                <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
+                                    <div style="position:absolute;z-index:200;top:-110%;left:+1%;color:white;font-size:12px;">
+                                        售价：￥{{ $good->price }}<br/>
+                                        @if($good->count==0)
+                                            无库存QAQ
+                                        @else
+                                            库存：{{ $good->count }}
+                                        @endif
+                                    </div>
+                                </div>
                             </a>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -52,16 +64,28 @@
                     <div class="row small-up-1 medium-up-2 large-up-4">
                         @foreach($catgoods[$cat->cat_name] as $good)
                             <div class="columns">
+                                <div class="good">
                                 <a href="/good/{{ $good->id }}">
                                     <div class="card">
-                                        <div class="card-divider" style="padding:5%;">
+                                        <div class="card-divider" style="padding:0;">
                                             <img src="/good/{{ sha1($good->id) }}/titlepic"/>
                                         </div>
                                         <div class="card-section">
                                             {{ $good->good_name }}
                                         </div>
                                     </div>
+                                    <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
+                                        <div style="position:absolute;z-index:200;top:-110%;left:+1%;color:white;font-size:12px;">
+                                            售价：￥{{ $good->price }}<br/>
+                                            @if($good->count==0)
+                                                无库存QAQ
+                                            @else
+                                                库存：{{ $good->count }}
+                                            @endif
+                                        </div>
+                                    </div>
                                 </a>
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -83,5 +107,5 @@
             </div>
         </div>
     </div>
-
+    <script src="/js/good/editfav.js"></script>
 @endsection

@@ -21,7 +21,7 @@
                         <div class="good">
                         <a href="/good/{{ $good->id }}">
                             <div class="card">
-                                <div class="card-divider" style="padding: 5%;">
+                                <div class="card-divider" style="padding: 0;">
                                     <img src="/good/{{ sha1($good->id) }}/titlepic/320/180"/>
                                 </div>
                                 <div class="card-section">

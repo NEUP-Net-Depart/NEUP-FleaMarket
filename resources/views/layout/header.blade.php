@@ -20,7 +20,7 @@
             @if(Session::has('user_id'))
               <li><a class="top-bar-avatar" href="/user/{{Session::get('user_id')}}"><img src="/avatar/{{ Session::get('user_id') }}/54/54"/></a></li>
               <li><a class="top-bar-list" href="/message">消息</a></li>
-              <li><a class="top-bar-list" href="/good/my">我的商品</a></li>
+              <li><a class="top-bar-list" href="/user/fav">收藏夹</a></li>
               <li><a href="/good/add" class="top-bar-button">出售</a></li>
             @else
               <li><a class="top-bar-list" href="/register">注册</a></li>

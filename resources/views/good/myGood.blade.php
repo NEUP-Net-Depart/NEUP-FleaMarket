@@ -53,6 +53,7 @@
 
             @endforeach
         </table>
+
         <a href="/good/add" class="button">添加商品</a>
     </div>
 </div>

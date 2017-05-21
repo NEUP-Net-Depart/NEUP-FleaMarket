@@ -50,22 +50,30 @@
 
             <div class="good">
                 <a href="/good/{{$good->good_id}}">
-                    <div class="card">
+                    <div class="card" style="z-index:100;">
 
-                        <div class="card-divider" style="padding: 5%;">
+                        <div class="card-divider" style="padding: 0;">
                             <img src="/good/{{ sha1($good->good_id) }}/titlepic/320/180"/>
                         </div>
-                        <div class="card-section">
-                            <div class="one-line-text">{{ $good->good_name }}</div>
-                            <div style="color: #cc4b37;" class="one-line-text"><b>￥{{ $good_info[$good->good_id]->price }}</b></div>
+
+                        <div class="card-section" style="border: 0;">
+                            <div class="one-line-text">{{ $good_info[$good->good_id]->good_name }}</div>
+
+                        </div>
+                    </div>
+
+                    <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none">
+                        <div style="position:absolute;z-index:200;top:-190%;left:+8%;">
+                            <p style="color:white">商品名：{{$good_info[$good->good_id]->good_name}} </p><br/>售价：￥{{ $good_info[$good->good_id]->price }}<br/>
                             @if($good_info[$good->good_id]->count==0)
-                                <div style="color: #ffae00;" class="one-line-text">无库存QAQ</div>
+                                无库存QAQ
                             @else
-                                <div class="one-line-text">库存：{{ $good_info[$good->good_id]->count }}</div>
+                                库存：{{ $good_info[$good->good_id]->count }}
                             @endif
                         </div>
-
                     </div>
+
+
                 </a>
             </div>
 
@@ -78,4 +86,5 @@
 
     <script src="/js/good/editfav.js"></script>
     <script src="/js/good/ToolTip.js"></script>
+    </div>
 @endsection

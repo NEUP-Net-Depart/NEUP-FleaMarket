@@ -1,4 +1,12 @@
+$(".good").mouseenter(function(){
+    $(".details",this).show();
+    $(".card-divider",this).css("filter","brightness(40%)");
 
+});
+$(".good").mouseleave(function(){
+    $(".details",this).hide();
+    $(".card-divider",this).css("filter","brightness(100%)");
+});
 function editfav(){
     $(".cb").attr("style","visibility:show;width:30px;height:30px;");
     $(".cb").removeAttr("checked");
