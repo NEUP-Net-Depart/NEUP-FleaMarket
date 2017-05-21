@@ -24,8 +24,8 @@
                                 <div class="card-divider" style="padding: 0;">
                                     <img src="/good/{{ sha1($good->id) }}/titlepic/320/180"/>
                                 </div>
-                                <div class="card-section">
-                                    <div class="one-line-text">{{ $good->good_name }}</div>
+                                <div class="card-section" >
+                                    <div class="one-line-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ $good->good_name }}</div>
                                     <div style="color: #cc4b37;" class="one-line-text"><b>￥{{ $good->price }}</b></div>
                                     @if($good->count==0)
                                         <div style="color: #ffae00;" class="one-line-text">无库存QAQ</div>

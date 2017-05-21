@@ -24,6 +24,7 @@
                 <label>
                     <span class="form-error is-visible">{!! $errors->first() !!}</span>
                 </label>
+                <br/><br/>
             @endif
             @foreach($goods as $good)
                 <form action="/good/{{$good->id}}/edit" method="POST" enctype="multipart/form-data">

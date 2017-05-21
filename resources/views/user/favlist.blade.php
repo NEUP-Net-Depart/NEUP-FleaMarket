@@ -55,23 +55,26 @@
                         <div class="card-divider" style="padding: 0;">
                             <img src="/good/{{ sha1($good->good_id) }}/titlepic/320/180"/>
                         </div>
-
+                        <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none">
+                            <div style="position:absolute;z-index:200;top:-120%;left:+8%;">
+                                <p style="color:white">商品名：{{$good_info[$good->good_id]->good_name}} </p><br/>
+                            </div>
+                            <div style="position:absolute;z-index:200;bottom:+100%;left:+8%;">
+                                售价：￥{{ $good_info[$good->good_id]->price }}<br/>
+                                @if($good_info[$good->good_id]->count==0)
+                                    无库存QAQ
+                                @else
+                                    库存：{{ $good_info[$good->good_id]->count }}
+                                @endif
+                            </div>
+                        </div>
                         <div class="card-section" style="border: 0;">
                             <div class="one-line-text">{{ $good_info[$good->good_id]->good_name }}</div>
 
                         </div>
                     </div>
 
-                    <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none">
-                        <div style="position:absolute;z-index:200;top:-190%;left:+8%;">
-                            <p style="color:white">商品名：{{$good_info[$good->good_id]->good_name}} </p><br/>售价：￥{{ $good_info[$good->good_id]->price }}<br/>
-                            @if($good_info[$good->good_id]->count==0)
-                                无库存QAQ
-                            @else
-                                库存：{{ $good_info[$good->good_id]->count }}
-                            @endif
-                        </div>
-                    </div>
+
 
 
                 </a>

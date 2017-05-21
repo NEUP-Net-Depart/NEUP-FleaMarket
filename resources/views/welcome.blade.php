@@ -37,18 +37,18 @@
                                     <div class="card-divider" style="padding:0;">
                                         <img src="/good/{{ sha1($good->id) }}/titlepic"/>
                                     </div>
-                                    <div class="card-section">
-                                        {{ $good->good_name }}
+                                    <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
+                                        <div style="position:absolute;z-index:200;top:-40%;left:+1%;color:white;font-size:12px;">
+                                            售价：￥{{ $good->price }}<br/>
+                                            @if($good->count==0)
+                                                无库存QAQ
+                                            @else
+                                                库存：{{ $good->count }}
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
-                                    <div style="position:absolute;z-index:200;top:-110%;left:+1%;color:white;font-size:12px;">
-                                        售价：￥{{ $good->price }}<br/>
-                                        @if($good->count==0)
-                                            无库存QAQ
-                                        @else
-                                            库存：{{ $good->count }}
-                                        @endif
+                                    <div class="card-section" style=";white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-size:15px;padding:10px 10px">
+                                        {{ $good->good_name }}
                                     </div>
                                 </div>
                             </a>
@@ -70,20 +70,21 @@
                                         <div class="card-divider" style="padding:0;">
                                             <img src="/good/{{ sha1($good->id) }}/titlepic"/>
                                         </div>
-                                        <div class="card-section">
+                                        <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
+                                            <div style="position:absolute;z-index:200;top:-40%;left:+1%;color:white;font-size:12px;">
+                                                售价：￥{{ $good->price }}<br/>
+                                                @if($good->count==0)
+                                                    无库存QAQ
+                                                @else
+                                                    库存：{{ $good->count }}
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="card-section" style=";white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-size:15px;padding:10px 10px">
                                             {{ $good->good_name }}
                                         </div>
                                     </div>
-                                    <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
-                                        <div style="position:absolute;z-index:200;top:-110%;left:+1%;color:white;font-size:12px;">
-                                            售价：￥{{ $good->price }}<br/>
-                                            @if($good->count==0)
-                                                无库存QAQ
-                                            @else
-                                                库存：{{ $good->count }}
-                                            @endif
-                                        </div>
-                                    </div>
+
                                 </a>
                                 </div>
                             </div>

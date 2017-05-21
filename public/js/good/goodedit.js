@@ -1,3 +1,16 @@
+function submitedit(id){
+        var str_data1 = $('#goodedit').serialize();
+        $.ajax({
+            type: "POST",
+            url: "/good/"+id+"/edit",
+            data: str_data1,
+            success: function (msg) {
+                confirm("fuck");
+            }
+
+        });
+
+}
 function preview(file) {
     var prevDiv = document.getElementById('preview');
     if (file.files && file.files[0]) {
