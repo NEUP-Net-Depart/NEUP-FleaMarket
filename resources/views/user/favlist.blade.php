@@ -52,7 +52,7 @@
                                 <input type="checkBox" name="del_goods[]" value="0" id="box{{ $good->good_id }}"
                                        class="cb" onclick="{setValue({{ $good->good_id }})}" style="visibility:hidden;width:5%;z-index:203;position: absolute;" />
                             </div>
-                            <div class="details" style="position:absolute;z-index:200;height:100%;width:100%;top:0%;">
+                            <div class="details" style="position:absolute;z-index:200;height:100%;width:100%;top:0%;display:none">
                                 <div style="position:absolute;z-index:200;left:+8%;">
                                     <p style="color:white">商品名：{{$good_info[$good->good_id]->good_name}} </p><br/>
                                 </div>
