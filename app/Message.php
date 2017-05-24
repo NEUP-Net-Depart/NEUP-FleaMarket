@@ -3,8 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
-    protected $table='messages';
+    protected $table = 'message';
+    protected $dates = ['deleted_at'];
+
+    public function receiver()
+    {
+        return $this->belongsTo('App\User', 'receiver_id');
+    }
+
 }

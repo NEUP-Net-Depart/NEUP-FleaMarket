@@ -14,7 +14,7 @@ use App\GoodInfo;
 use App\GoodTag;
 use App\Transaction;
 use App\TransactionLog;
-use App\Messages;
+use App\Message;
 use App\Tag;
 use App\FavList;
 use App\Http\Controllers\Controller;
@@ -181,7 +181,7 @@ class GoodController extends Controller
         $buy->save();
         $buyername = User::find($data->user_id);
         $goodname = GoodInfo::where('id',$good_id)->first();
-        $message = new Messages;
+        $message = new Message;
         $message->sender_id = 0;
         $message->receiver_id = $data->user_id;
         $message->content = '您好！名叫'.$buyername->username.'购买了你的'.$goodname->good_name.'请及时前往确认。';
