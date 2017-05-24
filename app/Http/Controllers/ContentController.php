@@ -16,6 +16,7 @@ class ContentController extends Controller
     public function Mainpage()
     {
         $data = [];
+        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['stargoods'] = GoodInfo::where('baned', '0')->where('stared', '1')->orderby('id', 'asc')->limit(5)->get();
         $data['newgoods'] = GoodInfo::where('baned', '0')->orderby('id', 'dsc')->limit(8)->get();
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();

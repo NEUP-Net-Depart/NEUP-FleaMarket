@@ -12,7 +12,7 @@
             </ul>
           <ul class="dropdown menu hide-for-small-only" data-dropdown-menu>
             <li><a class="top-bar-list" href="/">首页</a></li>
-            <li><a class="top-bar-list" href="/good">市场</a></li>
+            {{--<li><a class="top-bar-list" href="/good">市场</a></li>--}}
           </ul>
         </div>
         <div class="top-bar-right hide-for-small-only">
