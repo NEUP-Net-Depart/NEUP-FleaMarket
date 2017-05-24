@@ -77,6 +77,14 @@ Route::group(['middleware' => ['web']],function () {
     Route::post('/good/{good_id}/add_favlist', "GoodController@addFavlist")->middleware('auth');
     Route::delete('/good/{good_id}/del_favlist', "GoodController@delFavList")->middleware('auth');
 
+    Route::get('/message', "MessageController@getMessage")->middleware('auth');
+    Route::get('/test/sendmessagepage', "MessageController@sendMessagepage")->middleware('su');
+    Route::post('/message', "MessageController@sendMessage")->middleware('auth');
+    Route::get('/message/num', "MessageController@getUnreadMsgNum")->middleware('auth');
+    Route::put('/message/{id}', "MessageController@readMessage")->middleware('auth');
+    Route::delete('/message/{id}', "MessageController@deleteMessage")->middleware('auth');
+
+
     //------Above are tested function
 
     Route::get('/user/{user_id}/edit', [
@@ -150,31 +158,6 @@ Route::group(['middleware' => ['web']],function () {
     Route::delete('/cat/{cat_id}/delete', [
         "uses" => "AdminController@deleteCategory",
         "middleware" => "admin"
-    ]);
-
-    Route::match(['post','get'],'/message',[
-        "uses" => "MessageController@getMessage",
-        "middleware" => "auth"
-    ]);
-
-    Route::match(['post','get'],'/message/sendmessagepage',[
-        "uses" => "MessageController@sendMessagepage",
-        "middleware" => "auth"
-    ]);
-
-    Route::match(['post','get'],'/message/send',[
-        "uses" => "MessageController@sendAllow",
-        "middleware" => "auth"
-    ]);
-
-    Route::match(['post','get'],'/message/editmessage',[
-        "uses" => "MessageController@editMessagepage",
-        "middleware" => "auth"
-    ]);
-
-    Route::match(['post','get'],'/message/deletemessage/{message_id}',[
-        "uses" => "MessageController@deleteMessage",
-        "middleware" => "auth"
     ]);
 
     Route::match(['post','get'],'/sendannouncement',[
