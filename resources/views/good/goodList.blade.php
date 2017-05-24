@@ -22,7 +22,7 @@
                         <a href="/good/{{ $good->id }}">
                             <div class="card">
                                 <div class="card-divider" style="padding: 0;">
-                                    <img src="/good/{{ sha1($good->id) }}/titlepic/320/180"/>
+                                    <img src="/good/{{ sha1($good->id) }}/titlepic"/>
                                 </div>
                                 <div class="card-section" >
                                     <div class="one-line-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ $good->good_name }}</div>
