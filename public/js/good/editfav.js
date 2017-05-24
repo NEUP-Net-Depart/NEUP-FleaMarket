@@ -1,11 +1,11 @@
 $(".good").mouseenter(function(){
     $(".details",this).show();
-    $(".card-divider",this).css("filter","brightness(40%)");
+    $("img",this).css("filter","brightness(40%)");
 
 });
 $(".good").mouseleave(function(){
     $(".details",this).hide();
-    $(".card-divider",this).css("filter","brightness(100%)");
+    $("img",this).css("filter","brightness(100%)");
 });
 function editfav(){
     $(".cb").attr("style","visibility:show;width:30px;height:30px;");
@@ -23,11 +23,6 @@ function back(){
 }
 function submitdel(){
     if(confirm("你真的不爱它们了么？")) {
-        $(".cb").each(function () {
-            if ($(this).attr("value") != 0) {
-                $(this).parents(".good").hide();
-            }
-        });
         var str_data1 = $('#favdel').serialize();
         var str_data = str_data1 + '&_method=DELETE';
         $.ajax({
@@ -35,8 +30,12 @@ function submitdel(){
             url: "/user/fav/del",
             data: str_data,
             success: function (msg) {
-
-
+                $(".cb").each(function () {
+                    if ($(this).attr("value") != 0) {
+                        $(this).parents(".yesrpg").remove();
+                    }
+                });
+                confirm("删除成功！");
             }
         });
     }

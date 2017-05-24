@@ -42,18 +42,16 @@
                 {!! method_field('DELETE') !!}
 
             @foreach($goods as $good)
-        <div class="columns" id="good{{ $good->good_id }}">
-            <div style="bottom:-50px;left:+185px;z-index:100;position:relative">
-            <input type="checkBox" name="del_goods[]" value="0" id="box{{ $good->good_id }}"
-                   class="cb" onclick="{setValue({{ $good->good_id }})}" style="visibility:hidden;width:30px;height:30px;" />
-            </div>
-
+        <div class="columns yesrpg" id="good{{ $good->good_id }}" >
             <div class="good">
                 <a href="/good/{{$good->good_id}}">
                     <div class="card" style="z-index:100;">
-
-                        <div class="card-divider" style="padding: 0;">
-                            <img src="/good/{{ sha1($good->good_id) }}/titlepic/320/180"/>
+                        <div class="card-divider" style="padding: 0;background-color:white;position:relative">
+                            <img src="/good/{{ sha1($good->good_id) }}/titlepic/"/>
+                            <div style="position:absolute;z-index:201;right:0%;top:0%;">
+                                <input type="checkBox" name="del_goods[]" value="0" id="box{{ $good->good_id }}"
+                                       class="cb" onclick="{setValue({{ $good->good_id }})}" style="visibility:hidden;width:5%;z-index:203;position: absolute;" />
+                            </div>
                         </div>
                         <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none">
                             <div style="position:absolute;z-index:200;top:-120%;left:+8%;">
