@@ -23,4 +23,9 @@ class User extends Model
         } else
             return 0;
     }
+
+    public function trans()
+    {
+        return $this->hasManyThrough('App\Transaction', 'App\GoodInfo', 'user_id', 'good_id', 'id');
+    }
 }

@@ -84,6 +84,7 @@ Route::group(['middleware' => ['web']],function () {
     Route::delete('/message/{id}', "MessageController@deleteMessage")->middleware('auth');
 
     Route::get('/user/sell', "UserController@seller")->middleware('auth');
+    Route::get('/user/trans', "UserController@buyer")->middleware('auth');
     Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('auth');
 
     //------Above are tested function

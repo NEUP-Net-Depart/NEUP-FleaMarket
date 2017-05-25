@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserInfoRequest;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -180,8 +181,17 @@ class UserController extends Controller
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
-        $data['goods'] = GoodInfo::where('user_id',$user_id)->get();
+        $data['goods'] = GoodInfo::where('user_id', $user_id)->get();
+        $data['trans'] = User::find($user_id)->trans;
         return view::make('user.seller')->with($data);
+    }
+
+    public function buyer(Request $request)
+    {
+        $data = [];
+        $user_id = $request->session()->get('user_id');
+        $data['trans'] = Transaction::where('buyer_id', $user_id)->get();
+        return view::make('user.buyer')->with($data);
     }
 
 }

@@ -20,12 +20,12 @@
 
     <h3>我的出售</h3>
     <ul class="tabs" data-tabs id="editinfo">
-        <li class="tabs-title is-active"><a href="#extra" aria-selected="true">我的商品</a></li>
-        <li class="tabs-title"><a href="#account">交易订单</a></li>
-        <li class="tabs-title"><a href="#userinfo">历史评价</a></li>
+        <li class="tabs-title is-active"><a href="#goods" aria-selected="true">我的商品</a></li>
+        <li class="tabs-title"><a href="#trans">交易订单</a></li>
+        <li class="tabs-title"><a href="#tickets">历史评价</a></li>
     </ul>
     <div class="tabs-content" data-tabs-content="editinfo">
-        <div class="tabs-panel" id="extra">
+        <div class="tabs-panel" id="goods">
             <div class="card-section">
                 <div class="row">
                     <table class="table">
@@ -68,9 +68,10 @@
                 </div>
             </div>
         </div>
-        <div class="tabs-panel" id="account">
+        <div class="tabs-panel" id="trans">
+            {{ json_encode($trans) }}
         </div>
-        <div class="tabs-panel" id="userinfo">
+        <div class="tabs-panel" id="tickets">
             <div id="userinfo-container" class="card-section">
             </div>
         </div>
