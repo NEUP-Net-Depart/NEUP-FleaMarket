@@ -20,4 +20,5 @@
 
     <h3>我的订单</h3>
     {{ json_encode($trans) }}
+
 @endsection

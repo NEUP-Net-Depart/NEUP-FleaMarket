@@ -70,6 +70,7 @@
         </div>
         <div class="tabs-panel" id="trans">
             {{ json_encode($trans) }}
+            {{ $trans->links() }}
         </div>
         <div class="tabs-panel" id="tickets">
             <div id="userinfo-container" class="card-section">
