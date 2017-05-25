@@ -175,4 +175,13 @@ class UserController extends Controller
         $image = Image::make($file)->resize($width, $height);
         return $image->response('jpg');
     }
+
+    public function seller(Request $request)
+    {
+        $data = [];
+        $user_id = $request->session()->get('user_id');
+        $data['goods'] = GoodInfo::where('user_id',$user_id)->get();
+        return view::make('user.seller')->with($data);
+    }
+
 }

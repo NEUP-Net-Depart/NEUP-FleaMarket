@@ -14,12 +14,11 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('trans_id');
             $table->integer('buyer_id');
-            $table->integer('seller_id');
             $table->integer('good_id');
             $table->integer('number');
-            $table->integer('status');
+            $table->smallInteger('status');
+            $table->text('reason');
             $table->timestamps();
         });
     }

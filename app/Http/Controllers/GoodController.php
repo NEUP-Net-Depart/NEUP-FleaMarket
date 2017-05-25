@@ -143,60 +143,6 @@ class GoodController extends Controller
         return view::make('good.goodInfo')->with($data);
     }
 
-    public function allow(Request $request, $trans_id)
-    {
-        $data = [];
-        $user_id = $request->session()->get('user_id');
-        $data['buyers'] = Transaction::where('id',$trans_id)->first();
-        $good = Transaction::find($trans_id);
-        if($good->status==1)
-			$good->status = 2;
-        else if($good->status==2&&$user_id==$good->seller_id)
-            $good->status = 3;
-        else if($good->status==2&&$user_id==$good->buyer_id)
-            $good->status = 4;
-        else if($good->status==4||$good->status==3)
-        {
-            $good->status=5;
-            $goodinfo = GoodInfo::find($good->good_id);
-            $goodinfo->count = $goodinfo->count-$good->number;
-            $goodinfo->save();
-        }
-        $good->save();
-        return Redirect::to('/good');
-    }
-
-    public function getGood(Request $request, $good_id)
-    {
-        $input = $request->all();
-        $data = GoodInfo::find($good_id);
-        if($input['count']<=0||$input['count']>$data->count)
-        return Redirect::to('/good/'.$good_id)->withErrors('购买数量不符合规范');
-        $buy = new Transaction;
-        $buy->good_id = $good_id;
-        $buy->buyer_id = $request->session()->get('user_id');
-        $buy->seller_id = $data->user_id;
-        $buy->status = 1;
-        $buy->number = $input['count'];
-        $buy->save();
-        $buyername = User::find($data->user_id);
-        $goodname = GoodInfo::where('id',$good_id)->first();
-        $message = new Message;
-        $message->sender_id = 0;
-        $message->receiver_id = $data->user_id;
-        $message->content = '您好！名叫'.$buyername->username.'购买了你的'.$goodname->good_name.'请及时前往确认。';
-        $message->title = '您有一个新的交♂易';
-        $message->save();
-        return Redirect::to('/good');
-    }
-
-    public function myGood(Request $request)
-    {
-        $data = [];
-        $user_id = $request->session()->get('user_id');
-        $data['goods'] = GoodInfo::where('user_id',$user_id)->get();
-        return view::make('good.myGood')->with($data);
-    }
     /**
      * @function GoodController@addGood
      * @input Request $request
