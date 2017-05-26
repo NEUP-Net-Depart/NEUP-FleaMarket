@@ -85,11 +85,11 @@ class UserController extends Controller
         if (isset($input['tel_num']))
             $user_info->tel_num = $input['tel_num'];
         if (isset($input['QQ']))
-            $user_info->tel_num = $input['QQ'];
+            $user_info->QQ = $input['QQ'];
         if (isset($input['wechat']))
-            $user_info->tel_num = $input['wechat'];
+            $user_info->wechat = $input['wechat'];
         if (isset($input['address']))
-            $user_info->tel_num = $input['address'];
+            $user_info->address = $input['address'];
         $user_info->save();
 
         return json_encode([
