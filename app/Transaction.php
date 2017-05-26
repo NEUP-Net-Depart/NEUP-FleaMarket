@@ -12,4 +12,9 @@ class Transaction extends Model
     {
         return $this->belongsTo('App\GoodInfo');
     }
+
+    public function buyer()
+    {
+        return $this->belongsTo('App\User', 'buyer_id');
+    }
 }

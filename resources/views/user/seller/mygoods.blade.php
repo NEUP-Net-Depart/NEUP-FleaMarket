@@ -33,6 +33,7 @@
                             <td>#</td>
                             <td>商品名称</td>
                             <td>商品价格</td>
+                            <td>剩余库存</td>
                             <td>修改信息</td>
                             <td>删除商品</td>
                         </tr>
@@ -43,6 +44,7 @@
                                        onMouseOver="toolTip('<img src=/good/{{ sha1($good->id) }}/titlepic>')"
                                        onMouseOut="toolTip()">{{ $good->good_name }}</a></td>
                                 <td>{{ $good->price }}</td>
+                                <td>{{ $good->count }}</td>
                                 <td>
                                     <form action="/good/{{ $good->id }}/edit">
                                         <input type="submit" class="button" value="修改" style="margin: 0;">
@@ -62,6 +64,7 @@
                             </tr>
 
                         @endforeach
+                        {{ $goods->links() }}
                     </table>
 
                     <a href="/good/add" class="button">添加商品</a>
@@ -69,12 +72,8 @@
             </div>
         </div>
         <div class="tabs-panel" id="trans">
-            {{ json_encode($trans) }}
-            {{ $trans->links() }}
         </div>
         <div class="tabs-panel" id="tickets">
-            <div id="userinfo-container" class="card-section">
-            </div>
         </div>
     </div>
 
@@ -94,5 +93,13 @@
                 });
             }
         }
+        $(document).ready(function () {
+            $("a[href='#trans']").click(function () {
+                window.location.href = "/user/sell/trans";
+            });
+            $("a[href='#tickets']").click(function () {
+                window.location.href = "/user/sell/tickets";
+            });
+        });
     </script>
 @endsection

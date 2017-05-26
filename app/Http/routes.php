@@ -83,7 +83,9 @@ Route::group(['middleware' => ['web']],function () {
     Route::put('/message/{id}', "MessageController@readMessage")->middleware('auth');
     Route::delete('/message/{id}', "MessageController@deleteMessage")->middleware('auth');
 
-    Route::get('/user/sell', "UserController@seller")->middleware('auth');
+    Route::get('/user/sell', "UserController@mygoods")->middleware('auth');
+    Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
+    Route::get('/user/sell/tickets', "UserController@tickets")->middleware('auth');
     Route::get('/user/trans', "UserController@buyer")->middleware('auth');
     Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('auth');
 
