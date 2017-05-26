@@ -26,7 +26,7 @@ class SendMessageRequest extends FormRequest
         return [
             'title'=>'required|max:128',
             'content'=>'max:65535',
-            'receiver'=>'required|numeric',
+            'receiver'=>'required|integer',
         ];
     }
 
@@ -36,7 +36,7 @@ class SendMessageRequest extends FormRequest
             'title.max' => '标题长度不能超过128个字符！',
             'content.max' => '内容长度不能超过65535个字符',
             'receiver.required' => '收件人不可为空',
-            'receiver.numeric' => '收件人格式不正确！'
+            'receiver.integer' => '收件人格式不正确！'
         ];
     }
 }

@@ -62,7 +62,7 @@
                             <label class="right inline">商品价格:</label>
                         </div>
                         <div class="small-10 columns">
-                            <input type="number" name="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格">
+                            <input type="text" name="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格">
                         </div>
                     </div>
                     <div class="row">
