@@ -8,8 +8,8 @@
 @section('content')
 
     <div class="page-content" style="margin:0px;">
-        <div class="row hide-for-medium" >
-            <h5 style="left:5%">收藏商品</h5>
+        <div class="row hide-for-medium" style="margin-left:10px;margin-right:10px;margin-top:0px" >
+            <h5 style="">收藏商品</h5>
             <table class="table">
                 <tr>
                     <td>#</td>
@@ -20,7 +20,7 @@
                 @foreach($goods as $good)
                     <tr class="list">
                         <td>{{ $good->good_id }}</td>
-                        <td class="name"><a href="/good/{{$good->good_id}}" onMouseOver="toolTip('<img src=/good/{{ sha1($good->good_id) }}/titlepic>')" onMouseOut="toolTip()">{{ $good_info[$good->good_id]->good_name }}</a><img src="/good/{{ sha1($good->good_id) }}/titlepic" class="pic" /></td>
+                        <td class="name"><a href="/good/{{$good->good_id}}" >{{ $good_info[$good->good_id]->good_name }}</a><img src="/good/{{ sha1($good->good_id) }}/titlepic" class="pic" /></td>
                         <td>{{ $good_info[$good->good_id]->price }}</td>
                         <td>{{ $good_info[$good->good_id]->count }}</td>
                     </tr>

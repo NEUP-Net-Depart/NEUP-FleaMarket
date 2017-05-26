@@ -31,7 +31,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="page-content" style="margin-top:0px">
         <a href="/user/fav" class="button">返回收藏夹</a>
         <form action="/user/fav/del" method="POST">
             {!! csrf_field() !!}
