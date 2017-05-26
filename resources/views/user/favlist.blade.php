@@ -8,8 +8,8 @@
 @section('content')
 
     <div class="page-content" style="margin:0px;">
-        <div class="row" style="display: none">
-            <h5>收藏商品</h5>
+        <div class="row hide-for-medium" >
+            <h5 style="left:5%">收藏商品</h5>
             <table class="table">
                 <tr>
                     <td>#</td>
@@ -29,11 +29,11 @@
             <a href="/user/fav/edit" class="button">编辑收藏夹</a>
         </div>
 
-        <form  method="POST" id="favdel">
+        <form  method="POST" id="favdel" style="" class="hide-for-small-only">
             <div class="row small-up-1 medium-up-2 large-up-4" data-equalizer data-equalize-by-row>
                 <div class="row" >
                     <h4 style="float:left">收藏商品</h4>
-                    <div class="small-3 medium-3 medium-offset-9">
+                    <div class="small-3 medium-3 medium-offset-9 small-offset-3">
                     <button type="button" class="button" onclick="editfav()" id="editbutton">编辑收藏夹</button>
                     <input type="button" id="del_submit" class="button" value="删除选中商品" style="display: none" onclick="submitdel()"  />
                     </div>
