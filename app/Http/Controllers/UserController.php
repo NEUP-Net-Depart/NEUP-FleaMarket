@@ -17,6 +17,7 @@ use App\User;
 use App\UserInfo;
 use App\FavList;
 use App\GoodInfo;
+use App\Http\Requests\EditAccountRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Session;
@@ -40,6 +41,7 @@ class UserController extends Controller
         $user = User::find($request->session()->get('user_id'));
         if (isset($input['nickname']))
             $user->nickname = $input['nickname'];
+        if (isset($input['stuid'])) $user->stuid = $input['stuid'];
         $user->update();
         if ($request->hasFile('avatarPic'))
             Storage::put(
@@ -110,6 +112,7 @@ class UserController extends Controller
         $user = User::find($user_id);
         if (isset($input['nickname']))
             $user->nickname = $input['nickname'];
+        if (isset($input['stuid'])) $user->stuid = $input['stuid'];
         $user->update();
         if ($request->hasFile('avatarPic'))
             Storage::put(
@@ -117,6 +120,24 @@ class UserController extends Controller
                 Image::make($request->file('avatarPic'))->crop(round($input['crop_width']), round($input['crop_height']), round($input['crop_x']), round($input['crop_y']))->resize(800, 450)->encode('data-url')
             );
         return Redirect::to('/user/' . $user_id);
+    }
+
+    public function editAccount(EditAccountRequest $request, $user_id)
+    {
+        $input = $request->all();
+        $user = User::find($user_id);
+        if (!Hash::check($input['password'], $user->password)) return Redirect::to('/user/' . $user_id)->withErrors('当前密码错误');
+        $request->session()->forget('user_id');
+        if (isset($input['username'])) $user->username = $input['username'];
+        if (isset($input['newPassword'])) $user->password = Hash::make($input['newPassword']);
+        if (isset($input['email']) && $input['email'] != $user->email) {
+            $user->email = $input['email'];
+            $user->havecheckedemail = false;
+            $user->update();
+            return Redirect::to('/user/' . $user->id . '/sendCheckLetter');
+        }
+        $user->update();
+        return Redirect::to('/login')->withErrors('修改成功，请重新登录');
     }
 
     public function showEditPage(Request $request, $user_id)

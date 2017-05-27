@@ -42,6 +42,10 @@ Route::group(['middleware' => ['web']],function () {
         Route::post('/passwordReset/{token}', "AuthController@resetPassword");
     });
 
+    Route::group(['middleware' => ['auth']], function () {
+        Route::post('/user/{user_id}/edit/account',"UserController@editAccount");
+    });
+
     Route::get('/logout', "AuthController@logOut")->middleware('auth');
 
     Route::get('/register/2', "UserController@showCompleteUser")->middleware('auth');

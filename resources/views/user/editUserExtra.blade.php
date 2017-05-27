@@ -4,6 +4,7 @@
     @else
         <label>昵称<input type="text" name="nickname"></label>
     @endif
+    <label>学号<input type="text" name="stuid" value="{{$user->stuid}}"></label>
     {!! csrf_field() !!}
     <input type="submit" class="hollow button" value="保存">
 </div>

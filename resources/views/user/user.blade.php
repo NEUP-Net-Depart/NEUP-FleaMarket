@@ -15,6 +15,11 @@
 @section('content')
 
     <div class="page-content">
+        @if (count($errors) > 0)
+            <label>
+                <span class="form-error is-visible">{{$errors->first()}}</span>
+            </label>
+        @endif
         <ul class="tabs" data-tabs id="editinfo">
             <li class="tabs-title is-active"><a href="#extra" aria-selected="true">个人信息</a></li>
             <li class="tabs-title"><a href="#account">用户帐户</a></li>
@@ -29,6 +34,11 @@
                 </div>
             </div>
             <div class="tabs-panel" id="account">
+                <div class="card-section">
+                    <form action="/user/{{$user->id}}/edit/account" method="POST" enctype="multipart/form-data">
+                        @include('user.editUserAccount')
+                    </form>
+                </div>
             </div>
             <div class="tabs-panel" id="userinfo">
                 <div id="userinfo-container" class="card-section">
@@ -36,5 +46,6 @@
                 </div>
             </div>
         </div>
+    </div>
 
 @endsection
