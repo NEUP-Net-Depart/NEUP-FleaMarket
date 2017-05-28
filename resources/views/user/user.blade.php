@@ -35,7 +35,7 @@
             </div>
             <div class="tabs-panel" id="account">
                 <div class="card-section">
-                    <form action="/user/{{$user->id}}/edit/account" method="POST" enctype="multipart/form-data">
+                    <form action="/user/{{$user->id}}/edit/account" method="POST">
                         @include('user.editUserAccount')
                     </form>
                 </div>
