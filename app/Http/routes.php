@@ -43,7 +43,10 @@ Route::group(['middleware' => ['web']],function () {
     });
 
     Route::group(['middleware' => ['auth']], function () {
-        Route::post('/user/{user_id}/edit/account',"UserController@editAccount");
+        Route::post('/user/{user_id}/edit/account', "UserController@editAccount");
+        Route::get('/user/userinfo/edit/{userinfo_id}', "UserController@editUserInfo");
+        Route::post('/user/userinfo/update', "UserController@updateUserInfo");
+        Route::post('/user/userinfo/delete', "UserController@deleteUserInfo");
     });
 
     Route::get('/logout', "AuthController@logOut")->middleware('auth');

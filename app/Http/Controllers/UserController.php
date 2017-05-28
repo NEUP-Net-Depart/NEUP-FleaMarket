@@ -85,13 +85,59 @@ class UserController extends Controller
         if (isset($input['tel_num']))
             $user_info->tel_num = $input['tel_num'];
         if (isset($input['QQ']))
-            $user_info->tel_num = $input['QQ'];
+            $user_info->QQ = $input['QQ'];
         if (isset($input['wechat']))
-            $user_info->tel_num = $input['wechat'];
+            $user_info->wechat = $input['wechat'];
         if (isset($input['address']))
-            $user_info->tel_num = $input['address'];
+            $user_info->address = $input['address'];
         $user_info->save();
 
+        return json_encode([
+            'result' => 'true',
+            'msg' => 'success'
+        ]);
+    }
+
+    public function editUserInfo(Request $request, $userinfo_id)
+    {
+        $data = [];
+        $data['userinfo'] = UserInfo::where('id', $userinfo_id)->get();
+        $user_id = $request->session()->get('user_id');
+        if ($data['userinfo'][0]->user_id != $user_id) return Redirect::to('/user/' . $user_id)->withErrors('无权限访问');
+        return View::make('user.editUserInfo')->with($data);
+    }
+
+    public function updateUserInfo(StoreUserInfoRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user_info = UserInfo::find($input['id']);
+        if ($user_info->user_id != $user_id) return Redirect::to('/user/' . $user_id)->withErrors('无权限访问');
+        $user_info->realname = $input['realname'];
+        if (isset($input['gender'])) $user_info->gender = $input['gender'];
+        else $user_info->gender = '';
+        if (isset($input['tel_num'])) $user_info->tel_num = $input['tel_num'];
+        else $user_info->tel_num = '';
+        if (isset($input['QQ'])) $user_info->QQ = $input['QQ'];
+        else $user_info->QQ = '';
+        if (isset($input['wechat'])) $user_info->wechat = $input['wechat'];
+        else $user_info->wechat = '';
+        if (isset($input['address'])) $user_info->address = $input['address'];
+        else $user_info->address = '';
+        $user_info->update();
+        return json_encode([
+            'result' => 'true',
+            'msg' => 'success'
+        ]);
+    }
+
+    public function deleteUserInfo(Request $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user_info = UserInfo::find($input['id']);
+        if ($user_info->user_id != $user_id) return Redirect::to('/user/' . $user_id)->withErrors('无权限访问');
+        $user_info->delete();
         return json_encode([
             'result' => 'true',
             'msg' => 'success'
