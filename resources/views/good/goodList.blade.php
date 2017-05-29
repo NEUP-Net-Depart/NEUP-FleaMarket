@@ -3,7 +3,21 @@
 @section('title', "商品列表")
 
 @section('content')
-
+    <div class="medium-offset-2" style="font-size:13px;">
+<ul class="menu">
+    <li><a class="x" href="/good/">综合排序</a></li>
+    <li><a class="x" href="/good/?sort=p" id="ppx">按价格从低到高</a></li>
+    <li><a class="x" href="/good/?sort=pd" id="ppx">按价格从高到低</a></li>
+    <li><a class="x" href="/good/?sort=c" id="cpx">按库存从少到多</a></li>
+    <li><a class="x" href="/good/?sort=cd" id="cpx">按库存从多到少</a></li>
+</ul>
+        <ul class="menu">
+            <li><a class="x">价格：</a></li>
+            <li><input id="priceSet1" style="width:60px;" maxlength="9" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; } ?>"/>-<input id="priceSet2" style="width:60px;" maxlength="9" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; } ?>"/>&nbsp;<button class="button" style="width:40px;height:20px;font-size:9px;text-align:center; padding-top:4px;" onclick="setprice()">yes!</button></li>
+            <li><a class="x">库存下限：</a></li>
+            <li><input id="pricec" style="width:60px;" maxlength="9" value="<?php if(isset($_GET['start_count'])){echo $_GET['start_count']; } ?>" /><button class="button" style="width:40px;height:20px;font-size:9px;text-align:center; padding-top:4px;" onclick="setc()">yes!</button></li>
+        </ul>
+    </div>
     <div class="row">
         <div class="small-0 medium-2 columns">
             <ul class="menu vertical">

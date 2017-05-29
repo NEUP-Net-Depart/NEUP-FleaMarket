@@ -17,7 +17,7 @@ class CreateGoodInfoTable extends Migration
             $table->string('good_name');
             $table->integer('cat_id');
             $table->text('description');
-            $table->bigInteger('price');
+            $table->double('price');
             $table->tinyInteger('type');
             $table->integer('user_id');
             $table->integer('count');

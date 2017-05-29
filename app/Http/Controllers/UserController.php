@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserInfoRequest;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +22,7 @@ use App\Http\Requests\EditAccountRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\Controller;
 use Hash;
 use Mail;
@@ -242,4 +244,44 @@ class UserController extends Controller
         $image = Image::make($file)->resize($width, $height);
         return $image->response('jpg');
     }
+
+    public function mygoods(Request $request)
+    {
+        $data = [];
+        $user_id = $request->session()->get('user_id');
+        $data['goods'] = GoodInfo::where('user_id', $user_id)->paginate(15);
+
+        return view::make('user.seller.mygoods')->with($data);
+    }
+
+    public function sellerTrans(Request $request)
+    {
+        $data = [];
+        $page = isset($request->page) ? $request->page : 1;
+        $user_id = $request->session()->get('user_id');
+        $trans = User::with(['trans' => function ($query) use($page) {
+            $query->orderBy('id', 'desc')->offset(($page - 1) * 15)->limit(15);
+        }, 'trans.good', 'trans.buyer'])->find($user_id)->trans;
+
+        $data['trans'] = new Paginator($trans, 15, $page);
+        return view::make('user.seller.sellerTrans')->with($data);
+    }
+
+    public function tickets(Request $request)
+    {
+        $data = [];
+        $page = isset($request->page) ? $request->page : 1;
+        $user_id = $request->session()->get('user_id');
+
+        return view::make('user.seller.tickets')->with($data);
+    }
+
+    public function buyer(Request $request)
+    {
+        $data = [];
+        $user_id = $request->session()->get('user_id');
+        $data['trans'] = Transaction::where('buyer_id', $user_id)->orderBy('id', 'desc')->paginate(15);
+        return view::make('user.buyer')->with($data);
+    }
+
 }

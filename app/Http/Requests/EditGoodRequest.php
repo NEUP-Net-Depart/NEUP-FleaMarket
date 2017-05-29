@@ -26,8 +26,8 @@ class EditGoodRequest extends Request
         return [
 			'good_name'=>'required|max:128',
 			'description'=>'max:2048',
-			'price'=>'required|max:9223372036854775807',
-			'count'=>'required|max:2147483647',
+			'price'=>'numeric|required|max:9223372036854775807',
+			'count'=>'integer|required|max:2147483647',
             //'good_tag'=>'required',
             //'other_tag'=>'max:128',
         ];
@@ -39,6 +39,8 @@ class EditGoodRequest extends Request
 			'good_name.between' => '商品名不能多于128个字符！',
 			'description.max' => '商品描述不能多于2048个字符！',
 			'price.required' => '商品价格不能为空！',
+            'price.numeric' => '商品价格必须为数值！',
+            'count.integer' => '库存数必须是整数！',
 			'price.max' => '商品价格不能超过9223372036854775807！',
 			'count.required' => '库存数不能为空！',
 			'count.max' => '库存数不能超过2147483647！',

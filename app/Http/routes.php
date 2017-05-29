@@ -67,7 +67,6 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/avatar/{user_id}/{width}/{height}', "UserController@getAvatar");
 
     Route::get('/good', "GoodController@getList");
-    Route::get('/good/my', "GoodController@myGood")->middleware('auth');
 
     Route::get('/good/add', "GoodController@showAddGood")->middleware('auth');
     Route::post('/good/add', "GoodController@addGood")->middleware('auth');
@@ -91,6 +90,11 @@ Route::group(['middleware' => ['web']],function () {
     Route::put('/message/{id}', "MessageController@readMessage")->middleware('auth');
     Route::delete('/message/{id}', "MessageController@deleteMessage")->middleware('auth');
 
+    Route::get('/user/sell', "UserController@mygoods")->middleware('auth');
+    Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
+    Route::get('/user/sell/tickets', "UserController@tickets")->middleware('auth');
+    Route::get('/user/trans', "UserController@buyer")->middleware('auth');
+    Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('auth');
 
     //------Above are tested function
 
@@ -124,11 +128,6 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::match(['post', 'get'], '/good/end', [
         "uses" => "GoodController@end",
-        "middleware" => "auth"
-    ]);
-
-    Route::post('/good/{good_id}/buy', [
-        "uses" => "GoodController@getGood",
         "middleware" => "auth"
     ]);
 

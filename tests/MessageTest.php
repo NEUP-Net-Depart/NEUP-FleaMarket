@@ -22,7 +22,7 @@ class MessageTest extends BrowserKitTestCase
             ->seeStatusCode(302)
             ->post('message', ['title' => 'testMessage'])
             ->seeStatusCode(302)
-            ->post('message', ['title' => 'testMessage', 'receiver' => 'aaa'])
+            ->post('message', ['title' => 'testMessage', 'receiver' => '10.5'])
             ->seeStatusCode(302)
             ->post('message', ['title' => 'testMessage', 'receiver' => '1024'])
             ->seeJson(['result' => false, 'msg' => 'no such receiver'])
