@@ -30,6 +30,12 @@ use Image;
 
 class UserController extends Controller
 {
+    public function redirectUserID(Request $request)
+    {
+        $user_id = $request->session()->get('user_id');
+        return Redirect::to('/user/' . $user_id);
+    }
+
     public function showCompleteUser(Request $request)
     {
         $user = User::find($request->session()->get('user_id'));
@@ -43,7 +49,6 @@ class UserController extends Controller
         $user = User::find($request->session()->get('user_id'));
         if (isset($input['nickname']))
             $user->nickname = $input['nickname'];
-        if (isset($input['stuid'])) $user->stuid = $input['stuid'];
         $user->update();
         if ($request->hasFile('avatarPic'))
             Storage::put(
@@ -160,7 +165,6 @@ class UserController extends Controller
         $user = User::find($user_id);
         if (isset($input['nickname']))
             $user->nickname = $input['nickname'];
-        if (isset($input['stuid'])) $user->stuid = $input['stuid'];
         $user->update();
         if ($request->hasFile('avatarPic'))
             Storage::put(

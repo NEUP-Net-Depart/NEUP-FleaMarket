@@ -43,6 +43,7 @@ Route::group(['middleware' => ['web']],function () {
     });
 
     Route::group(['middleware' => ['auth']], function () {
+        Route::get('/user',"UserController@redirectUserID");
         Route::post('/user/{user_id}/edit/account', "UserController@editAccount");
         Route::get('/user/userinfo/edit/{userinfo_id}', "UserController@editUserInfo");
         Route::post('/user/userinfo/update', "UserController@updateUserInfo");
