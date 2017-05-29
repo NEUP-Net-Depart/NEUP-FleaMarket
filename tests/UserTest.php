@@ -39,10 +39,8 @@ class UserTest extends BrowserKitTestCase
         $this->withSession(['user_id' => 1])
             ->visit('/user/1')
             ->type('changenickname', 'nickname')
-            ->type('21231234', 'stuid')
             ->press('保存')
-            ->see('changenickname')
-            ->see('21231234');
+            ->see('changenickname');
     }
 
     public function testEditUserAccount()
@@ -89,16 +87,6 @@ class UserTest extends BrowserKitTestCase
             ->visit('/user/1')
             ->post('/user/1/edit/account', [
                 '_token' => csrf_token(),
-                'username' => 'hasusername',
-                'email' => 'test@example.com',
-                'password' => 'test@example.com',
-                'newPassword' => '',
-                'newPassword_confirmation' => ''
-            ])
-            ->visit('/user/1')
-            ->see('该用户名已被注册')
-            ->post('/user/1/edit/account', [
-                '_token' => csrf_token(),
                 'username' => 'username',
                 'email' => 'hasemail@example.com',
                 'password' => 'test@example.com',
@@ -107,21 +95,6 @@ class UserTest extends BrowserKitTestCase
             ])
             ->visit('/user/1')
             ->see('已有用户使用该邮箱注册')
-            ->post('/user/1/edit/account', [
-                '_token' => csrf_token(),
-                'username' => 'changeusername',
-                'email' => 'test@example.com',
-                'password' => 'test@example.com',
-                'newPassword' => '',
-                'newPassword_confirmation' => ''
-            ])
-            ->visit('/user/1')
-            ->seePageIs('/login')
-            ->type('changeusername', 'username')
-            ->type('test@example.com', 'password')
-            ->press('登录')
-            ->seePageIs('/')
-            ->visit('/user/1')
             ->post('/user/1/edit/account', [
                 '_token' => csrf_token(),
                 'username' => 'changeusername',
@@ -166,7 +139,7 @@ class UserTest extends BrowserKitTestCase
             ])
             ->visit('/user/1')
             ->seePageIs('/login')
-            ->type('changeusername', 'username')
+            ->type('username', 'username')
             ->type('changepassword', 'password')
             ->press('登录')
             ->seePageIs('/')

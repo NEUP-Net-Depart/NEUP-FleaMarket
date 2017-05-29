@@ -32,6 +32,11 @@ class EditAccountRequest extends FormRequest
                 'between:3,64',
                 Rule::unique('users')->ignore($this->session()->get('user_id'))
             ],
+            'stuid' => [
+                'nullable',
+                'alpha_dash',
+                Rule::unique('users')->ignore($this->session()->get('user_id'))
+            ],
             'email' => [
                 'required',
                 'email',
@@ -49,6 +54,8 @@ class EditAccountRequest extends FormRequest
             'username.between' => '用户名长度必须为3-64个字符！',
             'username.alpha_dash' => '用户名只能为字母、数字、减号和下划线！',
             'username.unique' => '该用户名已被注册！',
+            'stuid.alpha_dash' => '学号只能为字母、数字、减号和下划线！',
+            'stuid.unique' => '该学号已被注册！',
             'password.required' => '当前密码不能为空！',
             'newPassword.confirmed' => '两次输入的密码不一致！',
             'newPassword.between' => '密码长度必须为6-128个字符',

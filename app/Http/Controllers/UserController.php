@@ -179,10 +179,11 @@ class UserController extends Controller
         $input = $request->all();
         $user = User::find($user_id);
         if (!Hash::check($input['password'], $user->password)) return Redirect::to('/user/' . $user_id)->withErrors('当前密码错误');
+        if ($user->username == '' && isset($input['username']) && $input['username'] != '') $user->username = $input['username'];
+        if ($user->stuid == '' && isset($input['stuid']) && $input['stuid'] != '') $user->stuid = $input['stuid'];
+        if (isset($input['newPassword']) && $input['newPassword'] != '') $user->password = Hash::make($input['newPassword']);
         $request->session()->forget('user_id');
-        if (isset($input['username'])) $user->username = $input['username'];
-        if (isset($input['newPassword']) && $input['newPassword']!='') $user->password = Hash::make($input['newPassword']);
-        if (isset($input['email']) && $input['email'] != $user->email) {
+        if (isset($input['email']) && $input['email'] != '' && $input['email'] != $user->email) {
             $user->email = $input['email'];
             $user->havecheckedemail = false;
             $user->update();
