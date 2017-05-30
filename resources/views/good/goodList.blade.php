@@ -22,18 +22,18 @@
                         <a>排序</a>
                         <ul class="menu">
                         <li><a href="/good/">综合排序</a></li>
-                        <li><a href="/good/?sort=p" id="ppx">按价格从低到高</a></li>
-                        <li><a href="/good/?sort=pd" id="ppx">按价格从高到低</a></li>
-                        <li><a href="/good/?sort=c" id="cpx">按库存从少到多</a></li>
-                        <li><a href="/good/?sort=cd" id="cpx">按库存从多到少</a></li>
+                        <li><a onclick="setc('p')">按价格从低到高</a></li>
+                        <li><a onclick="setc('pd')">按价格从高到低</a></li>
+                        <li><a onclick="setc('c')">按库存从少到多</a></li>
+                        <li><a onclick="setc('cd')">按库存从多到少</a></li>
                         </ul>
                         </li>
                         <li>
-                            <a>价格筛选 <input id="priceSet1" style="width:50px;margin-left:10px;" maxlength="9" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; } ?>"/>-<input id="priceSet2" style="width:50px;margin-right:10px" maxlength="9" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; } ?>"/>&nbsp;<button class="button" style="width:45px;height:25px;font-size:14px;text-align:left; padding-top:4px;padding-left:7px;padding-right:3px; margin-top:-3px" onclick="setprice()">确定</button>
+                            <a>价格筛选 <input id="priceSet1" style="width:50px;margin-left:10px;" maxlength="9" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; } ?>"/>-<input id="priceSet2" style="width:50px;margin-right:10px" maxlength="9" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; } ?>"/>&nbsp;<button class="button" style="width:45px;height:25px;font-size:14px;text-align:left; padding-top:4px;padding-left:7px;padding-right:3px; margin-top:-3px" onclick="setc('a')">确定</button>
                             </a>
                         </li>
                         <li>
-                            <a>库存下限 <input id="pricec" maxlength="9" style="width:50px;margin-left:10px;margin-right:10px;" value="<?php if(isset($_GET['start_count'])){echo $_GET['start_count']; } ?>" />&nbsp;<button class="button"  style="width:45px;height:25px;font-size:14px;text-align:left; padding-top:4px;padding-left:7px;padding-right:3px; margin-top:-3px" onclick="setc()">确定</button>
+                            <a>库存下限 <input id="pricec" maxlength="9" style="width:50px;margin-left:10px;margin-right:10px;" value="<?php if(isset($_GET['start_count'])){echo $_GET['start_count']; } ?>" />&nbsp;<button class="button"  style="width:45px;height:25px;font-size:14px;text-align:left; padding-top:4px;padding-left:7px;padding-right:3px; margin-top:-3px" onclick="setc('a')">确定</button>
                             </a>
                            </li>
                         </li>
@@ -41,7 +41,7 @@
 
                 </div>
                 @foreach($goods as $good)
-                    <div class="columns" id="good{{ $good->id }}">
+                    <div class="columns blck" id="good{{ $good->id }}">
                         <div class="good">
                         <a href="/good/{{ $good->id }}">
                             <div class="card">

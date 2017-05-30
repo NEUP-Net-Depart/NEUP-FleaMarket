@@ -4,10 +4,8 @@ $(".good").mouseenter(function(){
 $(".good").mouseleave(function(){
     $(".good").stop().animate({opacity:'1.0'},"fast");
 });
-$(".x").onclick(function(){
 
-});
-$("#ppx").onclick(function(){
+$("#ppx").click(function(){
     $(this).attr("href","/good/?sort=pd");
 })
 function sq(px,sx){
@@ -28,8 +26,24 @@ function setprice(){
     }
     location.href=hr;
 }
-function setc(){
-    if($("#pricec").val()!=""){
-        location.href="/good/?start_count="+$("#pricec").val();
+function sort(ha){
+    var hr=window.location;
+   var a= $.get(hr);
+    alert(a.sort);
+}
+function setc(ha){
+    var hr="/good/?";
+    if($("#priceSet1").val()!=""){
+        hr=hr+"&start_price="+$("#priceSet1").val();
     }
+    if($("#priceSet2").val()!=""){
+        hr=hr+"&end_price="+$("#priceSet2").val();
+    }
+    if($("#pricec").val()!=""){
+        hr=hr+"&start_count="+$("#pricec").val();
+    }
+    if(ha!="a"){
+        hr=hr+"&sort="+ha;
+    }
+    location.href=hr;
 }
