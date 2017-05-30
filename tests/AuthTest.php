@@ -150,4 +150,23 @@ class AuthTest extends BrowserKitTestCase
             ->press('登录')
             ->seeInSession('is_admin', 2);
     }
+
+    public function testSendLetter()
+    {
+        $this->get('/user/100/sendCheckLetter')
+            ->assertResponseStatus(404)
+            ->visit('/user/1/sendCheckLetter')
+            ->see('该用户已经验证过邮箱');
+        $this->get('/user/100/sendUnbindLetter')
+            ->assertResponseStatus(404);
+    }
+
+    public function testPasswordForget()
+    {
+        $this->visit('/iforgotit')
+            ->see('重置密码')
+            ->type('admin@example.com', 'email')
+            ->press('确定')
+            ->see('已向你的邮箱发送一份包含重置密码的链接的邮件');
+    }
 }

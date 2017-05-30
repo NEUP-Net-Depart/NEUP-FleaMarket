@@ -1,0 +1,1 @@
+<a href="http://{{$host}}/user/unbindEmail/{{$token}}">http://{{$host}}/user/unbindEmail/{{$token}}</a>

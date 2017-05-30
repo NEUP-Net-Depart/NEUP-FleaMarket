@@ -16,7 +16,7 @@
                     </label>
                 @endif
                 <form action="/login" method="POST" data-abide novalidate>
-                    <label>用户名<input type="text" name="username"></label>
+                    <label>用户名/邮箱<input type="text" name="username"></label>
                     <label>密码<input type="password" id="password" name="password"></label>
                     {!! csrf_field() !!}
                     <input type="submit" class="hollow button" value="登录">
