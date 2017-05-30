@@ -1,0 +1,65 @@
+.ad{
+    display:inline;
+}
+.sub{
+    width:45px;height:25px;font-size:14px;text-align:left; padding-top:4px;padding-left:7px;padding-right:3px; margin-top:-3px
+}
+#priceSet1{
+    width:50px;
+    margin-left:10px;
+}
+#priceSet2{
+    width:50px;
+    margin-right:10px
+}
+#pricec{
+    width:50px;
+    margin-left:10px;
+    margin-right:10px;
+}
+@media (max-width: 1030px){
+}
+@media (max-width: 842px){
+    #priceSet1{
+        width:20%;
+        margin-left:2%;
+        margin-right:2%;
+    }
+    #priceSet2{
+        width:20%;
+        margin-left:2%;
+    }
+    .sub{
+        margin-right:0px;
+    }
+    #kca{
+        padding-left:0px;
+        padding-right:0px;
+        margin-right:0px;
+    }
+    #pricec{
+        width:20%;
+        margin-left:2%;
+    }
+    #sxa{
+        padding-right:0px;
+    }
+}
+@media (max-width: 705px) and (min-width:640px){
+    .ad{
+        display:block;
+    }
+    #pricec{
+        width:30%;
+        margin-left:2%;
+    }
+}
+@media (max-width: 507px){
+    .ad{
+        display:block;
+    }
+    #pricec{
+        width:30%;
+        margin-left:2%;
+    }
+}
