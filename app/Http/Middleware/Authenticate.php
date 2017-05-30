@@ -19,8 +19,6 @@ class Authenticate
     {
         if($request->session()->has('user_id'))
         {
-            if (isset($request->user_id) && $request->user_id != $request->session()->get('user_id'))
-                return Redirect::to('/user/' . $request->session()->get('user_id'));
             return $next($request);
         }
         else

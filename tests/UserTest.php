@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Hash;
 use Tests\BrowserKitTestCase;
 use App\User;
 use App\GoodInfo;
@@ -46,106 +47,88 @@ class UserTest extends BrowserKitTestCase
     public function testEditUserAccount()
     {
         $user_backup = User::where('email', 'test@example.com')->first();
+        $u2 = User::find(2);
+        $u2->username = "test";
+        $u2->save();
 
         // test add username
         $this->withSession(['user_id' => 1])
-            ->visit('/user/1')
-            ->post('/user/1/edit/account', [
-                '_token' => csrf_token(),
-                'username' => 'username',
-                'email' => 'test@example.com',
-                'password' => 'wrongpassword',
-                'newPassword' => '',
-                'newPassword_confirmation' => ''
-            ])
-            ->visit('/user/1')
-            ->see('当前密码错误')
-            ->post('/user/1/edit/account', [
-                '_token' => csrf_token(),
-                'username' => 'username',
-                'email' => 'test@example.com',
-                'password' => 'test@example.com',
-                'newPassword' => '',
-                'newPassword_confirmation' => ''
-            ])
-            ->visit('/user/1')
-            ->seePageIs('/login')
-            ->type('username', 'username')
-            ->type('test@example.com', 'password')
-            ->press('登录')
-            ->seePageIs('/')
-            ->seeInSession('user_id');
+            ->visit('/user')
+            ->press('设置')
+            ->see('用户名不可为空')
+            ->type('*#^$%', 'username')
+            ->press('设置')
+            ->see('用户名只能为')
+            ->type('test', 'username')
+            ->press('设置')
+            ->see('该用户名已被注册')
+            ->type('testusernameuname', 'username')
+            ->press('设置')
+            ->see('设置成功');
 
-        $user_another = new User;
-        $user_another->username = 'hasusername';
-        $user_another->email = 'hasemail@example.com';
-        $user_another->havecheckedemail = true;
-        $user_another->save();
-
-        //test change username and email
+        // test change username
         $this->withSession(['user_id' => 1])
-            ->visit('/user/1')
-            ->post('/user/1/edit/account', [
-                '_token' => csrf_token(),
-                'username' => 'username',
-                'email' => 'hasemail@example.com',
-                'password' => 'test@example.com',
-                'newPassword' => '',
-                'newPassword_confirmation' => ''
-            ])
-            ->visit('/user/1')
+            ->post('/user/edit/username', ['username' => 'newnewnew'])
+            ->seeStatusCode(302);
+        $this->visit('/user')
+            ->dontSee('newnewnew')
+            ->see('testusernameuname');
+
+        $nu = new User();
+        $nu->privilege = 0;
+        $nu->baned =  false;
+        $nu->havecheckedemail = false;
+        $nu->role = 0;
+        $nu->save();
+
+        //test change email
+        $this->withSession(['user_id' => $nu->id])
+            ->visit('/user?tab=account')
+            ->press('email_submit')
+            ->see('邮箱不能为空')
+            ->type('bindemail@example', 'email')
+            ->press('email_submit')
+            ->see('邮箱格式不正确')
+            ->type('test@example.com', 'email')
+            ->press('email_submit')
             ->see('已有用户使用该邮箱注册')
-            ->post('/user/1/edit/account', [
-                '_token' => csrf_token(),
-                'username' => 'changeusername',
-                'email' => 'changeemail@example.com',
-                'password' => 'test@example.com',
-                'newPassword' => '',
-                'newPassword_confirmation' => ''
-            ])
-            ->visit('/user/1');
+            ->type('bindemail@example.com', 'email')
+            ->press('email_submit')
+            ->see('已向您的邮箱发送一封验证邮件')
+            ->see('未验证')
+            ->see('解绑')
+            ->press('解绑')
+            ->see('验证完成后即可解绑此邮箱');
 
-        $user = User::where('email', 'changeemail@example.com')->first();
-        $user->havecheckedemail = true;
-        $user->save();
-
-        $this->seePageIs('/login')
-            ->type('changeemail@example.com', 'username')
-            ->type('test@example.com', 'password')
-            ->press('登录')
-            ->seePageIs('/')
-            ->seeInSession('user_id');
 
         //test change password
-        $this->withSession(['user_id' => 1])
-            ->visit('/user/1')
-            ->post('/user/1/edit/account', [
-                '_token' => csrf_token(),
-                'username' => 'changeusername',
-                'email' => 'changeemail@example.com',
-                'password' => 'test@example.com',
-                'newPassword' => 'changepassword',
-                'newPassword_confirmation' => 'changepassword2'
-            ])
-            ->visit('/user/1')
+        $this->withSession(['user_id' => $nu->id])
+            ->visit('/user?tab=account')
+            ->dontsee('当前密码')
+            ->press('password_submit')
+            ->see('密码不能为空')
+            ->type('newpassword','newPassword')
+            ->type('newpasswordn', 'newPassword_confirmation')
+            ->press('password_submit')
             ->see('两次输入的密码不一致')
-            ->post('/user/1/edit/account', [
-                '_token' => csrf_token(),
-                'username' => 'changeusername',
-                'email' => 'changeemail@example.com',
-                'password' => 'test@example.com',
-                'newPassword' => 'changepassword',
-                'newPassword_confirmation' => 'changepassword'
-            ])
-            ->visit('/user/1')
-            ->seePageIs('/login')
-            ->type('username', 'username')
-            ->type('changepassword', 'password')
-            ->press('登录')
-            ->seePageIs('/')
-            ->seeInSession('user_id');
+            ->type('newpassword','newPassword')
+            ->type('newpassword', 'newPassword_confirmation')
+            ->press('password_submit')
+            ->see('密码已变更')
+            ->see('当前密码')
+            ->type('wrongpassword','password')
+            ->type('newpassword2','newPassword')
+            ->type('newpassword2', 'newPassword_confirmation')
+            ->press('password_submit')
+            ->see('旧密码错误')
+            ->type('newpassword','password')
+            ->type('newpassword2','newPassword')
+            ->type('newpassword2', 'newPassword_confirmation')
+            ->press('password_submit')
+            ->see('密码已变更');
 
-        $user_backup->save();
+        $nu = User::find($nu->id);
+        $this->assertTrue(Hash::check('newpassword2', $nu->password));
     }
 
     public function testEditUserInfo()
@@ -173,7 +156,7 @@ class UserTest extends BrowserKitTestCase
             ->see('11000000')
             ->see('wechat')
             ->see('address')
-            ->json('POST', '/user/userinfo/update', [
+            ->json('PUT', '/user/userinfo/edit', [
                 'id' => '1',
                 'realname' => 'changerealname',
                 'tel_num' => '999',
@@ -187,7 +170,7 @@ class UserTest extends BrowserKitTestCase
             ->see('987')
             ->see('changewechat')
             ->see('changeaddress')
-            ->json('POST', '/user/userinfo/delete', [
+            ->json('DELETE', '/user/userinfo/delete', [
                 'id' => '1',
             ])
             ->dontSee('changerealname');

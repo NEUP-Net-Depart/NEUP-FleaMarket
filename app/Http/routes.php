@@ -33,9 +33,6 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/register', "AuthController@showRegister");
         Route::post('/register', "AuthController@register");
 
-        Route::get('/user/{user_id}/sendCheckLetter', "AuthController@sendCheckLetter");
-        Route::get('/user/checkEmail/{token}', "AuthController@checkEmail");
-
         Route::get('/iforgotit', "AuthController@showPasswordForget");
         Route::post('/iforgotit', "AuthController@sendPasswordResetMail");
         Route::get('/passwordReset/{token}', "AuthController@showPasswordReset");
@@ -43,26 +40,38 @@ Route::group(['middleware' => ['web']],function () {
     });
 
     Route::group(['middleware' => ['auth']], function () {
-        Route::get('/user',"UserController@redirectUserID");
-        Route::post('/user/{user_id}/edit/account', "UserController@editAccount");
+        Route::get('/user',"UserController@getList");
+        Route::post('/user',"UserController@editList");
+        Route::post('/user/edit/username', "AuthController@setUsername");
+        Route::post('/user/edit/stuid', "AuthController@setStuid");
+        Route::post('/user/edit/email', "AuthController@setEmail");
+        Route::post('/user/edit/password', "AuthController@setPassword");
+
         Route::get('/user/userinfo/edit/{userinfo_id}', "UserController@editUserInfo");
-        Route::post('/user/userinfo/update', "UserController@updateUserInfo");
-        Route::post('/user/userinfo/delete', "UserController@deleteUserInfo");
+        Route::put('/user/userinfo/edit', "UserController@updateUserInfo");
+        Route::delete('/user/userinfo/delete', "UserController@deleteUserInfo");
+
+        Route::get('/logout', "AuthController@logOut");
+
+        Route::get('/register/2', "UserController@showCompleteUser");
+        Route::post('/register/2', "UserController@completeUser");
+        Route::get('/register/3', "UserController@regUserInfo");
+
+        Route::get('user/userinfo', "UserController@userInfo");
+        Route::get('/user/userinfo/create', "UserController@createUserInfo");
+        Route::post('user/userinfo', "UserController@storeUserInfo");
+
+        Route::get('/user/fav', "UserController@getFavlist");
+        Route::get('/user/fav/edit', "UserController@editFavlist");
+        Route::delete('/user/fav/del', "UserController@delFavlist");
+
     });
 
-    Route::get('/logout', "AuthController@logOut")->middleware('auth');
+    Route::get('/user/{user_id}/sendCheckLetter', "AuthController@sendCheckLetter");
+    Route::get('/user/checkEmail/{token}', "AuthController@checkEmail");
+    Route::get('/user/unbindEmail/{token}', "AuthController@unbindEmail");
 
-    Route::get('/register/2', "UserController@showCompleteUser")->middleware('auth');
-    Route::post('/register/2', "UserController@completeUser")->middleware('auth');
-    Route::get('/register/3', "UserController@regUserInfo")->middleware('auth');
-
-    Route::get('user/userinfo', "UserController@userInfo")->middleware('auth');
-    Route::get('/user/userinfo/create', "UserController@createUserInfo")->middleware('auth');
-    Route::post('user/userinfo', "UserController@storeUserInfo")->middleware('auth');
-
-    Route::get('/user/fav', "UserController@getFavlist")->middleware('auth');
-    Route::get('/user/fav/edit', "UserController@editFavlist")->middleware('auth');
-    Route::delete('/user/fav/del', "UserController@delFavlist")->middleware('auth');
+    Route::get('/user/{user_id}',"UserController@userProfile");
 
     Route::get('/avatar/{user_id}', "UserController@getSimpleAvatar");
     Route::get('/avatar/{user_id}/{width}/{height}', "UserController@getAvatar");
@@ -98,21 +107,6 @@ Route::group(['middleware' => ['web']],function () {
     Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('auth');
 
     //------Above are tested function
-
-    Route::get('/user/{user_id}/edit', [
-        "uses" => "UserController@showEditPage",
-        "middleware" => "auth"
-    ]);
-
-    Route::post('/user/{user_id}/edit/middle', [
-        "uses" => "UserController@editList",
-        "middleware" => "auth"
-    ]);
-
-    Route::get('/user/{user_id}', [
-        "uses" => "UserController@getList",
-        "middleware" => "auth"
-    ]);
 
     Route::get('/', [
         "uses" => "ContentController@Mainpage",

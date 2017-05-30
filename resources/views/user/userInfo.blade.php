@@ -51,6 +51,7 @@
             type: "POST",
             url: "/user/userinfo/delete",
             data: {
+                "_method" : "DELETE",
                 "_token": "{{ csrf_token() }}",
                 "id": userinfo_id
             },
@@ -73,9 +74,10 @@
         var str_data = $("#modify_user_info_form input,#modify_user_info_form textarea").map(function () {
             return ($(this).attr("name") + '=' + encodeURIComponent($(this).val()));
         }).get().join("&");
+        str_data = str_data + "&_method=PUT";
         $.ajax({
             type: "POST",
-            url: "/user/userinfo/update",
+            url: "/user/userinfo/edit",
             data: str_data,
             success: function (msg) {
                 $.ajax({

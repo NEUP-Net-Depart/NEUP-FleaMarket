@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->tinyInteger('privilege');
             $table->string('username')->nullable()->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('stuid')->nullable();
             $table->string('nickname')->nullable();
             $table->string('email')->unique();

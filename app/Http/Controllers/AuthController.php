@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SetEmailRequest;
+use App\Http\Requests\SetPasswordRequest;
+use App\Http\Requests\SetStuidRequest;
+use App\Http\Requests\SetUsernameRequest;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
@@ -116,7 +120,7 @@ class AuthController extends Controller
         $log->event = "reg_success";
         $log->save();
         // log end
-        return Redirect::to('/user/' . $user->id . '/sendCheckLetter');
+        return $this->sendCheckLetter($request, $user->id);
     }
 
     public function logOut(Request $request)
@@ -139,6 +143,12 @@ class AuthController extends Controller
 
     public function sendCheckLetter(Request $request, $user_id)
     {
+        self::doSendCheckLetter($request, $user_id);
+        return Redirect::to('/login')->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可登录先锋市场。');
+    }
+
+    static private function doSendCheckLetter(Request $request, $user_id)
+    {
         $data = [];
         $user = User::where('id', $user_id)->first();
         if ($user == NULL)
@@ -159,7 +169,7 @@ class AuthController extends Controller
             $new_check_email->save();
         }
         $time = time();
-        $data['token'] = base64_encode($token . "@" . $time . "@" . substr(sha1($time . env('APP_KEY')), 0, 6));
+        $data['token'] = base64_encode($token . "#" . $time . "#" . $email . "#" . substr(sha1($time . $email . env('APP_KEY')), 0, 6));
         $data['host'] = $request->server("HTTP_HOST");
         if (env('APP_ENV') != "testing")
             Mail::send('auth.checkLetter', $data, function ($m) use ($user, $email) {
@@ -174,16 +184,118 @@ class AuthController extends Controller
         $log->event = "sendcheckletter";
         $log->save();
         // log end
-        return Redirect::to('/login')->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可登录先锋市场。');
     }
+
+    static private function doSendUnbindLetter(Request $request, $user_id)
+    {
+        $data = [];
+        $user = User::where('id', $user_id)->first();
+        if ($user == NULL)
+            abort(404);
+        if (!$user->havecheckedemail) {
+            $user->email = '';
+            $user->save();
+            return Redirect::to('/')->withErrors('解绑成功。');
+        }
+        $email = $user->email;
+
+        $check_email = CheckEmail::where('user_id', $user_id)->first();
+
+        if ($check_email != NULL) {
+            $token = $check_email->token;
+        } else {
+            $new_check_email = new CheckEmail;
+            $new_check_email->user_id = $user_id;
+            $token = md5($email . time());
+            $new_check_email->token = $token;
+            $new_check_email->save();
+        }
+        $time = time();
+        $data['token'] = base64_encode($token . "#" . $time . "#" . $email . "#" . substr(sha1($time . $email . env('APP_KEY')), 0, 6));
+        $data['host'] = $request->server("HTTP_HOST");
+        if (env('APP_ENV') != "testing")
+            Mail::send('auth.unbindLetter', $data, function ($m) use ($user, $email) {
+                $m->from(env('MAIL_USERNAME'), "先锋市场");
+                $m->to($email, $user->username)->subject('邮箱解绑请求');
+            });
+
+        // log start
+        $log = new AuthLog();
+        $log->user_id = $user_id;
+        $log->ip = $request->ip();
+        $log->event = "sendunbindletter";
+        $log->save();
+        // log end
+    }
+
+    public function setUsername(SetUsernameRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
+        if ($user->username == '') {
+            $user->username = $input['username'];
+            $user->save();
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！');
+        }
+        else
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('用户名不能更改');
+    }
+
+    public function setStuid(SetStuidRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
+        if ($user->stuid == '') {
+            $user->stuid = $input['stuid'];
+            $user->save();
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！');
+        }
+        else
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('学号一旦设置不能更改，请联系管理员');
+    }
+
+    public function setEmail(SetEmailRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
+        if ($user->email == '') {
+            $user->email = $input['email'];
+            $user->havecheckedemail = false;
+            $user->save();
+            self::doSendCheckLetter($request, $user_id);
+            return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。');
+        }
+        else {
+            self::doSendUnbindLetter($request, $user_id);
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可解绑此邮箱。');
+        }
+    }
+
+    public function setPassword(SetPasswordRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
+        if ($user->password != '' && !Hash::check($input['password'], $user->password))
+            return Redirect::to('/user?tab=account')->withErrors('旧密码错误');
+        $user->password = Hash::make($input['newPassword']);
+        $user->update();
+        return Redirect::to('/user?tab=account')->withErrors('密码已变更。');
+    }
+
 
     public function checkEmail(Request $request, $token)
     {
-        $token = explode('@', base64_decode($token));
+        $token = explode('#', base64_decode($token));
         $check_email = CheckEmail::where('token', $token[0])->first();
-        if ($check_email == NULL || substr(sha1($token[1] . env('APP_KEY')), 0, 6) != $token[2])
+        if ($check_email == NULL || substr(sha1($token[1] . $token[2] . env('APP_KEY')), 0, 6) != $token[3])
             return Redirect::to('/login')->withErrors('无效的链接');
         $user = User::find($check_email->user_id);
+        if($user->email != $token[2])
+            return Redirect::to('/login')->withErrors('此链接已失效。');
         $user->havecheckedemail = true;
         $user->update();
         $check_email->delete();
@@ -195,7 +307,30 @@ class AuthController extends Controller
         $log->event = "checkemail";
         $log->save();
         // log end
-        return Redirect::to('/login')->withErrors('已验证您的邮箱！现在你可以登录并完善更多信息啦！');
+        return Redirect::to('/login')->withErrors('已验证您的邮箱！现在你可以用这个邮箱登录啦！');
+    }
+
+    public function unbindEmail(Request $request, $token)
+    {
+        $token = explode('#', base64_decode($token));
+        $check_email = CheckEmail::where('token', $token[0])->first();
+        if ($check_email == NULL || substr(sha1($token[1] . $token[2] . env('APP_KEY')), 0, 6) != $token[3])
+            return Redirect::to('/login')->withErrors('无效的链接');
+        $user = User::find($check_email->user_id);
+        if($user->email != $token[2])
+            return Redirect::to('/login')->withErrors('此链接已失效。');
+        $user->email = "";
+        $user->update();
+        $check_email->delete();
+
+        // log start
+        $log = new AuthLog();
+        $log->user_id = $user->id;
+        $log->ip = $request->ip();
+        $log->event = "unbindemail";
+        $log->save();
+        // log end
+        return Redirect::to('/user?tab=account')->withErrors('已解绑您的邮箱！');
     }
 
     public function showPasswordForget()
@@ -226,7 +361,7 @@ class AuthController extends Controller
                 $new_password_reset->save();
             }
             $time = time();
-            $data['token'] = base64_encode($token . "@" . $time . "@" . substr(sha1($time . env('APP_KEY')), 0, 6));
+            $data['token'] = base64_encode($token . "#" . $time . "#" . substr(sha1($time . env('APP_KEY')), 0, 6));
             $data['host'] = $request->server("HTTP_HOST");
             if (env('APP_ENV') != "testing")
                 Mail::send('auth.resetLetter', $data, function ($m) use ($user, $email) {
@@ -253,7 +388,7 @@ class AuthController extends Controller
 
     public function resetPassword(ResetPassRequest $request, $token)
     {
-        $token = explode('@', base64_decode($token));
+        $token = explode('#', base64_decode($token));
         $data['method'] = 'POST';
         $data['sentence'] = '';
         $password_reset = PasswordReset::where('token', $token[0])->first();

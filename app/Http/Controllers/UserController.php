@@ -18,7 +18,7 @@ use App\User;
 use App\UserInfo;
 use App\FavList;
 use App\GoodInfo;
-use App\Http\Requests\EditAccountRequest;
+use App\Http\Requests\SetPasswordRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Session;
@@ -30,12 +30,6 @@ use Image;
 
 class UserController extends Controller
 {
-    public function redirectUserID(Request $request)
-    {
-        $user_id = $request->session()->get('user_id');
-        return Redirect::to('/user/' . $user_id);
-    }
-
     public function showCompleteUser(Request $request)
     {
         $user = User::find($request->session()->get('user_id'));
@@ -118,7 +112,7 @@ class UserController extends Controller
     {
         $input = $request->all();
         $user_id = $request->session()->get('user_id');
-        $user_info = UserInfo::find($input['id']);
+        $user_info = UserInfo::find($request->id);
         if ($user_info->user_id != $user_id) return Redirect::to('/user/' . $user_id)->withErrors('无权限访问');
         $user_info->realname = $input['realname'];
         if (isset($input['gender'])) $user_info->gender = $input['gender'];
@@ -151,17 +145,32 @@ class UserController extends Controller
         ]);
     }
 
-    public function getList(Request $request, $user_id)
+    public function userProfile(Request $request, $user_id)
     {
         $data = [];
+        if($user_id == $request->session()->get('user_id'))
+            return Redirect::to('/user');
+        $user = User::find($user_id);
+        if(!$user)
+            return View::make('common.errorPage')->withErrors('用户ID错误！');
+        $data['user'] = $user;
+        return View::make('user.userProfile')->with($data);
+    }
+
+    public function getList(Request $request)
+    {
+        $data = [];
+        $user_id = $request->session()->get('user_id');
         $data['user'] = User::find($user_id);
         $data['userinfos'] = UserInfo::where('user_id', $user_id)->get();
+        $data['tab'] = isset($request->tab) ? $request->tab : "profile";
         return View::make('user.user')->with($data);
     }
 
-    public function editList(Request $request, $user_id)
+    public function editList(Request $request)
     {
         $input = $request->all();
+        $user_id = $request->session()->get('user_id');
         $user = User::find($user_id);
         if (isset($input['nickname']))
             $user->nickname = $input['nickname'];
@@ -171,26 +180,7 @@ class UserController extends Controller
                 'avatar/' . $user_id,
                 Image::make($request->file('avatarPic'))->crop(round($input['crop_width']), round($input['crop_height']), round($input['crop_x']), round($input['crop_y']))->resize(800, 450)->encode('data-url')
             );
-        return Redirect::to('/user/' . $user_id);
-    }
-
-    public function editAccount(EditAccountRequest $request, $user_id)
-    {
-        $input = $request->all();
-        $user = User::find($user_id);
-        if (!Hash::check($input['password'], $user->password)) return Redirect::to('/user/' . $user_id)->withErrors('当前密码错误');
-        if ($user->username == '' && isset($input['username']) && $input['username'] != '') $user->username = $input['username'];
-        if ($user->stuid == '' && isset($input['stuid']) && $input['stuid'] != '') $user->stuid = $input['stuid'];
-        if (isset($input['newPassword']) && $input['newPassword'] != '') $user->password = Hash::make($input['newPassword']);
-        $request->session()->forget('user_id');
-        if (isset($input['email']) && $input['email'] != '' && $input['email'] != $user->email) {
-            $user->email = $input['email'];
-            $user->havecheckedemail = false;
-            $user->update();
-            return Redirect::to('/user/' . $user->id . '/sendCheckLetter');
-        }
-        $user->update();
-        return Redirect::to('/login')->withErrors('修改成功，请重新登录');
+        return Redirect::to('/user');
     }
 
     public function showEditPage(Request $request, $user_id)
