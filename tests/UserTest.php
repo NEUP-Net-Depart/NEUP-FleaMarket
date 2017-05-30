@@ -98,7 +98,18 @@ class UserTest extends BrowserKitTestCase
             ->see('未验证')
             ->see('解绑')
             ->press('解绑')
+            ->see('解绑成功');
+
+        $nu->email = "testnuemail@example.com";
+        $nu->havecheckedemail = true;
+        $nu->save();
+        $this->withSession(['user_id' => $nu->id])
+            ->visit('/user?tab=account')
+            ->see('解绑')
+            ->press('解绑')
             ->see('验证完成后即可解绑此邮箱');
+
+
 
 
         //test change password
@@ -156,6 +167,8 @@ class UserTest extends BrowserKitTestCase
             ->see('11000000')
             ->see('wechat')
             ->see('address')
+            ->visit('/user/userinfo/edit/1')
+            ->assertResponseStatus(200)
             ->json('PUT', '/user/userinfo/edit', [
                 'id' => '1',
                 'realname' => 'changerealname',

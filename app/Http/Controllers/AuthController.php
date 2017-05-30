@@ -143,7 +143,8 @@ class AuthController extends Controller
 
     public function sendCheckLetter(Request $request, $user_id)
     {
-        self::doSendCheckLetter($request, $user_id);
+        if(self::doSendCheckLetter($request, $user_id))
+            return Redirect::to('/login')->withErrors('该用户已经验证过邮箱。');
         return Redirect::to('/login')->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可登录先锋市场。');
     }
 
@@ -154,7 +155,7 @@ class AuthController extends Controller
         if ($user == NULL)
             abort(404);
         if ($user->havecheckedemail)
-            return Redirect::to('/')->withErrors('该用户已经验证过邮箱。');
+            return true;
         $email = $user->email;
 
         $check_email = CheckEmail::where('user_id', $user_id)->first();
@@ -195,7 +196,7 @@ class AuthController extends Controller
         if (!$user->havecheckedemail) {
             $user->email = '';
             $user->save();
-            return Redirect::to('/')->withErrors('解绑成功。');
+            return true;
         }
         $email = $user->email;
 
@@ -269,7 +270,8 @@ class AuthController extends Controller
             return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。');
         }
         else {
-            self::doSendUnbindLetter($request, $user_id);
+            if(self::doSendUnbindLetter($request, $user_id))
+                return Redirect::to('/user?tab=account')->withErrors('解绑成功。');
             return Redirect::to('/user?tab=account')->withInput()->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可解绑此邮箱。');
         }
     }

@@ -183,13 +183,6 @@ class UserController extends Controller
         return Redirect::to('/user');
     }
 
-    public function showEditPage(Request $request, $user_id)
-    {
-        $data = [];
-        $data['user'] = User::find($user_id);
-        return View::make('user.editinfo')->with($data);
-    }
-
     public function getFavlist(Request $request)
     {
         $data = [];
