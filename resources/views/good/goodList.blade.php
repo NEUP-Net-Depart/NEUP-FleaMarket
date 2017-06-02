@@ -20,7 +20,7 @@
         </div>
         <div class="small-12 medium-10 columns">
             <div class="row small-up-1 medium-up-2 large-up-4" data-equalizer data-equalize-by-row>
-                <div style="">
+                <div class="medium-12">
                     <ul class="dropdown menu" data-dropdown-menu>
                         <li>
                         <a id="nm" class="<?php if(isset($_GET['sort'])){echo $_GET['sort']; } ?>">排序</a>
@@ -43,8 +43,9 @@
                         </li>
                     </ul>
                 </div>
+                <div class="row">
                 @foreach($goods as $good)
-                    <div class="columns blck" id="good{{ $good->id }}">
+                    <div class="medium-3 end columns blck" id="good{{ $good->id }}">
                         <div class="good">
                         <a href="/good/{{ $good->id }}">
                             <div class="card">
@@ -65,6 +66,7 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
             </div>
         </div>
         {{ $goods->links() }}
