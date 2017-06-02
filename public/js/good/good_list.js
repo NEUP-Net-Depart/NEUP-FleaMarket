@@ -1,3 +1,16 @@
+$(document).ready(function(){
+    switch ($("#nm").prop("className")){
+        case "p":
+            $("#nm").text('按价格从低到高');break;
+        case "pd":
+            $("#nm").val("按价格从高到低");break;
+        case "c":
+            $("#nm").val("按库存从少到多");break;
+        case "cd":
+            $("#nm").val("按库存从多到少");break;
+    }
+});
+
 $(".good").mouseenter(function(){
     $(this).stop().animate({opacity:'0.5'},"fast");
 });
@@ -26,11 +39,6 @@ function setprice(){
     }
     location.href=hr;
 }
-function sort(ha){
-    var hr=window.location;
-   var a= $.get(hr);
-    alert(a.sort);
-}
 function setc(ha){
     var hr="/good/?";
     if($("#priceSet1").val()!=""){
@@ -44,6 +52,12 @@ function setc(ha){
     }
     if(ha!="a"){
         hr=hr+"&sort="+ha;
+    }
+    else if($("#nm").prop("className")!=""){
+        hr=hr+"&sort="+$("#nm").prop("className");
+    }
+    if($("#searchq").val()!=""){
+        hr=hr+"&query="+$("#searchq").val();
     }
     location.href=hr;
 }

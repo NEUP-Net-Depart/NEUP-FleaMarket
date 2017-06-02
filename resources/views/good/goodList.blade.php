@@ -23,7 +23,7 @@
                 <div style="">
                     <ul class="dropdown menu" data-dropdown-menu>
                         <li>
-                        <a>排序</a>
+                        <a id="nm" class="<?php if(isset($_GET['sort'])){echo $_GET['sort']; } ?>">排序</a>
                         <ul class="menu">
                         <li><a href="/good/">综合排序</a></li>
                         <li><a onclick="setc('p')">按价格从低到高</a></li>
