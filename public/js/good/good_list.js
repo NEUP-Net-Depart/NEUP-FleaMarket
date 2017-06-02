@@ -3,11 +3,11 @@ $(document).ready(function(){
         case "p":
             $("#nm").text('按价格从低到高');break;
         case "pd":
-            $("#nm").val("按价格从高到低");break;
+            $("#nm").text("按价格从高到低");break;
         case "c":
-            $("#nm").val("按库存从少到多");break;
+            $("#nm").text("按库存从少到多");break;
         case "cd":
-            $("#nm").val("按库存从多到少");break;
+            $("#nm").text("按库存从多到少");break;
     }
 });
 
