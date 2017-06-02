@@ -10,7 +10,7 @@ class CheckAdmin
 {
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('username')&&$request->session()->has('is_admin'))
+        if($request->session()->has('user_id') && $request->session()->has('is_admin'))
         {
             return $next($request);
         }

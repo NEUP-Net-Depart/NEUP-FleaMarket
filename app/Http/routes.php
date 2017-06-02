@@ -67,9 +67,14 @@ Route::group(['middleware' => ['web']],function () {
 
     });
 
-    Route::get('/user/{user_id}/sendCheckLetter', "AuthController@sendCheckLetter");
+    Route::get('/user/sell', "UserController@mygoods")->middleware('auth');
+    Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
+    Route::get('/user/sell/tickets', "UserController@tickets")->middleware('auth');
+    Route::get('/user/trans', "UserController@buyer")->middleware('auth');
+
     Route::get('/user/checkEmail/{token}', "AuthController@checkEmail");
     Route::get('/user/unbindEmail/{token}', "AuthController@unbindEmail");
+    Route::get('/user/{user_id}/sendCheckLetter', "AuthController@sendCheckLetter");
 
     Route::get('/user/{user_id}',"UserController@userProfile");
 
@@ -93,18 +98,14 @@ Route::group(['middleware' => ['web']],function () {
     Route::post('/good/{good_id}/add_favlist', "GoodController@addFavlist")->middleware('auth');
     Route::delete('/good/{good_id}/del_favlist', "GoodController@delFavList")->middleware('auth');
 
+    Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('auth');
+
     Route::get('/message', "MessageController@getMessage")->middleware('auth');
     Route::get('/test/sendmessagepage', "MessageController@sendMessagepage")->middleware('su');
     Route::post('/message', "MessageController@sendMessage")->middleware('auth');
     Route::get('/message/num', "MessageController@getUnreadMsgNum")->middleware('auth');
     Route::put('/message/{id}', "MessageController@readMessage")->middleware('auth');
     Route::delete('/message/{id}', "MessageController@deleteMessage")->middleware('auth');
-
-    Route::get('/user/sell', "UserController@mygoods")->middleware('auth');
-    Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
-    Route::get('/user/sell/tickets', "UserController@tickets")->middleware('auth');
-    Route::get('/user/trans', "UserController@buyer")->middleware('auth');
-    Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('auth');
 
     //------Above are tested function
 
