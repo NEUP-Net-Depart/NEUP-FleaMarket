@@ -31,7 +31,7 @@
             <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" src="/good/{{ sha1($good->id) }}/titlepic" /></a>
         </div>
         <div class="small-12 medium-6 medium-offset-1 columns">
-            <h1>{{ $good->good_name }}</h1>
+            <h2>{{ $good->good_name }}</h2>
             <div><!-- 放tag 和更多图片缩略图 --></div>
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             <div class="row">

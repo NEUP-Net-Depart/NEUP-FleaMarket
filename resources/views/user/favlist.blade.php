@@ -8,8 +8,8 @@
 @section('content')
 
     <div class="page-content" style="margin:0px;">
-        <div class="row hide-for-medium" >
-            <h5 style="left:5%">收藏商品</h5>
+        <div class="row hide-for-medium" style="margin-left:10px;margin-right:10px;margin-top:0px" >
+            <h5 style="">收藏商品</h5>
             <table class="table">
                 <tr>
                     <td>#</td>
@@ -20,7 +20,7 @@
                 @foreach($goods as $good)
                     <tr class="list">
                         <td>{{ $good->good_id }}</td>
-                        <td class="name"><a href="/good/{{$good->good_id}}" onMouseOver="toolTip('<img src=/good/{{ sha1($good->good_id) }}/titlepic>')" onMouseOut="toolTip()">{{ $good_info[$good->good_id]->good_name }}</a><img src="/good/{{ sha1($good->good_id) }}/titlepic" class="pic" /></td>
+                        <td class="name"><a href="/good/{{$good->good_id}}" >{{ $good_info[$good->good_id]->good_name }}</a><img src="/good/{{ sha1($good->good_id) }}/titlepic" class="pic" /></td>
                         <td>{{ $good_info[$good->good_id]->price }}</td>
                         <td>{{ $good_info[$good->good_id]->count }}</td>
                     </tr>
@@ -41,9 +41,9 @@
 
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
-
+                <div class="row" style="padding-right:10%;">
                 @foreach($goods as $good)
-                    <div class="columns yesrpg" id="good{{ $good->good_id }}" >
+                    <div class="medium-3 end columns yesrpg" id="good{{ $good->good_id }}" >
                         <div class="good">
                             <a href="/good/{{$good->good_id}}">
                                 <div class="card" style="z-index:100;">
@@ -54,10 +54,10 @@
                                                    class="cb" onclick="{setValue({{ $good->good_id }})}" style="visibility:hidden;width:5%;z-index:203;position: absolute;" />
                                         </div>
                                         <div class="details" style="position:absolute;z-index:200;height:100%;width:100%;top:0%;display:none">
-                                            <div style="position:absolute;z-index:200;left:+8%;">
-                                                <p style="color:white">商品名：{{$good_info[$good->good_id]->good_name}} </p><br/>
+                                            <div class="det-nam" style="position:absolute;z-index:200;left:+8%;">
+                                                <p class="det" style="color:white;margin:0;">商品名：{{$good_info[$good->good_id]->good_name}} </p><br/>
                                             </div>
-                                            <div style="position:absolute;z-index:200;left:+8%;bottom:0%">
+                                            <div class="det" style="position:absolute;z-index:200;left:+8%;bottom:0%">
                                                 售价：￥{{ $good_info[$good->good_id]->price }}<br/>
                                                 @if($good_info[$good->good_id]->count==0)
                                                     无库存QAQ
@@ -81,6 +81,7 @@
 
                     </div>
                 @endforeach
+                </div>
             </div>
         </form>
 

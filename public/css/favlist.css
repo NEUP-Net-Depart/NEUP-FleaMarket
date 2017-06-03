@@ -20,8 +20,29 @@
 {
     color:#999999;
 }
+.det{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
 .one-line-text{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.yesrpg{
+    padding-left:2%;
+    padding-right:0;
+}
+@media (max-width: 1010px){
+.det{
+    font-size:15px;
+}
+}
+@media (max-width: 910px){
+    .det-nam{
+        display:none;
+    }
 }
