@@ -54,10 +54,10 @@
                                                    class="cb" onclick="{setValue({{ $good->good_id }})}" style="visibility:hidden;width:5%;z-index:203;position: absolute;" />
                                         </div>
                                         <div class="details" style="position:absolute;z-index:200;height:100%;width:100%;top:0%;display:none">
-                                            <div style="position:absolute;z-index:200;left:+8%;">
-                                                <p style="color:white">商品名：{{$good_info[$good->good_id]->good_name}} </p><br/>
+                                            <div class="det-nam" style="position:absolute;z-index:200;left:+8%;">
+                                                <p class="det" style="color:white;margin:0;">商品名：{{$good_info[$good->good_id]->good_name}} </p><br/>
                                             </div>
-                                            <div style="position:absolute;z-index:200;left:+8%;bottom:0%">
+                                            <div class="det" style="position:absolute;z-index:200;left:+8%;bottom:0%">
                                                 售价：￥{{ $good_info[$good->good_id]->price }}<br/>
                                                 @if($good_info[$good->good_id]->count==0)
                                                     无库存QAQ
