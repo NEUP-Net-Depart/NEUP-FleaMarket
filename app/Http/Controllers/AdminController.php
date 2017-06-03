@@ -25,9 +25,10 @@ class AdminController extends Controller
         $data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
         $data['users'] = User::orderby('id', 'asc')->get();
         $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
+        $data['announcements'] = Announcement::orderby('id', 'asc')->get();
         return View::make('admin.index')->with($data);
     }
-    
+
     /**
      * @function AdminController@checkGood
      * @input Request $request, $good_id

@@ -3,64 +3,68 @@
 @section('title', "管理")
 
 @section('content')
-    <div class="page-content">
-        Unchecked goods:
-        {{ count($goods) }}
-        @foreach($goods as $good)
-            <div class="cat{{$good->cat_id}}"><a href="/good/{{$good->id}}">{{$good->good_name}}</a> <a
-                        href="/good/{{$good->id}}/check">Pass</a></div>
-        @endforeach
-        <br/>
-        All users:
-        @foreach($users as $user)
-            <div>
-                =============================<br/>
-                <a href="/user/{{$user->id}}">{{$user->username}}</a>
-                <form action="/user/{{$user->id}}/updatePriv" method="POST">
-                    <select name="priviledge">
-                        <option value="0" @if($user->priviledge==0) selected="selected" @endif>Normal user</option>
-                        <option value="1" @if($user->priviledge==1) selected="selected" @endif>Administrator</option>
-                        <option value="2" @if($user->priviledge==2) selected="selected" @endif>Super admin</option>
-                        {!! csrf_field() !!}
-                        <input type="submit"/>
-                    </select>
-                </form>
-                <form action="/user/{{$user->id}}/updateRole" method="POST">
-                    <select name="role_id">
-                        <option value="0" @if($user->role_id==0) selected="selected" @endif>Normal user</option>
-                        <option value="1" @if($user->role_id==1) selected="selected" @endif>Ke Fu</option>
-                        {!! csrf_field() !!}
-                        <input type="submit"/>
-                    </select>
-                </form>
-                <a href="/user/{{$user->id}}/ban">@if($user->baned==0) Ban @else Unban @endif</a><br/>
-                =============================
-            </div>
-        @endforeach
-        <br/>
-        All goods:
-        <ul>
-            @foreach($cats as $cat)
-                <li>
-                    {{$cat->cat_name}}
-                    <form action="/cat/{{$cat->id}}/edit" method="POST">
-                        <input name="cat_name"/>
-                        {!! csrf_field() !!}
-                        <input type="submit"/>
-                    </form>
-                    <form action="/cat/{{$cat->id}}/delete" method="POST">
-                        {!! csrf_field() !!}
-                        {{ method_field('DELETE') }}
-                        <input type="submit" value="Delete"/>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
-        <form action="/cat/add" method="POST">
-            Add a category: <input name="cat_name"/>
-            {!! csrf_field() !!}
-            <input type="submit"/>
-        </form>
-    </div>
 
+<ul class="tabs" data-tabs="w6tmms-tabs" id="editadmin" role="tablist">
+        <li class="tabs-title  is-active " role="presentation"><a href="#announcement" aria-selected="true" role="tab" aria-controls="extra" id="extra-label">公告管理</a></li>
+        <li class="tabs-title " role="presentation"><a href="#classify" role="tab" aria-controls="account" aria-selected="false" id="account-label">分类管理</a></li>
+</ul>
+
+<div class="tabs-content" data-tabs-content="editadmin">
+        <div class="tabs-panel" id="announcement" role="tabpanel" aria-hidden="false" aria-labelledby="extra-label">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>公告标题</th>
+                  <th>公告内容</th>
+                  <th>发布时间</th>
+                </tr>
+              </thead>
+                    @foreach($announcements as $announcement)
+                    <tbody>
+                      <tr>
+                        <td>{{ $announcement ->id }}</td>
+                        <td style="max-width:100px;word-break:break-all;">{{ $announcement->title }}</td>
+                        <td style="max-width:500px;word-break:break-all;">{{ $announcement->content }}</td>
+                        <td>{{ $announcement->created_at }}</td>
+                        <td><a href="" class="button">删除</a></td>
+                      </tr>
+                    </tbody>
+                    @endforeach
+            </table>
+
+            <form>
+              标题
+              <input type="text" placeholder="Title">
+              内容
+              <textarea rows="4" placeholder="Content"></textarea>
+              <a href="" class="button">发布公告</a>
+            </form>
+        </div>
+
+        <div class="tabs-panel" id="classify" role="tabpanel" aria-hidden="false" aria-labelledby="extra-label">
+          <table>
+            <thead>
+              <tr>
+                  @foreach($cats as $cat)
+                  <td width="100px">{{ $cat ->cat_name}}</td>
+                  @endforeach
+              </tr>
+            </thead>
+                  <tbody>
+                    <tr>
+                      @foreach($cats as $cat)
+                      <td><a href="" class="button">删除</a></td>
+                      @endforeach
+                    </tr>
+                  </tbody>
+          </table>
+
+          <form>
+            新建分类
+            <input type="text" placeholder="Classify" >
+            <a href="" class="button">提交</a>
+          </form>
+
+</div>
 @endsection
