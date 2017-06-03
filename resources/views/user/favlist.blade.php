@@ -41,9 +41,9 @@
 
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
-
+                <div class="row" style="padding-right:10%;">
                 @foreach($goods as $good)
-                    <div class="columns yesrpg" id="good{{ $good->good_id }}" >
+                    <div class="medium-3 end columns yesrpg" id="good{{ $good->good_id }}" >
                         <div class="good">
                             <a href="/good/{{$good->good_id}}">
                                 <div class="card" style="z-index:100;">
@@ -81,6 +81,7 @@
 
                     </div>
                 @endforeach
+                </div>
             </div>
         </form>
 

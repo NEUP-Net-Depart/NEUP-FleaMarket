@@ -43,9 +43,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="row">
+                <div class="sm1 row" style="margin-left:5px;margin-right:5px">
                 @foreach($goods as $good)
-                    <div class="medium-3 end columns blck" id="good{{ $good->id }}">
+                    <div class="small-3 medium-3 end columns blck" id="good{{ $good->id }}">
                         <div class="good">
                         <a href="/good/{{ $good->id }}">
                             <div class="card">

@@ -62,6 +62,18 @@
         width:30%;
         margin-left:2%;
     }
+    .one-line-text{
+        font-size: 13px;
+    }
+}
+@media (max-width: 639px){
+    .sm1{
+        padding-left:1%;
+        padding-right:0;
+    }
+    .one-line-text{
+        font-size: 13px;
+    }
 }
 @media (max-width: 507px){
     .ad{
