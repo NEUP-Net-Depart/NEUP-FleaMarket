@@ -107,7 +107,10 @@ Route::group(['middleware' => ['web']],function () {
     Route::put('/message/{id}', "MessageController@readMessage")->middleware('auth');
     Route::delete('/message/{id}', "MessageController@deleteMessage")->middleware('auth');
 
-    //------Above are tested function
+    Route::get('/trans/{trans_id}', "TransactionController@showTrans")->middleware('auth');
+    Route::delete('/trans/{trans_id}/cancel', "TransactionController@cancel")->middleware('auth');
+    Route::post('/trans/{trans_id}/confirm', "TransactionController@go")->middleware('auth');
+    Route::put('/trans/{trans_id}/edit', "TransactionController@edit")->middleware('auth');
 
     Route::get('/', [
         "uses" => "ContentController@Mainpage",
@@ -124,11 +127,6 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::match(['post', 'get'], '/good/end', [
         "uses" => "GoodController@end",
-        "middleware" => "auth"
-    ]);
-
-    Route::post('/good/{trans_id}/allow', [
-        "uses" => "GoodController@allow",
         "middleware" => "auth"
     ]);
 

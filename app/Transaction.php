@@ -17,4 +17,9 @@ class Transaction extends Model
     {
         return $this->belongsTo('App\User', 'buyer_id');
     }
+
+    public function getSellerIdAttribute()
+    {
+        return $this->good->user_id;
+    }
 }

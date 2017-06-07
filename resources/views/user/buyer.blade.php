@@ -27,7 +27,7 @@
                     <td>商品名称</td>
                     <td>数量</td>
                     <td>订单状态</td>
-                    <td>取消订单</td>
+                    <td>操作</td>
                 </tr>
                 @foreach($trans as $tran)
                     <tr id="tran{{ $tran->id }}">
@@ -36,18 +36,47 @@
                                onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
                                onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
                         <td>{{ $tran->number }}</td>
-                        <td>{{ $tran->status }}</td>
-                        <td>
-
-                            <form method="POST" id="delform">
-                                {!! csrf_field() !!}
-                                {!! method_field('DELETE') !!}
-
-                            </form>
-                            <input type="submit" class="button" value="取消" style="margin: 0;" id="delbutton"
-                                   onclick="del_trans({{ $tran->id }})">
-                        </td>
-
+                        @if($tran->status == 0)
+                            <td>
+                                已取消
+                            </td>
+                        @elseif($tran->status == 1)
+                            <td>
+                                等待卖家确认
+                            </td>
+                            <td>
+                                <form method="POST" action="/trans/{{ $tran->id }}/cancel" id="delform">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('DELETE') !!}
+                                    <input type="submit" class="button" value="取消订单" style="margin: 0;"
+                                           id="delbutton">
+                                </form>
+                            </td>
+                        @elseif($tran->status == 2)
+                            <td>
+                                交易已成立
+                            </td>
+                            <td>
+                                <a href="/trans/{{ $tran->id }}">查看交易</a>
+                            </td>
+                        @elseif($tran->status == 3)
+                            <td>
+                                交易失败
+                            </td>
+                        @elseif($tran->status == 4)
+                            <td>
+                                交易成功待评价
+                            </td>
+                            <td>
+                                <form action="#">
+                                    <input type="submit" class="button" value="评价" style="margin: 0;">
+                                </form>
+                            </td>
+                        @elseif($tran->status == 5)
+                            <td>
+                                已评价
+                            </td>
+                        @endif
                     </tr>
 
                 @endforeach

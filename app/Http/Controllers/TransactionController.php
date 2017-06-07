@@ -47,7 +47,7 @@ class TransactionController extends Controller
         }
         $result = json_decode($result, true);
         if($result['result'])
-            return Redirect::to('/user/sell');
+            return Redirect::to('/user/sell/trans');
         else
             return Redirect::back()->withInput()->withErrors($result['msg']);
 
@@ -61,9 +61,22 @@ class TransactionController extends Controller
         $result = json_decode($result, true);
         if($result['result']) {
             if($result['character'] == "seller")
-                return Redirect::to('/user/sell');
+                return Redirect::to('/user/sell/trans');
             else
                 return Redirect::to('/user/trans');
+        }
+        else
+            return Redirect::back()->withInput()->withErrors($result['msg']);
+    }
+
+    public function edit(Request $request, $trans_id)
+    {
+        $user_id = $request->session()->get('user_id');
+        $trans = Transaction::find($trans_id);
+        $result = $this->update($trans, $user_id, $request->number, $request->ip());
+        $result = json_decode($result);
+        if($result['result']) {
+            return Redirect::to('/user/sell/trans');
         }
         else
             return Redirect::back()->withInput()->withErrors($result['msg']);
@@ -120,7 +133,7 @@ class TransactionController extends Controller
 
                 $message = new Message();
                 $message->sender_id = 0;
-                $good = GoodInfo::find($trans->good_id);
+                $good = $trans->good;
                 $message->receiver_id = $good->user_id;
                 $message->content = '您好！您的' . $good->good_name . '的一个订单被买家取消，你可以前往查看。';
                 $message->title = '您有一个订单被取消';
@@ -141,7 +154,7 @@ class TransactionController extends Controller
 
                 $message = new Message();
                 $message->sender_id = 0;
-                $good = $trans->good();
+                $good = $trans->good;
                 $message->receiver_id = $trans->buyer_id;
                 $message->content = '您好！您购买的' . $good->good_name . '的一个订单被卖家驳回，你可以前往查看。';
                 $message->title = '您有一个订单被驳回';
@@ -155,11 +168,11 @@ class TransactionController extends Controller
 
     private function sell($trans, $user_id, $request_ip)
     {
-        if ($trans->user_id != $user_id)
+        if ($trans->seller_id != $user_id)
             return json_encode(['result' => false, 'msg' => 'unauthorized']);
         if($trans->status != 1)
             return json_encode(['result' => false, 'msg' => 'invalid']);
-        $good = $trans->good();
+        $good = $trans->good;
         if ($trans->count > $good->count)
             return json_encode(['result' => false, 'msg' => 'Out of stock']);
         $trans->status = 2;
@@ -181,9 +194,9 @@ class TransactionController extends Controller
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 
-    private function edit($trans, $user_id, $number, $request_ip)
+    private function update($trans, $user_id, $number, $request_ip)
     {
-        if ($trans->user_id != $user_id)
+        if ($trans->seller_id != $user_id)
             return json_encode(['result' => false, 'msg' => 'unauthorized']);
         if($trans->status != 2)
             return json_encode(['result' => false, 'msg' => 'invalid']);
@@ -202,7 +215,7 @@ class TransactionController extends Controller
 
     private function finish($trans, $user_id, $result, $request_ip)
     {
-        if ($trans->user_id != $user_id)
+        if ($trans->seller_id != $user_id)
             return json_encode(['result' => false, 'msg' => 'unauthorized']);
         if($trans->status != 2)
             return json_encode(['result' => false, 'msg' => 'invalid']);
@@ -225,7 +238,7 @@ class TransactionController extends Controller
         $message = new Message();
         $message->sender_id = 0;
         $message->receiver_id = $trans->buyer_id;
-        $good = $trans->good();
+        $good = $trans->good;
         if($result)
             $message->content = '您好！你订购的' . $good->good_name . '的订单已被卖家标记为交易成功，你现在可以去评价此单交易啦。';
         else
@@ -233,5 +246,19 @@ class TransactionController extends Controller
         $message->title = '您有一个交♂易订单被完成';
         $message->save();
         return json_encode(['result' => true, 'msg' => 'success']);
+    }
+
+    public function showTrans(Request $request, $trans_id)
+    {
+        $user_id = $request->session()->get('user_id');
+        $trans = Transaction::find($trans_id);
+        $seller = User::with('user_infos')->find($trans->seller_id);
+        $buyer = User::with('user_infos')->find($trans->buyer_id);
+        if(!$trans || ($user_id != $trans->buyer_id && $user_id != $trans->seller_id))
+            return View::make('common.errorPage')->withErrors('交易ID错误！');
+        $data['tran'] = $trans;
+        $data['seller'] = $seller;
+        $data['buyer'] = $buyer;
+        return view('transaction')->with($data);
     }
 }
