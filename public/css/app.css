@@ -8,6 +8,7 @@ hr {
     left: 0;
     height: 160px;
     width: 100%;
+	z-index: -10;
     overflow: hidden;
 }
 
@@ -17,9 +18,12 @@ hr {
     background-position: center 0;
     position: absolute;
     top: -10px;
-    left: -10px;
-    width: 120%;
+	left: -20px;
+	padding:0 20px;
     height: 160px;
+    width: 100%;
+	z-index: -10;
+	box-sizing: content-box;
 }
 
 .top-bar {
@@ -56,7 +60,6 @@ hr {
 .top-bar-right {
     height: 54px;
     position: relative;
-    z-index: 10000;
 }
 
 .top-bar-back {
@@ -74,7 +77,6 @@ hr {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 100;
     background-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -85,14 +87,14 @@ hr {
     background-repeat: no-repeat;
     height: 74px;
     top: -10px;
-    left: -10px;
-    width: 120%;
-    padding: 0 20px;
+	left: -20px;
+	padding:0 20px;
+    width: 100%;
     margin: 0;
     -webki-filter: blur(5px);
     -ms-filter: blur(5px);
     filter: blur(5px);
-    z-index: 50;
+	box-sizing: content-box;
 }
 
 #top-bar-quick-access {
@@ -138,7 +140,6 @@ hr {
 
 .page-content {
     position: relative;
-    z-index: 50;
     margin-top: 60px;
 }
 
@@ -172,4 +173,8 @@ table.card-table th, table.card-table td {
 
 .card-table.card-section {
     padding: 0;
+}
+
+footer {
+	text-align: center;
 }
