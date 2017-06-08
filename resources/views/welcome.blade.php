@@ -62,7 +62,15 @@
                                                     <img src="/good/{{ sha1($good->id) }}/titlepic"/>
                                                 </div>
                                                 <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
-                                                    <div class="det-d" style="position:absolute;z-index:200;top:-40%;left:+2%;color:white;font-size:12px;">
+                                                    <div class="det-d hide-for-small-only" style="position:absolute;z-index:200;top:-40%;left:+2%;color:white;font-size:12px;">
+                                                        售价：￥{{ $good->price }}<br/>
+                                                        @if($good->count==0)
+                                                            无库存QAQ
+                                                        @else
+                                                            库存：{{ $good->count }}
+                                                        @endif
+                                                    </div>
+                                                    <div class="det-d show-for-small-only" style="position:absolute;z-index:200;top:-50%;left:+2%;color:white;font-size:15px;">
                                                         售价：￥{{ $good->price }}<br/>
                                                         @if($good->count==0)
                                                             无库存QAQ

@@ -80,4 +80,7 @@
 	body{
 		background-color: #EBEBEB;
 	}
+	.is-at-bottom{
+		top:0;
+	}
 }
