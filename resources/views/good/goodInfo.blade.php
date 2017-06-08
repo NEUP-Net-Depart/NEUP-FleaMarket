@@ -61,7 +61,7 @@
                                     <input type="submit" class="button gb_right" value="删除">
                                 </form>
                     @endif
-                        <p class="gb_right">(库存:{{ $good->count }}件)</p>
+                        <p id="ach" class="gb_right">(库存:{{ $good->count }}件)</p>
                 </div>
             </div>
         </div>
@@ -88,13 +88,13 @@
     </div>
 
     <div class="row">
-        <div id="desc" class="small-12 medium-12 columns" style="background-color: white">
+        <div id="" class="small-12 medium-12 columns" style="background-color: white">
             <h3>商品介绍: </h3>
             <p>{{ $good->description }}</p>
         </div>
 
     </div>
-<div id="das">a</div>
+<div id="das"></div>
         <script>
         function add_favlist() {
             var str_data = $("#fav input").map(function () {
@@ -130,53 +130,55 @@
 @endsection
 
 @section('navbm')
-    <div class="row show-for-small-only" style="max-width: 100%" data-sticky-container>
-        <div class="sticky" data-sticky data-stick-to="bottom" data-sticky-on="small" data-btm-anchor="desc:bottom" data-options="marginBottom:0;" >
+    <div class="row show-for-small-only" style="max-width: 100%;" data-sticky-container>
+        <div class="sticky" data-sticky data-stick-to="bottom" data-sticky-on="small" data-top-anchor="ach" data-btm-anchor="desc:top" data-options="marginBottom:0;" >
             <div class="top-bar">
                     <ul class="menu"  style="position:relative; bottom: -5px;height:100%;">
-                        <li><button class="button warning" style="color:white">联系货主</button></li>
+                        <li><button class="button warning" style="color:white;font-size: 13px;width:90px;height:40px">联系货主</button></li>
+                        <li><button class="button warning" style="color:white;font-size: 13px;width:90px;height:40px">功能占位</button></li>
+                        @if(($good->user_id) != Session::get('user_id'))
+                            <li> <form action="/good/{{ $good->id }}/buy" method="post"  style="width:70%;float:right" >
+                                    <div class="input-group" style="margin-bottom:0px;">
+                                        <input type="number" name="count" value="1" class="input-group-field"/>
+                                        {!! csrf_field() !!}
+                                        <div class="input-group-button">
+                                            <input type="submit" class="button" value="购买"/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        @endif
+                        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
+                            <li><button class="button warning" style="color:white;font-size: 13px;width:90px;height:40px">功能占位</button></li>
+                            <li>
+                                <form action="/good/{{ $good->id }}/edit">
+                                    <input type="submit" style="margin-right:0;" class="button" value="修改">
+                                </form>
+                            </li>
+                            <li>
+                                <form action="/good/{{ $good->id }}/delete" method="POST" id="del" onsubmit="return confirm('确定删除吗？');">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('DELETE') !!}
+                                    <input type="submit" style="margin-right:0" class="button" value="删除">
+                                </form>
+                            </li>
+                        @endif
                         <li> @if(isset($inFvlst))
-                                <form id="fav" style="margin-bottom:3px">
+                                <form id="fav" style="">
                                     {!! csrf_field() !!}
                                     @if(count($inFvlst) == 0)
                                         <input id="fav_smt" class="button fav_smt" type="button" name="submit1" onclick="add_favlist()"
-                                               value="收藏OvO"/>
+                                               value="收藏OvO" style="width:122px;"/>
                                     @endif
                                     @if(count($inFvlst) != 0)
-                                        <input id="fav_smt" class="button" type="button" name="submit1" onclick="del_favlist()"
-                                               value="取消收藏QAQ"/>
+                                        <input id="fav_smt" class="button fav_smt" type="button" name="submit1" onclick="del_favlist()"
+                                               value="取消收藏QAQ"  style="width:122px;"/>
                                     @endif
                                 </form>
                             @else
                                 <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
                                        value="收藏OvO"/>
                             @endif</li>
-                        @if(($good->user_id) != Session::get('user_id'))
-                        <li> <form action="/good/{{ $good->id }}/buy" method="post"  style="width:70%;float:right" >
-                                <div class="input-group" style="margin-bottom:0px;">
-                                    <input type="number" name="count" value="1" class="input-group-field"/>
-                                    {!! csrf_field() !!}
-                                    <div class="input-group-button">
-                                        <input type="submit" class="button" value="购买"/>
-                                    </div>
-                                </div>
-                            </form>
-                        </li>
-                            @endif
-                            @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
-                                <li>
-                                <form action="/good/{{ $good->id }}/edit">
-                                    <input type="submit" class="button" value="修改">
-                                </form>
-                                </li>
-                        <li>
-                                <form action="/good/{{ $good->id }}/delete" method="POST" id="del" onsubmit="return confirm('确定删除吗？');">
-                                    {!! csrf_field() !!}
-                                    {!! method_field('DELETE') !!}
-                                    <input type="submit" class="button" value="删除">
-                                </form>
-                        </li>
-                            @endif
                     </ul>
             </div>
         </div>
