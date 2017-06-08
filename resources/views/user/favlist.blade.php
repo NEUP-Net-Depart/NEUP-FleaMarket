@@ -67,7 +67,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-section" style="border: 0;">
+                                    <div class="card-section sec-name" style="border: 0;">
                                         <div class="one-line-text">{{ $good_info[$good->good_id]->good_name }}</div>
 
                                     </div>

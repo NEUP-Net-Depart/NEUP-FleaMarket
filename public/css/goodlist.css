@@ -74,6 +74,13 @@
     .one-line-text{
         font-size: 13px;
     }
+    body{
+        background-color: #EBEBEB;
+    }
+    .shx{
+        margin-left:10px;
+        margin-right:10px;
+    }
 }
 @media (max-width: 507px){
     .ad{

@@ -1,10 +1,9 @@
 $(".good").mouseenter(function(){
-    $(".details",this).show();
+    $(".details",this).stop().fadeIn("fast");
     $("img",this).css("filter","brightness(40%)");
-
 });
 $(".good").mouseleave(function(){
-    $(".details",this).hide();
+    $(".details",this).stop().fadeOut("fast");
     $("img",this).css("filter","brightness(100%)");
 });
 function editfav(){

@@ -27,10 +27,10 @@
     </script>
 
     <div class="row">
-        <div class="small-12 medium-5 columns thumbnail">
+        <div class="small-12 medium-5 columns thumbnail block" style="background-color: white;">
             <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" src="/good/{{ sha1($good->id) }}/titlepic" /></a>
         </div>
-        <div class="small-12 medium-6 medium-offset-1 columns">
+        <div class="small-12 medium-6 medium-offset-1 columns block" >
             <h2>{{ $good->good_name }}</h2>
             <div><!-- 放tag 和更多图片缩略图 --></div>
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="small-12 medium-6 medium-offset-6 columns">
+        <div class="small-12 medium-6 medium-offset-6 columns block">
             @if(isset($inFvlst))
                 <form id="fav">
                     {!! csrf_field() !!}
