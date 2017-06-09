@@ -65,6 +65,7 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/user/fav/edit', "UserController@editFavlist");
         Route::delete('/user/fav/del', "UserController@delFavlist");
 
+        Route::get('/message/contacts', "MessageController@getMessageContact");
     });
 
     Route::get('/user/sell', "UserController@mygoods")->middleware('auth');

@@ -108,9 +108,7 @@ class TransactionController extends Controller
         $message = new Message();
         $message->sender_id = 0;
         $message->receiver_id = $good->user_id;
-        if (!$buyer->nickname)
-            $buyer->nickname = "一位先锋市场用户";
-        $message->content = '您好！' . $buyer->nickname . '购买了你的' . $good->good_name . '，请及时前往确认。';
+        $message->content = '您好！' . $buyer->not_null_nickname . '购买了你的' . $good->good_name . '，请及时前往确认。';
         $message->title = '您有一个新的交♂易订单';
         $message->save();
         return json_encode(['result' => true, 'msg' => 'success']);

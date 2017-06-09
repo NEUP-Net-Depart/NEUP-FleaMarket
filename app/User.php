@@ -29,4 +29,9 @@ class User extends Model
         return $this->hasManyThrough('App\Transaction', 'App\GoodInfo', 'user_id', 'good_id', 'id');
     }
 
+    public function getNotNullNicknameAttribute()
+    {
+        return $this->nickname != "" ? $this->nickname : "一位先锋市场用户";
+    }
+
 }
