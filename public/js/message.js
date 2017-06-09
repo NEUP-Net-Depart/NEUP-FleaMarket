@@ -21,11 +21,17 @@ Vue.component('contact-list', {
     mounted: function () {
         this.$nextTick(function () {
             this.$on('getContactEvent', function () {
+                this.clearContact();
                 this.getContact();
             })
         })
     },
     methods: {
+        clearContact: function () {
+            this.current_page = 0;
+            this.last_page = null;
+            this.contacts = [];
+        },
         getContact: function () {
             var vm = this;
             axios.get('/message/contacts?page=' + (this.current_page + 1).toString())
@@ -39,8 +45,12 @@ Vue.component('contact-list', {
                     vm.errorMessage = error;
                 })
         },
-        loadDialog: function (id) {
+        loadDialog: function (id, index) {
+            var vm = this;
             this.$emit('load-dialog', id);
+            var c = vm.contacts[index];
+            c.unread_count = 0;
+            Vue.set(vm.contacts, index, c);
         }
     }
 });
@@ -55,7 +65,9 @@ Vue.component('message-dialog', {
             current_page: 0,
             last_page: null,
             contact_id: null,
-            isHidden: true
+            isHidden: true,
+            inputMessage: '',
+            token: ''
         }
     },
     mounted: function () {
@@ -63,21 +75,28 @@ Vue.component('message-dialog', {
             this.$on('loadDialogHandler', function (id) {
                 this.current_page = 0;
                 this.last_page = null;
-                this.getMessage(id);
+                this.getHistoryMessage(id);
             })
         })
     },
     computed: {
         hasMore: function () {
             return this.current_page < this.last_page;
+        },
+        postData: function () {
+            return {
+                content: this.inputMessage,
+                receiver: this.contact_id,
+                _token: this.token
+            }
         }
     },
     methods: {
-        getMessage: function (contact_id) {
+        getHistoryMessage: function (contact_id) {
             var vm = this;
             if (contact_id === 0 || this.contact_id === contact_id) {
                 contact_id = this.contact_id;
-                axios.get('/message/getMessage?contact_id=' + contact_id.toString() + '&page=' + (this.current_page + 1).toString())
+                axios.get('/message/getHistoryMessage?contact_id=' + contact_id.toString() + '&page=' + (this.current_page + 1).toString())
                     .then(function (response) {
                         vm.current_page = response.data.current_page;
                         vm.last_page = response.data.last_page;
@@ -90,7 +109,7 @@ Vue.component('message-dialog', {
                     })
             }
             else {
-                axios.get('/message/getMessage?contact_id=' + contact_id.toString())
+                axios.get('/message/getHistoryMessage?contact_id=' + contact_id.toString())
                     .then(function (response) {
                         vm.current_page = response.data.current_page;
                         vm.last_page = response.data.last_page;
@@ -102,6 +121,29 @@ Vue.component('message-dialog', {
                     })
                 this.contact_id = contact_id;
             }
+        },
+        sendMessage: function () {
+            var vm = this;
+            vm.token = $('#token').val();
+            axios.post('/message', this.postData)
+                .then(function (response) {
+                    vm.messages.push(response.data.msg);
+                    vm.inputMessage = '';
+                })
+                .catch(function (error) {
+                    vm.errorMessage = error;
+                })
+        },
+        getNewMessage: function () {
+            var vm = this;
+            axios.get('/message/getNewMessage?contact_id=' + vm.contact_id.toString())
+                .then(function (response) {
+                    for (var i in response.data)
+                        vm.messages.push(response.data[i]);
+                })
+                .catch(function (error) {
+                    vm.errorMessage = error;
+                })
         }
     }
 });

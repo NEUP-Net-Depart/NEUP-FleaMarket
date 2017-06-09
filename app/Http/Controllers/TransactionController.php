@@ -109,7 +109,6 @@ class TransactionController extends Controller
         $message->sender_id = 0;
         $message->receiver_id = $good->user_id;
         $message->content = '您好！' . $buyer->not_null_nickname . '购买了你的' . $good->good_name . '，请及时前往确认。';
-        $message->title = '您有一个新的交♂易订单';
         $message->save();
         return json_encode(['result' => true, 'msg' => 'success']);
     }
@@ -134,7 +133,6 @@ class TransactionController extends Controller
                 $good = $trans->good;
                 $message->receiver_id = $good->user_id;
                 $message->content = '您好！您的' . $good->good_name . '的一个订单被买家取消，你可以前往查看。';
-                $message->title = '您有一个订单被取消';
                 $message->save();
                 return json_encode(['result' => true, 'character' => 'buyer', 'msg' => 'success']);
                 break;
@@ -155,7 +153,6 @@ class TransactionController extends Controller
                 $good = $trans->good;
                 $message->receiver_id = $trans->buyer_id;
                 $message->content = '您好！您购买的' . $good->good_name . '的一个订单被卖家驳回，你可以前往查看。';
-                $message->title = '您有一个订单被驳回';
                 $message->save();
                 return json_encode(['result' => true, 'character' => 'seller', 'msg' => 'success']);
                 break;
@@ -187,7 +184,6 @@ class TransactionController extends Controller
         $message->sender_id = 0;
         $message->receiver_id = $trans->buyer_id;
         $message->content = '您好！你订购的' . $good->good_name . '已被卖家确认，你们现在可以去看对方的联系方式并且交♂易啦。';
-        $message->title = '您有一个交♂易订单被确认';
         $message->save();
         return json_encode(['result' => true, 'msg' => 'success']);
     }
@@ -245,7 +241,6 @@ class TransactionController extends Controller
             $message->content = '您好！你订购的' . $good->good_name . '的订单已被卖家标记为交易成功，你现在可以去评价此单交易啦。';
         else
             $message->content = '您好！你订购的' . $good->good_name . '的订单已被卖家标记为交易失败。';
-        $message->title = '您有一个交♂易订单被完成';
         $message->save();
         return json_encode(['result' => true, 'msg' => 'success']);
     }

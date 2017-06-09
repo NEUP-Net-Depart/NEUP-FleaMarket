@@ -11,13 +11,18 @@ class MessageSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker\Factory::create();
         for ($i = 0; $i < 50; $i++)
             DB::table('message')->insert([
-                'title' => str_random(8),
                 'sender_id' => 1,
                 'receiver_id' => 1,
-                'content' => str_random(256),
+                'content' => $faker->text,
                 'is_read' => rand(0, 1)
             ]);
+        DB::table('message_contacts')->insert([
+            'user_id' => 1,
+            'contact_id' => 1,
+            'last_contact_time' => $faker->unixTime
+        ]);
     }
 }

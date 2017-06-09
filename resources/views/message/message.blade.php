@@ -35,7 +35,7 @@
         <div>
             <p v-if="errorMessage">@{{ errorMessage }}</p>
             <ul>
-                <li v-for="contact in contacts" v-on:click="loadDialog(contact.contact_id)">
+                <li v-for="(contact, index) in contacts" v-on:click="loadDialog(contact.contact_id, index)">
                     <img :src="'/avatar/' + contact.contact_id + '/64/64'"/>
                     @{{ contact.contact.nickname }}&nbsp;@{{ contact.unread_count }}
                 </li>
@@ -46,17 +46,22 @@
 
     <script type="text/x-template" id="message_dialog">
         <div :class="{ hide: isHidden }">
-            <a v-if="hasMore" v-on:click="getMessage(0)">加载更多</a>
+            <a v-if="hasMore" v-on:click="getHistoryMessage(0)">加载更多</a>
             <p v-else>没有更多了</p>
-            <p v-if="errorMessage">@{{ errorMessage }}</p>
             <ul>
                 <li v-for="message in messages">
                     <img :src="'/avatar/' + message.sender_id + '/64/64'"/>
                     @{{ message.content }}
                 </li>
             </ul>
+            <p v-if="errorMessage">@{{ errorMessage }}</p>
+            <textarea placeholder="键入要发送的内容:" v-model="inputMessage"></textarea>
+            <input type="button" value="发送" v-on:click="sendMessage"/>
+            <input id="token" type="hidden" value="{{ csrf_token() }}"/>
+            <a v-on:click="getNewMessage">!!!</a>
         </div>
     </script>
+
     <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/message.js"></script>

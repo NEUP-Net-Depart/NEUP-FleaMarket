@@ -26,14 +26,35 @@ class MessageController extends Controller
         return View::make('message.message');
     }
 
-    public function getMessage(Request $request)
+    public function getHistoryMessage(Request $request)
     {
         $user_id = $request->session()->get('user_id');
         $contact_id = $request->contact_id;
+        Message::where('receiver_id', $user_id)->where('sender_id', $contact_id)
+            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
+            ->update(['is_read' => true]);
         $messages = Message::where('receiver_id', $user_id)->where('sender_id', $contact_id)
             ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
             ->orderBy('id', 'desc')
             ->paginate(20);
+
+        return json_encode($messages);
+    }
+
+    public function getNewMessage(Request $request)
+    {
+        $user_id = $request->session()->get('user_id');
+        $contact_id = $request->contact_id;
+        $messages = Message::where('is_read', false)
+            ->where('receiver_id', $user_id)->where('sender_id', $contact_id)
+            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
+            ->where('is_read', false)
+            ->get();
+        Message::where('is_read', false)
+            ->where('receiver_id', $user_id)->where('sender_id', $contact_id)
+            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
         return json_encode($messages);
     }
 
@@ -71,7 +92,6 @@ class MessageController extends Controller
         //Create Message
         $message = new Message;
         $user_id = $request->session()->get('user_id');
-        $message->title = $input['title'];
         $message->content = $input['content'];
         $message->sender_id = $user_id;
         $message->receiver_id = $input['receiver'];
@@ -91,7 +111,7 @@ class MessageController extends Controller
         ]);
         $contact->last_contact_time = time();
         $contact->save();
-        return json_encode(['result' => true, 'msg' => 'success']);
+        return json_encode(['result' => true, 'msg' => $message]);
     }
 
     public function sendMessagepage(Request $request)
