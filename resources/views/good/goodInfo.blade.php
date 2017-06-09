@@ -132,7 +132,7 @@
 @section('navbm')
     <div class="row">
     <div class="row show-for-small-only" style="max-width: 100%;background-color: transparent;" data-sticky-container>
-        <div class="sticky" data-sticky data-stick-to="bottom" data-sticky-on="small" data-top-anchor="pic"  data-btm-anchor="desc:top" data-options="marginBottom:0;" >
+        <div class="sticky" data-sticky data-stick-to="bottom" data-sticky-on="small" data-top-anchor="pic"  data-btm-anchor="desc:bottom" data-options="marginBottom:0;" >
             <div class="top-bar" style="background-color: transparent;padding:0">
                     <ul class="menu"  style="position:relative;height:100%;background-color: transparent;left:+10px;">
                         @if(($good->user_id) != Session::get('user_id'))
@@ -167,8 +167,6 @@
                                 </form>
                             </li>
                         @endif
-                           @if( Session::get('is_admin') == 2)
-                               @endif
                         <li style="width:25%;"> @if(isset($inFvlst))
                                 <form id="fav" style="color:white">
                                     {!! csrf_field() !!}
