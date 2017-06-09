@@ -58,8 +58,8 @@
   </div>
 </div>
 <div class="banner-back">
-	<div class="banner">
-	</div>
+    <div class="banner">
+    </div>
 </div>
 <div class="row search-bar hide-for-small-only">
   <div class="medium-10 medium-centered columns">
@@ -87,7 +87,7 @@
       </form>
   </div>
 </div>
-  <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
+<div class="off-canvas position-left" id="offCanvas" data-off-canvas>
     <ul class="vertical menu">
         @if(Session::has('user_id'))
           <li><a href="/user/{{Session::get('user_id')}}"><img src="/avatar/{{ Session::get('user_id') }}/220/220"/><br/><br/>个人中心</a></li>
@@ -96,9 +96,9 @@
           <li><a href="/user/fav">收藏夹</a></li>
           <li><a href="/good/add" class="top-bar-button">出售</a></li>
         @else
-          <li><a href="/register">注册</a></li>
-          <li><a href="/login">登录</a></li>
+            <li><a href="/register">注册</a></li>
+            <li><a href="/login">登录</a></li>
         @endif
     </ul>
 
-  </div>
+</div>

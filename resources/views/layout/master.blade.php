@@ -29,6 +29,7 @@
         @yield('content')
     </div>
 </div>
+@yield('navbm')
 @include('layout.footer')
 </body>
 </html>

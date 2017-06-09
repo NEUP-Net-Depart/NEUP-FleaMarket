@@ -10,18 +10,25 @@
 
     <div class="row">
         <div class="small-0 medium-2 columns">
-            <ul class="menu vertical">
+            <ul class="menu vertical hide-for-small-only">
                 <li @if($cat_id == 0) class="active" @else class="cat" @endif><a href="/good">所有商品</a></li>
                 @foreach($cats as $cat)
                     <li @if($cat_id == $cat->id) class="active" @else class="cat" @endif><a
                                 href="/good?cat_id={{ $cat->id }}">{{ $cat->cat_name }}</a></li>
                 @endforeach
             </ul>
+            <ul class="menu show-for-small-only" style="background-color: white;margin-bottom: 15px">
+                <li class="cat"><a href="/good">所有商品</a></li>
+                @foreach($cats as $cat)
+                    <li class="cat"><a
+                                href="/good?cat_id={{ $cat->id }}">{{ $cat->cat_name }}</a></li>
+                @endforeach
+            </ul>
         </div>
         <div class="small-12 medium-10 columns">
             <div class="row small-up-1 medium-up-2 large-up-4" data-equalizer data-equalize-by-row>
-                <div class="medium-12">
-                    <ul class="dropdown menu" data-dropdown-menu>
+                <div class="medium-12 shx">
+                    <ul class="dropdown menu" style="background-color: white;" data-dropdown-menu>
                         <li>
                         <a id="nm" class="<?php if(isset($_GET['sort'])){echo $_GET['sort']; } ?>">排序</a>
                         <ul class="menu">
@@ -43,9 +50,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="sm1 row" style="margin-left:5px;margin-right:5px">
+                <div class="sm1 row" style="margin-left:1px;margin-right:5px">
                 @foreach($goods as $good)
-                    <div class="small-3 medium-3 end columns blck" id="good{{ $good->id }}">
+                    <div class="small-6 medium-3 end columns blck" id="good{{ $good->id }}">
                         <div class="good">
                         <a href="/good/{{ $good->id }}">
                             <div class="card">

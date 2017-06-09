@@ -1,4 +1,4 @@
-﻿<footer class="row hide-for-small-only">
+﻿﻿<footer class="row hide-for-small-only">
 	<div class="medium-9 medium-centered columns">
 	<div class="float-left">
 		<span>© {{date("Y")}} 东北大学先锋网</span>

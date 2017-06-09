@@ -75,3 +75,12 @@
 	width: 20px;
 	height: 20px;
 }
+
+@media (max-width: 640px){
+	body{
+		background-color: #EBEBEB;
+	}
+	.is-at-bottom{
+		top:0;
+	}
+}

@@ -2,11 +2,22 @@
 
 @section('title', "首页")
 
+@section('asset')
+    <link rel="stylesheet" href="/css/wel.css" />
+@endsection
+
 @section('content')
 
     <div class="row">
         <div class="small-0 medium-2 columns">
-            <ul class="menu vertical">
+            <ul class="menu vertical hide-for-small-only">
+                <li class="cat"><a href="/good">所有商品</a></li>
+                @foreach($cats as $cat)
+                    <li class="cat"><a
+                                href="/good?cat_id={{ $cat->id }}">{{ $cat->cat_name }}</a></li>
+                @endforeach
+            </ul>
+            <ul class="menu show-for-small-only" style="background-color: white;margin-bottom: 15px">
                 <li class="cat"><a href="/good">所有商品</a></li>
                 @foreach($cats as $cat)
                     <li class="cat"><a
@@ -17,6 +28,7 @@
         <div class="small-12 medium-10 columns">
             <div class="row">
                 <div class="small-12 medium-8 columns">
+                    <div class="row">
                     @if(count($stargoods) > 0)
                         <div class="orbit" role="region" aria-label="热销商品" data-orbit>
                             <ul class="orbit-container">
@@ -37,9 +49,10 @@
                         </div>
                         <br/>
                     @endif
+                    </div>
                     @if(count($newgoods)>0)
                         <h3>新品</h3>
-                        <div class="row small-up-1 medium-up-2 large-up-4">
+                        <div class="row small-up-2 medium-up-2 large-up-4">
                             @foreach($newgoods as $good)
                                 <div class="columns">
                                     <div class="good">
@@ -49,7 +62,15 @@
                                                     <img src="/good/{{ sha1($good->id) }}/titlepic"/>
                                                 </div>
                                                 <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
-                                                    <div style="position:absolute;z-index:200;top:-40%;left:+1%;color:white;font-size:12px;">
+                                                    <div class="det-d hide-for-small-only" style="position:absolute;z-index:200;top:-40%;left:+2%;color:white;font-size:12px;">
+                                                        售价：￥{{ $good->price }}<br/>
+                                                        @if($good->count==0)
+                                                            无库存QAQ
+                                                        @else
+                                                            库存：{{ $good->count }}
+                                                        @endif
+                                                    </div>
+                                                    <div class="det-d show-for-small-only" style="position:absolute;z-index:200;top:-50%;left:+2%;color:white;font-size:15px;">
                                                         售价：￥{{ $good->price }}<br/>
                                                         @if($good->count==0)
                                                             无库存QAQ
@@ -58,7 +79,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="card-section" style=";white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-size:15px;padding:10px 10px">
+                                                <div class="card-section sec-name"style=";white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-size:15px;padding:10px 10px">
                                                     {{ $good->good_name }}
                                                 </div>
                                             </div>
@@ -72,7 +93,7 @@
                     @foreach($cats as $cat)
                         @if(count($catgoods[$cat->cat_name]))
                             <h4>{{ $cat->cat_name }}</h4>
-                            <div class="row small-up-1 medium-up-2 large-up-4">
+                            <div class="row small-up-2 medium-up-2 large-up-4">
                                 @foreach($catgoods[$cat->cat_name] as $good)
                                     <div class="columns">
                                         <div class="good">
