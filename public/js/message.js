@@ -22,7 +22,7 @@ Vue.component('contact-list', {
         this.$nextTick(function () {
             this.$on('getContactEvent', function () {
                 this.clearContact();
-                this.getContact();
+                this.getHistoryContact();
             })
         })
     },
@@ -32,14 +32,28 @@ Vue.component('contact-list', {
             this.last_page = null;
             this.contacts = [];
         },
-        getContact: function () {
+        getHistoryContact: function () {
             var vm = this;
-            axios.get('/message/contacts?page=' + (this.current_page + 1).toString())
+            axios.get('/message/getHistoryMessageContact?page=' + (this.current_page + 1).toString())
                 .then(function (response) {
                     vm.current_page = response.data.current_page;
                     vm.last_page = response.data.last_page;
                     for (var i in response.data.data)
                         vm.contacts.push(response.data.data[i]);
+                })
+                .catch(function (error) {
+                    vm.errorMessage = error;
+                })
+        },
+        getNewContact:  function () {
+            var vm = this;
+            axios.get('/message/getNewMessageContact')
+                .then(function (response) {
+                    for (var i in response.data)
+                    {
+                        vm.contacts = vm.contacts.filter(t => t.contact_id !== response.data[i].contact_id);
+                        vm.contacts.unshift(response.data[i]);
+                    }
                 })
                 .catch(function (error) {
                     vm.errorMessage = error;
@@ -73,8 +87,7 @@ Vue.component('message-dialog', {
     mounted: function () {
         this.$nextTick(function () {
             this.$on('loadDialogHandler', function (id) {
-                this.current_page = 0;
-                this.last_page = null;
+                this.clearMessage();
                 this.getHistoryMessage(id);
             })
         })
@@ -121,6 +134,11 @@ Vue.component('message-dialog', {
                     })
                 this.contact_id = contact_id;
             }
+        },
+        clearMessage: function() {
+            this.current_page = 0;
+            this.last_page = null;
+            this.messages = [];
         },
         sendMessage: function () {
             var vm = this;

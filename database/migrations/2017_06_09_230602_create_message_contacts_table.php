@@ -18,6 +18,7 @@ class CreateMessageContactsTable extends Migration
             $table->integer('user_id');
             $table->integer('contact_id');
             $table->integer('last_contact_time');
+            $table->integer('unread_count')->default(0);
             $table->timestamps();
         });
     }

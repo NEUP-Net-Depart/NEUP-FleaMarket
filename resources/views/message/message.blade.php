@@ -33,6 +33,7 @@
 
     <script type="text/x-template" id="contact_list">
         <div>
+            <a v-on:click="getNewContact">###</a>
             <p v-if="errorMessage">@{{ errorMessage }}</p>
             <ul>
                 <li v-for="(contact, index) in contacts" v-on:click="loadDialog(contact.contact_id, index)">

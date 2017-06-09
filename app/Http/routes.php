@@ -65,7 +65,8 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/user/fav/edit', "UserController@editFavlist");
         Route::delete('/user/fav/del', "UserController@delFavlist");
 
-        Route::get('/message/contacts', "MessageController@getMessageContact");
+        Route::get('/message/getHistoryMessageContact', "MessageController@getHistoryMessageContact");
+        Route::get('/message/getNewMessageContact', "MessageController@getNewMessageContact");
         Route::get('/message/getHistoryMessage', "MessageController@getHistoryMessage");
         Route::get('/message/getNewMessage', "MessageController@getNewMessage");
     });
@@ -107,7 +108,6 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/test/sendmessagepage', "MessageController@sendMessagepage")->middleware('su');
     Route::post('/message', "MessageController@sendMessage")->middleware('auth');
     Route::get('/message/num', "MessageController@getUnreadMsgNum")->middleware('auth');
-    Route::put('/message/{id}', "MessageController@readMessage")->middleware('auth');
     Route::delete('/message/{id}', "MessageController@deleteMessage")->middleware('auth');
 
     Route::get('/trans/{trans_id}', "TransactionController@showTrans")->middleware('auth');

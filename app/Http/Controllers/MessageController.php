@@ -31,8 +31,10 @@ class MessageController extends Controller
         $user_id = $request->session()->get('user_id');
         $contact_id = $request->contact_id;
         Message::where('receiver_id', $user_id)->where('sender_id', $contact_id)
-            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
             ->update(['is_read' => true]);
+        MessageContact::where('user_id', $user_id)
+            ->where('contact_id', $contact_id)
+            ->update(['unread_count' => 0]);
         $messages = Message::where('receiver_id', $user_id)->where('sender_id', $contact_id)
             ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
             ->orderBy('id', 'desc')
@@ -47,14 +49,13 @@ class MessageController extends Controller
         $contact_id = $request->contact_id;
         $messages = Message::where('is_read', false)
             ->where('receiver_id', $user_id)->where('sender_id', $contact_id)
-            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
-            ->where('is_read', false)
             ->get();
         Message::where('is_read', false)
             ->where('receiver_id', $user_id)->where('sender_id', $contact_id)
-            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
-            ->where('is_read', false)
             ->update(['is_read' => true]);
+        MessageContact::where('user_id', $user_id)
+            ->where('contact_id', $contact_id)
+            ->update(['unread_count' => 0]);
         return json_encode($messages);
     }
 
@@ -63,16 +64,6 @@ class MessageController extends Controller
         $user_id = $request->session()->get('user_id');
         $count = Message::where('receiver_id', $user_id)->where('is_read', false)->count();
         return $count;
-    }
-
-    public function readMessage(Request $request, $id)
-    {
-        $data = Message::find($id);
-        if ($request->session()->get('user_id') != $data->receiver_id)
-            return json_encode(['result' => false, 'msg' => 'Auth Failure.']);
-        $data->is_read = true;
-        $data->save();
-        return json_encode(['result' => true, 'msg' => 'success']);
     }
 
     public function deleteMessage(Request $request, $id)
@@ -110,6 +101,7 @@ class MessageController extends Controller
             'contact_id' => $user_id
         ]);
         $contact->last_contact_time = time();
+        $contact->unread_count += 1;
         $contact->save();
         return json_encode(['result' => true, 'msg' => $message]);
     }
@@ -119,7 +111,7 @@ class MessageController extends Controller
         return View::make('message.sendMessage');
     }
 
-    public function getMessageContact(Request $request)
+    public function getHistoryMessageContact(Request $request)
     {
         $user_id = $request->session()->get('user_id');
         $contacts = MessageContact::where('user_id', $user_id)
@@ -128,12 +120,19 @@ class MessageController extends Controller
                 $query->select('id', 'nickname');
             }])
             ->paginate(10);
-        foreach ($contacts as $c) {
-            $c->unread_count = Message::where('receiver_id', $user_id)
-                ->where('sender_id', $c->contact_id)
-                ->where('is_read', false)
-                ->count();
-        }
+        return json_encode($contacts);
+    }
+
+    public function getNewMessageContact(Request $request)
+    {
+        $user_id = $request->session()->get('user_id');
+        $contacts = MessageContact::where('user_id', $user_id)
+            ->where('unread_count', '>', 0)
+            ->orderBy('last_contact_time', 'desc')
+            ->with(['contact' => function ($query) {
+                $query->select('id', 'nickname');
+            }])
+            ->get();
         return json_encode($contacts);
     }
 
