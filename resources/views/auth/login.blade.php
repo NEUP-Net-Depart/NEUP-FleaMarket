@@ -5,10 +5,10 @@
 @section('content')
 
     <div class="row align-middle">
-        <div class="hide-for-small-only medium-7 columns thumbnail">
+        <div class="hide-for-small-only medium-6 columns thumbnail">
             <img src="/img/loginpic.jpg"/>
         </div>
-        <div class="small-10 offset-1 medium-4 medium-offset-1 columns card">
+        <div class="small-10 small-pull-1 medium-4 medium-offset-1 columns card">
             <div class="card-section">
                 @if (count($errors) > 0)
                     <label>

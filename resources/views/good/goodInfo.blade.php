@@ -29,7 +29,7 @@
     </script>
 
     <div class="row">
-        <div class="small-12 medium-5 columns block" style="background-color: white;">
+        <div class="small-12 medium-5 columns block" style="">
             <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" class="thumbnail" src="/good/{{ sha1($good->id) }}/titlepic" /></a>
         </div>
         <div class="small-12 medium-6 medium-offset-1 columns block" style="background-color: white;margin-bottom: 10px;margin-top:10px">
@@ -38,17 +38,7 @@
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             <div class="row">
                 <div class="small-5 columns">
-                    @if(($good->user_id) != Session::get('user_id'))
-                        <form action="/good/{{ $good->id }}/buy" method="post">
-                            <div class="input-group gb_right">
-                                <input type="number" name="count" value="1" class="input-group-field"/>
-                                {!! csrf_field() !!}
-                                <div class="input-group-button">
-                                    <input type="submit" class="button" value="购买"/>
-                                </div>
-                            </div>
-                        </form>
-                    @endif
+
                             <br>
                             <br>
                             @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
@@ -88,7 +78,7 @@
     </div>
 
     <div class="row">
-        <div id="" class="small-12 medium-12 columns" style="background-color: white">
+        <div id="asd" class="small-12 medium-12 columns" style="background-color: white">
             <h3>商品介绍: </h3>
             <p>{{ $good->description }}</p>
         </div>
@@ -107,6 +97,7 @@
                 success: function (msg) {
                     $('.fav_smt').val('取消收藏QAQ');
                     $jQuery_NEW('.fav_smt').attr('onclick', 'del_favlist()');
+                    $jQuery_NEW('.fav_smt').attr('style', 'width:100%;color:white;padding-left:0;padding-right:0');
                 }
             });
         }
@@ -130,57 +121,61 @@
 @endsection
 
 @section('navbm')
-    <div class="row show-for-small-only" style="max-width: 100%;" data-sticky-container>
-        <div class="sticky" data-sticky data-stick-to="bottom" data-sticky-on="small" data-top-anchor="ach" data-btm-anchor="desc:top" data-options="marginBottom:0;" >
-            <div class="top-bar">
-                    <ul class="menu"  style="position:relative; bottom: -5px;height:100%;">
-                        <li><button class="button warning" style="color:white;font-size: 13px;width:90px;height:40px">联系货主</button></li>
-                        <li><button class="button warning" style="color:white;font-size: 13px;width:90px;height:40px">功能占位</button></li>
+    <div class="row">
+    <div class="row show-for-small-only" style="max-width: 100%;background-color: transparent;" data-sticky-container>
+        <div id="fuck" style="width:100%;height:50px"></div>
+        <div class="sticky" data-sticky data-stick-to="bottom" data-sticky-on="small" data-top-anchor="ach" data-btm-anchor="fuck:bottom" data-options="marginBottom:0;" >
+            <div class="top-bar" style="background-color: transparent;padding:0">
+                    <ul class="menu"  style="position:relative;height:100%;background-color: transparent;left:+10px;">
                         @if(($good->user_id) != Session::get('user_id'))
-                            <li> <form action="/good/{{ $good->id }}/buy" method="post"  style="width:70%;float:right" >
-                                    <div class="input-group" style="margin-bottom:0px;">
+                            <li style="width:25%"><button class="button warning" style="color:white;font-size: 15px;width:100%;height:40px;padding-left:0;padding-right:0;">联系货主</button></li>
+                            <li style="width:50%"> <form action="/good/{{ $good->id }}/buy" method="post"  style="width: 100%" >
+                                    <div class="input-group" style="margin-bottom:0px;width: 100%">
                                         <input type="number" name="count" value="1" class="input-group-field"/>
                                         {!! csrf_field() !!}
                                         <div class="input-group-button">
-                                            <input type="submit" class="button" value="购买"/>
+                                            <input type="submit" style="width: 100%;" class="button" value="购买"/>
                                         </div>
                                     </div>
                                 </form>
                             </li>
                         @endif
                         @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
-                            <li><button class="button warning" style="color:white;font-size: 13px;width:90px;height:40px">功能占位</button></li>
-                            <li>
+                                <li style="width:20%;height:100%">
+                                <button class="button" style="color:white;font-size: 15px;width:100%;height:40px;padding-left:0;padding-right:0">宣传商品</button>
+                                </li>
+                            <li style="width:10%;">
                                 <form action="/good/{{ $good->id }}/edit">
-                                    <input type="submit" style="margin-right:0;" class="button" value="修改">
+                                    <input type="submit" class="button warning" style="width:100%;float:right;margin-right:0;color:white;height:100%"  class="button" value="修改">
                                 </form>
                             </li>
-                            <li>
+                            <li style="width:10%;">
                                 <form action="/good/{{ $good->id }}/delete" method="POST" id="del" onsubmit="return confirm('确定删除吗？');">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
-                                    <input type="submit" style="margin-right:0" class="button" value="删除">
+                                    <input type="submit" style="width:100%;height:100%" class="button" value="删除">
                                 </form>
                             </li>
                         @endif
-                        <li> @if(isset($inFvlst))
-                                <form id="fav" style="">
+                        <li style="width:25%;"> @if(isset($inFvlst))
+                                <form id="fav" style="color:white">
                                     {!! csrf_field() !!}
                                     @if(count($inFvlst) == 0)
-                                        <input id="fav_smt" class="button fav_smt" type="button" name="submit1" onclick="add_favlist()"
-                                               value="收藏OvO" style="width:122px;"/>
+                                        <input id="fav_smt" class="button fav_smt warning" type="button" name="submit1" onclick="add_favlist()"
+                                               value="收藏OvO" style="width:100%;color:white;height:40px;padding:0;margin-right:0"/>
                                     @endif
                                     @if(count($inFvlst) != 0)
-                                        <input id="fav_smt" class="button fav_smt" type="button" name="submit1" onclick="del_favlist()"
-                                               value="取消收藏QAQ"  style="width:122px;"/>
+                                        <input id="fav_smt" class="button fav_smt warning" type="button" name="submit1" onclick="del_favlist()"
+                                               value="取消收藏QAQ"  style="width:100%;color:white;height:40px;padding:0;margin-right:0"/>
                                     @endif
                                 </form>
                             @else
-                                <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
-                                       value="收藏OvO"/>
+                                <input class="button warning" type="button" name="submit1" onclick="window.location.href='/login'"
+                                       value="收藏OvO" style="width:100%;color:white;height:40px;padding:0;margin-right:0"/>
                             @endif</li>
                     </ul>
             </div>
         </div>
+    </div>
     </div>
 @endsection

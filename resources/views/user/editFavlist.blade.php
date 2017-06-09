@@ -26,9 +26,6 @@
             height:200px;
         }
         @media (max-width: 640px){
-            body{
-                background-color: #EBEBEB;
-            }
         }
     </style>
 
