@@ -66,6 +66,7 @@ Route::group(['middleware' => ['web']],function () {
         Route::delete('/user/fav/del', "UserController@delFavlist");
 
         Route::get('/message/contacts', "MessageController@getMessageContact");
+        Route::get('/message/getMessage', "MessageController@getMessage");
     });
 
     Route::get('/user/sell', "UserController@mygoods")->middleware('auth');
@@ -101,7 +102,7 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('auth');
 
-    Route::get('/message', "MessageController@getMessage")->middleware('auth');
+    Route::get('/message', "MessageController@showMessageView")->middleware('auth');
     Route::get('/test/sendmessagepage', "MessageController@sendMessagepage")->middleware('su');
     Route::post('/message', "MessageController@sendMessage")->middleware('auth');
     Route::get('/message/num', "MessageController@getUnreadMsgNum")->middleware('auth');

@@ -21,12 +21,23 @@ use App\Http\Controllers\Controller;
 
 class MessageController extends Controller
 {
-    public function getMessage(Request $request)
+    public function showMessageView(Request $request)
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
         $data['informations'] = Message::with('receiver')->Orderby('id', 'desc')->where('receiver_id', $user_id)->paginate(15);
         return View::make('message.message')->with($data);
+    }
+
+    public function getMessage(Request $request)
+    {
+        $user_id = $request->session()->get('user_id');
+        $contact_id = $request->contact_id;
+        $messages = Message::where('receiver_id', $user_id)->where('sender_id', $contact_id)
+            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
+            ->orderBy('id', 'desc')
+            ->paginate(20);
+        return json_encode($messages);
     }
 
     public function getUnreadMsgNum(Request $request)

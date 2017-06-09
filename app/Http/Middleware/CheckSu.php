@@ -11,18 +11,15 @@ class CheckSu
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('username')&&$request->session()->get('is_admin')==2)
-        {
+        if ($request->session()->has('user_id') && $request->session()->get('is_admin') == 2) {
             return $next($request);
-        }
-        else
-        {
+        } else {
             return Redirect::to('/login');
         }
     }
