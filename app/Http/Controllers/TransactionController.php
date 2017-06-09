@@ -219,6 +219,10 @@ class TransactionController extends Controller
             return json_encode(['result' => false, 'msg' => 'unauthorized']);
         if($trans->status != 2)
             return json_encode(['result' => false, 'msg' => 'invalid']);
+        if($result) {
+            $trans->good->count = $trans->good->count - $trans->number;
+            $trans->good->save();
+        }
         if($result)
             $trans->status = 4;
         else
