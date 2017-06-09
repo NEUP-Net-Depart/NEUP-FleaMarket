@@ -101,7 +101,7 @@ class MessageController extends Controller
             }])
             ->paginate(10);
         foreach ($contacts as $c) {
-            $c->unread_message = Message::where('receiver_id', $user_id)
+            $c->unread_count = Message::where('receiver_id', $user_id)
                 ->where('sender_id', $c->contact_id)
                 ->where('is_read', false)
                 ->count();
