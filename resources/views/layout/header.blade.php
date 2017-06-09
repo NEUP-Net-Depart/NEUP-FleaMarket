@@ -36,6 +36,8 @@
                 <ul class="menu vertical top-bar-dropdown-menu">
                   <li><a href="/user">个人中心</a></li>
                   <li><a href="/user/fav">收藏夹</a></li>
+                  <li><a href="/user/trans">我的订单</a></li>
+                  <li><a href="/user/sell">我的出售</a></li>
                   <hr>
                   <li><a href="/logout">登出</a></li>
                 </ul>
@@ -94,6 +96,8 @@
           <li><a href="/logout">登出</a></li>
           <hr>
           <li><a href="/user/fav">收藏夹</a></li>
+          <li><a href="/user/trans">我的订单</a></li>
+          <li><a href="/user/sell">我的出售</a></li>
           <li><a href="/good/add" class="top-bar-button">出售</a></li>
         @else
             <li><a href="/register">注册</a></li>
