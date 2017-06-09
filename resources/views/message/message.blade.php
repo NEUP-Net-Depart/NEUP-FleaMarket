@@ -40,10 +40,14 @@
                     @{{ contact.contact.nickname }}&nbsp;@{{ contact.unread_count }}
                 </li>
             </ul>
+            <a v-if="hasMore" v-on:click="getContact">加载更多</a>
         </div>
     </script>
+
     <script type="text/x-template" id="message_dialog">
-        <div>
+        <div :class="{ hide: isHidden }">
+            <a v-if="hasMore" v-on:click="getMessage(0)">加载更多</a>
+            <p v-else>没有更多了</p>
             <p v-if="errorMessage">@{{ errorMessage }}</p>
             <ul>
                 <li v-for="message in messages">
