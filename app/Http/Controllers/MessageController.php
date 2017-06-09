@@ -23,10 +23,7 @@ class MessageController extends Controller
 {
     public function showMessageView(Request $request)
     {
-        $data = [];
-        $user_id = $request->session()->get('user_id');
-        $data['informations'] = Message::with('receiver')->Orderby('id', 'desc')->where('receiver_id', $user_id)->paginate(15);
-        return View::make('message.message')->with($data);
+        return View::make('message.message');
     }
 
     public function getMessage(Request $request)

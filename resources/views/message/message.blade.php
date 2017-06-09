@@ -6,9 +6,10 @@
 
     <div id="message">
         <a v-on:click="refreshContact">???</a>
-        <contact-list ref="child"></contact-list>
+        <contact-list ref="contactList" v-on:load-dialog="loadDialogCallback"></contact-list>
+        <message-dialog ref="messageDialog"></message-dialog>
     </div>
-    <div class="page-content">
+    {{--<div class="page-content">
         @foreach($informations as $information)
             <form action="/message/{{$information->id}}" method="POST">
                 {!! csrf_field() !!}
@@ -28,15 +29,26 @@
             </form>
         @endforeach
             {{ $informations->links() }}
-    </div>
+    </div>--}}
 
     <script type="text/x-template" id="contact_list">
         <div>
             <p v-if="errorMessage">@{{ errorMessage }}</p>
             <ul>
-                <li v-for="contact in contacts">
+                <li v-for="contact in contacts" v-on:click="loadDialog(contact.contact_id)">
                     <img :src="'/avatar/' + contact.contact_id + '/64/64'"/>
                     @{{ contact.contact.nickname }}&nbsp;@{{ contact.unread_count }}
+                </li>
+            </ul>
+        </div>
+    </script>
+    <script type="text/x-template" id="message_dialog">
+        <div>
+            <p v-if="errorMessage">@{{ errorMessage }}</p>
+            <ul>
+                <li v-for="message in messages">
+                    <img :src="'/avatar/' + message.sender_id + '/64/64'"/>
+                    @{{ message.content }}
                 </li>
             </ul>
         </div>
