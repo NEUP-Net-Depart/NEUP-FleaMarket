@@ -27,6 +27,7 @@ use App\Http\Controllers\Controller;
 use Hash;
 use Mail;
 use Image;
+use App\Ticket;
 
 class UserController extends Controller
 {
@@ -271,5 +272,30 @@ class UserController extends Controller
         $data['trans'] = Transaction::where('buyer_id', $user_id)->orderBy('id', 'desc')->paginate(15);
         return view::make('user.buyer')->with($data);
     }
+
+	public function reportSeller(Request $request, $seller_id)
+	{
+		$data = [];
+		$data['seller_id'] = $seller_id;
+		return view::make('user.report')->with($data);
+	}
+
+	/*
+	 * 评价type=1  举报type=2
+	 * 发布未领取state=0
+	 * 已领取未处理state=1
+	 * 已处理state=2
+	 */
+	public function sendRepo(Request $request, $seller_id)
+	{
+		$input = $request->all();
+		$ticket = new Ticket;
+		$ticket->sender_id = $request->session()->get('user_id');
+		$ticket->receiver_id = $seller_id;
+		$ticket->type = 2;
+		$ticket->message = $input['reason'];
+		$ticket->save();
+		return View::make('common.errorPage')->withErrors('举报成功！');
+	}
 
 }

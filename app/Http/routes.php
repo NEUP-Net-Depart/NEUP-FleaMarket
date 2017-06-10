@@ -81,6 +81,9 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/avatar/{user_id}', "UserController@getSimpleAvatar");
     Route::get('/avatar/{user_id}/{width}/{height}', "UserController@getAvatar");
 
+	Route::get('/report/{seller_id}', "UserController@reportSeller")->middleware('auth');
+	Route::post('/sendRepo/{seller_id}', "UserController@sendRepo");
+
     Route::get('/good', "GoodController@getList");
 
     Route::get('/good/add', "GoodController@showAddGood")->middleware('auth');

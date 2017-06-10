@@ -30,6 +30,7 @@
 
     <div class="row">
         <div class="small-12 medium-5 columns block" style="background-color: white;">
+			<a href="/user/{{ $good->user_id }}">卖家</a>
             <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" class="thumbnail" src="/good/{{ sha1($good->id) }}/titlepic" /></a>
         </div>
         <div class="small-12 medium-6 medium-offset-1 columns block" style="background-color: white;margin-bottom: 10px;margin-top:10px">
@@ -86,6 +87,12 @@
             @endif
         </div>
     </div>
+	
+	<div class="row hide-for-small-only">
+		@if($good->user_id != Session::get('user_id'))
+			<a class="button" href="/report/{{ $good->user_id }}">举报该卖家</a>
+		@endif
+	</div>
 
     <div class="row">
         <div id="" class="small-12 medium-12 columns" style="background-color: white">
