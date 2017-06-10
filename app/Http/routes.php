@@ -69,6 +69,7 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/message/getNewMessageContact', "MessageController@getNewMessageContact");
         Route::get('/message/getHistoryMessage', "MessageController@getHistoryMessage");
         Route::get('/message/getNewMessage', "MessageController@getNewMessage");
+        Route::get('/message/startConversation/{receiver}', "MessageController@startConversation");
     });
 
     Route::get('/user/sell', "UserController@mygoods")->middleware('auth');

@@ -10,7 +10,8 @@ Vue.component('contact-list', {
             contacts: [],
             errorMessage: '',
             current_page: 0,
-            last_page: null
+            last_page: null,
+            current_contact_id: null
         }
     },
     computed: {
@@ -22,11 +23,15 @@ Vue.component('contact-list', {
         this.$nextTick(function () {
             this.$on('loadContactEvent', function () {
                 this.clearContact();
-                this.getHistoryContact();
+                this.getHistoryContact(true);
             });
             this.$on('refreshContactEvent', function () {
                 this.getNewContact();
-            })
+            });
+            this.$on('topContactHandler', function (contact_id) {
+                this.setTop(this.contacts.filter(t => t.contact_id === contact_id));
+
+            });
         })
     },
     methods: {
@@ -34,8 +39,9 @@ Vue.component('contact-list', {
             this.current_page = 0;
             this.last_page = null;
             this.contacts = [];
+            this.current_contact_id = null;
         },
-        getHistoryContact: function () {
+        getHistoryContact: function (initialize) {
             var vm = this;
             axios.get('/message/getHistoryMessageContact?page=' + (this.current_page + 1).toString())
                 .then(function (response) {
@@ -43,31 +49,40 @@ Vue.component('contact-list', {
                     vm.last_page = response.data.last_page;
                     for (var i in response.data.data)
                         vm.contacts.push(response.data.data[i]);
+                    if (initialize && vm.contacts.length > 0)
+                        vm.loadDialog(0);
                 })
                 .catch(function (error) {
                     vm.errorMessage = error;
                 })
+        },
+        setTop: function (tops) {
+            var vm = this;
+            for (var i in tops)
+            {
+                vm.contacts = vm.contacts.filter(t => t.contact_id !== tops[i].contact_id);
+                if (tops[i].contact_id === vm.current_contact_id)
+                    tops[i].unread_count = 0;
+                vm.contacts.unshift(tops[i]);
+            }
         },
         getNewContact:  function () {
             var vm = this;
             axios.get('/message/getNewMessageContact')
                 .then(function (response) {
-                    for (var i in response.data)
-                    {
-                        vm.contacts = vm.contacts.filter(t => t.contact_id !== response.data[i].contact_id);
-                        vm.contacts.unshift(response.data[i]);
-                    }
+                    vm.setTop(response.data);
                 })
                 .catch(function (error) {
                     vm.errorMessage = error;
                 })
         },
-        loadDialog: function (id, index) {
+        loadDialog: function (index) {
             var vm = this;
-            this.$emit('load-dialog', id);
+            this.$emit('load-dialog', vm.contacts[index].contact_id);
             var c = vm.contacts[index];
             c.unread_count = 0;
             Vue.set(vm.contacts, index, c);
+            vm.current_contact_id = vm.contacts[index].contact_id;
         }
     }
 });
@@ -153,6 +168,7 @@ Vue.component('message-dialog', {
                 .then(function (response) {
                     vm.messages.push(response.data.msg);
                     vm.inputMessage = '';
+                    vm.$emit('top-contact', vm.contact_id);
                 })
                 .catch(function (error) {
                     vm.errorMessage = error;
@@ -198,6 +214,9 @@ var Message = new Vue({
         },
         loadDialogCallback: function (id) {
             this.$refs.messageDialog.$emit('loadDialogHandler', id)
+        },
+        topContactCallback: function (contact_id) {
+            this.$refs.contactList.$emit('topContactHandler', contact_id)
         }
     }
 });

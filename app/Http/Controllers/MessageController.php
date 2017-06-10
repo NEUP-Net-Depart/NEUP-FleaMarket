@@ -136,4 +136,18 @@ class MessageController extends Controller
         return json_encode($contacts);
     }
 
+    public function startConversation(Request $request, $receiver)
+    {
+        $user_id = $request->session()->get('user_id');
+        //Create or Update MessageContact
+        //A->B
+        $contact = MessageContact::firstOrNew([
+            'user_id' => $user_id,
+            'contact_id' => $receiver
+        ]);
+        $contact->last_contact_time = time();
+        $contact->save();
+        return Redirect::to('/message');
+    }
+
 }
