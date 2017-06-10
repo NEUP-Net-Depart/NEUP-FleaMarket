@@ -158,7 +158,7 @@
                                 </form>
                             </li>
                             @endif
-                            @if($good->user_id == Session::get('user_id') ||  Session::get('is_admin') >=1)
+                            @if($good->user_id == Session::get('user_id') ||  Session::get('is_admin') > 1)
                             <li style="width:10%;">
                                 <form action="/good/{{ $good->id }}/delete" method="POST" id="del" onsubmit="return confirm('确定删除吗？');">
                                     {!! csrf_field() !!}
