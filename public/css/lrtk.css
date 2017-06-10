@@ -77,10 +77,11 @@
 }
 
 @media (max-width: 640px){
-	body{
-		background-color: #EBEBEB;
-	}
 	.is-at-bottom{
 		top:0;
+	}
+	li{
+		height:100%;
+		padding:0;
 	}
 }
