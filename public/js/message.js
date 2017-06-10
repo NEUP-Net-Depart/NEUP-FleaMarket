@@ -20,9 +20,12 @@ Vue.component('contact-list', {
     },
     mounted: function () {
         this.$nextTick(function () {
-            this.$on('getContactEvent', function () {
+            this.$on('loadContactEvent', function () {
                 this.clearContact();
                 this.getHistoryContact();
+            });
+            this.$on('refreshContactEvent', function () {
+                this.getNewContact();
             })
         })
     },
@@ -89,6 +92,9 @@ Vue.component('message-dialog', {
             this.$on('loadDialogHandler', function (id) {
                 this.clearMessage();
                 this.getHistoryMessage(id);
+            });
+            this.$on('refreshMessageEvent', function () {
+                this.getNewMessage();
             })
         })
     },
@@ -154,14 +160,17 @@ Vue.component('message-dialog', {
         },
         getNewMessage: function () {
             var vm = this;
-            axios.get('/message/getNewMessage?contact_id=' + vm.contact_id.toString())
-                .then(function (response) {
-                    for (var i in response.data)
-                        vm.messages.push(response.data[i]);
-                })
-                .catch(function (error) {
-                    vm.errorMessage = error;
-                })
+            if (vm.contact_id)
+            {
+                axios.get('/message/getNewMessage?contact_id=' + vm.contact_id.toString())
+                    .then(function (response) {
+                        for (var i in response.data)
+                            vm.messages.push(response.data[i]);
+                    })
+                    .catch(function (error) {
+                        vm.errorMessage = error;
+                    })
+            }
         }
     }
 });
@@ -170,11 +179,29 @@ Vue.component('message-dialog', {
 var Message = new Vue({
     el: '#message',
     methods: {
+        startLoop: function () {
+            var vm = this;
+            vm.loadContact();
+            window.setInterval(function() {
+                vm.refreshContact();
+                vm.refreshMessage();
+            }, 5000);
+        },
+        loadContact: function () {
+            this.$refs.contactList.$emit('loadContactEvent')
+        },
         refreshContact: function () {
-            this.$refs.contactList.$emit('getContactEvent')
+            this.$refs.contactList.$emit('refreshContactEvent')
+        },
+        refreshMessage: function () {
+            this.$refs.messageDialog.$emit('refreshMessageEvent')
         },
         loadDialogCallback: function (id) {
             this.$refs.messageDialog.$emit('loadDialogHandler', id)
         }
     }
+});
+
+$(function () {
+    Message.startLoop();
 });

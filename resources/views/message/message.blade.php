@@ -5,9 +5,13 @@
 @section('content')
 
     <div id="message">
-        <a v-on:click="refreshContact">???</a>
-        <contact-list ref="contactList" v-on:load-dialog="loadDialogCallback"></contact-list>
-        <message-dialog ref="messageDialog"></message-dialog>
+        {{--<a v-on:click="refreshContact">???</a>--}}
+        <div class="float-right">
+            <contact-list ref="contactList" v-on:load-dialog="loadDialogCallback"></contact-list>
+        </div>
+        <div class="float-left" style="width: 60%">
+            <message-dialog ref="messageDialog"></message-dialog>
+        </div>
     </div>
     {{--<div class="page-content">
         @foreach($informations as $information)
@@ -33,7 +37,7 @@
 
     <script type="text/x-template" id="contact_list">
         <div>
-            <a v-on:click="getNewContact">###</a>
+            {{--<a v-on:click="getNewContact">###</a>--}}
             <p v-if="errorMessage">@{{ errorMessage }}</p>
             <ul>
                 <li v-for="(contact, index) in contacts" v-on:click="loadDialog(contact.contact_id, index)">
@@ -59,7 +63,7 @@
             <textarea placeholder="键入要发送的内容:" v-model="inputMessage"></textarea>
             <input type="button" value="发送" v-on:click="sendMessage"/>
             <input id="token" type="hidden" value="{{ csrf_token() }}"/>
-            <a v-on:click="getNewMessage">!!!</a>
+            {{--<a v-on:click="getNewMessage">!!!</a>--}}
         </div>
     </script>
 
