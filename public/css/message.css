@@ -19,7 +19,7 @@
     padding-right: 1.25em;
     list-style-type: none;
     cursor: pointer;
-    transition:background-color 0.2s, border-radius 0.5s;
+    transition: background-color 0.2s, border-radius 0.5s, 1s;
 }
 
 .con.active {
@@ -63,4 +63,51 @@
     overflow: auto;
     overflow-x: hidden;
     max-height: 500px;
+}
+
+.message-list-item {
+    transition: all 1s;
+}
+
+.message-list-enter, .message-list-leave-active {
+    opacity: 0;
+}
+
+.contact-list-item {
+    transition: all 1s;
+}
+
+.contact-list-enter, .contact-list-leave-active {
+    opacity: 0;
+}
+
+.err-msg {
+    color: red;
+    font-weight: bold;
+}
+
+#message-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#message-container::-webkit-scrollbar-button {
+    background-color: #efefff;
+}
+
+#message-container::-webkit-scrollbar-track {
+    background: #efefef;
+}
+
+#message-container::-webkit-scrollbar-thumb {
+    background: #aaaaaa;
+    border-radius: 4px;
+}
+
+#message-container::-webkit-scrollbar-corner {
+    background: #82AFFF;
+}
+
+#message-container::-webkit-scrollbar-resizer {
+    background: #efefff;
 }

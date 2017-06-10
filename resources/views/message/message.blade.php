@@ -40,10 +40,12 @@
     <script type="text/x-template" id="contact_list">
         <div>
             {{--<a v-on:click="getNewContact">###</a>--}}
-            <p v-if="errorMessage">@{{ errorMessage }}</p>
+            <p class="err-msg" v-if="errorMessage">@{{ errorMessage }}</p>
             <ul>
                 <table class="con-wrapper">
-                    <li :class="{ con: true, active: current_contact_id === contact.contact_id }" v-for="(contact, index) in contacts" v-on:click="loadDialog(index)">
+                    <transition-group name="contact-list" tag="ul">
+                    <li :class="{ con: true, active: current_contact_id === contact.contact_id }"
+                        v-bind:key="contact.contact_id" v-for="(contact, index) in contacts" v-on:click="loadDialog(index)">
                         <tr>
                             <td>
                                 <span>
@@ -54,6 +56,7 @@
                             <td><p class="con-name">@{{ contact.contact.nickname }}</p></td>
                         </tr>
                     </li>
+                    </transition-group>
                 </table>
             </ul>
             <a v-if="hasMore" v-on:click="getHistoryContact(false)">加载更多</a>
@@ -64,13 +67,15 @@
         <div :class="{ hide: isHidden }">
             <a v-if="hasMore" v-on:click="getHistoryMessage(0)">加载更多</a>
             <p v-else>没有更多了</p>
-            <ul class="message-container">
-                <li class="msg" v-for="message in messages">
+            <ul id="message-container" class="message-container">
+                <transition-group name="message-list" tag="ul">
+                <li class="msg message-list-item" v-for="message in messages" v-bind:key="message.id">
                     <img class="mavatar" :src="'/avatar/' + message.sender_id + '/64/64'"/>
                     @{{ message.content }}
                 </li>
+                </transition-group>
             </ul>
-            <p v-if="errorMessage">@{{ errorMessage }}</p>
+            <p class="err-msg" v-if="errorMessage">@{{ errorMessage }}</p>
             <textarea placeholder="键入要发送的内容:" v-model="inputMessage"></textarea>
             <input type="button" class="button" value="发送" v-on:click="sendMessage"/>
             <input id="token" type="hidden" value="{{ csrf_token() }}"/>

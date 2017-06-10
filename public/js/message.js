@@ -53,7 +53,7 @@ Vue.component('contact-list', {
                         vm.loadDialog(0);
                 })
                 .catch(function (error) {
-                    vm.errorMessage = error;
+                    vm.errorMessage = "服务器连接失败，请检查网络QAQ";
                 })
         },
         setTop: function (tops) {
@@ -73,7 +73,7 @@ Vue.component('contact-list', {
                     vm.setTop(response.data);
                 })
                 .catch(function (error) {
-                    vm.errorMessage = error;
+                    vm.errorMessage = "服务器连接失败，请检查网络QAQ";
                 })
         },
         loadDialog: function (index) {
@@ -99,7 +99,8 @@ Vue.component('message-dialog', {
             contact_id: null,
             isHidden: true,
             inputMessage: '',
-            token: ''
+            token: '',
+            isLockScroll: false
         }
     },
     mounted: function () {
@@ -125,6 +126,10 @@ Vue.component('message-dialog', {
             }
         }
     },
+    updated: function () {
+        if (!this.isLockScroll)
+            this.scrollToButtom();
+    },
     methods: {
         getHistoryMessage: function (contact_id) {
             var vm = this;
@@ -132,6 +137,7 @@ Vue.component('message-dialog', {
                 contact_id = this.contact_id;
                 axios.get('/message/getHistoryMessage?contact_id=' + contact_id.toString() + '&page=' + (this.current_page + 1).toString())
                     .then(function (response) {
+                        vm.isLockScroll = true;
                         vm.current_page = response.data.current_page;
                         vm.last_page = response.data.last_page;
                         for (var i in response.data.data)
@@ -139,7 +145,7 @@ Vue.component('message-dialog', {
                         vm.isHidden = false;
                     })
                     .catch(function (error) {
-                        vm.errorMessage = error;
+                        vm.errorMessage = "服务器连接失败，请检查网络QAQ";
                     })
             }
             else {
@@ -151,7 +157,7 @@ Vue.component('message-dialog', {
                         vm.isHidden = false;
                     })
                     .catch(function (error) {
-                        vm.errorMessage = error;
+                        vm.errorMessage = "服务器连接失败，请检查网络QAQ";
                     })
                 this.contact_id = contact_id;
             }
@@ -160,12 +166,14 @@ Vue.component('message-dialog', {
             this.current_page = 0;
             this.last_page = null;
             this.messages = [];
+            this.isLockScroll = false;
         },
         sendMessage: function () {
             var vm = this;
             vm.token = $('#token').val();
             axios.post('/message', this.postData)
                 .then(function (response) {
+                    vm.isLockScroll = false;
                     vm.messages.push(response.data.msg);
                     vm.inputMessage = '';
                     vm.$emit('top-contact', vm.contact_id);
@@ -180,13 +188,21 @@ Vue.component('message-dialog', {
             {
                 axios.get('/message/getNewMessage?contact_id=' + vm.contact_id.toString())
                     .then(function (response) {
+                        vm.isLockScroll = false;
                         for (var i in response.data)
+                        {
                             vm.messages.push(response.data[i]);
+                        }
                     })
                     .catch(function (error) {
-                        vm.errorMessage = error;
+                        vm.errorMessage = "服务器连接失败，请检查网络QAQ";
                     })
             }
+        },
+        scrollToButtom: function () {
+            var c = $('#message-container');
+            //console.log(c[0].scrollHeight);
+            c.scrollTop(c[0].scrollHeight + 1000);
         }
     }
 });
@@ -202,6 +218,9 @@ var Message = new Vue({
                 vm.refreshContact();
                 vm.refreshMessage();
             }, 5000);
+            window.setTimeout(function () {
+                vm.$refs.messageDialog.scrollToButtom();
+            }, 3000);
         },
         loadContact: function () {
             this.$refs.contactList.$emit('loadContactEvent')
