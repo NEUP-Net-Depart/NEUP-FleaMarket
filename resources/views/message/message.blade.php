@@ -32,7 +32,7 @@
                                     <i v-if="contact.unread_count > 0" class="balloon-tip">@{{ contact.unread_count }}</i>
                                 </span>
                             </td>
-                            <td><p class="con-name">@{{ contact.contact_id === 0 ? "系统消息" : contact.contact.nickname }}</p></td>
+                            <td><p class="con-name">@{{ contact.contact_id == 0 ? "系统消息" : contact.contact.nickname }}</p></td>
                         </tr>
                     </li>
                     </transition-group>
