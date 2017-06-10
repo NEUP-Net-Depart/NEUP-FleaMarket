@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\BrowserKitTestCase;
+use App\Message;
 
 class MessageTest extends BrowserKitTestCase
 {
@@ -20,14 +21,12 @@ class MessageTest extends BrowserKitTestCase
         $this->withSession(['user_id' => 1])
             ->post('message')
             ->seeStatusCode(302)
-            ->post('message', ['title' => 'testMessage'])
+            ->post('message', ['receiver' => '10.5'])
             ->seeStatusCode(302)
-            ->post('message', ['title' => 'testMessage', 'receiver' => '10.5'])
-            ->seeStatusCode(302)
-            ->post('message', ['title' => 'testMessage', 'receiver' => '1024'])
+            ->post('message', ['receiver' => '1024'])
             ->seeJson(['result' => false, 'msg' => 'no such receiver'])
-            ->post('message', ['title' => 'testMessage', 'content' => 'content', 'receiver' => '1'])
-            ->seeJson(['result' => true, 'msg' => 'success']);
+            ->post('message', ['content' => 'testMessage', 'receiver' => '1'])
+            ->seeStatusCode(200);
 
         //test Message Number
         $this->withSession(['user_id' => 1])
@@ -37,23 +36,12 @@ class MessageTest extends BrowserKitTestCase
         //test Get Message List
         $this->withSession(['user_id' => 1])
             ->visit('message')
-            ->see('testMessage');
+            ->seeStatusCode(200);
 
         //test Unauthorized
         $this->withSession(['user_id' => 2])
-            ->put('message/1')
-            ->seeJson(['result' => false, 'msg' => 'Auth Failure.'])
             ->delete('message/1')
             ->seeJson(['result' => false, 'msg' => 'Auth Failure.']);
-
-        //test Read Message
-        $this->withSession(['user_id' => 1])
-            ->put('message/1')
-            ->seeJson(['result' => true, 'msg' => 'success'])
-            ->get('message/num')
-            ->see('0')
-            ->visit('message')
-            ->see('testMessage');
 
         //test Del Message
         $this->withSession(['user_id' => 1])
