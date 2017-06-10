@@ -7,6 +7,7 @@ use App\Message;
 use App\Transaction;
 use App\TransactionLog;
 use App\User;
+use App\MessageContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -110,6 +111,15 @@ class TransactionController extends Controller
         $message->receiver_id = $good->user_id;
         $message->content = '您好！' . $buyer->not_null_nickname . '购买了你的' . $good->good_name . '，请及时前往确认。';
         $message->save();
+
+        //Create or Update MessageContact
+        $contact = MessageContact::firstOrNew([
+            'user_id' => $message->receiver_id,
+            'contact_id' => 0
+        ]);
+        $contact->unread_count += 1;
+        $contact->last_contact_time = time();
+        $contact->save();
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 
@@ -134,6 +144,14 @@ class TransactionController extends Controller
                 $message->receiver_id = $good->user_id;
                 $message->content = '您好！您的' . $good->good_name . '的一个订单被买家取消，你可以前往查看。';
                 $message->save();
+                //Create or Update MessageContact
+                $contact = MessageContact::firstOrNew([
+                    'user_id' => $message->receiver_id,
+                    'contact_id' => 0
+                ]);
+                $contact->unread_count += 1;
+                $contact->last_contact_time = time();
+                $contact->save();
                 return json_encode(['result' => true, 'character' => 'buyer', 'msg' => 'success']);
                 break;
             case $trans->seller_id:
@@ -154,6 +172,14 @@ class TransactionController extends Controller
                 $message->receiver_id = $trans->buyer_id;
                 $message->content = '您好！您购买的' . $good->good_name . '的一个订单被卖家驳回，你可以前往查看。';
                 $message->save();
+                //Create or Update MessageContact
+                $contact = MessageContact::firstOrNew([
+                    'user_id' => $message->receiver_id,
+                    'contact_id' => 0
+                ]);
+                $contact->unread_count += 1;
+                $contact->last_contact_time = time();
+                $contact->save();
                 return json_encode(['result' => true, 'character' => 'seller', 'msg' => 'success']);
                 break;
             default:
@@ -185,6 +211,14 @@ class TransactionController extends Controller
         $message->receiver_id = $trans->buyer_id;
         $message->content = '您好！你订购的' . $good->good_name . '已被卖家确认，你们现在可以去看对方的联系方式并且交♂易啦。';
         $message->save();
+        //Create or Update MessageContact
+        $contact = MessageContact::firstOrNew([
+            'user_id' => $message->receiver_id,
+            'contact_id' => 0
+        ]);
+        $contact->unread_count += 1;
+        $contact->last_contact_time = time();
+        $contact->save();
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 
@@ -242,6 +276,14 @@ class TransactionController extends Controller
         else
             $message->content = '您好！你订购的' . $good->good_name . '的订单已被卖家标记为交易失败。';
         $message->save();
+        //Create or Update MessageContact
+        $contact = MessageContact::firstOrNew([
+            'user_id' => $message->receiver_id,
+            'contact_id' => 0
+        ]);
+        $contact->unread_count += 1;
+        $contact->last_contact_time = time();
+        $contact->save();
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 

@@ -15,27 +15,6 @@
             </div>
         </div>
     </div>
-    {{--<div class="page-content">
-        @foreach($informations as $information)
-            <form action="/message/{{$information->id}}" method="POST">
-                {!! csrf_field() !!}
-                {!! method_field('delete') !!}
-                {{$information->id}}<br/>
-                {{$information->title}}<br/>
-                {{$information->content}}<br/>
-                {{$information->created_at}}<br/>
-                {{$information->is_read}}<br/>
-                @if($information->sender_id != 0)
-                    {{$information->receiver->nickname}}<br/>
-                @else
-                    系统通知<br/>
-                @endif
-                <input type="submit" value="Delete"><br/>
-                <br/>
-            </form>
-        @endforeach
-            {{ $informations->links() }}
-    </div>--}}
 
     <script type="text/x-template" id="contact_list">
         <div>
@@ -53,7 +32,7 @@
                                     <i v-if="contact.unread_count > 0" class="balloon-tip">@{{ contact.unread_count }}</i>
                                 </span>
                             </td>
-                            <td><p class="con-name">@{{ contact.contact.nickname }}</p></td>
+                            <td><p class="con-name">@{{ contact.contact_id === 0 ? "系统消息" : contact.contact.nickname }}</p></td>
                         </tr>
                     </li>
                     </transition-group>
@@ -65,7 +44,7 @@
 
     <script type="text/x-template" id="message_dialog">
         <div :class="{ hide: isHidden }">
-            <a v-if="hasMore" v-on:click="getHistoryMessage(0)">加载更多</a>
+            <a v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
             <p v-else>没有更多了</p>
             <ul id="message-container" class="message-container">
                 <transition-group name="message-list" tag="ul">

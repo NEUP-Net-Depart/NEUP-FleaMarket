@@ -133,7 +133,7 @@ Vue.component('message-dialog', {
     methods: {
         getHistoryMessage: function (contact_id) {
             var vm = this;
-            if (contact_id === 0 || this.contact_id === contact_id) {
+            if (contact_id === -1 || this.contact_id === contact_id) {
                 contact_id = this.contact_id;
                 axios.get('/message/getHistoryMessage?contact_id=' + contact_id.toString() + '&page=' + (this.current_page + 1).toString())
                     .then(function (response) {
