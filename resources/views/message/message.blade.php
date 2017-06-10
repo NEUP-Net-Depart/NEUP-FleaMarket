@@ -65,6 +65,6 @@
     <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/message.js"></script>
-    <link rel="stylesheet" href="/css/message.css"
+    <link rel="stylesheet" href="/css/message.css">
 
 @endsection

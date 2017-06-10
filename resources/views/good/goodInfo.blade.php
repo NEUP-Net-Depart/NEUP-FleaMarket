@@ -75,11 +75,11 @@
                 <form id="fav">
                     {!! csrf_field() !!}
                     @if(count($inFvlst) == 0)
-                        <input id="fav_smt" class="button" type="button" name="submit1" onclick="add_favlist()"
+                        <input class="button fav_smt fav_smt-medium" type="button" name="submit1" onclick="add_favlist()"
                                value="收藏OvO"/>
                     @endif
                     @if(count($inFvlst) != 0)
-                        <input id="fav_smt" class="button" type="button" name="submit1" onclick="del_favlist()"
+                        <input class="button fav_smt fav_smt-medium" type="button" name="submit1" onclick="del_favlist()"
                                value="取消收藏QAQ"/>
                     @endif
                 </form>
@@ -113,9 +113,12 @@
                 url: "/good/{{ $good->id }}/add_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('.fav_smt').val('取消收藏QAQ');
-                    $jQuery_NEW('.fav_smt').attr('onclick', 'del_favlist()');
-                    $jQuery_NEW('.fav_smt').attr('style', 'width:100%;color:white;padding-left:0;padding-right:0');
+                    $('.fav_smt.fav_smt-small').val('取消收藏QAQ');
+                    $jQuery_NEW('.fav_smt.fav_smt-small').attr('onclick', 'del_favlist()');
+                    //what's this? interesting
+                    $jQuery_NEW('.fav_smt.fav_smt-small').attr('style', 'width:100%;color:white;padding-left:0;padding-right:0');
+                    $('.fav_smt.fav_smt-medium').val('取消收藏QAQ');
+                    $jQuery_NEW('.fav_smt.fav_smt-medium').attr('onclick', 'del_favlist()');
                 }
             });
         }
@@ -129,8 +132,10 @@
                 url: "/good/{{ $good->id }}/del_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('.fav_smt').val('收藏OvO');
-                    $jQuery_NEW('.fav_smt').attr('onclick', 'add_favlist()');
+                    $('.fav_smt.fav_smt-small').val('收藏OvO');
+                    $jQuery_NEW('.fav_smt.fav_smt-small').attr('onclick', 'add_favlist()');
+                    $('.fav_smt.fav_smt-medium').val('收藏OvO');
+                    $jQuery_NEW('.fav_smt.fav_smt-medium').attr('onclick', 'add_favlist()');
                 }
             });
         }
@@ -195,13 +200,13 @@
                                 <form id="fav" style="color:white">
                                     {!! csrf_field() !!}
                                     @if(count($inFvlst) == 0)
-                                        <input id="fav_smt" class="button fav_smt warning" type="button" name="submit1"
+                                        <input class="button fav_smt fav_smt-small warning" type="button" name="submit1"
                                                onclick="add_favlist()"
                                                value="收藏OvO"
                                                style="width:100%;color:white;height:40px;padding:0;margin-right:0"/>
                                     @endif
                                     @if(count($inFvlst) != 0)
-                                        <input id="fav_smt" class="button fav_smt warning" type="button" name="submit1"
+                                        <input class="button fav_smt fav_smt-small warning" type="button" name="submit1"
                                                onclick="del_favlist()"
                                                value="取消收藏QAQ"
                                                style="width:100%;color:white;height:40px;padding:0;margin-right:0"/>
