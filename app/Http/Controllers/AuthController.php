@@ -98,12 +98,16 @@ class AuthController extends Controller
 
     public function showRegister()
     {
-        return View::make('auth.register');
+        if (!env('ALLOW_REG', false)){
+            return View::make('auth.ssoGuide');
+        }else{
+            return View::make('auth.register');
+        }
     }
 
     public function register(RegisterRequest $request)
     {
-        if (!env('ALLOW_REG', true)) {
+        if (!env('ALLOW_REG', false)) {
             abort(404);
         }
         $input = $request->all();

@@ -20,6 +20,7 @@
                     <label>密码<input type="password" id="password" name="password"></label>
                     {!! csrf_field() !!}
                     <input type="submit" class="hollow button" value="登录">
+                    <input type="button" class="hollow button" value="注册" onclick="window.location.href='/register'">
                 </form>
             </div>
         </div>
