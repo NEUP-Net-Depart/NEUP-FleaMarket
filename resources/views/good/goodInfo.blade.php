@@ -4,6 +4,14 @@
 
 @section('asset')
     <link rel="stylesheet" href="/css/lrtk.css"/>
+    <style>
+        .glyphicon:hover, .glyphicon:focus {
+            text-decoration: none;
+        }
+        .input-group {
+            max-width: 200px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -27,82 +35,58 @@
             }
         });
     </script>
-
-	<div class="row">
-		<h3>
-			<a href="/user/{{ $user->id }}">{{ $user->nickname }}</a>
-		</h3>
-        <div class="small-12 medium-5 columns block" style="">
-            <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" class="thumbnail" src="/good/{{ sha1($good->id) }}/titlepic"/></a>
-        </div>
-        <div class="small-12 medium-6 medium-offset-1 columns block"
-             style="background-color: white;margin-bottom: 10px;margin-top:10px">
-            <h2>
-                {{ $good->good_name }}
-            <span class="hide-for-small-only">
-            @if(isset($inFvlst))
-                @if(count($inFvlst) == 0)
-                    <a class="fav_smt fav_smt-medium" onclick="add_favlist()">☆</a>
-                @endif
-                @if(count($inFvlst) != 0)
-                    <a class="fav_smt fav_smt-medium" onclick="del_favlist()">★</a>
-                @endif
-            @else
-                <a class="fav_smt fav_smt-medium" onclick="window.location.href='/login'">☆</a>
-            @endif
+    <div class="col-xs-12 col-sm-5">
+        <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="thumbnail" src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%"/></a>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-sm-offset-1">
+        <h2>{{ $good->good_name }}
+            <span>
+                @if(isset($inFvlst))
+                    @if(count($inFvlst) == 0)
+                        <a class="glyphicon glyphicon-star-empty" onclick="add_favlist()" href="#" title="收藏OvO"></a>
+                    @endif
+                    @if(count($inFvlst) != 0)
+                        <a class="glyphicon glyphicon-star" onclick="del_favlist()" href="#" title="取消收藏QAQ"></a>
+                    @endif
+                    @else
+                        <a class="glyphicon glyphicon-star-empty" onclick="window.location.href='/login'" title="收藏OvO">☆</a>
+                    @endif
             </span>
-            </h2>
-            <div><!-- 放tag 和更多图片缩略图 --></div>
-            <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
-            <div class="row">
-                <div class="columns hide-for-small-only" style="width:180px;">
-                    @if(($good->user_id) != Session::get('user_id'))
-                        <form action="/good/{{ $good->id }}/buy" method="post">
-                            <div class="input-group gb_right">
-                                <input type="number" name="count" value="1" class="input-group-field"/>
-                                {!! csrf_field() !!}
-                                <div class="input-group-button">
-                                    <input type="submit" class="button" value="购买"/>
-                                </div>
-                            </div>
-                        </form>
-                    @endif
-                    <p id="ach" class="gb_right">(库存:{{ $good->count }}件)</p>
-                    @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
-                        <form class="hide-for-small-only" action="/good/{{ $good->id }}/edit"
-                              style="margin:0px;display:inline;">
-                            <input type="submit" class="button gb_right" value="修改">
-                        </form>
-                        <form class="hide-for-small-only" action="/good/{{ $good->id }}/delete" method="POST"
-                              style="margin:0px;display:inline;" id="del" onsubmit="return confirm('确定删除吗？');">
-                            {!! csrf_field() !!}
-                            {!! method_field('DELETE') !!}
-                            <input type="submit" class="button gb_right" value="删除">
-                        </form>
-                    @endif
+        </h2>
+		卖家：<a href="/user/{{ $user->id }}">{{ $user->nickname }}</a>
+        <div><!-- 放tag 和更多图片缩略图 --></div>
+        <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
+        <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div><br/>
+        @if(($good->user_id) != Session::get('user_id'))
+            <form action="/good/{{ $good->id }}/buy" method="post">
+                <div class="input-group">
+                    <input type="number" name="count" value="1" class="form-control"/>
+                    {!! csrf_field() !!}
+                    <span class="input-group-btn">
+                        <input type="submit" class="btn btn-primary" value="购买"/>
+                    </span>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row hide-for-small-only">
-        <div class="small-12 medium-6 medium-offset-6 columns block">
-        </div>
-    </div>
-	
-	<div class="row hide-for-small-only">
+            </form>
+        @endif
+        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') >= 1)
+            <form action="/good/{{ $good->id }}/edit" style="display:inline-block;">
+                <input type="submit" class="btn btn-primary" value="修改">
+            </form>
+            <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');">
+                {!! csrf_field() !!}
+                {!! method_field('DELETE') !!}
+                <input type="submit" class="btn btn-primary" value="删除">
+            </form>
+        @endif
 		@if(Session::has('user_id') && $good->user_id!=Session::get('user_id'))
-			<form action="/report/{{ $good->user_id }}" method="GET">
-				<input type="submit" class="button" value="举报该卖家">
+			<br/><form action="/report/{{ $good->user_id }}" method="GET">
+				<input type="submit" class="btn btn-primary" value="举报该卖家">
 			</form>
 		@endif
-	</div>
-
-    <div class="row">
-        <div id="asd" class="small-12 medium-12 columns" style="background-color: white">
-            <h3>商品介绍: </h3>
-            <p>{{ $good->description }}</p>
-        </div>
-
+    </div>
+    <div class="col-xs-12 row">
+        <h3>商品介绍</h3>
+        <div>{{ $good->description }}</div>
     </div>
     <script>
         function add_favlist() {
@@ -114,12 +98,9 @@
                 url: "/good/{{ $good->id }}/add_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('.fav_smt.fav_smt-small').text('★');
-                    $jQuery_NEW('.fav_smt.fav_smt-small').attr('onclick', 'del_favlist()');
-                    //what's this? interesting
-                    $jQuery_NEW('.fav_smt.fav_smt-small').attr('style', 'width:100%;color:white;padding-left:0;padding-right:0');
-                    $('.fav_smt.fav_smt-medium').text('★');
-                    $jQuery_NEW('.fav_smt.fav_smt-medium').attr('onclick', 'del_favlist()');
+                    $jQuery_NEW('.glyphicon-star-empty').attr('title','取消收藏QAQ');
+                    $jQuery_NEW('.glyphicon-star-empty').attr('onclick', 'del_favlist()');
+                    $jQuery_NEW('.glyphicon-star-empty').attr('class','glyphicon glyphicon-star');
                 }
             });
         }
@@ -133,10 +114,9 @@
                 url: "/good/{{ $good->id }}/del_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('.fav_smt.fav_smt-small').text('☆');
-                    $jQuery_NEW('.fav_smt.fav_smt-small').attr('onclick', 'add_favlist()');
-                    $('.fav_smt.fav_smt-medium').text('☆');
-                    $jQuery_NEW('.fav_smt.fav_smt-medium').attr('onclick', 'add_favlist()');
+                    $jQuery_NEW('.glyphicon-star').attr('title','收藏OvO');
+                    $jQuery_NEW('.glyphicon-star').attr('onclick', 'add_favlist()');
+                    $jQuery_NEW('.glyphicon-star').attr('class','glyphicon glyphicon-star-empty');
                 }
             });
         }
@@ -145,7 +125,7 @@
 @endsection
 
 @section('navbm')
-    <div class="row">
+    <div class="row hidden">
         <div class="row show-for-small-only" style="max-width: 100%;background-color: transparent;"
              data-sticky-container>
             <div class="sticky" data-sticky data-stick-to="bottom" data-sticky-on="small" data-top-anchor="pic"

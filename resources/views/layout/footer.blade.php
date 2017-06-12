@@ -1,20 +1,18 @@
-﻿﻿<footer class="row hide-for-small-only">
-	<div class="medium-9 medium-centered columns">
-	<div class="float-left">
-		<span>© {{date("Y")}} 东北大学先锋网</span>
-		<span><a href="/">隐私政策</a></span>
-		<span><a href="/">服务条款</a></span>
+﻿﻿<div class="footer">
+	<div class="container hidden-sm hidden-xs">
+	<ul class="pull-left">
+		<li>© {{date("Y")}} 东北大学先锋网</li>
+		<li><a href="/">隐私政策</a></li>
+		<li><a href="/">服务条款</a></li>
+	</ul>
+	<ul class="pull-right">
+		<li><a href="/">帮助文档</a></li>
+		<li><a href="/">申诉通道</a></li>
+		<li><a href="/">意见反馈</a></li>
+		<li><a href="/">关于我们</a></li>
+	</ul>
 	</div>
-	<div class="float-right">
-		<span><a href="/">帮助文档</a></span>
-		<span><a href="/">申诉通道</a></span>
-		<span><a href="/">意见反馈</a></span>
-		<span><a href="/">关于我们</a></span>
-	</div>
-	</div>
-</footer>
-<footer class="row hide-for-medium">
-	<div class="small-11 small-centered columns">
+	<div class="visible-xs-block visible-sm-block">
 		<span><center>© {{date("Y")}} 东北大学先锋网</center></span>
 	</div>
-</footer>
+</div>

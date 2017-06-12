@@ -153,8 +153,10 @@ class GoodController extends Controller
     {
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
+        $data['good'] = new GoodInfo;
+        $data['add'] = true;
         //$data['tags'] = Tag::orderby('id', 'asc')->get();
-        return view::make('good.addPage')->with($data);
+        return view::make('good.goodInfoForm')->with($data);
     }
 
     public function addGood(AddGoodRequest $request)
@@ -207,16 +209,15 @@ class GoodController extends Controller
     {
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
-        $good = GoodInfo::find($good_id);
-        if($good == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
-        $data['goods'] = [];
-        array_push($data['goods'], $good);
-        if($request->session()->get('user_id')!=$good->user_id && $request->session()->get('is_admin')!=2)
+        $data['good'] = GoodInfo::find($good_id);
+        if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
+        if($request->session()->get('user_id')!=$data['good']->user_id && $request->session()->get('is_admin')!=2)
             return Redirect::to('/good/'.$good_id);
+        $data['add'] = false;
         /*$data['tags'] = Tag::orderby('id', 'asc')->get();
         $collection = GoodTag::where('good_id', $good_id)->pluck('tag_id');
         $data['this_good_tags'] = $collection->toArray();*/
-        return view::make('good.editPage')->with($data);
+        return view::make('good.goodInfoForm')->with($data);
     }
 
     public function editGood(EditGoodRequest $request, $good_id)
