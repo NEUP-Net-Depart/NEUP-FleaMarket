@@ -34,11 +34,25 @@
         </div>
         <div class="small-12 medium-6 medium-offset-1 columns block"
              style="background-color: white;margin-bottom: 10px;margin-top:10px">
-            <h2>{{ $good->good_name }}</h2>
+            <h2>
+                {{ $good->good_name }}
+            <span class="hide-for-small-only">
+            @if(isset($inFvlst))
+                @if(count($inFvlst) == 0)
+                    <a class="fav_smt fav_smt-medium" onclick="add_favlist()">☆</a>
+                @endif
+                @if(count($inFvlst) != 0)
+                    <a class="fav_smt fav_smt-medium" onclick="del_favlist()">★</a>
+                @endif
+            @else
+                <a class="fav_smt fav_smt-medium" onclick="window.location.href='/login'">☆</a>
+            @endif
+            </span>
+            </h2>
             <div><!-- 放tag 和更多图片缩略图 --></div>
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             <div class="row">
-                <div class="small-5 columns hide-for-small-only">
+                <div class="columns hide-for-small-only" style="width:180px;">
                     @if(($good->user_id) != Session::get('user_id'))
                         <form action="/good/{{ $good->id }}/buy" method="post">
                             <div class="input-group gb_right">
@@ -50,8 +64,7 @@
                             </div>
                         </form>
                     @endif
-                    <br>
-                    <br>
+                    <p id="ach" class="gb_right">(库存:{{ $good->count }}件)</p>
                     @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
                         <form class="hide-for-small-only" action="/good/{{ $good->id }}/edit"
                               style="margin:0px;display:inline;">
@@ -64,29 +77,12 @@
                             <input type="submit" class="button gb_right" value="删除">
                         </form>
                     @endif
-                    <p id="ach" class="gb_right">(库存:{{ $good->count }}件)</p>
                 </div>
             </div>
         </div>
     </div>
     <div class="row hide-for-small-only">
         <div class="small-12 medium-6 medium-offset-6 columns block">
-            @if(isset($inFvlst))
-                <form id="fav">
-                    {!! csrf_field() !!}
-                    @if(count($inFvlst) == 0)
-                        <input class="button fav_smt fav_smt-medium" type="button" name="submit1" onclick="add_favlist()"
-                               value="收藏OvO"/>
-                    @endif
-                    @if(count($inFvlst) != 0)
-                        <input class="button fav_smt fav_smt-medium" type="button" name="submit1" onclick="del_favlist()"
-                               value="取消收藏QAQ"/>
-                    @endif
-                </form>
-            @else
-                <input class="button" type="button" name="submit1" onclick="window.location.href='/login'"
-                       value="收藏OvO"/>
-            @endif
         </div>
     </div>
 	
@@ -113,11 +109,11 @@
                 url: "/good/{{ $good->id }}/add_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('.fav_smt.fav_smt-small').val('取消收藏QAQ');
+                    $('.fav_smt.fav_smt-small').text('★');
                     $jQuery_NEW('.fav_smt.fav_smt-small').attr('onclick', 'del_favlist()');
                     //what's this? interesting
                     $jQuery_NEW('.fav_smt.fav_smt-small').attr('style', 'width:100%;color:white;padding-left:0;padding-right:0');
-                    $('.fav_smt.fav_smt-medium').val('取消收藏QAQ');
+                    $('.fav_smt.fav_smt-medium').text('★');
                     $jQuery_NEW('.fav_smt.fav_smt-medium').attr('onclick', 'del_favlist()');
                 }
             });
@@ -132,9 +128,9 @@
                 url: "/good/{{ $good->id }}/del_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('.fav_smt.fav_smt-small').val('收藏OvO');
+                    $('.fav_smt.fav_smt-small').text('☆');
                     $jQuery_NEW('.fav_smt.fav_smt-small').attr('onclick', 'add_favlist()');
-                    $('.fav_smt.fav_smt-medium').val('收藏OvO');
+                    $('.fav_smt.fav_smt-medium').text('☆');
                     $jQuery_NEW('.fav_smt.fav_smt-medium').attr('onclick', 'add_favlist()');
                 }
             });

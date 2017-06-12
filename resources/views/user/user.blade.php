@@ -20,8 +20,7 @@
         </label>
     @endif
     <ul class="tabs" data-tabs id="editinfo">
-        <li class="tabs-title @if($tab == "profile") is-active @endif"><a href="#extra" aria-selected="true">个人信息</a>
-        </li>
+        <li class="tabs-title @if($tab == "profile") is-active @endif"><a href="#extra" aria-selected="true">个人信息</a></li>
         <li class="tabs-title @if($tab == "account") is-active @endif"><a href="#account">用户帐户</a></li>
         <li class="tabs-title @if($tab == "contact") is-active @endif"><a href="#userinfo">联系方式</a></li>
     </ul>

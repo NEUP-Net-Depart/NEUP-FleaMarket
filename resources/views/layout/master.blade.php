@@ -25,7 +25,7 @@
 <body>
 @include('layout.header')
 <div class="page-content row">
-    <div class="medium-10 medium-centered columns">
+    <div class="columns">
         @yield('content')
     </div>
 </div>
