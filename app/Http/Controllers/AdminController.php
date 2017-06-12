@@ -55,7 +55,7 @@ class AdminController extends Controller
     {
         $input = $request->all();
         $user = User::find($user_id);
-        $user->priviledge = $input['priviledge'];
+        $user->privilege = $input['privilege'];
         $user->update();
         return Redirect::to('/admin');
     }
@@ -142,12 +142,30 @@ class AdminController extends Controller
 		return Redirect::to('/admin');
 	}
 
+	public function assignReport(Request $request, $repo_id)
+    {
+        $user_id = $request->session()->get('user_id');
+        $repo = Ticket::find($repo_id);
+        $repo->assignee = $user_id;
+        $repo->state = 0;
+        $repo->save();
+
+        $result = MessageController::sendMessageHandle($user_id, $repo->sender_id, "【系统消息】您好！您的举报（编号：" . $repo_id . "）已由管理员（ID: " . $user_id . "）受理。请协助管理员核实举报具体细节。");
+        $result = json_decode($result);
+        if($result->result)
+            return Redirect::to('/message');
+        else
+            return View::make('common.errorPage')->withErrors($result->msg);
+    }
+
 	public function solveReport(Request $request, $repo_id)
 	{
 		$input = $request->all();
 		$repo = Ticket::find($repo_id);
-		$repo->state = $input['setstate'];
-		$repo->update();
+		if($repo->assignee == $request->session()->get('user_id')) {
+            $repo->state = $input['setstate'];
+            $repo->update();
+        }
 		return Redirect::to('/admin');
 	}
 

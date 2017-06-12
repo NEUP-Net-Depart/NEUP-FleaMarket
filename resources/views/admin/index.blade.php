@@ -101,31 +101,33 @@
 								<td>{{ $repo->id }}</td>
 								<td>{{ $repo->sender_id }}</td>
 								<td>{{ $repo->receiver_id }}</td>
-								@if($repo->state == 0)
-									<td>无</td>
-									<td>未领取</td>
+								@if(!$repo->assignee)
 									<td>
-										<form action="/repo/{{ $repo->id }}/solve" method="POST">
+										<form action="/repo/{{ $repo->id }}/assign" method="POST">
 											{!! csrf_field() !!}
 											<input type="submit" class="button" value="领取">
-											<input type="hidden" name="setstate" value="1">
 										</form>
 									</td>
-								@endif
-								@if($repo->state == 1)
-									<td>{{ $repo->assignee }}</td>
-									<td>已领取未处理</td>
-									<td>
-										<form action="/repo/{{ $repo->id }}/solve" method="POST">
-											{!! csrf_field() !!}
-											<input type="submit" class="button" value="完成">
-											<input type="hidden" name="setstate" value="2">
-										</form>
-									</td>
-								@endif
-								@if($repo->state == 2)
-									<td>{{ $repo->assignee }}</td>
-									<td>已处理</td>
+									<td>未领取</td>
+								@else
+                                    <td>{{ $repo->assignee }}</td>
+                                    @if(!$repo->state)
+                                        @if(session('user_id') == $repo->assignee)
+                                            <td>
+                                                <form action="/repo/{{ $repo->id }}/solve" method="POST">
+                                                    {!! csrf_field() !!}
+                                                    <input type="hidden" name="setstate" value="1">
+                                                    <input type="submit" class="button" value="完成">
+                                                </form>
+                                            </td>
+                                        @else
+                                            <td>已领取未处理</td>
+                                        @endif
+                                    @elseif($repo->state == 1)
+                                        <td>已驳回</td>
+                                    @elseif($repo->state == 2)
+                                        <td>已批准</td>
+                                    @endif
 								@endif
 							</tr>
 						</tbody>

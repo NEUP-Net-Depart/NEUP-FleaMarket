@@ -90,6 +90,7 @@ Route::group(['middleware' => ['web']],function () {
 
 	Route::get('/report/{seller_id}', "UserController@reportSeller")->middleware('auth');
 	Route::post('/sendRepo/{seller_id}', "UserController@sendRepo");
+    Route::post('/repo/{repo_id}/assign', "AdminController@assignReport")->middleware('admin');
 	Route::post('/repo/{repo_id}/solve', "AdminController@solveReport")->middleware('admin');
 
     Route::get('/good', "GoodController@getList");
@@ -184,10 +185,5 @@ Route::group(['middleware' => ['web']],function () {
 		"uses" => "AdminController@delAnnouncement",
 		"middleware" => "admin"
 	]);
-
-//    Route::match(['post','get'],'/announcement',[
-//        "uses" => "AdminController@getAnnouncement",
-//        "middleware" => "auth"
-//    ]);
 
 });

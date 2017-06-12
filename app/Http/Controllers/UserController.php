@@ -282,9 +282,9 @@ class UserController extends Controller
 
 	/*
 	 * 评价type=1  举报type=2
-	 * 发布未领取state=0
-	 * 已领取未处理state=1
-	 * 已处理state=2
+	 * 发布未领取 assignee = false
+	 * 已领取未处理 assignee = true, state=0
+	 * 批准（显示在用户页）state=2 驳回 state=1
 	 */
 	public function sendRepo(Request $request, $seller_id)
 	{

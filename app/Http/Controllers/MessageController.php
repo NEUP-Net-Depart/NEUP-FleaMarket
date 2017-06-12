@@ -75,35 +75,40 @@ class MessageController extends Controller
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 
-    public function sendMessage(SendMessageRequest $request)
+    static public function sendMessageHandle($sender, $receiver, $content)
     {
-        $input = $request->all();
-        if (!User::where('id', $input['receiver'])->count())
+        if (!User::where('id', $receiver)->count())
             return json_encode(['result' => false, 'msg' => 'no such receiver']);
         //Create Message
         $message = new Message;
-        $user_id = $request->session()->get('user_id');
-        $message->content = $input['content'];
+        $user_id = $sender;
+        $message->content = $content;
         $message->sender_id = $user_id;
-        $message->receiver_id = $input['receiver'];
+        $message->receiver_id = $receiver;
         $message->save();
         //Create or Update MessageContact
         //A->B
         $contact = MessageContact::firstOrNew([
             'user_id' => $user_id,
-            'contact_id' => $input['receiver']
+            'contact_id' => $receiver
         ]);
         $contact->last_contact_time = time();
         $contact->save();
         //B->A
         $contact = MessageContact::firstOrNew([
-            'user_id' => $input['receiver'],
+            'user_id' => $receiver,
             'contact_id' => $user_id
         ]);
         $contact->last_contact_time = time();
         $contact->unread_count += 1;
         $contact->save();
         return json_encode(['result' => true, 'msg' => $message]);
+    }
+
+    public function sendMessage(SendMessageRequest $request)
+    {
+        $input = $request->all();
+        return $this->sendMessageHandle($request->session()->get('user_id'), $input['receiver'], $input['content']);
     }
 
     public function sendMessagepage(Request $request)
