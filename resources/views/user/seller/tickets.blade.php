@@ -30,7 +30,21 @@
         <div class="tabs-panel" id="trans">
         </div>
         <div class="tabs-panel" id="tickets">
-            <div id="userinfo-container" class="card-section">
+            <div id="tickets-container" class="card-section">
+                <ul>
+                    @foreach($tickets as $ticket)
+                        <li>
+                            <label>{{ $ticket->created_at }}
+                                @if($ticket->type == 1)
+                                    评价
+                                @else
+                                    举报
+                                @endif
+                            </label>
+                            <p>{{ $ticket->message }}</p>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>

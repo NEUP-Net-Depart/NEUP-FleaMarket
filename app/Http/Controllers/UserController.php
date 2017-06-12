@@ -261,7 +261,11 @@ class UserController extends Controller
         $data = [];
         $page = isset($request->page) ? $request->page : 1;
         $user_id = $request->session()->get('user_id');
+        $tickets = Ticket::where('receiver_id', $user_id)->where('type', 1)
+            ->orWhere('receiver_id', $user_id)->where('type', 2)->where('state', 2)
+            ->orderBy('id', 'desc')->get();
 
+        $data['tickets'] = $tickets;
         return view::make('user.seller.tickets')->with($data);
     }
 
