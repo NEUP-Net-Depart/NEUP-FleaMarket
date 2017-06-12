@@ -108,6 +108,8 @@ class MessageController extends Controller
     public function sendMessage(SendMessageRequest $request)
     {
         $input = $request->all();
+        if(!isset($input['content']))
+            $input['content'] = '';
         return $this->sendMessageHandle($request->session()->get('user_id'), $input['receiver'], $input['content']);
     }
 
