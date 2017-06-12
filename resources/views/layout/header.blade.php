@@ -43,8 +43,8 @@
                   <hr>
 				  @if(Session::get('is_admin') >= 1)
 					<li><a href="/admin">管理中心</a></li>
+                    <hr>
 				  @endif
-                  <hr>
                   <li><a href="/logout">登出</a></li>
                 </ul>
               </li>

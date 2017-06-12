@@ -20,7 +20,7 @@
                     <label>密码<input type="password" id="password" name="password"></label>
                     {!! csrf_field() !!}
                     <input type="submit" class="hollow button" value="登录">
-                    <input type="button" class="hollow button" value="注册" onclick="window.location.href='/register'">
+                    <a href="/sso" style="float: right" class="button small-centered">校卡平台快捷登录</a>
                 </form>
             </div>
         </div>

@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="row card">
-        <div class="medium-4 medium-centered small-8 small-centered columns card-section">
+        <div class="large-4 large-centered medium-6 medium-centered small-12 small-centered columns card-section">
             @if (count($errors) > 0)
                 <label>
                     <span class="form-error is-visible">{!! $errors->first() !!}</span>
@@ -18,7 +18,7 @@
                 {{--<label>用户名<input type="text" name="username" placeholder="必填，3-64"></label>
                 <label>昵称<input type="text" name="nickname" placeholder="<=128"></label>--}}
                 {!! csrf_field() !!}
-                <input type="submit" class="hollow button" value="注册">
+                <input type="submit" class="hollow button" value="注册"> <a href="/sso" style="float: right" class="button small-centered">校园统一身份认证服务平台注册</a>
             </form>
         </div>
     </div>
