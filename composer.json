@@ -9,7 +9,8 @@
         "laravel/framework": "5.4.*",
         "intervention/image": "^2.3",
         "laravel/browser-kit-testing": "^1.0",
-        "satooshi/php-coveralls": "^1.0"
+        "satooshi/php-coveralls": "^1.0",
+        "jasig/phpcas": "^1.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

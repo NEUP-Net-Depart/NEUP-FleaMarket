@@ -29,6 +29,7 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::group(['middleware' => ['authredirect']], function() {
         Route::get('/login', "AuthController@showLogin");
+        Route::get('/sso', "AuthController@cas");
         Route::post('/login', "AuthController@login");
         Route::get('/register', "AuthController@showRegister");
         Route::post('/register', "AuthController@register");
