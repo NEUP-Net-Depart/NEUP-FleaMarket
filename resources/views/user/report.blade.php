@@ -9,8 +9,7 @@
 	{!! csrf_field() !!}
 		<label class="right inline">举报理由：</label>
 		<textarea name="reason"></textarea>
-		<input class="button" type="submit" name="submit1"
-			   value="确认举报"/>
+		<input class="button" type="submit" value="确认举报"/>
 	</form>
 </div>
 

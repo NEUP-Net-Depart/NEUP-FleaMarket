@@ -38,6 +38,9 @@
                   <li><a href="/user/fav">收藏夹</a></li>
                   <li><a href="/user/trans">我的订单</a></li>
                   <li><a href="/user/sell">我的出售</a></li>
+				  @if(Session::get('is_admin') >= 1)
+					<li><a href="/admin">管理中心</a></li>
+				  @endif
                   <hr>
                   <li><a href="/logout">登出</a></li>
                 </ul>

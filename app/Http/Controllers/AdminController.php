@@ -10,6 +10,7 @@ use App\GoodInfo;
 use App\User;
 use App\Announcement;
 use App\Http\Controllers\Controller;
+use App\Ticket;
 
 class AdminController extends Controller
 {
@@ -25,7 +26,8 @@ class AdminController extends Controller
         $data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
         $data['users'] = User::orderby('id', 'asc')->get();
         $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
-        $data['announcements'] = Announcement::orderby('id', 'asc')->get();
+		$data['announcements'] = Announcement::orderby('id', 'dsc')->get();
+		$data['reports'] = Ticket::where('type', '2')->orderby('id', 'dsc')->paginate(16);
         return View::make('admin.index')->with($data);
     }
 
@@ -116,39 +118,51 @@ class AdminController extends Controller
         return Redirect::to('/admin');
     }
 
-    public function sendAnnouncement(Request $request)
-    {
-        return View::make('admin.sendannouncement');
-    }
-
-        /**
+    /**
      * @function AdminController@sendAnnouncement
      * @input Request $request
      * @return View
      * @description admin send annoucement.
      */
 
-     public function checkAnnouncement(Request $request)
+     public function sendAnnouncement(Request $request)
      {
         $input = $request->all();
         $announcement = new Announcement;
         $announcement->title = $input['title'];
         $announcement->content = $input['content'];
-        $announcement->save();
-        return Redirect::to('/sendannouncement');
-     }
+		$announcement->save();
+        return Redirect::to('/admin');
+	 }
 
-             /**
-     * @function AdminController@checkAnnouncement
+	public function delAnnouncement(Request $request, $ann_id)
+	{
+		$ann = Announcement::find($ann_id);
+		$ann->delete();
+		return Redirect::to('/admin');
+	}
+
+	public function solveReport(Request $request, $repo_id)
+	{
+		$input = $request->all();
+		$repo = Ticket::find($repo_id);
+		$repo->state = $input['setstate'];
+		$repo->update();
+		return Redirect::to('/admin');
+	}
+
+    /**
+     * @function AdminController@getAnnouncement
      * @input Request $request
      * @return Redirect
-     * @description a function send announcement
+     * @description a function get announcement
      */
 
-     public function getAnnouncement(Request $request)
+/*     public function getAnnouncement(Request $request)
      {
         $data = [];
         $data['announcements'] = Announcement::Orderby('id','dsc')->get();
         return View::make('admin.announcement')->with($data);
-     }
+	} */
+
 }

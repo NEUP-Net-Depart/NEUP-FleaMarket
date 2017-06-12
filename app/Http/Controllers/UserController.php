@@ -269,7 +269,7 @@ class UserController extends Controller
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
-        $data['trans'] = Transaction::where('buyer_id', $user_id)->orderBy('id', 'desc')->paginate(15);
+        $data['trans'] = Transaction::with('feedback')->where('buyer_id', $user_id)->orderBy('id', 'desc')->paginate(15);
         return view::make('user.buyer')->with($data);
     }
 

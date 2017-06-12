@@ -68,7 +68,8 @@
                                 交易成功待评价
                             </td>
                             <td>
-                                <form action="#">
+                                <form action="/comment/{{ $tran->id }}">
+									{!! csrf_field() !!}
                                     <input type="submit" class="button" value="评价" style="margin: 0;">
                                 </form>
                             </td>

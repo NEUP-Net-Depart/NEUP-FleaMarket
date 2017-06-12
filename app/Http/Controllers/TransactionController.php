@@ -10,6 +10,7 @@ use App\User;
 use App\MessageContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Ticket;
 
 class TransactionController extends Controller
 {
@@ -300,4 +301,27 @@ class TransactionController extends Controller
         $data['buyer'] = $buyer;
         return view('transaction')->with($data);
     }
+
+	public function comment(Request $request, $trans_id)
+	{
+		$data = [];
+		$data['trans_id'] = $trans_id;
+		return view('comment')->with($data);
+	}
+
+	public function sendComment(Request $request, $trans_id)
+	{
+		$input = $request->all();
+		$ticket = new Ticket;
+		$ticket->sender_id = $request->session()->get('user_id');
+		$ticket->trans_id = $trans_id;
+		$trans = Transaction::find($trans_id);
+		$ticket->receiver_id = $trans->seller->id;
+		$ticket->type = 1;
+		$ticket->message = $input['comment'];
+		$ticket->save();
+		$trans->status = 5; 
+		$trans->save();
+		return Redirect::to('/user/trans');
+	}
 }

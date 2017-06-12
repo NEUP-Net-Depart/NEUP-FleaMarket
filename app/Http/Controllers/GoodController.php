@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\UserInfo;
@@ -126,8 +127,7 @@ class GoodController extends Controller
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = GoodInfo::where('id', $good_id)->first();
         if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
-        $data['user'] = UserInfo::where('id', $data['good']->user_id)->first();
-        $data['sell'] = Transaction::where('good_id',$good_id)->first();
+        $data['user'] = User::where('id', $data['good']->user_id)->first();
 		if($request->session()->has('user_id'))
 		{
 			$data['user_id'] = $request->session()->get('user_id');

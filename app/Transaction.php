@@ -22,4 +22,14 @@ class Transaction extends Model
     {
         return $this->good->user_id;
     }
+
+    public function seller()
+    {
+        return $this->belongsTo('App\User', 'seller_id');
+    }
+
+	public function feedback()
+	{
+		return $this->hasOne('App\Ticket', 'trans_id');
+	}
 }

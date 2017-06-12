@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="page-content">
-    <form action="/sendannouncement/send" method="post">
+    <form action="/sendannouncement" method="POST">
         Title:<input type="text" name="title"><br/>
         Content:<textarea name="content" row="15" cols="45"></textarea><br/>
         {!! csrf_field() !!}

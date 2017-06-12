@@ -7,6 +7,7 @@
 <ul class="tabs" data-tabs="w6tmms-tabs" id="editadmin" role="tablist">
         <li class="tabs-title  is-active " role="presentation"><a href="#announcement" aria-selected="true" role="tab" aria-controls="extra" id="extra-label">公告管理</a></li>
         <li class="tabs-title " role="presentation"><a href="#classify" role="tab" aria-controls="account" aria-selected="false" id="account-label">分类管理</a></li>
+		<li class="tabs-title "><a href="#report">查看举报记录</a></li>
 </ul>
 
 <div class="tabs-content" data-tabs-content="editadmin">
@@ -27,18 +28,26 @@
                         <td style="max-width:100px;word-break:break-all;">{{ $announcement->title }}</td>
                         <td style="max-width:500px;word-break:break-all;">{{ $announcement->content }}</td>
                         <td>{{ $announcement->created_at }}</td>
-                        <td><a href="" class="button">删除</a></td>
+						</td>
+						<td>
+							<form action="/delannouncement/{{ $announcement -> id }}" method="POST">
+							{!! csrf_field() !!}
+							{!! method_field('DELETE') !!}
+							<input type="submit" class="button" value="删除">
+							</form>
+						</td>
                       </tr>
                     </tbody>
                     @endforeach
             </table>
 
-            <form>
+            <form action="/sendannouncement" method="POST">
+			{!! csrf_field() !!}
               标题
-              <input type="text" placeholder="Title">
+              <input type="text" placeholder="Title" name="title">
               内容
-              <textarea rows="4" placeholder="Content"></textarea>
-              <a href="" class="button">发布公告</a>
+			  <textarea rows="4" placeholder="Content" name="content"></textarea>
+              <input type="submit" class="button" value="发布公告">
             </form>
         </div>
 
@@ -54,17 +63,77 @@
                   <tbody>
                     <tr>
                       @foreach($cats as $cat)
-                      <td><a href="" class="button">删除</a></td>
+					  <td>
+						<form action="/cat/{{ $cat->id }}/delete" method="POST">
+							{!! csrf_field() !!}
+							{!! method_field('DELETE') !!}
+							<input type="submit" class="button" value="删除">
+						</form>
+					  </td>
                       @endforeach
                     </tr>
                   </tbody>
           </table>
 
-          <form>
+          <form action="/cat/add" method="POST">
+			{!! csrf_field() !!}
             新建分类
-            <input type="text" placeholder="Classify" >
-            <a href="" class="button">提交</a>
+            <input type="text" placeholder="Classify" name="cat_name">
+            <input type="submit" class="button" value="提交">
           </form>
+		</div>
+
+		<div class="tabs-panel" id="report">
+			<div class="card-section">
+				<table>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>举报者ID</th>
+							<th>被举报者ID</th>
+							<th>受理管理员ID</th>
+							<th>状态</th>
+						</tr>
+					</thead>
+						@foreach($reports as $repo)
+						<tbody>
+							<tr>
+								<td>{{ $repo->id }}</td>
+								<td>{{ $repo->sender_id }}</td>
+								<td>{{ $repo->receiver_id }}</td>
+								@if($repo->state == 0)
+									<td>无</td>
+									<td>未领取</td>
+									<td>
+										<form action="/repo/{{ $repo->id }}/solve" method="POST">
+											{!! csrf_field() !!}
+											<input type="submit" class="button" value="领取">
+											<input type="hidden" name="setstate" value="1">
+										</form>
+									</td>
+								@endif
+								@if($repo->state == 1)
+									<td>{{ $repo->assignee }}</td>
+									<td>已领取未处理</td>
+									<td>
+										<form action="/repo/{{ $repo->id }}/solve" method="POST">
+											{!! csrf_field() !!}
+											<input type="submit" class="button" value="完成">
+											<input type="hidden" name="setstate" value="2">
+										</form>
+									</td>
+								@endif
+								@if($repo->state == 2)
+									<td>{{ $repo->assignee }}</td>
+									<td>已处理</td>
+								@endif
+							</tr>
+						</tbody>
+						@endforeach
+				</table>
+			</div>
+			{{ $reports->links() }}
+		</div>
 
 </div>
 @endsection

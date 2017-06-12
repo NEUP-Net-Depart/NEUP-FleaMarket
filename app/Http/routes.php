@@ -76,6 +76,8 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
     Route::get('/user/sell/tickets', "UserController@tickets")->middleware('auth');
     Route::get('/user/trans', "UserController@buyer")->middleware('auth');
+	Route::get('/comment/{trans_id}', "TransactionController@comment")->middleware('auth');
+	Route::post('/sendComment/{trans_id}', "TransactionController@sendComment")->middleware('auth');
 
     Route::get('/user/checkEmail/{token}', "AuthController@checkEmail");
     Route::get('/user/unbindEmail/{token}', "AuthController@unbindEmail");
@@ -88,6 +90,7 @@ Route::group(['middleware' => ['web']],function () {
 
 	Route::get('/report/{seller_id}', "UserController@reportSeller")->middleware('auth');
 	Route::post('/sendRepo/{seller_id}', "UserController@sendRepo");
+	Route::post('/repo/{repo_id}/solve', "AdminController@solveReport")->middleware('admin');
 
     Route::get('/good', "GoodController@getList");
 
@@ -157,6 +160,11 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "admin"
     ]);
 
+	Route::post('/cat/add', [
+		"uses" => "AdminController@addCategory",
+		"middleware" => "admin"
+	]);
+
     Route::post('/cat/{cat_id}/edit', [
         "uses" => "AdminController@editCategory",
         "middleware" => "admin"
@@ -167,18 +175,19 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "admin"
     ]);
 
-    Route::match(['post','get'],'/sendannouncement',[
+    Route::post('/sendannouncement',[
         "uses" => "AdminController@sendAnnouncement",
         "middleware" => "admin"
     ]);
 
-    Route::match(['post','get'],'/sendannouncement/send',[
-        "uses" => "AdminController@checkAnnouncement",
-        "middleware" => "admin"
-    ]);
+	Route::delete('/delannouncement/{ann_id}', [
+		"uses" => "AdminController@delAnnouncement",
+		"middleware" => "admin"
+	]);
 
-    Route::match(['post','get'],'/announcement',[
-        "uses" => "AdminController@getAnnouncement",
-        "middleware" => "auth"
-    ]);
+//    Route::match(['post','get'],'/announcement',[
+//        "uses" => "AdminController@getAnnouncement",
+//        "middleware" => "auth"
+//    ]);
+
 });

@@ -28,7 +28,10 @@
         });
     </script>
 
-    <div class="row">
+	<div class="row">
+		<h3>
+			<a href="/user/{{ $user->id }}">{{ $user->nickname }}</a>
+		</h3>
         <div class="small-12 medium-5 columns block" style="">
             <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" class="thumbnail" src="/good/{{ sha1($good->id) }}/titlepic"/></a>
         </div>
@@ -91,8 +94,10 @@
     </div>
 	
 	<div class="row hide-for-small-only">
-		@if($good->user_id != Session::get('user_id'))
-			<a class="button" href="/report/{{ $good->user_id }}">举报该卖家</a>
+		@if(Session::has('user_id') && $good->user_id!=Session::get('user_id'))
+			<form action="/report/{{ $good->user_id }}" method="GET">
+				<input type="submit" class="button" value="举报该卖家">
+			</form>
 		@endif
 	</div>
 
