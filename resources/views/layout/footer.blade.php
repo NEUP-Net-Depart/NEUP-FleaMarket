@@ -18,3 +18,14 @@
 		<span><center>© {{date("Y")}} 东北大学先锋网</center></span>
 	</div>
 </footer>
+@if( env('APP_DEBUG') )
+<footer class="row">
+	<div class="small-11 small-centered columns">
+		<span>
+			<center>
+				当前处于调试模式<br>  程序版本：{{ config('app.version')       }}&nbsp;&nbsp; 文件版本：<a href="https://github.com/NEUP-Net-Depart/NEUP-FleaMarket/commit/{{ explode(' ', exec('git log --pretty=oneline -1'))[0]   }}">{{ exec('git log --abbrev-commit --pretty=oneline -1')  }}</a>
+			</center>
+		</span>
+	</div>
+</footer>
+@endif
