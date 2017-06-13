@@ -5,12 +5,12 @@
 @section('content')
 
     <div class="row card">
-        <div class="row">
-            <div class="small-offset-11 small-1">
+        <div class="row" style="margin-top: 5px">
+            <div class="small-offset-10 small-2 medium-offset-11 medium-1">
                 <a href="/">跳过</a>
             </div>
         </div>
-        <div class="small-10 small-centered columns card-section">
+        <div class="small-12 medium-10 small-centered columns card-section">
             @if (count($errors) > 0)
                 <label>
                     <span class="form-error is-visible">{!! $errors->first() !!}</span>

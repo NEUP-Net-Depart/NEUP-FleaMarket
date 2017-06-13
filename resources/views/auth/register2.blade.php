@@ -5,8 +5,8 @@
 @section('content')
 
     <div class="row card">
-        <div class="row">
-            <div class="small-offset-11 small-1">
+        <div class="row" style="margin-top: 5px">
+            <div class="small-offset-10 small-2 medium-offset-11 medium-1">
                 <a href="/register/3">跳过</a>
             </div>
         </div>
