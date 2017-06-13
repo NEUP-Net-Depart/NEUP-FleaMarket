@@ -41,15 +41,13 @@
                             <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" style="width:100%"/>
                         </div>
                         <div class="panel-body">
-                            <div>{{ $good->good_name }}</div>
-                                <div class="text-warning"><b>￥{{ $good->price }}</b></div>
-                                    @if($good->count==0)
-                                        <div class="text-danger">无库存QAQ</div>
-                                    @else
-                                        <div>库存：{{ $good->count }}</div>
-                                    @endif
-                                </div>
-                            </div>
+                            <div style="word-break:break-all">{{ $good->good_name }}</div>
+                            <div class="text-warning"><b>￥{{ $good->price }}</b></div>
+                            @if($good->count==0)
+                                <div class="text-danger">无库存QAQ</div>
+                            @else
+                                <div>库存：{{ $good->count }}</div>
+                            @endif
                         </div>
                     </div>
                 </a>

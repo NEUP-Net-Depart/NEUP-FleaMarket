@@ -6,7 +6,7 @@
     <div class="hidden-xs col-sm-6 thumbnail">
         <img src="/img/loginpic.jpg"/>
     </div>
-    <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-1 panel panel-default">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-1 panel panel-default">
         <div class="panel-body">
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
@@ -29,6 +29,9 @@
                <input type="button" class="btn btn-success" value="注册" onclick="window.location.href='/register'">
             </form>
         </div>
+    </div>
+    <div class="visible-xs-block col-xs-12 thumbnail">
+        <img src="/img/loginpic.jpg"/>
     </div>
 
 @endsection

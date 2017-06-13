@@ -4,15 +4,16 @@
 
 @section('content')
 
-<ul class="tabs" data-tabs="w6tmms-tabs" id="editadmin" role="tablist">
-        <li class="tabs-title  is-active " role="presentation"><a href="#announcement" aria-selected="true" role="tab" aria-controls="extra" id="extra-label">公告管理</a></li>
-        <li class="tabs-title " role="presentation"><a href="#classify" role="tab" aria-controls="account" aria-selected="false" id="account-label">分类管理</a></li>
-		<li class="tabs-title "><a href="#report">查看举报记录</a></li>
+<ul class="nav nav-tabs" role="tab-list">
+        <li role="presentation" class="active"><a href="#announcement" role="tab" data-toggle="tab" aria-controls="announcement">公告管理</a></li>
+        <li role="presentation"><a href="#classify" role="tab" data-toggle="tab" aria-controls="classify">分类管理</a></li>
+		<li role="presentation"><a href="#report" role="tab" data-toggle="tab" aria-controls="report">查看举报记录</a></li>
 </ul>
 
-<div class="tabs-content" data-tabs-content="editadmin">
-        <div class="tabs-panel" id="announcement" role="tabpanel" aria-hidden="false" aria-labelledby="extra-label">
-            <table>
+<div class="panel panel-default">
+    <div class="tab-content panel-body">
+        <div role="tabpanel" class="tab-pane active" id="announcement">
+            <table class="table table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -33,7 +34,7 @@
 							<form action="/delannouncement/{{ $announcement -> id }}" method="POST">
 							{!! csrf_field() !!}
 							{!! method_field('DELETE') !!}
-							<input type="submit" class="button" value="删除">
+							<input type="submit" class="btn btn-primary" value="删除">
 							</form>
 						</td>
                       </tr>
@@ -44,15 +45,15 @@
             <form action="/sendannouncement" method="POST">
 			{!! csrf_field() !!}
               标题
-              <input type="text" placeholder="Title" name="title">
+              <input type="text" placeholder="Title" name="title" class="form-control">
               内容
-			  <textarea rows="4" placeholder="Content" name="content"></textarea>
-              <input type="submit" class="button" value="发布公告">
+			  <textarea rows="4" placeholder="Content" name="content" class="form-control"></textarea>
+              <input type="submit" class="btn btn-primary" value="发布公告">
             </form>
         </div>
 
-        <div class="tabs-panel" id="classify" role="tabpanel" aria-hidden="false" aria-labelledby="extra-label">
-          <table>
+        <div class="tab-pane" id="classify" role="tabpanel">
+          <table class="table table-hover">
             <thead>
               <tr>
                   @foreach($cats as $cat)
@@ -67,7 +68,7 @@
 						<form action="/cat/{{ $cat->id }}/delete" method="POST">
 							{!! csrf_field() !!}
 							{!! method_field('DELETE') !!}
-							<input type="submit" class="button" value="删除">
+							<input type="submit" class="btn btn-primary" value="删除">
 						</form>
 					  </td>
                       @endforeach
@@ -78,14 +79,13 @@
           <form action="/cat/add" method="POST">
 			{!! csrf_field() !!}
             新建分类
-            <input type="text" placeholder="Classify" name="cat_name">
-            <input type="submit" class="button" value="提交">
+            <input type="text" placeholder="Classify" name="cat_name" class="form-control">
+            <input type="submit" class="btn btn-primary" value="提交">
           </form>
 		</div>
 
-		<div class="tabs-panel" id="report">
-			<div class="card-section">
-				<table>
+		<div class="tab-pane" id="report" role="tabpanel">
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>#</th>
@@ -105,7 +105,7 @@
 									<td>
 										<form action="/repo/{{ $repo->id }}/assign" method="POST">
 											{!! csrf_field() !!}
-											<input type="submit" class="button" value="领取">
+											<input type="submit" class="btn btn-primary" value="领取">
 										</form>
 									</td>
 									<td>未领取</td>
@@ -117,7 +117,7 @@
                                                 <form action="/repo/{{ $repo->id }}/solve" method="POST">
                                                     {!! csrf_field() !!}
                                                     <input type="hidden" name="setstate" value="2">
-                                                    <input type="submit" class="button" value="完成">
+                                                    <input type="submit" class="btn btn-primary" value="完成">
                                                 </form>
                                             </td>
                                         @else
@@ -133,7 +133,6 @@
 						</tbody>
 						@endforeach
 				</table>
-			</div>
 			{{ $reports->links() }}
 		</div>
 

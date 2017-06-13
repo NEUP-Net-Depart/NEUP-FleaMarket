@@ -73,7 +73,7 @@ a:hover, a:focus {
     color: #ffffff !important;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 749px) {
     .navbar a {
         color: #eeeeee !important;
     }
@@ -98,7 +98,12 @@ a:hover, a:focus {
 .navbar-search {
     padding: 0;
     margin: 0;
-    max-width: 250px;
+}
+
+@media (min-width: 750px) {
+    .navbar-search {
+        max-width: 250px;
+    }
 }
 
 .page-content {
@@ -121,4 +126,8 @@ a:hover, a:focus {
 
 .titlepic {
     width: 100%;
+}
+
+.header-icon-bar {
+    background-color: #eeeeee !important;
 }

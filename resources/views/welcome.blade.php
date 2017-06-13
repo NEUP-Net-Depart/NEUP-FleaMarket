@@ -58,7 +58,20 @@
             <div class="panel-heading"><h4>公告</h4></div>
             <div class="list-group">
             @foreach($announces as $announce)
-                <a href="/announcement/{{ $announce->id }}" class="list-group-item">{{ $announce->title }}</a>
+                <a href="#ann{{$announce->id}}" class="list-group-item" data-toggle="modal">{{ $announce->title }}</a>
+                <div class="modal fade" id="ann{{$announce->id}}" tabindex="-1" role="dialog" aria-labelledby="ann{{$announce->id}}Label">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{{ $announce->title }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                {{$announce->content}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endforeach
             </div>
         </div>
