@@ -54,6 +54,11 @@
         <div><!-- 放tag 和更多图片缩略图 --></div>
         <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
         <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div><br/>
+        @if (count($errors) > 0)
+            <label>
+                <span class="form-error is-visible">{!! $errors->first() !!}</span>
+            </label>
+        @endif
         @if(($good->user_id) != Session::get('user_id'))
             <form action="/good/{{ $good->id }}/buy" method="post">
                 <div class="input-group">
