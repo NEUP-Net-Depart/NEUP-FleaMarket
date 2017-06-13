@@ -58,6 +58,18 @@ class AuthController extends Controller
         }
         else
         {
+            if ($user->baned) {
+                // log start
+                $log = new AuthLog();
+                $log->user_id = $user->id;
+                $log->ip = $request->ip();
+                $log->event = "cas_login_banned";
+                $log->save();
+                // log end
+                //
+                return Redirect::back()->withInput()->withErrors('你的账号被封禁了，请联系管理员。');
+            }
+
             // log start
             $log = new AuthLog();
             $log->user_id = $user->id;
@@ -114,7 +126,7 @@ class AuthController extends Controller
                 $log->save();
                 // log end
                 //
-                return Redirect::back()->withInput()->withErrors('You\'re banned!');
+                return Redirect::back()->withInput()->withErrors('你的账号被封禁了，请联系管理员。');
             }
 
             //Successfully logged in
