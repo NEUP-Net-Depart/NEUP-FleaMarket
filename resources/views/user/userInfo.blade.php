@@ -13,7 +13,7 @@
 
                 @foreach($userinfos as $userinfo)
                     <tr>
-                        <td>{{ $userinfo->realname }}</td>
+                        <td>{{ isset($user->realname) ? $user->realname : "" }}</td>
                         <td>{{ isset($userinfo->tel_num) ? $userinfo->tel_num : "" }}</td>
                         <td>{{ isset($userinfo->QQ) ? $userinfo->QQ : "" }}</td>
                         <td>{{ isset($userinfo->wechat) ? $userinfo->wechat : "" }}</td>

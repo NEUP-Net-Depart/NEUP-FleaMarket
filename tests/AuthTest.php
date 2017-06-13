@@ -120,7 +120,6 @@ class AuthTest extends BrowserKitTestCase
         $this->visit('logout');
         $userinfo = new UserInfo();
         $userinfo->user_id = 1;
-        $userinfo->realname = "unreal";
         $userinfo->tel_num = "12323232323";
         $userinfo->save();
         $this->visit('/login')
