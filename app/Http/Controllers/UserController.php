@@ -312,12 +312,14 @@ class UserController extends Controller
 		$user->banedtime = $input['count'];
 		$user->banedstart = time();
 		$user->update();
+
 		$event = new AdminEvent;
 		$event->admin_id = $request->session()->get('user_id');
 		$event->target_user = $user_id;
 		$event->event = "ban";
 		$event->message = $input['reason'];
 		$event->save();
+
 		return Redirect::to('/user/'.$user_id);
 	}
 

@@ -70,10 +70,11 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/message/getNewMessageContact', "MessageController@getNewMessageContact");
         Route::get('/message/getHistoryMessage', "MessageController@getHistoryMessage");
         Route::get('/message/getNewMessage', "MessageController@getNewMessage");
-        Route::get('/message/startConversation/{receiver}', "MessageController@startConversation");
-		Route::get('/user/{user_id}/banpage', "UserController@banPage");
-		Route::post('/setBan/{user_id}', "UserController@setBan");
-    });
+		Route::get('/message/startConversation/{receiver}', "MessageController@startConversation");
+	});
+
+	Route::get('/user/{user_id}/banpage', "UserController@banPage")->middleware('admin');
+	Route::post('/setBan/{user_id}', "UserController@setBan")->middleware('admin');
 
     Route::get('/user/sell', "UserController@mygoods")->middleware('auth');
     Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
@@ -104,6 +105,7 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/good/{good_id}', "GoodController@getInfo");
     Route::get('/good/{good_id}/edit', "GoodController@showEditGood")->middleware('auth');
     Route::post('/good/{good_id}/edit', "GoodController@editGood")->middleware('auth');
+	Route::post('/good/{good_id}/ban', "GoodController@banGood")->middleware('admin');
 
     Route::delete('/good/{good_id}/delete', "GoodController@deleteGood")->middleware('auth');
 
