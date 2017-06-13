@@ -116,8 +116,8 @@
                                             <td>
                                                 <form action="/repo/{{ $repo->id }}/solve" method="POST">
                                                     {!! csrf_field() !!}
-                                                    <input type="hidden" name="setstate" value="2">
-                                                    <input type="submit" class="button" value="完成">
+                                                    <input type="hidden" name="setstate" value="2" />
+                                                    <input type="submit" class="button" value="完成" />
                                                 </form>
                                             </td>
                                         @else
