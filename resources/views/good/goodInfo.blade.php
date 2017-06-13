@@ -65,7 +65,7 @@
                 </div>
             </form>
         @endif
-        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') >= 1)
+        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
             <form action="/good/{{ $good->id }}/edit" style="display:inline-block;">
                 <input type="submit" class="btn btn-primary" value="修改">
             </form>

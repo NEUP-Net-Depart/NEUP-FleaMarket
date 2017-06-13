@@ -7,14 +7,14 @@ $(".good").mouseleave(function(){
     $("img",this).css("filter","brightness(100%)");
 });
 function editfav(){
-    $(".cb").attr("style","visibility:show;width:30px;height:30px;");
+    $(".cb").attr("style","visibility:show;width:25px;height:25px;z-index:203;position:absolute;top:0;left:5px");
     $(".cb").removeAttr("checked");
     $("#editbutton").attr("onclick","back()");
     $("#editbutton").text("返回");
     $("#del_submit").show();
 }
 function back(){
-    $(".cb").attr("style","visibility:hidden;width:30px;height:30px;");
+    $(".cb").attr("style","visibility:hidden;width:25px;height:25px;z-index:203");
     $("#editbutton").attr("checked",'true');
     $("#editbutton").text("编辑收藏夹");
     $("#editbutton").attr("onclick","editfav()");

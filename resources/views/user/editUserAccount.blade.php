@@ -55,6 +55,6 @@
             <label for="newPassword_confirmation">确认新密码</label>
             <input type="password" name="newPassword_confirmation" id="newPassword_confirmation" class="form-control" placeholder="必填" required>
         </div>
-        <input type="submit" class="btn btn-primary" value="保存">
+        <input type="submit" class="btn btn-primary" name="password_submit" value="保存">
     </form>
 </div>
