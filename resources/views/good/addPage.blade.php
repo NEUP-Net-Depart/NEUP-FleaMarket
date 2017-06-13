@@ -11,9 +11,8 @@
 @endsection
 
 @section('content')
-
-    <div class="page-content">
-        <div class="large-8 large-offset-2 small-10 small-offset-1 columns">
+    <div class="columns small-12 medium-8 medium-offset-2 large-6 large-offset-3">
+        <div class="row">
             @if (count($errors) > 0)
                 <label>
                     <span class="form-error is-visible">{!! $errors->first() !!}</span>
@@ -21,18 +20,18 @@
             @endif
             <form action="/good/add" method="POST" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="small-2 columns">
+                    <div class="small-3 columns">
                         <label class="right inline">商品名称:</label>
                     </div>
-                    <div class="small-10 columns">
+                    <div class="small-9 columns">
                         <input type="text" name="good_name" value="{{old('good_name')}}" placeholder="商品名称">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-2 columns">
+                    <div class="small-3 columns">
                         <label class="right inline">商品分类:</label>
                     </div>
-                    <div class="small-10 columns">
+                    <div class="small-9 columns">
                         <select name="cat_id">
                             @foreach($cats as $cat)
                                 <option value="{{$cat->id}}" {{old('cat_id') == $cat->id ? "selected" : ""}}>{{$cat->cat_name}}</option>
@@ -41,26 +40,26 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-2 columns">
+                    <div class="small-3 columns">
                         <label class="right inline">商品描述:</label>
                     </div>
-                    <div class="small-10 columns">
+                    <div class="small-9 columns">
                         <textarea name="description" placeholder="商品描述（此处应支持HTML）">{{old('description')}}</textarea>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-2 columns">
+                    <div class="small-3 columns">
                         <label class="right inline">商品价格:</label>
                     </div>
-                    <div class="small-10 columns">
+                    <div class="small-9 columns">
                         <input type="text" name="price" value="{{old('price')}}" placeholder="商品价格">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-2 columns">
+                    <div class="small-3 columns">
                         <label class="right inline">商品类型:</label>
                     </div>
-                    <div class="small-10 columns">
+                    <div class="small-9 columns">
                         <select name="type">
                             <option value="0" {{old('type') == '0' ? "selected" : ""}}>普通商品</option>
                             <option value="1" {{old('type') == '1' ? "selected" : ""}}>拍卖商品</option>
@@ -68,10 +67,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-2 columns">
+                    <div class="small-3 columns">
                         <label class="right inline">商品数量:</label>
                     </div>
-                    <div class="small-10 columns">
+                    <div class="small-9 columns">
                         <input type="number" name="count" value="{{old('count')}}" placeholder="库存">
                     </div>
                 </div>
@@ -90,10 +89,10 @@
                 </div>
                 --}}
                 <div class="row">
-                    <div class="small-4 columns">
+                    <div class="small-3 columns">
                         <label for="goodTitleUpload" class="button right inline">上传封面</label>
                     </div>
-                    <div id="preview" class="small-8 columns"></div>
+                    <div id="preview" class="small-9 columns"></div>
                     <div style="display: none">
                         <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic"
                                onchange="preview(this)"/>
