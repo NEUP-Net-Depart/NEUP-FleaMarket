@@ -26,12 +26,14 @@ class StoreUserInfoRequest extends Request
         if($this->method()=='GET') return [];
         return [
             'realname'=>'required',
+            'tel_num'=>'required',
         ];
     }
 
     public function messages(){
         return [
             'realname.required' => '真实姓名不可为空！',
+            'tel_num.required' => '手机号不可为空！',
         ];
     }
 }

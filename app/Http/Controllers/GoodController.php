@@ -159,6 +159,12 @@ class GoodController extends Controller
 
     public function addGood(AddGoodRequest $request)
     {
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
+        if(!$user || $user->baned)
+            return Redirect::back()->withInput()->withErrors('您的账号被封禁，请联系系统管理员');
+        if(UserInfo::where('user_id', $user_id)->count() == 0)
+            return Redirect::back()->withInput()->withErrors('你必须添加联系方式才能出售');
         $input = $request->all();
         $good = new GoodInfo;
         $good->good_name = $input['good_name'];
@@ -167,7 +173,7 @@ class GoodController extends Controller
         $good->price = $input['price'];
         $good->type = $input['type'];
         $good->count = $input['count'];
-        $good->user_id = $request->session()->get('user_id');
+        $good->user_id = $user_id;
         $good->baned = '0';
         $good->save();
 
