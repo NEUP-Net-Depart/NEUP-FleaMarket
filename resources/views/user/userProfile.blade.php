@@ -28,7 +28,7 @@
                        onclick="window.location.href='/message/startConversation/{{ $user->id }}'"/>
             @if(Session::has('user_id') && Session::get('user_id')!=$user->id)
                 <form action="/report/{{ $user->id }}" method="GET">
-                    <input type="submit" class="button" value="举报该卖家">
+                    <input type="submit" class="button" value="举报该用户">
                 </form>
             @endif
             </p>

@@ -92,7 +92,7 @@
 							<th>举报者ID</th>
 							<th>被举报者ID</th>
 							<th>受理管理员ID</th>
-							<th>状态</th>
+							<th colspan="2">状态</th>
 						</tr>
 					</thead>
 						@foreach($reports as $repo)
@@ -116,8 +116,15 @@
                                             <td>
                                                 <form action="/repo/{{ $repo->id }}/solve" method="POST">
                                                     {!! csrf_field() !!}
-                                                    <input type="hidden" name="setstate" value="2" />
-                                                    <input type="submit" class="button" value="完成" />
+                                                    <input type="hidden" name="setstate" value="2">
+                                                    <input type="submit" class="button" value="批准显示">
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form action="/repo/{{ $repo->id }}/solve" method="POST">
+                                                    {!! csrf_field() !!}
+                                                    <input type="hidden" name="setstate" value="1">
+                                                    <input type="submit" class="button" value="驳回此条">
                                                 </form>
                                             </td>
                                         @else

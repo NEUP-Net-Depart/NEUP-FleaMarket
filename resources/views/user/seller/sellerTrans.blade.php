@@ -28,6 +28,7 @@
         <div class="tabs-panel" id="goods">
         </div>
         <div class="tabs-panel" id="trans">
+            <label>友情提示：如果需要取消订单，请务必和对方沟通说明理由。恶意取消订单的行为可以举报。</label>
             <div class="card-section">
                 <div class="row table-responsive">
                     <table class="table">
@@ -45,7 +46,7 @@
                                 <td><a href="/good/{{$tran->good_id}}"
                                        onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
                                        onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
-                                <td>{{ $tran->buyer->nickname ? $tran->buyer->nickname : "无昵称用户" }}</td>
+                                <td><a href="/user/{{ $tran->buyer_id }}">{{ $tran->buyer->nickname ? $tran->buyer->nickname : "无昵称用户" }}</a></td>
                                 <td>{{ $tran->number }}</td>
                                 @if($tran->status == 0)
                                     <td>
