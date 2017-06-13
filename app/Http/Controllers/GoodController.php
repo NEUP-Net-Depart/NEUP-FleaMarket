@@ -357,13 +357,14 @@ class GoodController extends Controller
 		$good->update();
 
 		$admin_id = $request->session()->get('user_id');
-		MessageController::sendMessageHandle($user_id, $admin_id, "【系统消息】您好！您的商品（编号：".$good_id."）由于不符合有关规定已被管理员（ID：".$admin_id."）下架。请在此消息下询问具体细节。");
+		MessageController::sendMessageHandle($admin_id, $good->user_id, "【系统消息】您好！您的商品（编号：".$good_id."）由于不符合有关规定已被管理员（ID：".$admin_id."）下架。请在此消息下询问具体细节。");
 
 		$trans = Transaction::where('good_id', $good_id)->get();
 		foreach($trans as $tran)
 		{
 			$tran->status = 0;
-			MessageController::sendMessageHandle($tran->buyer_id, 0, "【系统消息】您好！由于该商品不符合有关规定被下架，您的订单（编号：".$tran->id."）已被取消。非常抱歉。");
+			MessageController::sendMessageHandle(0, $tran->buyer_id, "【系统消息】您好！由于该商品不符合有关规定被下架，您的订单（编号：".$tran->id."）已被取消。非常抱歉。");
+			$tran->update();
 		}
 
 		 return Redirect::to('/good/'.$good_id);
