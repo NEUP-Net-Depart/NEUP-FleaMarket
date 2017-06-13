@@ -214,18 +214,12 @@ class UserController extends Controller
         return Redirect::to('/user/fav/edit');
     }
 
-    public function getSimpleAvatar(Request $request, $user_id)
+    public function getAvatar(Request $request, $user_id, $width = 600, $height = 600)
     {
-        if (!Storage::exists('avatar/' . $user_id))
-            $file = Storage::get('public/avatar.jpg');
-        else
-            $file = Storage::get('avatar/' . $user_id);
-        $image = Image::make($file)->resize(600, 600);
-        return $image->response('jpg');
-    }
-
-    public function getAvatar(Request $request, $user_id, $width, $height)
-    {
+        if($width > 1920)
+            $width = 1920;
+        if($height > 1080)
+            $height = 1080;
         if (!Storage::exists('avatar/' . $user_id))
             $file = Storage::get('public/avatar.jpg');
         else

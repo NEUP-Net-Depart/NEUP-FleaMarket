@@ -329,15 +329,12 @@ class GoodController extends Controller
 		return json_encode(['msg' => 'success']);
 	}
 
-    public function getSimpleTitlePic(Request $request, $good_id)
+    public function getTitlePic(Request $request, $good_id, $width = 800, $height = 450)
     {
-        $file = Storage::get('good/titlepic/'.$good_id);
-        $image = Image::make($file)->resize(800, 450);
-        return $image->response('jpg');
-    }
-
-    public function getTitlePic(Request $request, $good_id, $width, $height)
-    {
+        if($width > 1920)
+            $width = 1920;
+        if($height > 1080)
+            $height = 1080;
         $file = Storage::get('good/titlepic/'.$good_id);
         $image = Image::make($file)->resize($width, $height);
         return $image->response('jpg');
