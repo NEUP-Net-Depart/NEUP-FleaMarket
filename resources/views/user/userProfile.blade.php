@@ -27,9 +27,16 @@
                 <input type="button" value="和他联系" class="button"
                        onclick="window.location.href='/message/startConversation/{{ $user->id }}'"/>
             @if(Session::has('user_id') && Session::get('user_id')!=$user->id)
-                <form action="/report/{{ $user->id }}" method="GET">
-                    <input type="submit" class="button" value="举报该用户">
-                </form>
+                    @if(Session::get('user_id') == $user->id)
+                    @elseif(Session::get('is_admin') >= 1)
+                        <form action="/user/{{ $user->id }}/banpage" method="GET">
+                            <input type="submit" class="button" value="封禁该用户">
+                        </form>
+                    @else
+                        <form action="/report/{{ $user->id }}" method="GET">
+                            <input type="submit" class="button" value="举报该用户">
+                        </form>
+                    @endif
             @endif
             </p>
         </div>
