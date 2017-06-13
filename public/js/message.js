@@ -54,6 +54,7 @@ Vue.component('contact-list', {
                 })
                 .catch(function (error) {
                     vm.errorMessage = "服务器连接失败，请检查网络QAQ";
+                    vm.$emit('network-error');
                 })
         },
         setTop: function (tops) {
@@ -74,6 +75,7 @@ Vue.component('contact-list', {
                 })
                 .catch(function (error) {
                     vm.errorMessage = "服务器连接失败，请检查网络QAQ";
+                    vm.$emit('network-error');
                 })
         },
         loadDialog: function (index) {
@@ -141,11 +143,20 @@ Vue.component('message-dialog', {
                         vm.current_page = response.data.current_page;
                         vm.last_page = response.data.last_page;
                         for (var i in response.data.data)
+                        {
                             vm.messages.unshift(response.data.data[i]);
+                            if (parseInt(i) + 1 < response.data.data.length &&
+                                response.data.data[i].is_read !== response.data.data[parseInt(i) + 1].is_read)
+                                vm.messages.unshift({
+                                    id: -1,
+                                    type: 'history-info'
+                                });
+                        }
                         vm.isHidden = false;
                     })
                     .catch(function (error) {
                         vm.errorMessage = "服务器连接失败，请检查网络QAQ";
+                        vm.$emit('network-error');
                     })
             }
             else {
@@ -153,11 +164,22 @@ Vue.component('message-dialog', {
                     .then(function (response) {
                         vm.current_page = response.data.current_page;
                         vm.last_page = response.data.last_page;
-                        vm.messages = response.data.data.reverse();
+                        vm.messages = [];
+                        for (var i in response.data.data)
+                        {
+                            vm.messages.unshift(response.data.data[i]);
+                            if (parseInt(i) + 1 < response.data.data.length &&
+                                response.data.data[i].is_read !== response.data.data[parseInt(i) + 1].is_read)
+                                vm.messages.unshift({
+                                    id: -1,
+                                    type: 'history-info'
+                                });
+                        }
                         vm.isHidden = false;
                     })
                     .catch(function (error) {
                         vm.errorMessage = "服务器连接失败，请检查网络QAQ";
+                        vm.$emit('network-error');
                     })
                 this.contact_id = contact_id;
             }
@@ -179,7 +201,8 @@ Vue.component('message-dialog', {
                     vm.$emit('top-contact', vm.contact_id);
                 })
                 .catch(function (error) {
-                    vm.errorMessage = error;
+                    vm.errorMessage = "服务器连接失败，请检查网络QAQ";
+                    vm.$emit('network-error');
                 })
         },
         getNewMessage: function () {
@@ -196,12 +219,12 @@ Vue.component('message-dialog', {
                     })
                     .catch(function (error) {
                         vm.errorMessage = "服务器连接失败，请检查网络QAQ";
+                        vm.$emit('network-error');
                     })
             }
         },
         scrollToButtom: function () {
             var c = $('#message-container');
-            //console.log(c[0].scrollHeight);
             c.scrollTop(c[0].scrollHeight + 1000);
         }
     }
@@ -210,11 +233,14 @@ Vue.component('message-dialog', {
 // 创建根实例
 var Message = new Vue({
     el: '#message',
+    data: {
+        timer: null
+    },
     methods: {
         startLoop: function () {
             var vm = this;
             vm.loadContact();
-            window.setInterval(function() {
+            vm.timer = window.setInterval(function() {
                 vm.refreshContact();
                 vm.refreshMessage();
             }, 5000);
@@ -236,6 +262,10 @@ var Message = new Vue({
         },
         topContactCallback: function (contact_id) {
             this.$refs.contactList.$emit('topContactHandler', contact_id)
+        },
+        stopTimerCallback: function () {
+            var vm = this;
+            vm.timer = window.clearInterval(vm.timer);
         }
     }
 });

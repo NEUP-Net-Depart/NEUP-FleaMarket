@@ -30,16 +30,15 @@ class MessageController extends Controller
     {
         $user_id = $request->session()->get('user_id');
         $contact_id = $request->contact_id;
+        $messages = Message::where('receiver_id', $user_id)->where('sender_id', $contact_id)
+            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
+            ->orderBy('id', 'desc')
+            ->paginate(20);
         Message::where('receiver_id', $user_id)->where('sender_id', $contact_id)
             ->update(['is_read' => true]);
         MessageContact::where('user_id', $user_id)
             ->where('contact_id', $contact_id)
             ->update(['unread_count' => 0]);
-        $messages = Message::where('receiver_id', $user_id)->where('sender_id', $contact_id)
-            ->orWhere('receiver_id', $contact_id)->where('sender_id', $user_id)
-            ->orderBy('id', 'desc')
-            ->paginate(20);
-
         return json_encode($messages);
     }
 
@@ -124,7 +123,7 @@ class MessageController extends Controller
         $contacts = MessageContact::where('user_id', $user_id)
             ->orderBy('last_contact_time', 'desc')
             ->with(['contact' => function ($query) {
-                $query->select('id', 'nickname');
+                $query->select('id', 'nickname', 'baned');
             }])
             ->paginate(10);
         return json_encode($contacts);
@@ -137,7 +136,7 @@ class MessageController extends Controller
             ->where('unread_count', '>', 0)
             ->orderBy('last_contact_time', 'desc')
             ->with(['contact' => function ($query) {
-                $query->select('id', 'nickname');
+                $query->select('id', 'nickname', 'baned');
             }])
             ->get();
         return json_encode($contacts);
