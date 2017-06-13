@@ -77,11 +77,11 @@
                                     <td>
                                         <a href="/trans/{{ $tran->id }}">查看交易</a>
                                     </td>
-                                    <td>
+                                    {{--<td>
                                         <form action="#">
                                             <input type="submit" class="button" value="修改订单" style="margin: 0;">
                                         </form>
-                                    </td>
+                                    </td>--}}
                                     <td>
                                         <form method="POST" action="/trans/{{ $tran->id }}/confirm">
                                             {!! csrf_field() !!}

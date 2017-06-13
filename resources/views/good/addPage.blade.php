@@ -44,7 +44,7 @@
                         <label class="right inline">商品描述:</label>
                     </div>
                     <div class="small-9 columns">
-                        <textarea name="description" placeholder="商品描述（此处应支持HTML）">{{old('description')}}</textarea>
+                        <textarea name="description" placeholder="商品描述">{{old('description')}}</textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -55,12 +55,12 @@
                         <input type="text" name="price" value="{{old('price')}}" placeholder="商品价格">
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="display: none">
                     <div class="small-3 columns">
                         <label class="right inline">商品类型:</label>
                     </div>
                     <div class="small-9 columns">
-                        <select name="type">
+                        <select name="type" value="0">
                             <option value="0" {{old('type') == '0' ? "selected" : ""}}>普通商品</option>
                             <option value="1" {{old('type') == '1' ? "selected" : ""}}>拍卖商品</option>
                         </select>

@@ -54,7 +54,7 @@
                             <label class="right inline">商品描述:</label>
                         </div>
                         <div class="small-9 columns">
-                            <textarea name="description" placeholder="商品描述（此处应支持HTML）">{{count($errors) ? old('description') : $good->description}}</textarea>
+                            <textarea name="description" placeholder="商品描述">{{count($errors) ? old('description') : $good->description}}</textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -65,7 +65,7 @@
                             <input type="text" name="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格">
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="display: none;">
                         <div class="small-3 columns">
                             <label class="right inline">商品类型:</label>
                         </div>
