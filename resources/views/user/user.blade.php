@@ -30,6 +30,7 @@
             <div class="card-section">
                 <form action="/user" method="POST" enctype="multipart/form-data">
                     @include('user.editUserExtra')
+                    <br/><input class="btn btn-primary" type="submit" name="submit" value="保存">
                 </form>
             </div>
         </div>

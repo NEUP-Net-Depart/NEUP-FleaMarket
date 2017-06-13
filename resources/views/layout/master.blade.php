@@ -17,7 +17,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="/js/jquery.slides.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <title>@yield('title') - 先锋市场</title>
+    <title>@yield('title') - 先锋市场 Powered by NEUPioneer</title>
 </head>
 <body>
 @include('layout.header')

@@ -25,8 +25,12 @@
                     <input type="password" name="password" id="password" class="form-control" placeholder="密码">
                 </div>
                 {!! csrf_field() !!}
-                <input type="submit" class="btn btn-primary" value="登录">
-               <input type="button" class="btn btn-success" value="注册" onclick="window.location.href='/register'">
+                <div class="pull-left">
+                    <input type="submit" class="btn btn-primary" value="登录">
+                </div>
+                <div class="pull-right">
+                    <input type="button" class="btn btn-success" value="注册" onclick="window.location.href='/register'">
+                </div>
             </form>
         </div>
     </div>

@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', "首页")
+<title>先锋市场 Powered by NEUPioneer</title>
 
 @section('asset')
     <style>

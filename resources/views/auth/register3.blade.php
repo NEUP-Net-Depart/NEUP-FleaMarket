@@ -1,25 +1,34 @@
 @extends('layout.master')
 
-@section('title', "添加联系方式")
+@section('title', "即将打开新的大门")
 
 @section('content')
 
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
-            <div class="col-xs-12">
-                <a href="/" class="pull-right">完成</a>
-            </div>
-            @if (count($errors) > 0)
-                <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    {!! $errors->first() !!}
+                <div class="row">
+                    <div class="bs-callout bs-callout-info" role="alert">
+                        如果你希望在先锋市场出售物品，你还<b>需要</b>添加至少一种联系方式。其他用户会在与你开始某件商品的交易时将可以看到你的联系方式。
+                    </div>
                 </div>
-            @endif
-            <div id="userinfo-container">
-                @include('user.userInfo')
-            </div>
+                <div class="row">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="width: 67%;">
+                            <span class="sr-only">67% Complete</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="userinfo-container">
+                        @include('user.userInfo')
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="pull-right">
+                        <a href="/" class="pull-right btn btn-default">完成</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

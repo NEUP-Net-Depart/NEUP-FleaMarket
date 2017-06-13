@@ -1,4 +1,10 @@
-<div class="col-xs-12 col-sm-4">
+    @if (count($errors) > 0)
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {!! $errors->first() !!}
+        </div>
+    @endif
     @if(isset($user->nickname))
         <div class="form-group">
             <label for="nickname">昵称</label>
@@ -11,8 +17,7 @@
         </div>
     @endif
     {!! csrf_field() !!}
-    <br/><input type="submit" class="btn btn-primary" value="保存"><br/><br/>
-    <label for="avatarUpload" class="btn btn-primary">上传头像</label>
+    <label for="avatarUpload" class="btn btn-primary">选择头像</label>
     <div id="preview"></div>
     <div style="display: none">
         <input type="file" id="avatarUpload" class="show-for-sr" name="avatarPic"
@@ -22,8 +27,6 @@
     <input id="avatarUploadCpHeight" type="hidden" name="crop_height">
     <input id="avatarUploadCpX" type="hidden" name="crop_x">
     <input id="avatarUploadCpY" type="hidden" name="crop_y">
-    <br/><input class="btn btn-primary" type="submit" name="submit" value="上传">
-</div>
 
 <script>
     function preview(file) {

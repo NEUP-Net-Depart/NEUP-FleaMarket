@@ -2,6 +2,10 @@ a:hover, a:focus {
     text-decoration: none;
 }
 
+a:focus, button:focus {
+    outline: none;
+}
+
 .banner-back {
     position: absolute;
     top: 0;
@@ -128,6 +132,44 @@ a:hover, a:focus {
     width: 100%;
 }
 
-.header-icon-bar {
+.navbar-toggle > .icon-bar {
     background-color: #eeeeee !important;
+}
+
+.navbar-toggle:hover > .icon-bar, .navbar-toggle:focus > .icon-bar {
+    background-color: #999999 !important;
+}
+
+.panel > .list-group > a:focus {
+    background-color: white;
+}
+
+.bs-callout {
+  margin: 20px 0;
+  padding: 15px 30px 15px 15px;
+  border-left: 5px solid #eee;
+}
+.bs-callout h4 {
+  margin-top: 0;
+}
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+.bs-callout code,
+.bs-callout .highlight {
+  background-color: #fff;
+}
+
+/* Themes for different contexts */
+.bs-callout-danger {
+  background-color: #fcf2f2;
+  border-color: #dFb5b4;
+}
+.bs-callout-warning {
+  background-color: #fefbed;
+  border-color: #f1e7bc;
+}
+.bs-callout-info {
+  background-color: #f0f7fd;
+  border-color: #d0e3f0;
 }

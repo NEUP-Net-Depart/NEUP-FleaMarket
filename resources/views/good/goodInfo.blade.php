@@ -60,7 +60,7 @@
             </label>
         @endif
         @if(($good->user_id) != Session::get('user_id'))
-            <form action="/good/{{ $good->id }}/buy" method="post" class="hidden-xs">
+            <form action="/good/{{ $good->id }}/buy" method="post">
                 <div class="input-group">
                     <input type="number" name="count" value="1" class="form-control"/>
                     {!! csrf_field() !!}
@@ -143,6 +143,8 @@
                 <button class="glyphicon glyphicon-star-empty btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO"></button>
             @endif
             </form>
+        </div>
+        <div class="pull-right">
             @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
                 <form action="/good/{{ $good->id }}/edit" style="display:inline-block;">
                     <input type="submit" class="btn btn-primary" value="修改">
@@ -152,19 +154,6 @@
                     {!! method_field('DELETE') !!}
                     <input type="submit" class="btn btn-primary" value="删除">
                 </form>
-            @endif
-        </div>
-        <div class="pull-right">
-            @if(($good->user_id) != Session::get('user_id'))
-            <form action="/good/{{ $good->id }}/buy" method="post" style="display:inline-block">
-                <div class="input-group">
-                    <input type="number" name="count" value="1" class="form-control"/>
-                    {!! csrf_field() !!}
-                    <span class="input-group-btn">
-                        <input type="submit" class="btn btn-primary" value="购买"/>
-                    </span>
-                </div>
-            </form>
             @endif
         </div>
     </div>
