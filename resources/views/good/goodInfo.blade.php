@@ -36,6 +36,9 @@
              style="background-color: white;margin-bottom: 10px;margin-top:10px">
             <h2>
                 {{ $good->good_name }}
+                @if($good->baned)
+                    【已封禁】
+                @endif
             <span class="hide-for-small-only">
             @if(isset($inFvlst))
                 @if(count($inFvlst) == 0)
@@ -50,7 +53,11 @@
             </span>
             </h2>
             <div><!-- 放tag 和更多图片缩略图 --></div>
-            货主：<a href="/user/{{ $user->id }}">{{ $user->nickname }}</a> &nbsp; <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
+            货主：<a href="/user/{{ $user->id }}">{{ $user->nickname }}
+                @if($user->baned)
+                    【已封禁】
+                @endif
+            </a> &nbsp; <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             @if (count($errors) > 0)
                 <label>
@@ -59,7 +66,7 @@
             @endif
             <div class="row">
                 <div class="columns hide-for-small-only" style="width:180px;">
-                    @if(($good->user_id) != Session::get('user_id'))
+                    @if(($good->user_id) != Session::get('user_id') && !$good->baned)
                         <form action="/good/{{ $good->id }}/buy" method="post">
                             <div class="input-group gb_right">
                                 <input type="number" name="count" value="1" class="input-group-field"/>
@@ -83,6 +90,13 @@
                             <input type="submit" class="button gb_right" value="删除">
                         </form>
                     @endif
+                        @if(Session::get('is_admin') >= 1 && !$good->baned)
+                            <form action="/good/{{ $good->id }}/ban" method="POST"
+                                  style="margin:0px;display:inline;">
+                                {!! csrf_field() !!}
+                                <input type="submit" class="button gb_right" value="封禁">
+                            </form>
+                        @endif
                 </div>
             </div>
         </div>

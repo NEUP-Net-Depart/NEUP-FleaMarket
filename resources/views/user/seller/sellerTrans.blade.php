@@ -46,7 +46,11 @@
                                 <td><a href="/good/{{$tran->good_id}}"
                                        onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
                                        onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
-                                <td><a href="/user/{{ $tran->buyer_id }}">{{ $tran->buyer->nickname ? $tran->buyer->nickname : "无昵称用户" }}</a></td>
+                                <td><a href="/user/{{ $tran->buyer_id }}">{{ $tran->buyer->nickname ? $tran->buyer->nickname : "无昵称用户" }}
+                                        @if($tran->buyer->baned)
+                                            【已封禁】
+                                        @endif
+                                    </a></td>
                                 <td>{{ $tran->number }}</td>
                                 @if($tran->status == 0)
                                     <td>

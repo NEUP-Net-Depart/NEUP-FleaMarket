@@ -11,9 +11,17 @@
     <div class="row">
         <div class="column">
             @if(isset($user->nickname))
-                <h2>{{ $user->nickname }}</h2>
+                <h2>{{ $user->nickname }}
+                    @if($user->baned)
+                        【已封禁】
+                    @endif
+                </h2>
             @else
-                <h2>还没有昵称&gt;_&lt;</h2>
+                <h2>还没有昵称&gt;_&lt;
+                    @if($user->baned)
+                        【已封禁】
+                    @endif
+                </h2>
             @endif
         </div>
     </div>
