@@ -59,15 +59,19 @@ class UserController extends Controller
 
     public function regUserInfo(Request $request)
     {
+        $user_id = $request->session()->get('user_id');
         $data = [];
-        $data['userinfos'] = UserInfo::where('user_id', $request->session()->get('user_id'))->get();
+        $data['user'] = User::where('id', $user_id)->first();
+        $data['userinfos'] = UserInfo::where('user_id', $user_id)->get();
         return View::make('auth.register3')->with($data);
     }
 
     public function userInfo(Request $request)
     {
+        $user_id = $request->session()->get('user_id');
         $data = [];
-        $data['userinfos'] = UserInfo::where('user_id', $request->session()->get('user_id'))->get();
+        $data['user'] = User::where('id', $user_id)->first();
+        $data['userinfos'] = UserInfo::where('user_id', $user_id)->get();
         return View::make('user.userInfo')->with($data);
     }
 
@@ -82,7 +86,6 @@ class UserController extends Controller
         $user_id = $request->session()->get('user_id');
         $user_info = new UserInfo();
         $user_info->user_id = $user_id;
-        $user_info->realname = $input['realname'];
         if (isset($input['gender']))
             $user_info->gender = $input['gender'];
         if (isset($input['tel_num']))
@@ -116,7 +119,6 @@ class UserController extends Controller
         $user_id = $request->session()->get('user_id');
         $user_info = UserInfo::find($request->id);
         if ($user_info->user_id != $user_id) return Redirect::to('/user/' . $user_id)->withErrors('无权限访问');
-        $user_info->realname = $input['realname'];
         if (isset($input['gender'])) $user_info->gender = $input['gender'];
         else $user_info->gender = '';
         if (isset($input['tel_num'])) $user_info->tel_num = $input['tel_num'];

@@ -18,8 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('username')->nullable()->unique();
             $table->string('password')->nullable();
             $table->string('stuid')->nullable();
+            $table->string('realname')->nullable();
             $table->string('nickname')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->boolean('havecheckedemail');
             $table->tinyInteger('role');
             $table->boolean('baned');

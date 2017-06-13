@@ -81,7 +81,7 @@
 
                 @foreach($seller->user_infos as $userinfo)
                     <tr>
-                        <td>{{ $userinfo->realname }}</td>
+                        <td>{{ $seller->realname }}</td>
                         <td>{{ isset($userinfo->tel_num) ? $userinfo->tel_num : "" }}</td>
                         <td>{{ isset($userinfo->QQ) ? $userinfo->QQ : "" }}</td>
                         <td>{{ isset($userinfo->wechat) ? $userinfo->wechat : "" }}</td>
@@ -105,7 +105,7 @@
 
                 @foreach($buyer->user_infos as $userinfo)
                     <tr>
-                        <td>{{ $userinfo->realname }}</td>
+                        <td>{{ $buyer->realname }}</td>
                         <td>{{ isset($userinfo->tel_num) ? $userinfo->tel_num : "" }}</td>
                         <td>{{ isset($userinfo->QQ) ? $userinfo->QQ : "" }}</td>
                         <td>{{ isset($userinfo->wechat) ? $userinfo->wechat : "" }}</td>
