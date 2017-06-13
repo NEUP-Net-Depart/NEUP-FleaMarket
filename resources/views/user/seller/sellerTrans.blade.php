@@ -29,7 +29,7 @@
         </div>
         <div class="tabs-panel" id="trans">
             <div class="card-section">
-                <div class="row">
+                <div class="row table-responsive">
                     <table class="table">
                         <tr>
                             <td>订单编号</td>

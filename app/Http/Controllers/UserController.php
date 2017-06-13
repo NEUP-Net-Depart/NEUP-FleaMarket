@@ -156,6 +156,13 @@ class UserController extends Controller
         if(!$user)
             return View::make('common.errorPage')->withErrors('用户ID错误！');
         $data['user'] = $user;
+        $data['goods'] = GoodInfo::where('user_id', $user_id)->where('count', '>', 0)->where('baned', false)->paginate(15);
+        $page = isset($request->page) ? $request->page : 1;
+        $tickets = Ticket::where('receiver_id', $user_id)->where('type', 1)
+            ->orWhere('receiver_id', $user_id)->where('type', 2)->where('state', 2)
+            ->orderBy('id', 'desc')->get();
+
+        $data['tickets'] = $tickets;
         return View::make('user.userProfile')->with($data);
     }
 

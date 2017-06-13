@@ -1,7 +1,7 @@
 <div class="card">
 
     @if(count($userinfos) != 0)
-        <div class="card-section card-table">
+        <div class="card-section card-table table-responsive">
             <table class="card-table" rules="rows">
                 <tr>
                     <th>真实姓名</th>
@@ -25,7 +25,6 @@
                     </tr>
                 @endforeach
             </table>
-
         </div>
     @endif
     <a href="javascript: createUserInfo()" class="card-item">

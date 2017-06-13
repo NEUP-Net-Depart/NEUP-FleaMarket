@@ -29,9 +29,6 @@
     </script>
 
 	<div class="row">
-		<h3>
-			<a href="/user/{{ $user->id }}">{{ $user->nickname }}</a>
-		</h3>
         <div class="small-12 medium-5 columns block" style="">
             <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img alt="" class="thumbnail" src="/good/{{ sha1($good->id) }}/titlepic"/></a>
         </div>
@@ -53,6 +50,7 @@
             </span>
             </h2>
             <div><!-- 放tag 和更多图片缩略图 --></div>
+            货主：<a href="/user/{{ $user->id }}">{{ $user->nickname }}</a> &nbsp; <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             @if (count($errors) > 0)
                 <label>
@@ -93,15 +91,6 @@
         <div class="small-12 medium-6 medium-offset-6 columns block">
         </div>
     </div>
-	
-	<div class="row hide-for-small-only">
-		@if(Session::has('user_id') && $good->user_id!=Session::get('user_id'))
-			<form action="/report/{{ $good->user_id }}" method="GET">
-				<input type="submit" class="button" value="举报该卖家">
-			</form>
-		@endif
-	</div>
-
     <div class="row">
         <div id="asd" class="small-12 medium-12 columns" style="background-color: white">
             <h3>商品介绍: </h3>
@@ -119,7 +108,7 @@
                 url: "/good/{{ $good->id }}/add_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('.fav_smt.fav_smt-small').text('★');
+                    $('.fav_smt.fav_smt-small').val('取消收藏QAQ');
                     $jQuery_NEW('.fav_smt.fav_smt-small').attr('onclick', 'del_favlist()');
                     //what's this? interesting
                     $jQuery_NEW('.fav_smt.fav_smt-small').attr('style', 'width:100%;color:white;padding-left:0;padding-right:0');
@@ -138,7 +127,7 @@
                 url: "/good/{{ $good->id }}/del_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $('.fav_smt.fav_smt-small').text('☆');
+                    $('.fav_smt.fav_smt-small').val('收藏OvO');
                     $jQuery_NEW('.fav_smt.fav_smt-small').attr('onclick', 'add_favlist()');
                     $('.fav_smt.fav_smt-medium').text('☆');
                     $jQuery_NEW('.fav_smt.fav_smt-medium').attr('onclick', 'add_favlist()');
@@ -161,7 +150,7 @@
                         @if(($good->user_id) != Session::get('user_id'))
                             <li style="width:25%">
                                 <button class="button warning"
-                                        style="color:white;font-size: 15px;width:100%;height:40px;padding-left:0;padding-right:0;">
+                                        style="color:white;font-size: 15px;width:100%;height:40px;padding-left:0;padding-right:0;" onclick="window.location.href='/message/startConversation/{{ $user->id }}'">
                                     联系货主
                                 </button>
                             </li>

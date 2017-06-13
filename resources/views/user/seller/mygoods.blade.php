@@ -27,7 +27,7 @@
     <div class="tabs-content" data-tabs-content="editinfo">
         <div class="tabs-panel" id="goods">
             <div class="card-section">
-                <div class="row">
+                <div class="row table-responsive">
                     <table class="table">
                         <tr>
                             <td>#</td>
