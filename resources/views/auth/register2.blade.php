@@ -4,21 +4,23 @@
 
 @section('content')
 
-    <div class="row card">
-        <div class="row">
-            <div class="small-offset-11 small-1">
-                <a href="/register/3">跳过</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+            <div class="col-xs-12">
+                <a href="/register/3" class="pull-right">>>下一步</a>
             </div>
-        </div>
-        <div class="medium-4 medium-centered small-8 small-centered columns card-section">
             @if (count($errors) > 0)
-                <label>
-                    <span class="form-error is-visible">{!! $errors->first() !!}</span>
-                </label>
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {!! $errors->first() !!}
+                </div>
             @endif
             <form action="/register/2" method="POST" enctype="multipart/form-data">
                 @include('user.editUserExtra')
             </form>
+            </div>
         </div>
     </div>
 @endsection

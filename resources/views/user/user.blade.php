@@ -19,28 +19,30 @@
             <span class="form-error is-visible">{{$errors->first()}}</span>
         </label>
     @endif
-    <ul class="tabs" data-tabs id="editinfo">
-        <li class="tabs-title @if($tab == "profile") is-active @endif"><a href="#extra" aria-selected="true">个人信息</a></li>
-        <li class="tabs-title @if($tab == "account") is-active @endif"><a href="#account">用户帐户</a></li>
-        <li class="tabs-title @if($tab == "contact") is-active @endif"><a href="#userinfo">联系方式</a></li>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" @if($tab == "profile") class="active" @endif><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">个人信息</a></li>
+        <li role="presentation" @if($tab == "account") class="active" @endif><a href="#account" aria-controls="account" role="tab" data-toggle="tab">用户帐户</a></li>
+        <li role="presentation" @if($tab == "contact") class="active" @endif><a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">联系方式</a></li>
     </ul>
-    <div class="tabs-content" data-tabs-content="editinfo">
-        <div class="tabs-panel" id="extra">
+    <div class="panel panel-default">
+    <div class="tab-content panel-body">
+        <div role="tabpanel" class="tab-pane @if($tab == 'profile') active @endif" id="profile">
             <div class="card-section">
                 <form action="/user" method="POST" enctype="multipart/form-data">
                     @include('user.editUserExtra')
                 </form>
             </div>
         </div>
-        <div class="tabs-panel" id="account">
+        <div role="tabpanel" class="tab-pane @if($tab == 'account') active @endif" id="account">
             <div class="card-section">
                 @include('user.editUserAccount')
             </div>
         </div>
-        <div class="tabs-panel" id="userinfo">
+        <div role="tabpanel" class="tab-pane @if($tab == 'contact') active @endif" id="contact">
             <div id="userinfo-container" class="card-section">
                 @include('user.userInfo')
             </div>
         </div>
+    </div>
     </div>
 @endsection

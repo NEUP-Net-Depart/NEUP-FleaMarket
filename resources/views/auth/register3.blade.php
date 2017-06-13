@@ -4,20 +4,22 @@
 
 @section('content')
 
-    <div class="row card">
-        <div class="row">
-            <div class="small-offset-11 small-1">
-                <a href="/">跳过</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+            <div class="col-xs-12">
+                <a href="/" class="pull-right">完成</a>
             </div>
-        </div>
-        <div class="small-10 small-centered columns card-section">
             @if (count($errors) > 0)
-                <label>
-                    <span class="form-error is-visible">{!! $errors->first() !!}</span>
-                </label>
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {!! $errors->first() !!}
+                </div>
             @endif
             <div id="userinfo-container">
                 @include('user.userInfo')
+            </div>
             </div>
         </div>
     </div>

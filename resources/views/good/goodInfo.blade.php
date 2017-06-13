@@ -5,9 +5,6 @@
 @section('asset')
     <link rel="stylesheet" href="/css/lrtk.css"/>
     <style>
-        .glyphicon:hover, .glyphicon:focus {
-            text-decoration: none;
-        }
         .input-group {
             max-width: 200px;
         }

@@ -18,7 +18,7 @@
         @if(Session::has('user_id'))
           <li class="dropdown">
             <a class="navbar-avatar dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <img src="/avatar/{{ Session::get('user_id') }}/50/50" class="avatar"/>
+              <img src="/avatar/{{ Session::get('user_id') }}/62/62" class="avatar"/>
             </a>
             <ul class="dropdown-menu">
               <li><a href="/user">个人中心</a></li>

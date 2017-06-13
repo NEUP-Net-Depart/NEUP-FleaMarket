@@ -1,8 +1,12 @@
+a:hover, a:focus {
+    text-decoration: none;
+}
+
 .banner-back {
     position: absolute;
     top: 0;
     left: 0;
-    height: 160px;
+    height: 157px;
     width: 100%;
     z-index: -2;
     overflow: hidden;
@@ -16,7 +20,7 @@
     top: -10px;
     left: -20px;
     padding: 0 20px;
-    height: 160px;
+    height: 157px;
     width: 100%;
     box-sizing: content-box;
 }

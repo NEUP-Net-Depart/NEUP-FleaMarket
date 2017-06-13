@@ -19,9 +19,7 @@
 @section('content')
 
     <h3>我的订单</h3>
-    <div class="card-section">
-        <div class="row">
-            <table class="table">
+            <table class="table table-hover">
                 <tr>
                     <td>订单编号</td>
                     <td>商品名称</td>
@@ -48,7 +46,7 @@
                                 <form method="POST" action="/trans/{{ $tran->id }}/cancel" id="delform">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
-                                    <input type="submit" class="button" value="取消订单" style="margin: 0;"
+                                    <input type="submit" class="btn btn-primary" value="取消订单" style="margin: 0;"
                                            id="delbutton">
                                 </form>
                             </td>
@@ -70,7 +68,7 @@
                             <td>
                                 <form action="/comment/{{ $tran->id }}">
 									{!! csrf_field() !!}
-                                    <input type="submit" class="button" value="评价" style="margin: 0;">
+                                    <input type="submit" class="btn btn-primary" value="评价" style="margin: 0;">
                                 </form>
                             </td>
                         @elseif($tran->status == 5)
@@ -83,7 +81,5 @@
                 @endforeach
                 {{ $trans->links() }}
             </table>
-        </div>
-    </div>
 
 @endsection

@@ -1,39 +1,32 @@
-<div class="card">
-
     @if(count($userinfos) != 0)
-        <div class="card-section card-table">
-            <table class="card-table" rules="rows">
+        <table class="table table-hover">
+            <tr>
+                <th>真实姓名</th>
+                <th>手机</th>
+                <th>QQ</th>
+                <th>微信</th>
+                <th>地址</th>
+                <th>操作</th>
+            </tr>
+
+            @foreach($userinfos as $userinfo)
                 <tr>
-                    <th>真实姓名</th>
-                    <th>手机</th>
-                    <th>QQ</th>
-                    <th>微信</th>
-                    <th>地址</th>
+                    <td>{{ $userinfo->realname }}</td>
+                    <td>{{ isset($userinfo->tel_num) ? $userinfo->tel_num : "" }}</td>
+                    <td>{{ isset($userinfo->QQ) ? $userinfo->QQ : "" }}</td>
+                    <td>{{ isset($userinfo->wechat) ? $userinfo->wechat : "" }}</td>
+                    <td>{{ isset($userinfo->address) ? $userinfo->address : "" }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="editUserInfo({{$userinfo->id}})">修改</button>
+                        <button type="button" class="btn btn-primary" onclick="deleteUserInfo({{$userinfo->id}})">删除</button>
+                    </td>
                 </tr>
-
-                @foreach($userinfos as $userinfo)
-                    <tr>
-                        <td>{{ $userinfo->realname }}</td>
-                        <td>{{ isset($userinfo->tel_num) ? $userinfo->tel_num : "" }}</td>
-                        <td>{{ isset($userinfo->QQ) ? $userinfo->QQ : "" }}</td>
-                        <td>{{ isset($userinfo->wechat) ? $userinfo->wechat : "" }}</td>
-                        <td>{{ isset($userinfo->address) ? $userinfo->address : "" }}</td>
-                        <td>
-                            <button type="button" class="button" onclick="editUserInfo({{$userinfo->id}})">修改</button>
-                            <button type="button" class="button" onclick="deleteUserInfo({{$userinfo->id}})">删除</button>
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-
-        </div>
+            @endforeach
+        </table>
     @endif
-    <a href="javascript: createUserInfo()" class="card-item">
-        <div class="card-section">
-            <center>添加联系方式</center>
-        </div>
+    <a href="javascript: createUserInfo()">
+        <center>添加联系方式</center>
     </a>
-</div>
 
 <script>
     function editUserInfo(userinfo_id) {

@@ -6,14 +6,12 @@
 
     <div id="message">
         {{--<a v-on:click="refreshContact">???</a>--}}
-        <div class="row">
-            <div class="column large-8 small-12">
+            <div class="col-md-8 col-xs-12">
                 <message-dialog ref="messageDialog" v-on:top-contact="topContactCallback"></message-dialog>
             </div>
-            <div class="column large-4 small-12">
+            <div class="col-md-4 col-xs-12">
                 <contact-list ref="contactList" v-on:load-dialog="loadDialogCallback"></contact-list>
             </div>
-        </div>
     </div>
 
     <script type="text/x-template" id="contact_list">
@@ -44,7 +42,7 @@
 
     <script type="text/x-template" id="message_dialog">
         <div :class="{ hide: isHidden }">
-            <a v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
+            <a href="#" v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
             <p v-else>没有更多了</p>
             <ul id="message-container" class="message-container">
                 <transition-group name="message-list" tag="ul">
@@ -55,8 +53,8 @@
                 </transition-group>
             </ul>
             <p class="err-msg" v-if="errorMessage">@{{ errorMessage }}</p>
-            <textarea placeholder="键入要发送的内容:" v-model="inputMessage"></textarea>
-            <input type="button" class="button" value="发送" v-on:click="sendMessage"/>
+            <textarea placeholder="键入要发送的内容:" v-model="inputMessage" class="form-control"></textarea><br/>
+            <input type="button" class="btn btn-primary" value="发送" v-on:click="sendMessage"/>
             <input id="token" type="hidden" value="{{ csrf_token() }}"/>
             {{--<a v-on:click="getNewMessage">!!!</a>--}}
         </div>

@@ -1,14 +1,18 @@
-<div class="row">
+<div class="col-xs-12 col-sm-4">
     @if(isset($user->nickname))
-        <label>昵称<input type="text" name="nickname" value="{{ $user->nickname }}"></label>
+        <div class="form-group">
+            <label for="nickname">昵称</label>
+            <input type="text" name="nickname" id="nickname" class="form-control" value="{{ $user->nickname }}"></label>
+        </div>
     @else
-        <label>昵称<input type="text" name="nickname"></label>
+        <div class="form-group">
+            <label for="nickname">昵称</label>
+            <input type="text" name="nickname" id="nickname" class="form-control"></label>
+        </div>
     @endif
     {!! csrf_field() !!}
-    <input type="submit" class="hollow button" value="保存">
-</div>
-<div class="row">
-    <label for="avatarUpload" class="button right inline">上传头像</label>
+    <br/><input type="submit" class="btn btn-primary" value="保存"><br/><br/>
+    <label for="avatarUpload" class="btn btn-primary">上传头像</label>
     <div id="preview"></div>
     <div style="display: none">
         <input type="file" id="avatarUpload" class="show-for-sr" name="avatarPic"
@@ -18,7 +22,7 @@
     <input id="avatarUploadCpHeight" type="hidden" name="crop_height">
     <input id="avatarUploadCpX" type="hidden" name="crop_x">
     <input id="avatarUploadCpY" type="hidden" name="crop_y">
-    <input class="button" type="submit" name="submit" value="上传">
+    <br/><input class="btn btn-primary" type="submit" name="submit" value="上传">
 </div>
 
 <script>
@@ -28,8 +32,8 @@
             var prreader = new FileReader();
             var reader = new FileReader();
             reader.onload = function (evt) {
-                prevDiv.innerHTML = '<img id="avatarpreview" src="' + evt.target.result + '" />';
-                $jQuery_FOUNDATION('#avatarpreview').cropper({
+                prevDiv.innerHTML = '<br/><img id="avatarpreview" src="' + evt.target.result + '" />';
+                $jQuery_CROPPER('#avatarpreview').cropper({
                     aspectRatio: 1 / 1,
                     crop: function (e) {
                         $('#avatarUploadCpX').val(e.x);
@@ -41,17 +45,17 @@
             };
             prreader.onload = function (evt) {
                 var fileBuf = new Uint8Array(evt.target.result.slice(0, 11));
-                var mime = isImage(fileBuf);
+                /*var mime = isImage(fileBuf);
                 if (mime == null) {
                     alert("Please open image!");
                     return;
-                } else {
+                } else {*/
                     reader.readAsDataURL(file.files[0]);
-                }
+                //}
             };
             prreader.readAsArrayBuffer(file.files[0]);
         } else {
-            prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+            prevDiv.innerHTML = '<br/><div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
         }
     }
 </script>

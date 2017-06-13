@@ -19,61 +19,51 @@
 @section('content')
 
     <h3>我的出售</h3>
-    <ul class="tabs" data-tabs id="editinfo">
-        <li class="tabs-title is-active"><a href="#goods" aria-selected="true">我的商品</a></li>
-        <li class="tabs-title"><a href="#trans">交易订单</a></li>
-        <li class="tabs-title"><a href="#tickets">历史评价</a></li>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#goods" aria-controls="goods" role="tab" data-toggle="tab">我的商品</a></li>
+        <li role="presentation"><a href="#trans" aria-controls="trans" role="tab" data-toggle="tab">交易订单</a></li>
+        <li role="presentation"><a href="#tickets" aria-controls="tickets" role="tab" data-toggle="tab">历史评价</a></li>
     </ul>
-    <div class="tabs-content" data-tabs-content="editinfo">
-        <div class="tabs-panel" id="goods">
-            <div class="card-section">
-                <div class="row">
-                    <table class="table">
-                        <tr>
-                            <td>#</td>
-                            <td>商品名称</td>
-                            <td>商品价格</td>
-                            <td>剩余库存</td>
-                            <td>修改信息</td>
-                            <td>删除商品</td>
-                        </tr>
-                        @foreach($goods as $good)
-                            <tr id="good{{ $good->id }}">
-                                <td>{{ $good->id }}</td>
-                                <td><a href="/good/{{$good->id}}"
-                                       onMouseOver="toolTip('<img src=/good/{{ sha1($good->id) }}/titlepic>')"
-                                       onMouseOut="toolTip()">{{ $good->good_name }}</a></td>
-                                <td>{{ $good->price }}</td>
-                                <td>{{ $good->count }}</td>
-                                <td>
-                                    <form action="/good/{{ $good->id }}/edit">
-                                        <input type="submit" class="button" value="修改" style="margin: 0;">
-                                    </form>
-                                </td>
-                                <td>
-
-                                    <form method="POST" id="delform">
-                                        {!! csrf_field() !!}
-                                        {!! method_field('DELETE') !!}
-
-                                    </form>
-                                    <input type="submit" class="button" value="删除" style="margin: 0;" id="delbutton"
-                                           onclick="del_good({{ $good->id }})">
-                                </td>
-
-                            </tr>
-
-                        @endforeach
-                        {{ $goods->links() }}
-                    </table>
-
-                    <a href="/good/add" class="button">添加商品</a>
-                </div>
-            </div>
+    <div class="panel panel-default">
+    <div class="tab-content panel-body">
+        <div role="tabpanel" class="tab-pane active" id="goods">
+            <table class="table table-hover">
+                <tr>
+                    <th>#</th>
+                    <th>商品名称</th>
+                    <th>商品价格</th>
+                    <th>剩余库存</th>
+                    <th>修改信息</th>
+                    <th>删除商品</th>
+                </tr>
+                @foreach($goods as $good)
+                    <tr id="good{{ $good->id }}">
+                        <td>{{ $good->id }}</td>
+                        <td><a href="/good/{{$good->id}}"
+                                onMouseOver="toolTip('<img src=/good/{{ sha1($good->id) }}/titlepic>')"
+                                onMouseOut="toolTip()">{{ $good->good_name }}</a></td>
+                        <td>{{ $good->price }}</td>
+                        <td>{{ $good->count }}</td>
+                        <td>
+                            <form action="/good/{{ $good->id }}/edit">
+                                <input type="submit" class="btn btn-primary" value="修改" style="margin: 0;">
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST" id="delform">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                            </form>
+                            <input type="submit" class="btn btn-primary" value="删除" style="margin: 0;" id="delbutton" onclick="del_good({{ $good->id }})">
+                        </td>
+                    </tr>
+                @endforeach
+                {{ $goods->links() }}
+            </table>
         </div>
-        <div class="tabs-panel" id="trans">
+        <div class="tab-pane" id="trans">
         </div>
-        <div class="tabs-panel" id="tickets">
+        <div class="tab-pane" id="tickets">
         </div>
     </div>
 

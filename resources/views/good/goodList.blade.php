@@ -8,58 +8,56 @@
 
 @section('content')
     @include('layout.catlist')
-        <div class="small-12 medium-10 columns">
-            <div class="row small-up-1 medium-up-2 large-up-4" data-equalizer data-equalize-by-row>
-                <div class="medium-12 shx">
-                    <ul class="dropdown menu" style="background-color: white;" data-dropdown-menu>
-                        <li>
-                        <a id="nm" class="<?php if(isset($_GET['sort'])){echo $_GET['sort']; } ?>">排序</a>
-                        <ul class="menu">
-                        <li><a href="/good/">综合排序</a></li>
-                        <li><a onclick="setc('p')">按价格从低到高</a></li>
-                        <li><a onclick="setc('pd')">按价格从高到低</a></li>
-                        <li><a onclick="setc('c')">按库存从少到多</a></li>
-                        <li><a onclick="setc('cd')">按库存从多到少</a></li>
-                        </ul>
-                        </li>
-                        <li>
-                            <a id="sxa"><div class="ad">价格筛选</div> <input id="priceSet1" style="" maxlength="9" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; } ?>"/>-<input id="priceSet2" style="" maxlength="9" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; } ?>"/>&nbsp;<button class="button sub" id="subk"  onclick="setc('a')">确定</button>
-                            </a>
-                        </li>
-                        <li class="kucli">
-                            <a id="kca"><div class="ad">库存下限</div> <input id="pricec" maxlength="9" style="" value="<?php if(isset($_GET['start_count'])){echo $_GET['start_count']; } ?>" />&nbsp;<button class="button sub" id="subs"  onclick="setc('a')">确定</button>
-                            </a>
-                           </li>
-                        </li>
-                    </ul>
-                </div>
-                <div class="sm1 row" style="margin-left:1px;margin-right:5px">
-                @foreach($goods as $good)
-                    <div class="small-6 medium-3 end columns blck" id="good{{ $good->id }}">
-                        <div class="good">
-                        <a href="/good/{{ $good->id }}">
-                            <div class="card">
-                                <div class="card-divider" style="padding: 0;">
-                                    <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}"/>
-                                </div>
-                                <div class="card-section" >
-                                    <div class="one-line-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ $good->good_name }}</div>
-                                    <div style="color: #cc4b37;" class="one-line-text"><b>￥{{ $good->price }}</b></div>
+    <div class="col-xs-12 col-sm-7">
+        <div>
+        <div class="dropdown" style="display:inline-block">
+            <button class="btn btn-primary" id="sort" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <input type="hidden" id="nm" class="@if(isset($_GET['sort'])){{ $_GET['sort'] }}@endif">
+                排序
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="sort">
+                <li><a href="/good/">综合排序</a></li>
+                <li><a href="#" onclick="setc('p')">按价格从低到高</a></li>
+                <li><a href="#" onclick="setc('pd')">按价格从高到低</a></li>
+                <li><a href="#" onclick="setc('c')">按库存从少到多</a></li>
+                <li><a href="#" onclick="setc('cd')">按库存从多到少</a></li>
+            </ul>
+        </div>&nbsp;&nbsp;&nbsp;
+        <div style="display:inline-block">
+            <a>价格筛选</a> <input id="priceSet1" style="display:inline-block"maxlength="9" class="form-control" value="@if(isset($_GET['start_price'])){{ $_GET['start_price'] }}@endif"/> - <input id="priceSet2" class="form-control" style="display:inline-block" maxlength="9" value="@if(isset($_GET['end_price'])){{ $_GET['end_price'] }}@endif"/>&nbsp;<button class="btn btn-primary" onclick="setc('a')">确定</button>
+        </div>&nbsp;&nbsp;&nbsp;
+        <div style="display:inline-block">
+            <a>库存下限</a> <input id="pricec" style="display:inline-block" maxlength="9" class="form-control" value="@if(isset($_GET['start_count'])){{ $_GET['start_count'] }}@endif"/>&nbsp;<button class="btn btn-primary" id="subs" onclick="setc('a')">确定</button>
+        </div>
+        </div>
+        <br/>
+        @foreach($goods as $good)
+        <div class="col-xs-6 col-sm-4">
+            <div class="good">
+                <a href="/good/{{ $good->id }}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" style="width:100%"/>
+                        </div>
+                        <div class="panel-body">
+                            <div>{{ $good->good_name }}</div>
+                                <div class="text-warning"><b>￥{{ $good->price }}</b></div>
                                     @if($good->count==0)
-                                        <div style="color: #ffae00;" class="one-line-text">无库存QAQ</div>
+                                        <div class="text-danger">无库存QAQ</div>
                                     @else
-                                        <div class="one-line-text">库存：{{ $good->count }}</div>
+                                        <div>库存：{{ $good->count }}</div>
                                     @endif
                                 </div>
                             </div>
-                        </a>
                         </div>
                     </div>
-                @endforeach
-                </div>
+                </a>
             </div>
         </div>
         {{ $goods->links() }}
+        @endforeach
+    </div>
     <script src="/js/good/cat.js"></script>
     <script src="/js/good/good_list.js"></script>
     <script src="/js/jquery.color.js"></script>
