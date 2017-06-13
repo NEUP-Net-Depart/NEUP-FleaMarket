@@ -86,7 +86,7 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::get('/user/{user_id}',"UserController@userProfile");
 
-    Route::get('/avatar/{user_id}', "UserController@getSimpleAvatar");
+    Route::get('/avatar/{user_id}', "UserController@getAvatar");
     Route::get('/avatar/{user_id}/{width}/{height}', "UserController@getAvatar");
 
 	Route::get('/report/{seller_id}', "UserController@reportSeller")->middleware('auth');
@@ -105,7 +105,7 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::delete('/good/{good_id}/delete', "GoodController@deleteGood")->middleware('auth');
 
-    Route::get('/good/{good_id}/titlepic', "GoodController@getSimpleTitlePic");
+    Route::get('/good/{good_id}/titlepic', "GoodController@getTitlePic");
     Route::get('/good/{good_id}/titlepic/{width}/{height}', "GoodController@getTitlePic");
 
     Route::post('/good/{good_id}/add_favlist', "GoodController@addFavlist")->middleware('auth');
