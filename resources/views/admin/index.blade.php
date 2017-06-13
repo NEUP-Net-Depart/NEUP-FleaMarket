@@ -30,7 +30,7 @@
                         <td>{{ $announcement->created_at }}</td>
 						</td>
 						<td>
-							<form action="/delannouncement/{{ $announcement -> id }}" method="POST">
+							<form action="/notice/{{ $announcement -> id }}" method="POST">
 							{!! csrf_field() !!}
 							{!! method_field('DELETE') !!}
 							<input type="submit" class="button" value="删除">
@@ -41,7 +41,7 @@
                     @endforeach
             </table>
 
-            <form action="/sendannouncement" method="POST">
+            <form action="/notice" method="POST">
 			{!! csrf_field() !!}
               标题
               <input type="text" placeholder="Title" name="title">

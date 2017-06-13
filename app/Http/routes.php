@@ -126,33 +126,16 @@ Route::group(['middleware' => ['web']],function () {
     Route::post('/trans/{trans_id}/confirm', "TransactionController@go")->middleware('auth');
     Route::put('/trans/{trans_id}/edit', "TransactionController@edit")->middleware('auth');
 
-    Route::get('/', [
-        "uses" => "ContentController@Mainpage",
-    ]);
+    Route::get('/', "ContentController@Mainpage");
 
-    Route::get('/announcement/{announcement_id}', [
-        "uses" => "ContentController@announcementPage",
-    ]);
+    Route::get('/notice/{notice_id}', "ContentController@announcementPage");
+    Route::post('/cat/add', "AdminController@addCategory")->middleware('admin');
+    Route::post('/cat/{cat_id}/edit', "AdminController@editCategory")->middleware('admin');
+    Route::delete('/cat/{cat_id}/delete', "AdminController@deleteCategory")->middleware('admin');
+    Route::post('/notice', "AdminController@sendAnnouncement")->middleware('admin');
+    Route::delete('/notice/{ann_id}', "AdminController@delAnnouncement")->middleware('admin');
 
-    Route::match(['post', 'get'], '/good/check', [
-        "uses" => "GoodController@check",
-        "middleware" => "auth"
-    ]);
-
-    Route::match(['post', 'get'], '/good/end', [
-        "uses" => "GoodController@end",
-        "middleware" => "auth"
-    ]);
-
-    Route::get('/good/{good_id}/check', [
-        "uses" => "AdminController@checkGood",
-        "middleware" => "admin"
-    ]);
-
-    Route::get('/admin', [
-        "uses" => "AdminController@adminIndex",
-        "middleware" => "admin"
-    ]);
+    Route::get('/admin', "AdminController@adminIndex")->middleware('admin');
 
     Route::post('/user/{user_id}/updatePriv', [
         "uses" => "AdminController@updateUserPriv",
@@ -163,30 +146,5 @@ Route::group(['middleware' => ['web']],function () {
         "uses" => "AdminController@updateUserRole",
         "middleware" => "admin"
     ]);
-
-	Route::post('/cat/add', [
-		"uses" => "AdminController@addCategory",
-		"middleware" => "admin"
-	]);
-
-    Route::post('/cat/{cat_id}/edit', [
-        "uses" => "AdminController@editCategory",
-        "middleware" => "admin"
-    ]);
-
-    Route::delete('/cat/{cat_id}/delete', [
-        "uses" => "AdminController@deleteCategory",
-        "middleware" => "admin"
-    ]);
-
-    Route::post('/sendannouncement',[
-        "uses" => "AdminController@sendAnnouncement",
-        "middleware" => "admin"
-    ]);
-
-	Route::delete('/delannouncement/{ann_id}', [
-		"uses" => "AdminController@delAnnouncement",
-		"middleware" => "admin"
-	]);
 
 });

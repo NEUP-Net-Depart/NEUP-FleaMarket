@@ -27,9 +27,9 @@ class ContentController extends Controller
         return View::make('welcome')->with($data);
     }
 
-    public function announcementPage(Request $request, $announcement_id){
+    public function announcementPage(Request $request, $notice_id){
         $data = [];
-        $data['announcement'] = Announcement::find($announcement_id);
+        $data['announcement'] = Announcement::find($notice_id);
         return View::make('layout.announcement')->with($data);
     }
 }

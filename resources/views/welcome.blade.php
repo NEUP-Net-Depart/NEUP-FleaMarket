@@ -132,7 +132,7 @@
                             <div class="card">
                                 <h4 class="card-divider">公告</h4>
                                 @foreach($announces as $announce)
-                                    <a href="/announcement/{{ $announce->id }}" class="card-item">
+                                    <a href="/notice/{{ $announce->id }}" class="card-item">
                                         <div class="card-section">{{ $announce->title }}</div>
                                     </a>
                                 @endforeach
