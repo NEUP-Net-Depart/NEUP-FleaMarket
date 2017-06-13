@@ -54,6 +54,11 @@
             </h2>
             <div><!-- 放tag 和更多图片缩略图 --></div>
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
+            @if (count($errors) > 0)
+                <label>
+                    <span class="form-error is-visible">{!! $errors->first() !!}</span>
+                </label>
+            @endif
             <div class="row">
                 <div class="columns hide-for-small-only" style="width:180px;">
                     @if(($good->user_id) != Session::get('user_id'))

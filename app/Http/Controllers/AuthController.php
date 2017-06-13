@@ -18,12 +18,87 @@ use App\CheckEmail;
 use App\PasswordReset;
 use Mail;
 use App\AuthLog;
+use phpCAS;
 
 class AuthController extends Controller
 {
     public function showLogin()
     {
         return View::make('auth.login');
+    }
+
+    public function cas(Request $request)
+    {
+        phpCAS::client(CAS_VERSION_2_0, "sso.neu.cn", 443, "/cas");
+        phpCAS::setNoCasServerValidation();
+        phpCAS::forceAuthentication();
+        $stuid = phpCAS::getUser();
+        $user = User::where('stuid', $stuid)->first();
+        if(!$user)
+        {
+            $user = new User;
+            $user->privilege = 0;
+            $user->stuid = $stuid;
+            $user->havecheckedemail = false;
+            $user->role = 0;
+            $user->baned = false;
+            $user->save();
+
+            // log start
+            $log = new AuthLog();
+            $log->user_id = $user->id;
+            $log->ip = $request->ip();
+            $log->event = "cas_reg_success";
+            $log->save();
+            // log end
+
+            $request->session()->put('user_id', $user->id);
+
+            return Redirect::to('/register/' . $user->registerCompletion());
+        }
+        else
+        {
+            if ($user->baned) {
+				$nowdate = time();
+				$banedstart = $user->banedstart;
+				$date = $nowdate-$banedstart;
+				if($date>($user->banedtime)*86400 && $user->banedtime!=-1)
+				{
+					$user->baned = 0;
+					return Redirect::to('/');
+				}
+                // log start
+                $log = new AuthLog();
+                $log->user_id = $user->id;
+                $log->ip = $request->ip();
+                $log->event = "cas_login_banned";
+                $log->save();
+                // log end
+				
+				if($user->banedtime == -1)
+					return Redirect::back()->withInput()->withErrors('你已经被永久封禁!');
+                return Redirect::back()->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime-($date/86400)).'天后解禁!');
+            }
+
+            // log start
+            $log = new AuthLog();
+            $log->user_id = $user->id;
+            $log->ip = $request->ip();
+            $log->event = "cas_login_success";
+            $log->save();
+            // log end
+
+            $request->session()->put('user_id', $user->id);
+            $request->session()->put('username', $user->username);
+            $request->session()->put('nickname', $user->nickname);
+            if ($user->privilege)
+                $request->session()->put('is_admin', $user->privilege);
+
+            if ($user->registerCompletion() != 0)
+                return Redirect::to('/register/' . $user->registerCompletion());
+            else
+                return Redirect::to('/');
+        }
     }
 
     public function login(LoginRequest $request)
@@ -68,7 +143,7 @@ class AuthController extends Controller
                 $log->event = "login_banned";
                 $log->save();
                 // log end
-				//
+				
 				if($user->banedtime == -1)
 					return Redirect::back()->withInput()->withErrors('你已经被永久封禁!');
                 return Redirect::back()->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime-($date/86400)).'天后解禁!');
@@ -125,6 +200,8 @@ class AuthController extends Controller
         $user->password = Hash::make($input['password']);
         $user->email = $input['email'];
         $user->havecheckedemail = false;
+        $user->role = 0;
+        $user->baned = false;
         $user->save();
 
         // log start
@@ -251,7 +328,10 @@ class AuthController extends Controller
         if ($user->username == '') {
             $user->username = $input['username'];
             $user->save();
-            return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！');
+            if(!$user->password)
+                return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！但是你必须设置密码才可以使用用户名登录。');
+            else
+                return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！');
         }
         else
             return Redirect::to('/user?tab=account')->withInput()->withErrors('用户名不能更改');
@@ -281,7 +361,10 @@ class AuthController extends Controller
             $user->havecheckedemail = false;
             $user->save();
             self::doSendCheckLetter($request, $user_id);
-            return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。');
+            if(!$user->password)
+                return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。请注意，你必须先设置密码才可以使用邮箱登录。');
+            else
+                return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。');
         }
         else {
             if(self::doSendUnbindLetter($request, $user_id))
