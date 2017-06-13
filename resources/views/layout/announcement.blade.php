@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', "商品列表")
+@section('title', "公告")
 
 @section('content')
 

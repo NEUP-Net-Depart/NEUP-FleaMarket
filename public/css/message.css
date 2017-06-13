@@ -8,6 +8,9 @@
     margin-top: 0.5em;
     padding: 0.1em;
     list-style-type: none;
+}
+
+.msg.box {
     border-style: solid;
     border-width: 1px;
     border-color: #cccccc;
@@ -84,6 +87,21 @@
 .err-msg {
     color: red;
     font-weight: bold;
+}
+
+.time-tag {
+    color: #7b7a80;
+    margin: 1px;
+    font-size: 10px;
+    float: right;
+    position: relative;
+    top: -2em;
+    left: -2em;
+}
+
+.history-text {
+    color: #7b7a80;
+    float: right;
 }
 
 #message-container::-webkit-scrollbar {

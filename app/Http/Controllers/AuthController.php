@@ -59,6 +59,14 @@ class AuthController extends Controller
         else
         {
             if ($user->baned) {
+				$nowdate = time();
+				$banedstart = $user->banedstart;
+				$date = $nowdate-$banedstart;
+				if($date>($user->banedtime)*86400 && $user->banedtime!=-1)
+				{
+					$user->baned = 0;
+					return Redirect::to('/');
+				}
                 // log start
                 $log = new AuthLog();
                 $log->user_id = $user->id;
@@ -66,8 +74,10 @@ class AuthController extends Controller
                 $log->event = "cas_login_banned";
                 $log->save();
                 // log end
-                //
-                return Redirect::back()->withInput()->withErrors('你的账号被封禁了，请联系管理员。');
+				
+				if($user->banedtime == -1)
+					return Redirect::back()->withInput()->withErrors('你已经被永久封禁!');
+                return Redirect::back()->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime-($date/86400)).'天后解禁!');
             }
 
             // log start
@@ -118,6 +128,14 @@ class AuthController extends Controller
             }
 
             if ($user->baned) {
+				$nowdate = time();
+				$banedstart = $user->banedstart;
+				$date = $nowdate-$banedstart;
+				if($date>($user->banedtime)*86400 && $user->banedtime!=-1)
+				{
+					$user->baned = 0;
+					return Redirect::to('/');
+				}
                 // log start
                 $log = new AuthLog();
                 $log->user_id = $user->id;
@@ -125,8 +143,10 @@ class AuthController extends Controller
                 $log->event = "login_banned";
                 $log->save();
                 // log end
-                //
-                return Redirect::back()->withInput()->withErrors('你的账号被封禁了，请联系管理员。');
+				
+				if($user->banedtime == -1)
+					return Redirect::back()->withInput()->withErrors('你已经被永久封禁!');
+                return Redirect::back()->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime-($date/86400)).'天后解禁!');
             }
 
             //Successfully logged in

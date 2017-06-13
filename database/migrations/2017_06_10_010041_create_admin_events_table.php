@@ -20,6 +20,8 @@ class CreateAdminEventsTable extends Migration
 			$table->string('event');
 			$table->integer('ticket_id')->nullable();
 			$table->text('message');
+			$table->integer('banedtime');
+			$table->integer('banedstart');
 			$table->timestamps();
 		});
     }

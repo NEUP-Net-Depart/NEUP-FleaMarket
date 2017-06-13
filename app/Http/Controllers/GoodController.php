@@ -68,6 +68,9 @@ class GoodController extends Controller
         //对数量筛选只设下限
         if(isset($input['start_count']))
             $data['goods'] = $data['goods']->where('count', '>=', $input['start_count']);
+		else
+            $data['goods'] = $data['goods']->where('count', '>', 0);
+
         // 最后在排序筛选baned==0以及paginate分页
         // p为价格，c为数量，d为倒序，值相同时按id倒序排列
         if(isset($input['sort'])){
@@ -126,7 +129,9 @@ class GoodController extends Controller
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = GoodInfo::where('id', $good_id)->first();
-        if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
+		if($data['good']==NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
+		if(($data['good']->baned) && ($data['good']->user_id != $request->session()->get('user_id') && !$request->session()->get('is_admin')))
+			return View::make('common.errorPage')->withErrors('商品ID错误！');
         $data['user'] = User::where('id', $data['good']->user_id)->first();
 		if($request->session()->has('user_id'))
 		{
@@ -345,5 +350,25 @@ class GoodController extends Controller
         $image = Image::make($file)->resize($width, $height);
         return $image->response('jpg');
     }
+
+	public function banGood(Request $request, $good_id)
+	{
+		$good = GoodInfo::find($good_id);
+		$good->baned = 1;
+		$good->update();
+
+		$admin_id = $request->session()->get('user_id');
+		MessageController::sendMessageHandle($admin_id, $good->user_id, "【系统消息】您好！您的商品（编号：".$good_id."）由于不符合有关规定已被管理员（ID：".$admin_id."）下架。请在此消息下询问具体细节。");
+
+		$trans = Transaction::where('good_id', $good_id)->get();
+		foreach($trans as $tran)
+		{
+			$tran->status = 0;
+			MessageController::sendMessageHandle(0, $tran->buyer_id, "【系统消息】您好！由于该商品不符合有关规定被下架，您的订单（编号：".$tran->id."）已被取消。非常抱歉。");
+			$tran->update();
+		}
+
+		 return Redirect::to('/good/'.$good_id);
+	}
 
 }

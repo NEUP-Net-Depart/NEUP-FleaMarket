@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->boolean('havecheckedemail');
             $table->tinyInteger('role');
             $table->boolean('baned');
+			$table->integer('banedtime');
+			$table->integer('banedstart');
             $table->timestamps();
         });
     }

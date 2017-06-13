@@ -28,6 +28,7 @@ use Hash;
 use Mail;
 use Image;
 use App\Ticket;
+use App\AdminEvent;
 
 class UserController extends Controller
 {
@@ -293,7 +294,33 @@ class UserController extends Controller
 		$ticket->type = 2;
 		$ticket->message = $input['reason'];
 		$ticket->save();
-		return View::make('common.errorPage')->withErrors('举报成功！');
+		return view::make('common.errorPage')->withErrors('举报成功！');
+	}
+
+	public function banPage(Request $request, $user_id)
+	{
+		$data = [];
+		$data['user_id'] = $user_id;
+		return view::make('user.banPage')->with($data);
+	}
+
+	public function setBan(Request $request, $user_id)
+	{
+		$input = $request->all();
+		$user = User::find($user_id);
+		$user->baned = 1;
+		$user->banedtime = $input['count'];
+		$user->banedstart = time();
+		$user->update();
+
+		$event = new AdminEvent;
+		$event->admin_id = $request->session()->get('user_id');
+		$event->target_user = $user_id;
+		$event->event = "ban";
+		$event->message = $input['reason'];
+		$event->save();
+
+		return Redirect::to('/user/'.$user_id);
 	}
 
 }
