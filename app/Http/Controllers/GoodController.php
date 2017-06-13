@@ -357,6 +357,7 @@ class GoodController extends Controller
 		$good->update();
 
 		$admin_id = $request->session()->get('user_id');
+
 		MessageController::sendMessageHandle($admin_id, $good->user_id, "【系统消息】您好！您的商品（编号：".$good_id."）由于不符合有关规定已被管理员（ID：".$admin_id."）下架。请在此消息下询问具体细节。");
 
 		$trans = Transaction::where('good_id', $good_id)->get();
