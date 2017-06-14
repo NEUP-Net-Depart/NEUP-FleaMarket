@@ -76,6 +76,11 @@
     opacity: 0;
 }
 
+.message-content {
+    word-break:break-all;
+    display: inline;
+}
+
 .contact-list-item {
     transition: all 1s;
 }
@@ -128,4 +133,14 @@
 
 #message-container::-webkit-scrollbar-resizer {
     background: #efefff;
+}
+
+#contact-closer {
+    position: relative;
+    top: -4.6em;
+    float: right;
+}
+
+#contact-closer:hover {
+    background-color: #b42600;
 }
