@@ -345,7 +345,10 @@ class GoodController extends Controller
             $width = 1920;
         if($height > 1080)
             $height = 1080;
-        $file = Storage::get('good/titlepic/'.$good_id);
+        if (!Storage::exists('good/titlepic/'.$good_id))
+            $file = Storage::get('public/titlepic.jpg');
+        else
+            $file = Storage::get('good/titlepic/'.$good_id);
         $image = Image::make($file)->resize($width, $height);
         return $image->response('jpg');
     }
