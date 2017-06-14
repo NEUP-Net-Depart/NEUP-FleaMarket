@@ -34,75 +34,95 @@ class GoodController extends Controller
      */
     public function getList(Request $request)
     {
+        $paginate_limit = 16;
         $data = [];
         $input = $request->all();
-		$query = "";
+        $query = "";
+        $cat_id = $start_price = $end_price = $start_count = $sort = "";
+        if(isset($input['cat_id']))
+            $cat_id = $input['cat_id'];
+        if(isset($input['start_price']))
+            $start_price = $input['start_price'];
+        if(isset($input['end_price']))
+            $end_price = $input['end_price'];
+        if(isset($input['start_count']))
+            $start_count = $input['start_count'];
+        if(isset($input['sort']))
+            $sort = $input['sort'];
         if(isset($input['query'])) $query = $input['query'];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
-		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%");
-        $data['cat_id'] = 0;
-        if(isset($input['cat_id'])){
+        $data['goods'] = GoodInfo::where('good_name', 'like', "%$query%");
+        //$data['cat_id'] = 0;
+        if(isset($input['cat_id']) && $input['cat_id'] != ""){
             $data['goods'] = GoodInfo::where('cat_id', $input['cat_id']);
             $data['cat_id'] = $input['cat_id'];
         }
         //同时给定价格上下限
-        if(isset($input['start_price']) && isset($input['end_price'])){
+        if(isset($input['start_price']) && isset($input['end_price'])
+            && $input['start_price'] != "" && $input['end_price'] != ""){
             //确保上限大于下限
             if($input['start_price'] > $input['end_price']){
-              $temp = $input['start_price'];
-              $input['start_price'] = $input['end_price'];
-              $input['end_price'] = $temp;
+                $temp = $input['start_price'];
+                $input['start_price'] = $input['end_price'];
+                $input['end_price'] = $temp;
             }
             $data['goods'] = $data['goods']->where([
-                                ['price', '>=', $input['start_price']],
-                                ['price', '<=', $input['end_price']]
-                              ]);
+                ['price', '>=', $input['start_price']],
+                ['price', '<=', $input['end_price']]
+            ]);
         }
         //只设上限或下限时
         else{
-            if(isset($input['start_price']))
+            if(isset($input['start_price']) && $input['start_price'] != "")
                 $data['goods'] = $data['goods']->where('price', '>=', $input['start_price']);
-            if(isset($input['end_price']))
+            if(isset($input['end_price']) && $input['end_price'] != "")
                 $data['goods'] = $data['goods']->where('price', '<=', $input['end_price']);
-            }
+        }
         //对数量筛选只设下限
-        if(isset($input['start_count']))
+        if(isset($input['start_count']) && $input['start_count'] != "")
             $data['goods'] = $data['goods']->where('count', '>=', $input['start_count']);
-		else
+        else
             $data['goods'] = $data['goods']->where('count', '>', 0);
 
         // 最后在排序筛选baned==0以及paginate分页
         // p为价格，c为数量，d为倒序，值相同时按id倒序排列
-        if(isset($input['sort'])){
+        if(isset($input['sort']) && $input['sort'] != ""){
             if ($input['sort'] == 'old'){
-              $data['goods'] = $data['goods']->orderby('id', 'asc')->where('baned', 0)->paginate(16);
+                $data['goods'] = $data['goods']->orderby('id', 'asc')->where('baned', 0)->paginate($paginate_limit);
             }
             elseif ($input['sort'] == 'p'){
-              $data['goods'] = $data['goods']->orderby('price', 'asc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
+                $data['goods'] = $data['goods']->orderby('price', 'asc')->orderby('id', 'desc')->where('baned', 0)->paginate($paginate_limit);
             }
             elseif ($input['sort'] == 'pd') {
-              $data['goods'] = $data['goods']->orderby('price', 'desc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
+                $data['goods'] = $data['goods']->orderby('price', 'desc')->orderby('id', 'desc')->where('baned', 0)->paginate($paginate_limit);
             }
             elseif ($input['sort'] == 'c') {
-              $data['goods'] = $data['goods']->orderby('count', 'asc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
+                $data['goods'] = $data['goods']->orderby('count', 'asc')->orderby('id', 'desc')->where('baned', 0)->paginate($paginate_limit);
             }
             elseif ($input['sort'] == 'cd') {
-              $data['goods'] = $data['goods']->orderby('count', 'desc')->orderby('id', 'desc')->where('baned', 0)->paginate(16);
+                $data['goods'] = $data['goods']->orderby('count', 'desc')->orderby('id', 'desc')->where('baned', 0)->paginate($paginate_limit);
             }
         }
         //未指定排序规则时按id倒序排序
         else
-          $data['goods'] = $data['goods']->orderby('id', 'desc')->where('baned', 0)->paginate(16);
-		if($request->session()->has('user_id'))
-		    $data['user_id'] = $request->session()->get('user_id');
-		else
-		    $data['user_id'] = NULL;
-		if($request->session()->has('is_admin'))
-	        $data['is_admin'] = $request->session()->get('is_admin');
-		else
-			$data['is_admin'] = NULL;
+            $data['goods'] = $data['goods']->orderby('id', 'desc')->where('baned', 0)->paginate($paginate_limit);
+        if($request->session()->has('user_id'))
+            $data['user_id'] = $request->session()->get('user_id');
+        else
+            $data['user_id'] = NULL;
+        if($request->session()->has('is_admin'))
+            $data['is_admin'] = $request->session()->get('is_admin');
+        else
+            $data['is_admin'] = NULL;
         $data['page'] = 1;
-        if(isset($input['page'])) $data['page'] = $input['page'];
+        if(isset($input['page']) && $input['page'] != "") $data['page'] = $input['page'];
+        $data['cat_id'] = $cat_id;
+        $data['query'] = $query;
+        $data['start_price'] = $start_price;
+        $data['end_price'] = $end_price;
+        $data['start_count'] = $start_count;
+        $data['sort'] = $sort;
+        //dd($data['cat_id'] == "");
         return view::make('good.goodList')->with($data);
     }
 
