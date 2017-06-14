@@ -156,11 +156,17 @@ class GoodController extends Controller
      */
     public function showAddGood(Request $request)
     {
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = new GoodInfo;
         $data['add'] = true;
         //$data['tags'] = Tag::orderby('id', 'asc')->get();
+        if(!$user || $user->baned)
+            return view::make('good.goodInfoForm')->with($data)->withErrors('您的账号被封禁，无法出售商品，请联系系统管理员');
+        if(UserInfo::where('user_id', $user_id)->count() == 0)
+            return view::make('good.goodInfoForm')->with($data)->withErrors('你必须先添加联系方式才能出售');
         return view::make('good.goodInfoForm')->with($data);
     }
 
