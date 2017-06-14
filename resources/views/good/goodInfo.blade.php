@@ -57,7 +57,10 @@
                 @if($user->baned)
                     【已封禁】
                 @endif
-            </a> &nbsp; <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
+            </a>
+            @if ($user->id != session('user_id'))
+                <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
+            @endif
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             @if (count($errors) > 0)
                 <label>
