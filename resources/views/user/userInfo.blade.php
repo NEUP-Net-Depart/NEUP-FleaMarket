@@ -1,7 +1,6 @@
     @if(count($userinfos) != 0)
         <table class="table table-hover table-responsive">
             <tr>
-                <th>真实姓名</th>
                 <th>手机</th>
                 <th>QQ</th>
                 <th>微信</th>
@@ -11,7 +10,6 @@
 
             @foreach($userinfos as $userinfo)
                 <tr>
-                    <td>{{ isset($user->realname) ? $user->realname : "" }}</td>
                     <td>{{ isset($userinfo->tel_num) ? $userinfo->tel_num : "" }}</td>
                     <td>{{ isset($userinfo->QQ) ? $userinfo->QQ : "" }}</td>
                     <td>{{ isset($userinfo->wechat) ? $userinfo->wechat : "" }}</td>

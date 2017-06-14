@@ -41,6 +41,7 @@
         @endif
       </ul>
   </div>
+  </div>
 </nav>
 
 <div class="banner-back"><div class="banner"></div></div>
@@ -50,7 +51,7 @@
   <div class="col-lg-12 navbar-search float-right">
       <form action="/good" method="GET">
         <div class="input-group">
-            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{ urldecode($_GET['query']) }}@endif"/>
+            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif"/>
             <span class="input-group-btn">
                 <input type="submit" class="btn btn-primary" value="G♂"/>
             </span>

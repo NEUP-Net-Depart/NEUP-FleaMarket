@@ -40,6 +40,8 @@
                                     contact.contact.nickname + '【已封禁】') }}</p>
                                 </td>
                             </tr>
+                            <span id="contact-closer" class="badge secondary"
+                                  v-on:click="closeContact(index)">X</span>
                         </li>
                     </transition-group>
                 </table>
@@ -49,19 +51,23 @@
     </script>
 
     <script type="text/x-template" id="message_dialog">
-        <div :class="{ hide: isHidden }">
-            <a href="#" v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
-            <p v-else>没有更多了</p>
-            <ul id="message-container" class="message-container">
-                <transition-group name="message-list" tag="ul">
-                    <li :class="{ box: message.type !== 'history-info' }" class="msg message-list-item"
-                        v-for="message in messages" v-bind:key="message.id">
+        <div>
+            <p v-if="messages.length == 0" style="text-align: center">暂无消息</p>
+            <div :class="{ hide: isHidden }">
+                <a v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
+                <p v-else>没有更多了</p>
+                <ul id="message-container" class="message-container">
+                    <transition-group name="message-list" tag="ul">
+                        <li :class="{ box: message.type !== 'history-info' }" class="msg message-list-item"
+                            v-for="message in messages" v-bind:key="message.id">
                         <span v-if="message.type !== 'history-info'">
                         <img class="mavatar" :src="'/avatar/' + message.sender_id + '/64/64'"/>
-                            @{{ message.content }}<br/><br/>
+                            <p v-if="contact_id == 0" class="message-content" v-html="message.content"></p>
+                            <p v-else class="message-content">@{{ message.content }}</p>
+                            <br/><br/>
                         <i class="time-tag">@{{ message.updated_at }}</i>
                         </span>
-                        <span v-else>
+                            <span v-else>
                             <i class="history-text">以上是历史消息</i>
                             <hr/>
                         </span>
@@ -73,6 +79,7 @@
             <input type="button" class="btn btn-primary" value="发送" v-on:click="sendMessage"/>
             <input id="token" type="hidden" value="{{ csrf_token() }}"/>
             {{--<a v-on:click="getNewMessage">!!!</a>--}}
+            </div>
         </div>
     </script>
 

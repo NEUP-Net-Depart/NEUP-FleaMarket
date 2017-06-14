@@ -1,4 +1,4 @@
-﻿<div class="footer container">
+﻿﻿<div class="footer container">
 	<div class="hidden-md-down">
 	<ul class="float-left">
 		<li>© {{date("Y")}} 东北大学先锋网</li>
@@ -16,12 +16,18 @@
 		<span><center>© {{date("Y")}} 东北大学先锋网</center></span>
 	</div>
 @if( env('SHOW_VER') || env('APP_DEBUG') )
-	<span>
-		<center>
-			@if(env('APP_DEBUG'))当前处于调试模式<br>@endif
-			@if(env('SHOW_VER'))程序版本：{{ config('app.version')       }}&nbsp;&nbsp; 文件版本：<ahref="https://github.com/NEUP-Net-Depart/NEUP-FleaMarket/commit/{{ explode(' ', exec('git log --pretty=oneline -1'))[0]   }}">{{ exec('git log --abbrev-commit --pretty=oneline -1')  }}</a>@endif
-		</center>
-	</span>
+    <footer class="row">
+        <div class="small-11 small-centered columns">
+		<span>
+			<center>
+				@if(env('APP_DEBUG'))当前处于调试模式<br>@endif
+                @if(env('SHOW_VER'))程序版本：{{ config('app.version')       }}&nbsp;&nbsp; 文件版本：<a
+                        href="https://github.com/NEUP-Net-Depart/NEUP-FleaMarket/commit/{{ explode(' ', exec('git log --pretty=oneline -1'))[0]   }}">{{ exec('git log --abbrev-commit --pretty=oneline -1')  }}</a>
+                @endif
+            </center>
+		</span>
+        </div>
+    </footer>
 @endif
 
 </div>

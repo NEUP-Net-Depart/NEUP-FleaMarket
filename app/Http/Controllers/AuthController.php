@@ -42,6 +42,7 @@ class AuthController extends Controller
             $user->havecheckedemail = false;
             $user->role = 0;
             $user->baned = false;
+            $user->realname = phpCAS::getAttribute('name');
             $user->save();
 
             // log start

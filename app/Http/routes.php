@@ -71,6 +71,7 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/message/getHistoryMessage', "MessageController@getHistoryMessage");
         Route::get('/message/getNewMessage', "MessageController@getNewMessage");
 		Route::get('/message/startConversation/{receiver}', "MessageController@startConversation");
+        Route::get('/message/closeConversation/{receiver}', "MessageController@closeConversation");
 	});
 
 	Route::get('/user/{user_id}/banpage', "UserController@banPage")->middleware('admin');

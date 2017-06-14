@@ -23,7 +23,6 @@ class UserTest extends BrowserKitTestCase
 
         $this->withSession(['user_id' => 1])
             ->json('POST', '/user/userinfo', [
-                'realname' => 'test',
                 'tel_num' => '13333333333',
                 'QQ' => 'interesting@u.me',
                 'wechat' => '13333333333',
@@ -147,22 +146,12 @@ class UserTest extends BrowserKitTestCase
         $this->withSession(['user_id' => 1])
             ->visit('/user/1')
             ->json('POST', '/user/userinfo', [
-                'realname' => '',
-                'tel_num' => '10000000000',
-                'QQ' => '10000000',
-                'wechat' => 'wechat',
-                'address' => 'address',
-            ])
-            ->assertResponseStatus(422)
-            ->json('POST', '/user/userinfo', [
-                'realname' => 'realname',
                 'tel_num' => '10000000000',
                 'QQ' => '11000000',
                 'wechat' => 'wechat',
                 'address' => 'address',
             ])
             ->visit('/user/userinfo')
-            ->see('realname')
             ->see('10000000000')
             ->see('11000000')
             ->see('wechat')
@@ -171,14 +160,12 @@ class UserTest extends BrowserKitTestCase
             ->assertResponseStatus(200)
             ->json('PUT', '/user/userinfo/edit', [
                 'id' => '1',
-                'realname' => 'changerealname',
                 'tel_num' => '999',
                 'QQ' => '987',
                 'wechat' => 'changewechat',
                 'address' => 'changeaddress',
             ])
             ->visit('/user/userinfo')
-            ->see('changerealname')
             ->see('999')
             ->see('987')
             ->see('changewechat')
@@ -186,7 +173,7 @@ class UserTest extends BrowserKitTestCase
             ->json('DELETE', '/user/userinfo/delete', [
                 'id' => '1',
             ])
-            ->dontSee('changerealname');
+            ->dontSee('changewechat');
     }
 
     public function testAvatar()

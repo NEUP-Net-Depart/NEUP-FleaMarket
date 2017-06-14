@@ -16,7 +16,6 @@ class CreateUserInfoTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->boolean('gender')->nullable();
-            $table->string('realname');
             $table->string('tel_num');
             $table->string('QQ')->nullable();
             $table->string('wechat')->nullable();

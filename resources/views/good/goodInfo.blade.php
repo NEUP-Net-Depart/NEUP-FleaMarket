@@ -89,11 +89,6 @@
                 <input type="submit" class="btn btn-primary" value="封禁">
             </form>
         @endif
-		@if(Session::has('user_id') && $good->user_id!=Session::get('user_id'))
-			<br/><form action="/report/{{ $good->user_id }}" method="GET">
-				<input type="submit" class="btn btn-primary" value="举报该卖家">
-			</form>
-		@endif
     </div>
     </div>
     <br/>

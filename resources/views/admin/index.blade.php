@@ -126,7 +126,7 @@
                                                 <form action="/repo/{{ $repo->id }}/solve" method="POST">
                                                     {!! csrf_field() !!}
                                                     <input type="hidden" name="setstate" value="1">
-                                                    <input type="submit" class="button" value="驳回此条">
+                                                    <input type="submit" class="btn btn-default" value="驳回此条">
                                                 </form>
                                             </td>
                                         @else
