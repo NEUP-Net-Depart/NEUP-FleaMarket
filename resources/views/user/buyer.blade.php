@@ -34,8 +34,11 @@
                     <tr id="tran{{ $tran->id }}">
                         <td>{{ $tran->id }}</td>
                         <td><a href="/good/{{$tran->good_id}}"
-                               onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
-                               onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
+                               @if(isset($tran->good))
+                                   onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
+                                   onMouseOut="toolTip()"
+                               @endif
+                            >{{ isset($tran->good) ? $tran->good->good_name : "此商品已删除" }}</a></td>
                         <td>{{ $tran->number }}</td>
                         @if($tran->status == 0)
                             <td>
