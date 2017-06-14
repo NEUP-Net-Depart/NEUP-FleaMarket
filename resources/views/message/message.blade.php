@@ -37,7 +37,10 @@
                                 <td>
                                     <p class="con-name">@{{ contact.contact_id == 0 ? "系统消息" :
                                     (contact.contact.baned == 0 ? contact.contact.nickname :
-                                    contact.contact.nickname + '【已封禁】') }}</p>
+                                    contact.contact.nickname + '【已封禁】') }}
+                                        <img v-if="contact.contact_id != 0 && contact.contact.privilege == 1" src="https://img.shields.io/badge/%E5%85%88%E9%94%8B%E5%B8%82%E5%9C%BA-%E7%AE%A1%E7%90%86%E5%91%98-9300dd.svg">
+                                        <img v-if="contact.contact_id != 0 && contact.contact.privilege == 2" src="https://img.shields.io/badge/%E5%85%88%E9%94%8B%E5%B8%82%E5%9C%BA-%E7%AE%A1%E7%90%86%E5%91%98-ee0000.svg">
+                                    </p>
                                 </td>
                             </tr>
                             <span id="contact-closer" class="badge secondary"

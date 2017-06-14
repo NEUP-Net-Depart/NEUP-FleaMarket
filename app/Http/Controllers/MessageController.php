@@ -123,7 +123,7 @@ class MessageController extends Controller
         $contacts = MessageContact::where('user_id', $user_id)
             ->orderBy('last_contact_time', 'desc')
             ->with(['contact' => function ($query) {
-                $query->select('id', 'nickname', 'baned');
+                $query->select('id', 'nickname', 'baned', 'privilege');
             }])
             ->paginate(10);
         return json_encode($contacts);
@@ -136,7 +136,7 @@ class MessageController extends Controller
             ->where('unread_count', '>', 0)
             ->orderBy('last_contact_time', 'desc')
             ->with(['contact' => function ($query) {
-                $query->select('id', 'nickname', 'baned');
+                $query->select('id', 'nickname', 'baned', 'privilege');
             }])
             ->get();
         return json_encode($contacts);
