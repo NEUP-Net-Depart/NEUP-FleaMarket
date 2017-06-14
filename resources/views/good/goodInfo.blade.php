@@ -53,7 +53,7 @@
             </span>
             </h2>
             <div><!-- 放tag 和更多图片缩略图 --></div>
-            货主：<a href="/user/{{ $user->id }}">{{ $user->nickname }}
+            货主：<a href="/user/{{ $user->id }}">@if(isset($user->nickname)){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif
                 @if($user->baned)
                     【已封禁】
                 @endif
