@@ -30,7 +30,7 @@
                 <div class="medium-12 shx">
                     <ul class="dropdown menu" style="background-color: white;" data-dropdown-menu>
                         <li>
-                        <a id="nm" class="<?php if(isset($_GET['sort'])){echo $_GET['sort']; } ?>">排序</a>
+                        <a id="nm" class="@if(isset($_GET['sort'])){{$_GET['sort']}}@endif">排序</a>
                         <ul class="menu">
                         <li><a href="/good/">综合排序</a></li>
                         <li><a onclick="setc('p')">按价格从低到高</a></li>
@@ -40,11 +40,11 @@
                         </ul>
                         </li>
                         <li>
-                            <a id="sxa"><div class="ad">价格筛选</div> <input id="priceSet1" style="" maxlength="9" value="<?php if(isset($_GET['start_price'])){echo $_GET['start_price']; } ?>"/>-<input id="priceSet2" style="" maxlength="9" value="<?php if(isset($_GET['end_price'])){echo $_GET['end_price']; } ?>"/>&nbsp;<button class="button sub" id="subk"  onclick="setc('a')">确定</button>
+                            <a id="sxa"><div class="ad">价格筛选</div> <input id="priceSet1" style="" maxlength="9" value="@if(isset($_GET['start_price'])){{$_GET['start_price']}}@endif"/>-<input id="priceSet2" style="" maxlength="9" value="@if(isset($_GET['end_price'])){{$_GET['end_price']}}@endif"/>&nbsp;<button class="button sub" id="subk"  onclick="setc('a')">确定</button>
                             </a>
                         </li>
                         <li class="kucli">
-                            <a id="kca"><div class="ad">库存下限</div> <input id="pricec" maxlength="9" style="" value="<?php if(isset($_GET['start_count'])){echo $_GET['start_count']; } ?>" />&nbsp;<button class="button sub" id="subs"  onclick="setc('a')">确定</button>
+                            <a id="kca"><div class="ad">库存下限</div> <input id="pricec" maxlength="9" style="" value="@if(isset($_GET['start_count'])){{$_GET['start_count']}}@endif" />&nbsp;<button class="button sub" id="subs"  onclick="setc('a')">确定</button>
                             </a>
                            </li>
                         </li>
