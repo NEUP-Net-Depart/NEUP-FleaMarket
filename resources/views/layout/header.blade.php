@@ -10,10 +10,10 @@
             <ul class="dropdown menu hide-for-medium" data-dropdown-menu>
               @if(Session::has('user_id'))
                 <li><a class="top-bar-list" data-toggle="offCanvas">≡</a></li>
-                <li><a class="top-bar-list" href="/">主页</a></li>
+                <li><a class="top-bar-list" href="/">首页</a></li>
                 <li><a class="top-bar-list" href="/message">消息</a></li>
               @else
-              <li><a class="top-bar-list" href="/">主页</a></li>
+              <li><a class="top-bar-list" href="/">首页</a></li>
               <li class="is-dropdown-submenu-parent">
                 <a class="top-bar-list top-bar-dropdown">登录&nbsp;</a>
                 <ul class="menu vertical top-bar-dropdown-menu">
@@ -25,7 +25,7 @@
               @endif
             </ul>
           <ul class="dropdown menu hide-for-small-only" data-dropdown-menu>
-            <li><a class="top-bar-list" href="/">主页</a></li>
+            <li><a class="top-bar-list" href="/">首页</a></li>
           </ul>
         </div>
         <div class="top-bar-right hide-for-small-only">
@@ -39,7 +39,7 @@
                   <li><a href="/user">个人中心</a></li>
                   <li><a href="/user/fav">收藏夹</a></li>
                   <li><a href="/user/trans">我的订单</a></li>
-                  <li><a href="/user/sell">我的商品</a></li>
+                  <li><a href="/user/sell">我的出售</a></li>
                   <hr>
 				  @if(Session::get('is_admin') >= 1)
 					<li><a href="/admin">管理中心</a></li>
@@ -104,7 +104,7 @@
           <hr>
           <li><a href="/user/fav">收藏夹</a></li>
           <li><a href="/user/trans">我的交易</a></li>
-          <li><a href="/user/sell">我的商品</a></li>
+          <li><a href="/user/sell">我的出售</a></li>
           @if(Session::get('is_admin') >= 1)
             <li><a href="/admin">管理中心</a></li>
           @endif
