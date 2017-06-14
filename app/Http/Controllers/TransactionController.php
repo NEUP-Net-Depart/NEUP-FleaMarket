@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Ticket;
 use App\UserInfo;
+use Illuminate\Support\Facades\View;
 
 class TransactionController extends Controller
 {
@@ -116,7 +117,7 @@ class TransactionController extends Controller
         $message = new Message();
         $message->sender_id = 0;
         $message->receiver_id = $good->user_id;
-        $message->content = '您好！' . $buyer->not_null_nickname . '购买了你的' . $good->good_name . '，请及时前往确认。';
+        $message->content = '您好！<a href="/user/' . $buyer_id . '">' . $buyer->not_null_nickname . '</a>购买了你的<a href="/good/' . $good_id . '">' . $good->good_name . '</a>，请及时前往<a href="/user/sell/trans">交易订单页</a>确认。';
         $message->save();
 
         //Create or Update MessageContact
@@ -149,7 +150,7 @@ class TransactionController extends Controller
                 $message->sender_id = 0;
                 $good = $trans->good;
                 $message->receiver_id = $good->user_id;
-                $message->content = '您好！您的' . $good->good_name . '的一个订单被买家取消，你可以前往查看。';
+                $message->content = '您好！您的<a href="/good/' . $good->id . '">' . $good->good_name . '</a>的一个订单被买家取消，你可以前往<a href="/user/sell/trans">交易订单页</a>查看。';
                 $message->save();
                 //Create or Update MessageContact
                 $contact = MessageContact::firstOrNew([
@@ -177,7 +178,7 @@ class TransactionController extends Controller
                 $message->sender_id = 0;
                 $good = $trans->good;
                 $message->receiver_id = $trans->buyer_id;
-                $message->content = '您好！您购买的' . $good->good_name . '的一个订单被卖家驳回，你可以前往查看。';
+                $message->content = '您好！您购买的<a href="/good/' . $good->id . '">' . $good->good_name . '</a>的一个订单被卖家驳回，你可以前往<a href="/user/trans">交易订单页</a>查看。';
                 $message->save();
                 //Create or Update MessageContact
                 $contact = MessageContact::firstOrNew([
@@ -218,7 +219,7 @@ class TransactionController extends Controller
         $message = new Message();
         $message->sender_id = 0;
         $message->receiver_id = $trans->buyer_id;
-        $message->content = '您好！你订购的' . $good->good_name . '已被卖家确认，你们现在可以去看对方的联系方式并且交♂易啦。';
+        $message->content = '您好！你订购的<a href="/good/' . $good->id . '">' . $good->good_name . '</a>已被卖家确认，你们现在可以去<a href="/trans/' . $trans->id . '">查看对方的联系方式</a>并且交♂易啦。';
         $message->save();
         //Create or Update MessageContact
         $contact = MessageContact::firstOrNew([
@@ -281,9 +282,9 @@ class TransactionController extends Controller
         $message->receiver_id = $trans->buyer_id;
         $good = $trans->good;
         if($result)
-            $message->content = '您好！你订购的' . $good->good_name . '的订单已被卖家标记为交易成功，你现在可以去评价此单交易啦。';
+            $message->content = '您好！你订购的<a href="/good/' . $good->id . '">' . $good->good_name . '</a>的订单已被卖家标记为交易成功，你现在可以去<a href="/user/trans">评价此单交易</a>啦。';
         else
-            $message->content = '您好！你订购的' . $good->good_name . '的订单已被卖家标记为交易失败。';
+            $message->content = '您好！你订购的<a href="/good/' . $good->id . '">' . $good->good_name . '</a>的订单已被卖家标记为交易失败。';
         $message->save();
         //Create or Update MessageContact
         $contact = MessageContact::firstOrNew([
@@ -300,9 +301,11 @@ class TransactionController extends Controller
     {
         $user_id = $request->session()->get('user_id');
         $trans = Transaction::find($trans_id);
+        if(!$trans)
+            return View::make('common.errorPage')->withErrors('交易ID错误！');
         $seller = User::with('user_infos')->find($trans->seller_id);
         $buyer = User::with('user_infos')->find($trans->buyer_id);
-        if(!$trans || ($user_id != $trans->buyer_id && $user_id != $trans->seller_id))
+        if(($user_id != $trans->buyer_id && $user_id != $trans->seller_id) || $trans->status != 2)
             return View::make('common.errorPage')->withErrors('交易ID错误！');
         $data['tran'] = $trans;
         $data['seller'] = $seller;
