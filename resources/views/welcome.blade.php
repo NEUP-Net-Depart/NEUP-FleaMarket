@@ -32,7 +32,7 @@
                 <div class="medium-12 large-7 columns">
                     <div class="row">
                     @if(count($stargoods) > 0)
-                        <div class="orbit" role="region" aria-label="热销商品" data-orbit>
+                        <div class="orbit" role="region" aria-label="推荐商品" data-orbit>
                             <ul class="orbit-container">
                                 @if(count($stargoods) > 1)
                                     <button class="orbit-previous"><span class="show-for-sr">←</span>&#9664;&#xFE0E;</button>
@@ -52,6 +52,45 @@
                         <br/>
                     @endif
                     </div>
+                    @if(count($populargoods)>0)
+                        <h3>热门</h3>
+                        <div class="row small-up-2 medium-up-4 large-up-3">
+                            @foreach($populargoods as $good)
+                                <div class="columns">
+                                    <div class="good">
+                                        <a href="/good/{{ $good->id }}">
+                                            <div class="card">
+                                                <div class="card-divider" style="padding:0;">
+                                                    <img src="/good/{{ sha1($good->id) }}/titlepic"/>
+                                                </div>
+                                                <div class="details" style="position:absolute;z-index:200;width:200px;height:100px;display:none;">
+                                                    <div class="det-d hide-for-small-only" style="position:absolute;z-index:200;top:-40%;left:+2%;color:white;font-size:12px;">
+                                                        售价：￥{{ $good->price }}<br/>
+                                                        @if($good->count==0)
+                                                            无库存QAQ
+                                                        @else
+                                                            库存：{{ $good->count }}
+                                                        @endif
+                                                    </div>
+                                                    <div class="det-d show-for-small-only" style="position:absolute;z-index:200;top:-50%;left:+2%;color:white;font-size:15px;">
+                                                        售价：￥{{ $good->price }}<br/>
+                                                        @if($good->count==0)
+                                                            无库存QAQ
+                                                        @else
+                                                            库存：{{ $good->count }}
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="card-section sec-name"style=";white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-size:15px;padding:10px 10px">
+                                                    {{ $good->good_name }}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                     @if(count($newgoods)>0)
                         <h3>新品</h3>
                         <div class="row small-up-2 medium-up-4 large-up-3">
