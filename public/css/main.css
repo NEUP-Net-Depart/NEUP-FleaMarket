@@ -6,7 +6,7 @@ a:hover, a:focus {
     position: absolute;
     top: 0;
     left: 0;
-    height: 135px;
+    height: 152px;
     width: 100%;
     z-index: -2;
     overflow: hidden;
@@ -20,7 +20,7 @@ a:hover, a:focus {
     top: -10px;
     left: -20px;
     padding: 0 20px;
-    height: 135px;
+    height: 152px;
     width: 100%;
     box-sizing: content-box;
 }

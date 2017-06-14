@@ -44,20 +44,22 @@
 
 <div class="banner-back"><div class="banner"></div></div>
 
-  <div class="hidden-sm-down col-12">
+<br/>
+
+  <div class="container hidden-sm-down">
       <form action="/good" method="GET">
-        <div class="input-group float-right" style="width:250px">
-            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif" style="width:300px">
+        <div class="input-group float-right search-group" style="width:250px">
+            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif">
             <span class="input-group-btn">
                 <input type="submit" class="btn btn-primary" value="G♂">
             </span>
         </div>
       </form>
   </div>
-  <div class="hidden-md-up col-12">
+  <div class="hidden-md-up container">
       <form action="/good" method="GET">
-        <div class="input-group float-right">
-            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif" style="width:300px">
+        <div class="input-group float-right search-group">
+            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif">
             <span class="input-group-btn">
                 <input type="submit" class="btn btn-primary" value="G♂">
             </span>
