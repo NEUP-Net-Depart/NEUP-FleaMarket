@@ -36,7 +36,7 @@
             var reader = new FileReader();
             reader.onload = function (evt) {
                 prevDiv.innerHTML = '<img id="avatarpreview" src="' + evt.target.result + '" />';
-                $jQuery_CROPPER('#avatarpreview').cropper({
+                $('#avatarpreview').cropper({
                     aspectRatio: 1 / 1,
                     crop: function (e) {
                         $('#avatarUploadCpX').val(e.x);

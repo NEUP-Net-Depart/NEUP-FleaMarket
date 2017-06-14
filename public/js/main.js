@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $jQuery_CROPPER.fn.cropper();
+    $.fn.cropper();
 });
 
 var pngMagic = [
