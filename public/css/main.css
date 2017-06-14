@@ -6,7 +6,7 @@ a:hover, a:focus {
     position: absolute;
     top: 0;
     left: 0;
-    height: 152px;
+    height: 135px;
     width: 100%;
     z-index: -2;
     overflow: hidden;
@@ -20,7 +20,7 @@ a:hover, a:focus {
     top: -10px;
     left: -20px;
     padding: 0 20px;
-    height: 152px;
+    height: 135px;
     width: 100%;
     box-sizing: content-box;
 }
@@ -85,11 +85,6 @@ a:hover, a:focus {
 .avatar {
     border: 0;
     border-radius: 50%;
-}
-
-.navbar-search {
-    padding: 0;
-    margin: 0;
 }
 
 #searchq {

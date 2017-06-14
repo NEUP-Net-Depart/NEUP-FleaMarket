@@ -1,9 +1,8 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse">
+<nav class="navbar navbar-toggleable-sm navbar-inverse">
   <div class="navbar-back">
     <div class="navbar-bg"></div>
     <div class="navbar-filter"></div>
   </div>
-  <div class="container">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -41,21 +40,27 @@
         @endif
       </ul>
   </div>
-  </div>
 </nav>
 
 <div class="banner-back"><div class="banner"></div></div>
 
-<div class="container">
-  <br/>
-  <div class="col-lg-12 navbar-search float-right">
+  <div class="hidden-sm-down col-12">
       <form action="/good" method="GET">
-        <div class="input-group">
-            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif"/>
+        <div class="input-group float-right" style="width:250px">
+            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif" style="width:300px">
             <span class="input-group-btn">
-                <input type="submit" class="btn btn-primary" value="G♂"/>
+                <input type="submit" class="btn btn-primary" value="G♂">
             </span>
         </div>
       </form>
   </div>
-</div>
+  <div class="hidden-md-up col-12">
+      <form action="/good" method="GET">
+        <div class="input-group float-right">
+            <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif" style="width:300px">
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-primary" value="G♂">
+            </span>
+        </div>
+      </form>
+  </div>

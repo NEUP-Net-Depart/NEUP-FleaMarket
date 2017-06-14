@@ -12,45 +12,31 @@
 @endsection
 
 @section('content')
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        var $jQuery_NEW = $.noConflict(true);
-    </script>
-    <!--Pop new version of jQuery and 向黑恶势力低头-->
-    <script src="https://cdn.bootcss.com/jquery/1.3.1/jquery.min.js"></script>
-    <script src="/js/good/imgbox/jquery.imgbox.pack.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            if ($(document.body).width() > 640) {
-                $("#pic").imgbox({
-                    'speedIn': 0,
-                    'speedOut': 0,
-                    'alignment': 'center',
-                    'overlayShow': true,
-                    'allowMultiple': false
-                });
-            }
-        });
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
     <div class="row">
     <div class="col-12 col-md-5">
         <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%"/></a><br/>
     </div>
-    <div class="col-12 col-md-6 offset-md-1">
-        <h2 style="word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif
-            <span class="hidden-sm-down">
+    <div class="col-12 col-md-7">
+        <div>
+            <span class="hidden-sm-down" style="position:relative;top:-8px">
                 @if(isset($inFvlst))
                     @if(count($inFvlst) == 0)
-                        <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" title="收藏OvO"></button>
+                        <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
                     @endif
                     @if(count($inFvlst) != 0)
-                        <button class="fa fa-star btn btn-primary" onclick="del_favlist()" title="取消收藏QAQ"></button>
+                        <button class="fa fa-star btn btn-primary" onclick="del_favlist()" data-toggle="tooltip" data-placement="top" title="取消收藏QAQ"></button>
                     @endif
                 @else
-                    <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO"></button>
+                    <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
                 @endif
             </span>
-        </h2>
+            <h2 style="margin-left:10px;display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h2>
+        </div>
 		卖家：<a href="/user/{{ $user->id }}">{{ $user->nickname }}@if($user->baned)【已封禁】@endif</a> &nbsp; <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
         <div><!-- 放tag 和更多图片缩略图 --></div>
         <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
@@ -105,9 +91,9 @@
                 url: "/good/{{ $good->id }}/add_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $jQuery_NEW('.fa-star-o').attr('title','取消收藏QAQ');
-                    $jQuery_NEW('.fa-star-o').attr('onclick', 'del_favlist()');
-                    $jQuery_NEW('.fa-star-o').attr('class','fa fa-star btn btn-primary');
+                    $('.fa-star-o').attr('title','取消收藏QAQ');
+                    $('.fa-star-o').attr('onclick', 'del_favlist()');
+                    $('.fa-star-o').attr('class','fa fa-star btn btn-primary');
                 }
             });
         }
@@ -121,9 +107,9 @@
                 url: "/good/{{ $good->id }}/del_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $jQuery_NEW('.fa-star').attr('title','收藏OvO');
-                    $jQuery_NEW('.fa-star').attr('onclick', 'add_favlist()');
-                    $jQuery_NEW('.fa-star').attr('class','fa fa-star-o btn btn-primary');
+                    $('.fa-star').attr('title','收藏OvO');
+                    $('.fa-star').attr('onclick', 'add_favlist()');
+                    $('.fa-star').attr('class','fa fa-star-o btn btn-primary');
                 }
             });
         }
