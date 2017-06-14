@@ -5,7 +5,7 @@
 @section('asset')
     <link rel="stylesheet" href="/css/lrtk.css"/>
     <style>
-        .input-group {
+        .input-group:not(.search-group) {
             max-width: 200px;
         }
     </style>

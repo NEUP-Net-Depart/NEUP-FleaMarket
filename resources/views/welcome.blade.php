@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-<title>先锋市场 Powered by NEUPioneer</title>
+@section('title', "首页")
 
 @section('asset')
     <style>
@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+<div class="row">
     @include('layout.catlist')
     <div class="col-12 col-md-7">
         @if(count($newgoods)>0)
@@ -67,9 +67,8 @@
             </div>
         </div>
     </div>
-    </div>
-    <script src="/js/good/cat.js"></script>
-    <script src="/js/good/editfav.js"></script>
-    <script src="/js/jquery.color.js"></script>
 </div>
+<script src="/js/good/cat.js"></script>
+<script src="/js/good/editfav.js"></script>
+<script src="/js/jquery.color.js"></script>
 @endsection
