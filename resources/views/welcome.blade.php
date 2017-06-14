@@ -16,24 +16,6 @@
     <div class="row">
     @include('layout.catlist')
     <div class="col-12 col-md-7">
-        {{--@if(count($stargoods) > 0)
-            <div class="orbit" role="region" aria-label="推荐商品" data-orbit>
-                <ul class="orbit-container">
-                    @if(count($stargoods) > 1)
-                        <button class="orbit-previous"><span class="show-for-sr">←</span>&#9664;&#xFE0E;</button>
-                        <button class="orbit-next"><span class="show-for-sr">→</span>&#9654;&#xFE0E;</button>
-                    @endif
-                    @foreach($stargoods as $good)
-                        <li class="orbit-slide">
-                            <a href="/good/{{ $good->id }}"><img class="orbit-image" src="/good/{{ sha1($good->id) }}/titlepic" alt="{{ $good->name }}"/>
-                                <figcaption class="orbit-caption">{{ $good->good_name }}</figcaption>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <br/>
-        @endif--}}
         @if(count($newgoods)>0)
             <h3>新品</h3>
                 <div class="row">
@@ -42,6 +24,14 @@
                 @endforeach
                 </div>
         @endif
+            @if(count($populargoods)>0)
+                <h3>热门</h3>
+                <div class="row">
+                    @foreach($populargoods as $good)
+                        @include('good.goodInfoOnWelcome')
+                    @endforeach
+                </div>
+            @endif
         <h3>随便看看</h3>
         @foreach($cats as $cat)
             @if(count($catgoods[$cat->cat_name]))

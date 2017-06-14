@@ -242,7 +242,7 @@ class UserController extends Controller
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
-        $data['goods'] = GoodInfo::where('user_id', $user_id)->paginate(15);
+        $data['goods'] = GoodInfo::where('user_id', $user_id)->orderby('id', 'desc')->paginate(15);
 
         return view::make('user.seller.mygoods')->with($data);
     }
