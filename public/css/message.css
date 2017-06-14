@@ -54,15 +54,20 @@
     border-radius: 50%;
     width: 2em;
     height: 2em;
-    padding-left: 0em;
     padding-top: 0.2em;
-    top: -1.4em;
-    left: -4.5em;
-    position: relative;
+    position: absolute;
+    top: 0.3em;
+    left: 5em;
     z-index: 10;
 }
 
 .message-container {
+    overflow: auto;
+    overflow-x: hidden;
+    max-height: 500px;
+}
+
+.contact-container {
     overflow: auto;
     overflow-x: hidden;
     max-height: 500px;
@@ -113,6 +118,10 @@
     display: none;
 }
 
+.secondary {
+    background-color: #c5c5ca
+}
+
 #message-container::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -139,9 +148,35 @@
     background: #efefff;
 }
 
+#contact-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#contact-container::-webkit-scrollbar-button {
+    background-color: #efefff;
+}
+
+#contact-container::-webkit-scrollbar-track {
+    background: #efefef;
+}
+
+#contact-container::-webkit-scrollbar-thumb {
+    background: #aaaaaa;
+    border-radius: 4px;
+}
+
+#contact-container::-webkit-scrollbar-corner {
+    background: #82AFFF;
+}
+
+#contact-container::-webkit-scrollbar-resizer {
+    background: #efefff;
+}
+
 #contact-closer {
     position: relative;
-    top: -4.6em;
+    top: -5em;
     float: right;
 }
 

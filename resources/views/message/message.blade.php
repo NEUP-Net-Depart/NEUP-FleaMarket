@@ -20,18 +20,18 @@
         <div>
             {{--<a v-on:click="getNewContact">###</a>--}}
             <p class="err-msg" v-if="errorMessage">@{{ errorMessage }}</p>
-            <ul>
+            <ul id="contact-container" class="contact-container">
                 <table class="con-wrapper">
                     <transition-group name="contact-list" tag="ul">
                         <li :class="{ con: true, active: current_contact_id === contact.contact_id }"
                             v-bind:key="contact.contact_id" v-for="(contact, index) in contacts"
                             v-on:click="loadDialog(index)">
+                            <i v-if="contact.unread_count > 0"
+                               class="balloon-tip">@{{ contact.unread_count }}</i>
                             <tr>
                                 <td>
                                 <span>
                                     <img class="mavatar" :src="'/avatar/' + contact.contact_id + '/64/64'"/>
-                                    <i v-if="contact.unread_count > 0"
-                                       class="balloon-tip">@{{ contact.unread_count }}</i>
                                 </span>
                                 </td>
                                 <td>
@@ -43,13 +43,14 @@
                                     </p>
                                 </td>
                             </tr>
-                            <span id="contact-closer" class="badge secondary"
-                                  v-on:click="closeContact(index)">X</span>
+                            <span id="contact-closer" class="badge secondary" v-on:click="closeContact(index)">
+                                X
+                            </span>
                         </li>
                     </transition-group>
                 </table>
             </ul>
-            <a v-if="hasMore" v-on:click="getHistoryContact(false)">加载更多</a>
+            <a href="javascript:void(0)" v-if="hasMore" v-on:click="getHistoryContact(false)">加载更多</a>
         </div>
     </script>
 
@@ -57,7 +58,7 @@
         <div>
             <p v-if="messages.length == 0" style="text-align: center">暂无消息</p>
             <div :class="{ hide: isHidden }">
-                <a v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
+                <a href="javascript:void(0)" v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
                 <p v-else>没有更多了</p>
                 <ul id="message-container" class="message-container">
                     <transition-group name="message-list" tag="ul">
