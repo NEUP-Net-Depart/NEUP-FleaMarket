@@ -26,6 +26,11 @@
     </ul>
     <div class="tabs-content" data-tabs-content="editinfo">
         <div class="tabs-panel" id="goods">
+            @if (count($errors) > 0)
+                <label>
+                    <span class="form-error is-visible">{!! $errors->first() !!}</span>
+                </label>
+            @endif
             <div class="card-section">
                 <div class="row">
                     <table class="table">

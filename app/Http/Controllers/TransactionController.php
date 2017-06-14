@@ -93,11 +93,11 @@ class TransactionController extends Controller
     private function buy($good_id, $buyer_id, $count, $request_ip)
     {
         if (GoodInfo::where('id', $good_id)->where('baned', false)->count() == 0)
-            return json_encode(['result' => false, 'msg' => 'No such item']);
+            return json_encode(['result' => false, 'msg' => '没有此商品']);
         $good = GoodInfo::find($good_id);
         $buyer = User::find($buyer_id);
         if ($count > $good->count)
-            return json_encode(['result' => false, 'msg' => 'Out of stock']);
+            return json_encode(['result' => false, 'msg' => '商品缺货']);
 
         $trans = new Transaction();
         $trans->good_id = $good_id;
@@ -190,19 +190,21 @@ class TransactionController extends Controller
                 return json_encode(['result' => true, 'character' => 'seller', 'msg' => 'success']);
                 break;
             default:
-                return json_encode(['result' => false, 'msg' => 'unauthorized']);
+                return json_encode(['result' => false, 'msg' => '未授权的访问']);
         }
     }
 
     private function sell($trans, $user_id, $request_ip)
     {
         if ($trans->seller_id != $user_id)
-            return json_encode(['result' => false, 'msg' => 'unauthorized']);
+            return json_encode(['result' => false, 'msg' => '未授权的访问']);
         if($trans->status != 1)
-            return json_encode(['result' => false, 'msg' => 'invalid']);
+            return json_encode(['result' => false, 'msg' => '无效的请求']);
         $good = $trans->good;
-        if ($trans->count > $good->count)
-            return json_encode(['result' => false, 'msg' => 'Out of stock']);
+        if ($trans->number > $good->count)
+            return json_encode(['result' => false, 'msg' => '商品缺货']);
+        $good->count = $good->count - $trans->number;
+        $good->save();
         $trans->status = 2;
         $trans->save();
 
@@ -232,9 +234,9 @@ class TransactionController extends Controller
     private function update($trans, $user_id, $number, $request_ip)
     {
         if ($trans->seller_id != $user_id)
-            return json_encode(['result' => false, 'msg' => 'unauthorized']);
+            return json_encode(['result' => false, 'msg' => '未授权的访问']);
         if($trans->status != 2)
-            return json_encode(['result' => false, 'msg' => 'invalid']);
+            return json_encode(['result' => false, 'msg' => '无效的请求']);
         $trans->number = $number;
         $trans->save();
 
@@ -251,11 +253,11 @@ class TransactionController extends Controller
     private function finish($trans, $user_id, $result, $request_ip)
     {
         if ($trans->seller_id != $user_id)
-            return json_encode(['result' => false, 'msg' => 'unauthorized']);
+            return json_encode(['result' => false, 'msg' => '未授权的访问']);
         if($trans->status != 2)
-            return json_encode(['result' => false, 'msg' => 'invalid']);
-        if($result) {
-            $trans->good->count = $trans->good->count - $trans->number;
+            return json_encode(['result' => false, 'msg' => '无效的请求']);
+        if(!$result) {
+            $trans->good->count = $trans->good->count + $trans->number;
             $trans->good->save();
         }
         if($result)
