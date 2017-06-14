@@ -19,11 +19,13 @@
 @section('content')
 
     <h3>我的出售</h3>
-    <ul class="nav nav-tabs" role="tablist">
-        @yield('tab-list')
-    </ul>
-    <div class="panel panel-default">
-    <div class="tab-content panel-body">
+    <div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            @yield('tab-list')
+        </ul>
+    </div>
+    <div class="tab-content card-block">
         @yield('tab-content')
     </div>
     </div>

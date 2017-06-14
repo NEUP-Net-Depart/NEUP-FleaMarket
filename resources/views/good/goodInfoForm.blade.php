@@ -12,12 +12,13 @@
 
 @section('content')
 
-        <div class="panel panel-default">
-            <div class="panel-body">
-            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <div class="card">
+            <div class="card-block">
+            <div class="row">
+            <div class="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
                     <span class="sr-only">Error:</span>
                     {!! $errors->first() !!}
                 </div>
@@ -29,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label>商品分类</label>
-                    <select name="cat_id" id="cat_id" class="btn btn-default dropdown-toggle" style="width:100%">
+                    <select name="cat_id" id="cat_id" class="btn btn-secondary dropdown-toggle" style="width:100%">
                         @foreach($cats as $cat)
                             <option value="{{$cat->id}}"  @if(($good->cat_id==$cat->id&&!count($errors))||(old('cat_id')==$cat->id&&count($errors))) 
                                         selected="selected" @endif>{{$cat->cat_name}}</option>
@@ -46,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label>商品类型</label>
-                    <select name="type" class="btn btn-default dropdown-toggle" style="width:100%">
+                    <select name="type" class="btn btn-secondary dropdown-toggle" style="width:100%">
                         <option value="0" @if(($good->type==0&&!count($errors))||(old('type')==0&&count($errors))) selected="selected" @endif>普通商品</option>
                         <option value="1" @if(($good->type==1&&!count($errors))||(old('type')==1&&count($errors))) selected="selected" @endif>拍卖商品</option>
                     </select>
@@ -85,9 +86,10 @@
                 <input type="submit" class="btn btn-primary" value="@if($add)添加@else更改@endif"/>
                 <input type="button" class="btn btn-success" value="商品列表" onclick="window.location.href=('/good')">
             </form>
+            </div>
+            </div>
+            </div>
         </div>
-        </div>
-    </div>
     <script type="text/javascript">
         function preview(file) {
             var prevDiv = document.getElementById('preview');

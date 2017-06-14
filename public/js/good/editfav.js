@@ -7,7 +7,7 @@ $(".good").mouseleave(function(){
     $("img",this).css("filter","brightness(100%)");
 });
 function editfav(){
-    $(".cb").attr("style","visibility:show;width:25px;height:25px;z-index:203;position:absolute;top:0;left:5px");
+    $(".cb").attr("style","visibility:show;width:25px;height:25px;z-index:203;position:absolute;top:5px;left:5px");
     $(".cb").removeAttr("checked");
     $("#editbutton").attr("onclick","back()");
     $("#editbutton").text("返回");

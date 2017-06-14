@@ -19,13 +19,15 @@
             <span class="form-error is-visible">{{$errors->first()}}</span>
         </label>
     @endif
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" @if($tab == "profile") class="active" @endif><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">个人信息</a></li>
-        <li role="presentation" @if($tab == "account") class="active" @endif><a href="#account" aria-controls="account" role="tab" data-toggle="tab">用户帐户</a></li>
-        <li role="presentation" @if($tab == "contact") class="active" @endif><a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">联系方式</a></li>
-    </ul>
-    <div class="panel panel-default">
-    <div class="tab-content panel-body">
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item"><a class="nav-link @if($tab == "profile") active @endif" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">个人信息</a></li>
+                <li class="nav-item"><a class="nav-link @if($tab == "account") active @endif" href="#account" aria-controls="account" role="tab" data-toggle="tab">用户帐户</a></li>
+                <li class="nav-item"><a class="nav-link @if($tab == "contact") active @endif" href="#contact" aria-controls="contact" role="tab" data-toggle="tab">联系方式</a></li>
+            </ul>
+        </div>
+        <div class="tab-content card-block">
         <div role="tabpanel" class="tab-pane @if($tab == 'profile') active @endif" id="profile">
             <div class="card-section">
                 <form action="/user" method="POST" enctype="multipart/form-data">

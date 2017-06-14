@@ -13,8 +13,9 @@
 @endsection
 
 @section('content')
+    <div class="row">
     @include('layout.catlist')
-    <div class="col-xs-12 col-sm-7">
+    <div class="col-12 col-md-7">
         {{--@if(count($stargoods) > 0)
             <div class="orbit" role="region" aria-label="推荐商品" data-orbit>
                 <ul class="orbit-container">
@@ -34,6 +35,7 @@
             <br/>
         @endif--}}
         @if(count($newgoods)>0)
+            <br/>
             <h3>新品</h3>
                 <div class="row">
                 @foreach($newgoods as $good)
@@ -41,6 +43,7 @@
                 @endforeach
                 </div>
         @endif
+        <br/>
         <h3>随便看看</h3>
         @foreach($cats as $cat)
             @if(count($catgoods[$cat->cat_name]))
@@ -53,18 +56,18 @@
             @endif
         @endforeach
     </div>
-    <div class="col-xs-12 col-sm-3">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h4>公告</h4></div>
-            <div class="list-group">
+    <div class="col-12 col-md-3">
+        <div class="card">
+            <div class="card-header"><h4>公告</h4></div>
+            <div class="list-group list-group-flush">
             @foreach($announces as $announce)
                 <a href="#ann{{$announce->id}}" class="list-group-item" data-toggle="modal">{{ $announce->title }}</a>
                 <div class="modal fade" id="ann{{$announce->id}}" tabindex="-1" role="dialog" aria-labelledby="ann{{$announce->id}}Label">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">{{ $announce->title }}</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
                                 {{$announce->content}}
@@ -75,6 +78,7 @@
             @endforeach
             </div>
         </div>
+    </div>
     </div>
     <script src="/js/good/cat.js"></script>
     <script src="/js/good/editfav.js"></script>

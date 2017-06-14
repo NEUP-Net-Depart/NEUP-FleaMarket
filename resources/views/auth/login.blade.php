@@ -3,14 +3,17 @@
 @section('title', "登录")
 
 @section('content')
-    <div class="hidden-xs col-sm-6 thumbnail">
-        <img src="/img/loginpic.jpg"/>
+    <div class="row">
+    <div class="hidden-sm-down col-md-6 card">
+        <div class="card-block">
+            <img src="/img/loginpic.jpg" style="width:100%">
+        </div>
     </div>
-    <div class="col-xs-12 col-sm-4 col-sm-offset-1 panel panel-default">
-        <div class="panel-body">
+    <div class="col-10 offset-1 col-md-4 offset-md-1 card">
+        <div class="card-block">
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
                     <span class="sr-only">Error:</span>
                     {!! $errors->first() !!}
                 </div>
@@ -25,17 +28,22 @@
                     <input type="password" name="password" id="password" class="form-control" placeholder="密码">
                 </div>
                 {!! csrf_field() !!}
-                <div class="pull-left">
+                <div class="float-left">
                     <input type="submit" class="btn btn-primary" value="登录">
                 </div>
-                <div class="pull-right">
+                <div class="float-right">
                     <input type="button" class="btn btn-success" value="注册" onclick="window.location.href='/register'">
                 </div>
             </form>
         </div>
     </div>
-    <div class="visible-xs-block col-xs-12 thumbnail">
-        <img src="/img/loginpic.jpg"/>
+    </div><br/>
+    <div class="row">
+    <div class="hidden-md-up col-10 offset-1 card">
+        <div class="card-block">
+            <img src="/img/loginpic.jpg" style="width:100%">
+        </div>
+    </div>
     </div>
 
 @endsection

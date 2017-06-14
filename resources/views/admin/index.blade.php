@@ -4,14 +4,16 @@
 
 @section('content')
 
-<ul class="nav nav-tabs" role="tab-list">
-        <li role="presentation" class="active"><a href="#announcement" role="tab" data-toggle="tab" aria-controls="announcement">公告管理</a></li>
-        <li role="presentation"><a href="#classify" role="tab" data-toggle="tab" aria-controls="classify">分类管理</a></li>
-		<li role="presentation"><a href="#report" role="tab" data-toggle="tab" aria-controls="report">查看举报记录</a></li>
+<div class="card">
+<div class="card-header">
+<ul class="nav nav-tabs card-header-tabs" role="tab-list">
+        <li class="nav-item"><a class="nav-link active" href="#announcement" role="tab" data-toggle="tab" aria-controls="announcement">公告管理</a></li>
+        <li class="nav-item"><a class="nav-link" href="#classify" role="tab" data-toggle="tab" aria-controls="classify">分类管理</a></li>
+		<li class="nav-item"><a class="nav-link" href="#report" role="tab" data-toggle="tab" aria-controls="report">查看举报记录</a></li>
 </ul>
+</div>
 
-<div class="panel panel-default">
-    <div class="tab-content panel-body">
+    <div class="tab-content card-block">
         <div role="tabpanel" class="tab-pane active" id="announcement">
             <table class="table table-hover">
               <thead>
@@ -135,6 +137,5 @@
 				</table>
 			{{ $reports->links() }}
 		</div>
-
 </div>
 @endsection

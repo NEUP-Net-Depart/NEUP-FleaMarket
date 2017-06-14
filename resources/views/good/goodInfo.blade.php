@@ -32,23 +32,24 @@
             }
         });
     </script>
-    <div class="col-xs-12 col-sm-5">
-        <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="thumbnail" src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%"/></a>
+    <div class="row">
+    <div class="col-12 col-md-5">
+        <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%"/></a><br/>
     </div>
-    <div class="col-xs-12 col-sm-6 col-sm-offset-1">
-        <h2 style="word-break:break-all">
-            <span class="hidden-xs">
+    <div class="col-12 col-md-6 offset-md-1">
+        <h2 style="word-break:break-all">{{ $good->good_name }}
+            <span class="hidden-sm-down">
                 @if(isset($inFvlst))
                     @if(count($inFvlst) == 0)
-                        <button class="glyphicon glyphicon-star-empty btn btn-primary" onclick="add_favlist()" title="收藏OvO"></button>
+                        <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" title="收藏OvO"></button>
                     @endif
                     @if(count($inFvlst) != 0)
-                        <button class="glyphicon glyphicon-star btn btn-primary" onclick="del_favlist()" title="取消收藏QAQ"></button>
+                        <button class="fa fa-star btn btn-primary" onclick="del_favlist()" title="取消收藏QAQ"></button>
                     @endif
                 @else
-                    <button class="glyphicon glyphicon-star-empty btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO"></button>
+                    <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO"></button>
                 @endif
-            </span>{{ $good->good_name }}
+            </span>
         </h2>
 		卖家：<a href="/user/{{ $user->id }}">{{ $user->nickname }}</a>
         <div><!-- 放tag 和更多图片缩略图 --></div>
@@ -71,10 +72,10 @@
             </form>
         @endif
         @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
-            <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-xs">
+            <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
                 <input type="submit" class="btn btn-primary" value="修改">
             </form>
-            <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-xs">
+            <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
                 <input type="submit" class="btn btn-primary" value="删除">
@@ -86,8 +87,9 @@
 			</form>
 		@endif
     </div>
-    <div class="col-xs-12">
-        <h3>商品介绍</h3>
+    </div>
+    <br/>
+    <h3>商品介绍</h3>
         <div style="word-break:break-all">{{ $good->description }}</div>
     </div>
     <script>
@@ -100,9 +102,9 @@
                 url: "/good/{{ $good->id }}/add_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $jQuery_NEW('.glyphicon-star-empty').attr('title','取消收藏QAQ');
-                    $jQuery_NEW('.glyphicon-star-empty').attr('onclick', 'del_favlist()');
-                    $jQuery_NEW('.glyphicon-star-empty').attr('class','glyphicon glyphicon-star btn btn-primary');
+                    $jQuery_NEW('.fa-star-o').attr('title','取消收藏QAQ');
+                    $jQuery_NEW('.fa-star-o').attr('onclick', 'del_favlist()');
+                    $jQuery_NEW('.fa-star-o').attr('class','fa fa-star btn btn-primary');
                 }
             });
         }
@@ -116,9 +118,9 @@
                 url: "/good/{{ $good->id }}/del_favlist",
                 data: str_data,
                 success: function (msg) {
-                    $jQuery_NEW('.glyphicon-star').attr('title','收藏OvO');
-                    $jQuery_NEW('.glyphicon-star').attr('onclick', 'add_favlist()');
-                    $jQuery_NEW('.glyphicon-star').attr('class','glyphicon glyphicon-star-empty btn btn-primary');
+                    $jQuery_NEW('.fa-star').attr('title','收藏OvO');
+                    $jQuery_NEW('.fa-star').attr('onclick', 'add_favlist()');
+                    $jQuery_NEW('.fa-star').attr('class','fa fa-star-o btn btn-primary');
                 }
             });
         }
@@ -129,22 +131,20 @@
 @endsection
 
 @section('navbm')
-    <div class="visible-xs-block col-xs-12" style="position:sticky;bottom:0">
-        <div class="pull-left">
-            <form style="display:inline-block">
+    <div class="hidden-md-up col-12" style="position:sticky;bottom:37px">
+        <div class="float-left">
             @if(isset($inFvlst))
                 @if(count($inFvlst) == 0)
-                    <button class="glyphicon glyphicon-star-empty btn btn-primary" onclick="add_favlist()" href="#" title="收藏OvO"></button>
+                    <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" href="#" title="收藏OvO" style="position:relative;top:4px"></button>
                 @endif
                 @if(count($inFvlst) != 0)
-                    <button class="glyphicon glyphicon-star btn btn-primary" onclick="del_favlist()" href="#" title="取消收藏QAQ"></button>
+                    <button class="fa fa-star btn btn-primary" onclick="del_favlist()" href="#" title="取消收藏QAQ"></button>
                  @endif
             @else
-                <button class="glyphicon glyphicon-star-empty btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO"></button>
+                <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO"></button>
             @endif
-            </form>
         </div>
-        <div class="pull-right">
+        <div class="float-right">
             @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
                 <form action="/good/{{ $good->id }}/edit" style="display:inline-block;">
                     <input type="submit" class="btn btn-primary" value="修改">

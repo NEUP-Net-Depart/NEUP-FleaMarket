@@ -2,15 +2,11 @@ a:hover, a:focus {
     text-decoration: none;
 }
 
-a:focus, button:focus {
-    outline: none;
-}
-
 .banner-back {
     position: absolute;
     top: 0;
     left: 0;
-    height: 138px;
+    height: 152px;
     width: 100%;
     z-index: -2;
     overflow: hidden;
@@ -24,7 +20,7 @@ a:focus, button:focus {
     top: -10px;
     left: -20px;
     padding: 0 20px;
-    height: 138px;
+    height: 152px;
     width: 100%;
     box-sizing: content-box;
 }
@@ -69,14 +65,6 @@ a:focus, button:focus {
     box-sizing: content-box;
 }
 
-.navbar-li {
-    color: #eeeeee !important;
-}
-
-.navbar-li:hover {
-    color: #ffffff !important;
-}
-
 @media (max-width: 749px) {
     .navbar a {
         color: #eeeeee !important;
@@ -104,6 +92,10 @@ a:focus, button:focus {
     margin: 0;
 }
 
+#searchq {
+    border: 0px;
+}
+
 @media (min-width: 750px) {
     .navbar-search {
         max-width: 250px;
@@ -111,7 +103,7 @@ a:focus, button:focus {
 }
 
 .page-content {
-    margin-top: 40px;
+    margin-top: 75px;
 }
 
 .footer ul {
@@ -130,46 +122,4 @@ a:focus, button:focus {
 
 .titlepic {
     width: 100%;
-}
-
-.navbar-toggle > .icon-bar {
-    background-color: #eeeeee !important;
-}
-
-.navbar-toggle:hover > .icon-bar, .navbar-toggle:focus > .icon-bar {
-    background-color: #999999 !important;
-}
-
-.panel > .list-group > a:focus {
-    background-color: white;
-}
-
-.bs-callout {
-  margin: 20px 0;
-  padding: 15px 30px 15px 15px;
-  border-left: 5px solid #eee;
-}
-.bs-callout h4 {
-  margin-top: 0;
-}
-.bs-callout p:last-child {
-  margin-bottom: 0;
-}
-.bs-callout code,
-.bs-callout .highlight {
-  background-color: #fff;
-}
-
-/* Themes for different contexts */
-.bs-callout-danger {
-  background-color: #fcf2f2;
-  border-color: #dFb5b4;
-}
-.bs-callout-warning {
-  background-color: #fefbed;
-  border-color: #f1e7bc;
-}
-.bs-callout-info {
-  background-color: #f0f7fd;
-  border-color: #d0e3f0;
 }

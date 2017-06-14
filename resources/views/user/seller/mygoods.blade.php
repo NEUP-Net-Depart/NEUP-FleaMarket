@@ -1,9 +1,9 @@
 @extends('user.seller.master')
 
 @section('tab-list')
-    <li role="presentation" class="active"><a href="/user/sell">我的商品</a></li>
-    <li role="presentation"><a href="/user/sell/trans">交易订单</a></li>
-    <li role="presentation"><a href="/user/sell/tickets">历史评价</a></li>
+    <li class="nav-item"><a href="/user/sell" class="nav-link active">我的商品</a></li>
+    <li class="nav-item"><a href="/user/sell/trans" class="nav-link">交易订单</a></li>
+    <li class="nav-item"><a href="/user/sell/tickets" class="nav-link">历史评价</a></li>
 @endsection
 
 @section('tab-content')

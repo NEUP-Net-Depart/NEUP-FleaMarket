@@ -6,12 +6,14 @@
 
     <div id="message">
         {{--<a v-on:click="refreshContact">???</a>--}}
-            <div class="col-md-8 col-xs-12">
+        <div class="row">
+            <div class="col-lg-8 col-12">
                 <message-dialog ref="messageDialog" v-on:top-contact="topContactCallback"></message-dialog>
             </div>
-            <div class="col-md-4 col-xs-12">
+            <div class="col-lg-4 col-12">
                 <contact-list ref="contactList" v-on:load-dialog="loadDialogCallback"></contact-list>
             </div>
+        </div>
     </div>
 
     <script type="text/x-template" id="contact_list">
