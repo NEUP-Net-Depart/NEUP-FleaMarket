@@ -29,6 +29,11 @@
         </div>
         <div class="tabs-panel" id="trans">
             <label>友情提示：如果需要取消订单，请务必和对方沟通说明理由。恶意取消订单的行为可以举报。</label>
+            @if (count($errors) > 0)
+                <label>
+                    <span class="form-error is-visible">{!! $errors->first() !!}</span>
+                </label>
+            @endif
             <div class="card-section">
                 <div class="row table-responsive">
                     <table class="table">
