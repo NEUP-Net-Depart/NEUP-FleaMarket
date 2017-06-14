@@ -32,7 +32,7 @@
                     <input type="submit" class="btn btn-primary" value="登录">
                 </div>
                 <div class="float-right">
-                    <input type="button" class="btn btn-success" value="注册" onclick="window.location.href='/register'">
+                    <input type="button" class="btn btn-success" value="校卡平台快捷登录" onclick="window.location.href='/sso'">
                 </div>
             </form>
         </div>

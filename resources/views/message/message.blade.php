@@ -8,10 +8,10 @@
         {{--<a v-on:click="refreshContact">???</a>--}}
         <div class="row">
             <div class="col-lg-8 col-12">
-                <message-dialog ref="messageDialog" v-on:top-contact="topContactCallback"></message-dialog>
+                <message-dialog ref="messageDialog" v-on:top-contact="topContactCallback" v-on:network-error="stopTimerCallback"></message-dialog>
             </div>
             <div class="col-lg-4 col-12">
-                <contact-list ref="contactList" v-on:load-dialog="loadDialogCallback"></contact-list>
+                <contact-list ref="contactList" v-on:load-dialog="loadDialogCallback" v-on:network-error="stopTimerCallback"></contact-list>
             </div>
         </div>
     </div>

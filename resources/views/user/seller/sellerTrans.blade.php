@@ -10,8 +10,15 @@
         <div role="tabpanel" class="tab-pane" id="goods">
         </div>
         <div role="tabpanel" class="tab-pane active" id="trans">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger" role="alert">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {!! $errors->first() !!}
+                </div>
+            @endif
             <label>友情提示：如果需要取消订单，请务必和对方沟通说明理由。恶意取消订单的行为可以举报。</label>
-                    <table class="table">
+                    <table class="table table-hover table-responsive">
                         <tr>
                             <td>订单编号</td>
                             <td>商品名称</td>
@@ -26,7 +33,7 @@
                                 <td><a href="/good/{{$tran->good_id}}"
                                        onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
                                        onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
-                                <td>{{ $tran->buyer->nickname ? $tran->buyer->nickname : "无昵称用户" }}</td>
+                                <td><a href="/user/{{ $tran->buyer_id }}">{{ $tran->buyer->nickname ? $tran->buyer->nickname : "无昵称用户" }}@if($tran->buyer->baned)【已封禁】@endif</a></td>
                                 <td>{{ $tran->number }}</td>
                                 @if($tran->status == 0)
                                     <td>
@@ -57,11 +64,11 @@
                                     <td>
                                         <a href="/trans/{{ $tran->id }}">查看交易</a>
                                     </td>
-                                    <td>
+                                    {{--<td>
                                         <form action="#">
                                             <input type="submit" class="button" value="修改订单" style="margin: 0;">
                                         </form>
-                                    </td>
+                                    </td>--}}
                                     <td>
                                         <form method="POST" action="/trans/{{ $tran->id }}/confirm">
                                             {!! csrf_field() !!}

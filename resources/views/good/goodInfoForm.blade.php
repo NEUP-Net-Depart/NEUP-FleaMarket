@@ -45,9 +45,9 @@
                     <label for="price">商品价格</label>
                     <input type="number" min="0" name="price" id="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格" class="form-control">
                 </div>
-                <div class="form-group">
+                <div class="form-group hidden-xs-up">
                     <label>商品类型</label>
-                    <select name="type" class="btn btn-secondary dropdown-toggle" style="width:100%">
+                    <select name="type" class="btn btn-secondary dropdown-toggle" style="width:100%" value="0">
                         <option value="0" @if(($good->type==0&&!count($errors))||(old('type')==0&&count($errors))) selected="selected" @endif>普通商品</option>
                         <option value="1" @if(($good->type==1&&!count($errors))||(old('type')==1&&count($errors))) selected="selected" @endif>拍卖商品</option>
                     </select>

@@ -38,7 +38,7 @@
         <div class="row">
         @foreach($goods as $good)
         <div class="col-6 col-md-4 col-lg-3">
-            <div class="good">
+            <div class="good" style="margin-bottom:20px;">
                 <a href="/good/{{ $good->id }}">
                     <div class="card">
                         <div class="card-img-top">

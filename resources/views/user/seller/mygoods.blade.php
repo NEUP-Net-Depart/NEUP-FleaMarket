@@ -8,7 +8,15 @@
 
 @section('tab-content')
         <div role="tabpanel" class="tab-pane active" id="goods">
-            <table class="table table-hover">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger" role="alert">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {!! $errors->first() !!}
+                </div>
+            @endif
+            <table class="table table-hover table-responsive">
+                <thead>
                 <tr>
                     <th>#</th>
                     <th>商品名称</th>
@@ -17,6 +25,8 @@
                     <th>修改信息</th>
                     <th>删除商品</th>
                 </tr>
+                </thead>
+                <tbody>
                 @foreach($goods as $good)
                     <tr id="good{{ $good->id }}">
                         <td>{{ $good->id }}</td>
@@ -39,8 +49,9 @@
                         </td>
                     </tr>
                 @endforeach
-                {{ $goods->links() }}
+                </tbody>
             </table>
+            {{ $goods->links() }}
         </div>
         <div role="tabpanel" class="tab-pane" id="trans">
         </div>

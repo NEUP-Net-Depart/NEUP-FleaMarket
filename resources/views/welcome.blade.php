@@ -35,7 +35,6 @@
             <br/>
         @endif--}}
         @if(count($newgoods)>0)
-            <br/>
             <h3>新品</h3>
                 <div class="row">
                 @foreach($newgoods as $good)
@@ -43,7 +42,6 @@
                 @endforeach
                 </div>
         @endif
-        <br/>
         <h3>随便看看</h3>
         @foreach($cats as $cat)
             @if(count($catgoods[$cat->cat_name]))
