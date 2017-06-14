@@ -75,7 +75,7 @@
     <div class="medium-12 columns">
       <form action="/good" method="GET">
         <div class="input-group float-right" id="top-bar-quick-access">
-            <input class="input-group-field" type="search" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="<?php if(isset($_GET['query'])){echo $_GET['query']; } ?>"/>
+            <input class="input-group-field" type="search" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif"/>
             <div class="input-group-button">
                 <input type="submit" class="button" value="G♂"/>
             </div>
@@ -88,7 +88,7 @@
   <div class="small-11 small-centered columns">
       <form action="/good" method="GET">
         <div class="input-group float-right" id="top-bar-quick-access-small">
-            <input class="input-group-field" type="search" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="<?php if(isset($_GET['query'])){echo $_GET['query']; } ?>"/>
+            <input class="input-group-field" type="search" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif"/>
             <div class="input-group-button">
               <input type="submit" class="button" value="G♂"/>
             </div>
