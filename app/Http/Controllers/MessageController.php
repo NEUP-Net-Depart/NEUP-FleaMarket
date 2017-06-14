@@ -156,4 +156,13 @@ class MessageController extends Controller
         return Redirect::to('/message');
     }
 
+    public function closeConversation(Request $request, $receiver)
+    {
+        $user_id = $request->session()->get('user_id');
+        MessageContact::where('user_id', $user_id)
+            ->where('contact_id', $receiver)
+            ->delete();
+        return json_encode(['result' => true, 'msg' => 'success']);
+    }
+
 }
