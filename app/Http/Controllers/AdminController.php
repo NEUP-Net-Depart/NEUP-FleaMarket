@@ -11,6 +11,7 @@ use App\User;
 use App\Announcement;
 use App\Http\Controllers\Controller;
 use App\Ticket;
+use Mews\Purifier\Purifier;
 
 class AdminController extends Controller
 {
@@ -130,7 +131,7 @@ class AdminController extends Controller
         $input = $request->all();
         $announcement = new Announcement;
         $announcement->title = $input['title'];
-        $announcement->content = $input['content'];
+        $announcement->content = clean($input['content']);
 		$announcement->save();
         return Redirect::to('/admin');
 	 }
