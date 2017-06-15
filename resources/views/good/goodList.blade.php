@@ -11,18 +11,18 @@
     <div class="row">
         <div class="small-0 medium-2 columns">
             <ul class="menu vertical hide-for-small-only">
+                <li class="byj"><a href="/good?cat_id=5" @if($cat_id == 5) style="color: #ffffff; background-color: #ff172e" @else style="color: #ffffff; background-color: #ff5d73" @endif>毕业季活动</a></li>
                 <li @if($cat_id == 0) class="active" @else class="cat" @endif><a href="/good">所有商品</a></li>
                 @foreach($cats as $cat)
-                    <li @if($cat_id == $cat->id) class="active" @else class="cat" @endif><a
-                                href="/good?cat_id={{ $cat->id }}">{{ $cat->cat_name }}</a></li>
+                    @if($cat->cat_name != "毕业季活动")
+                        <li @if($cat_id == $cat->id) class="active" @else class="cat" @endif><a
+                                    href="/good?cat_id={{ $cat->id }}">{{ $cat->cat_name }}</a></li>
+                    @endif
                 @endforeach
             </ul>
             <ul class="menu show-for-small-only" style="background-color: white;margin-bottom: 15px">
-                <li class="cat"><a href="/good">所有商品</a></li>
-                @foreach($cats as $cat)
-                    <li class="cat"><a
-                                href="/good?cat_id={{ $cat->id }}">{{ $cat->cat_name }}</a></li>
-                @endforeach
+                <li class="byj"><a href="/good?cat_id=5" @if($cat_id == 5) style="color: #ffffff; background-color: #ff172e" @else style="color: #ffffff; background-color: #ff5d73" @endif>毕业季活动</a></li>
+                <li @if($cat_id == 0) class="active" @else class="cat" @endif><a href="/good">所有商品</a></li>
             </ul>
         </div>
         <div class="small-12 medium-10 columns">
