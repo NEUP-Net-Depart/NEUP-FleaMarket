@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="/css/foundation.css"/>
     <link rel="stylesheet" href="/css/app.css"/>
     <link rel="stylesheet" href="/css/cropper.min.css"/>
+    <link rel="stylesheet" href="/css/froala_editor.min.css">
+    <link rel="stylesheet" href="/css/froala_editor.pkgd.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link type="text/css" media="screen" rel="stylesheet" href="/css/responsive-tables.css" />
     @yield('asset')
     <script src="/js/jquery.min.js"></script>
@@ -21,6 +24,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="/js/jquery.slides.min.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/froala_editor.pkgd.min.js"></script>
     <title>@yield('title') - 先锋市场</title>
 </head>
 <body>

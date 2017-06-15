@@ -44,7 +44,7 @@
                         <label class="right inline">商品描述:</label>
                     </div>
                     <div class="small-9 columns">
-                        <textarea name="description" placeholder="商品描述">{{old('description')}}</textarea>
+                        <textarea id="description" name="description" placeholder="商品描述">{!! old('description') !!}</textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -151,6 +151,20 @@
                 prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
             }
         }
+        // WYIWYG Editor
+        $("textarea#description").froalaEditor({
+            imageUploadParam: 'source',
+            imageUploadParams: {
+                key: "7e945496f2de8cbc710ecca702062e9b",
+                format: "flea-mart"
+            },
+            imageUploadURL: 'https://flimg.neupioneer.com/api/1/upload',
+            requestWithCORS: true,
+            pluginsEnabled: ['image', 'link', 'colors', 'emoticons',
+                'fontSize', 'fontFamily', 'fullscreen'],
+            toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+                'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo']
+        });
     </script>
 
 @endsection
