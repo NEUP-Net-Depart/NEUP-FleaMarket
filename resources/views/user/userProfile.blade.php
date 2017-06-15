@@ -3,14 +3,14 @@
 @section('title', "用户")
 
 @section('asset')
-<style>
-    @media (max-width: 770px) {
-        #profile_bt {
-            height: 40px;
+    <style>
+        @media (max-width: 770px) {
+            #profile_bt {
+                height: 40px;
+            }
         }
-    }
-</style>
-<script src="/js/good/good_list.js"></script>
+    </style>
+    <script src="/js/good/good_list.js"></script>
 @endsection
 
 @section('content')
@@ -81,48 +81,48 @@
             </ul>
         </div>
         <div class="tab-content card-block">
-            <div role="tabpanel" class="tab-pane active" id="goods">
-                    <div class="row">
-                        @foreach($goods as $good)
-                            <div class="col-6 col-md-4 col-lg-3">
-                                <div class="good" style="margin-bottom:20px;">
-                                    <a href="/good/{{ $good->id }}">
-                                        <div class="card">
-                                            <div class="card-img-top">
-                                                <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" style="width:100%"/>
-                                            </div>
-                                            <div class="card-block">
-                                                <div style="word-break:break-all">{{ $good->good_name }}</div>
-                                                <div class="text-warning"><b>￥{{ $good->price }}</b></div>
-                                                @if($good->count==0)
-                                                    <div class="text-danger">无库存QAQ</div>
-                                                @else
-                                                    <div>库存：{{ $good->count }}</div>
-                                                @endif
-                                            </div>
+            <div role="tabpanel" class="tab-pane active" id="goods" style="min-height: 270px">
+                <div class="row">
+                    @foreach($goods as $good)
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="good" style="margin-bottom:20px;">
+                                <a href="/good/{{ $good->id }}">
+                                    <div class="card">
+                                        <div class="card-img-top">
+                                            <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" style="width:100%"/>
                                         </div>
-                                    </a>
-                                </div>
+                                        <div class="card-block">
+                                            <div style="word-break:break-all">{{ $good->good_name }}</div>
+                                            <div class="text-warning"><b>￥{{ $good->price }}</b></div>
+                                            @if($good->count==0)
+                                                <div class="text-danger">无库存QAQ</div>
+                                            @else
+                                                <div>库存：{{ $good->count }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                            {{ $goods->links() }}
-                        @endforeach
-                    </div>
+                        </div>
+                        {{ $goods->links() }}
+                    @endforeach
+                </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tickets">
+            <div role="tabpanel" class="tab-pane" id="tickets"  style="min-height: 270px">
                 <div class="card-section">
                     <div id="tickets-container" class="card-section">
-                            @foreach($tickets as $ticket)
-                                <div class="card card-block" style="margin-bottom: 5px">
-                                    <label>{{ $ticket->created_at }}
-                                        @if($ticket->type == 1)
-                                            一只小萌妹评价了TA说：
-                                        @else
-                                            一只小萌妹举报了TA说：
-                                        @endif
-                                    </label>
-                                    <p>{{ $ticket->message }}</p>
-                                </div>
-                            @endforeach
+                        @foreach($tickets as $ticket)
+                            <div class="card card-block" style="margin-bottom: 5px">
+                                <label>{{ $ticket->created_at }}
+                                    @if($ticket->type == 1)
+                                        一只小萌妹评价了TA说：
+                                    @else
+                                        一只小萌妹举报了TA说：
+                                    @endif
+                                </label>
+                                <p>{{ $ticket->message }}</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
