@@ -18,8 +18,9 @@
         <div class="card-header">
             <div class="row" style="margin-bottom:10px">
                 <div class="col-md-7 col-sm-12">
+                    <figure class="figure">
                     <img src="/avatar/{{ $user->id }}/150/150"  style="width:150px; height:150px; border-radius:50%; overflow:hidden;margin-bottom:10px" />
-                    <div class="column" style="margin-bottom:10px;padding-left:5px">
+                    <figcaption class="figure-caption text-center">
                         @if(isset($user->nickname))
                             用户名： {{ $user->nickname }}
                             @if($user->baned)
@@ -31,6 +32,9 @@
                                 【已封禁】
                             @endif
                         @endif
+                    </figcaption>
+                    </figure>
+                    <div class="column" style="margin-bottom:10px;padding-left:5px">
                         @if(isset($user->stuid))
                             @if(strlen($user->stuid) == 8)
                                 @if(intval(substr($user->stuid, 0, 4)) == 2000 + env('FRESH_YEAR'))
@@ -56,7 +60,6 @@
                             <img src="https://img.shields.io/badge/%E5%85%88%E9%94%8B%E5%B8%82%E5%9C%BA-%E7%AE%A1%E7%90%86%E5%91%98-ee0000.svg">
                         @endif
                     </div>
-
                 </div>
                 <div class="col-md-5 col-sm-12" id="profile_bt">
                     @if(Session::get('user_id') == $user->id)
