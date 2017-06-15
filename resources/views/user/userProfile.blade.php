@@ -10,6 +10,7 @@
         }
     }
 </style>
+<script src="/js/good/good_list.js"></script>
 @endsection
 
 @section('content')
@@ -107,23 +108,21 @@
                         @endforeach
                     </div>
             </div>
-            <div role="tabpanel" class="tab-pane active" id="tickets">
+            <div role="tabpanel" class="tab-pane" id="tickets">
                 <div class="card-section">
                     <div id="tickets-container" class="card-section">
-                        <ul>
                             @foreach($tickets as $ticket)
-                                <li>
+                                <div class="card card-block" style="margin-bottom: 5px">
                                     <label>{{ $ticket->created_at }}
                                         @if($ticket->type == 1)
-                                            评价
+                                            一只小萌妹评价了TA说：
                                         @else
-                                            举报
+                                            一只小萌妹举报了TA说：
                                         @endif
                                     </label>
                                     <p>{{ $ticket->message }}</p>
-                                </li>
+                                </div>
                             @endforeach
-                        </ul>
                     </div>
                 </div>
             </div>
