@@ -109,6 +109,10 @@
                         </div>
                         {{ $goods->links() }}
                     @endforeach
+                        @if(count($goods)==0)
+                            <div style="margin-left:auto;margin-right:auto;">他还没有发布商品呢</div>
+
+                        @endif
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tickets"  style="min-height: 270px">
@@ -126,6 +130,11 @@
                                 <p>{{ $ticket->message }}</p>
                             </div>
                         @endforeach
+                        @if(count($tickets)==0)
+                            <div class="row">
+                                <div style="margin-left:auto;margin-right:auto;">还没有人评价他呢</div>
+                            </div>
+                            @endif
                     </div>
                 </div>
             </div>

@@ -8,6 +8,9 @@
         .input-group:not(.search-group) {
             max-width: 200px;
         }
+        img{
+            max-width: 50%;
+        }
     </style>
     <script>
         $(function () {
@@ -21,11 +24,11 @@
 
 @section('content')
     <div class="row">
-    <div class="col-12 col-md-5">
-        <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%"/></a><br/>
-    </div>
-    <div class="col-12 col-md-7">
-        <div>
+        <div class="col-12 col-md-5">
+            <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%"/></a><br/>
+        </div>
+        <div class="col-12 col-md-7">
+            <div>
             <span class="hidden-sm-down" style="position:relative;top:-8px">
                 @if(isset($inFvlst))
                     @if(count($inFvlst) == 0)
@@ -38,15 +41,15 @@
                     <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
                 @endif
             </span>
-            <h2 style="margin-left:10px;display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h2>
-        </div>
-		卖家：<a href="/user/{{ $user->id }}">{{ $user->nickname }}@if($user->baned)【已封禁】@endif</a> &nbsp;
-        @if($user->baned)
-            <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
-        @endif
-        <div><!-- 放tag 和更多图片缩略图 --></div>
-        <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
-        <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div><br/>
+                <h2 style="margin-left:10px;display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h2>
+            </div>
+            卖家：<a href="/user/{{ $user->id }}">{{ $user->nickname }}@if($user->baned)【已封禁】@endif</a> &nbsp;
+            @if($user->baned)
+                <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
+            @endif
+            <div><!-- 放tag 和更多图片缩略图 --></div>
+            <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
+            <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div><br/>
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -54,38 +57,42 @@
                     {!! $errors->first() !!}
                 </div>
             @endif
-        @if(($good->user_id) != Session::get('user_id') && !$good->baned)
-            <form action="/good/{{ $good->id }}/buy" method="post">
-                <div class="input-group">
-                    <input type="number" name="count" value="1" class="form-control"/>
-                    {!! csrf_field() !!}
-                    <span class="input-group-btn">
+            @if(($good->user_id) != Session::get('user_id') && !$good->baned)
+                <form action="/good/{{ $good->id }}/buy" method="post">
+                    <div class="input-group">
+                        <input type="number" name="count" value="1" class="form-control"/>
+                        {!! csrf_field() !!}
+                        <span class="input-group-btn">
                         <input type="submit" class="btn btn-primary" value="购买"/>
                     </span>
-                </div>
-            </form>
-        @endif
-        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
-            <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
-                <input type="submit" class="btn btn-primary" value="修改">
-            </form>
-            <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
-                {!! csrf_field() !!}
-                {!! method_field('DELETE') !!}
-                <input type="submit" class="btn btn-primary" value="删除">
-            </form>
-        @endif
-        @if(Session::get('is_admin') >= 1 && !$good->baned)
-            <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
-                {!! csrf_field() !!}
-                <input type="submit" class="btn btn-primary" value="封禁">
-            </form>
-        @endif
-    </div>
+                    </div>
+                </form>
+            @endif
+            @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
+                <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
+                    <input type="submit" class="btn btn-primary" value="修改">
+                </form>
+                <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
+                    {!! csrf_field() !!}
+                    {!! method_field('DELETE') !!}
+                    <input type="submit" class="btn btn-primary" value="删除">
+                </form>
+            @endif
+            @if(Session::get('is_admin') >= 1 && !$good->baned)
+                <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
+                    {!! csrf_field() !!}
+                    <input type="submit" class="btn btn-primary" value="封禁">
+                </form>
+            @endif
+        </div>
     </div>
     <br/>
-    <h3>商品介绍</h3>
-        <div style="word-break:break-all">{!! $good->description !!}</div>
+    <div class="card">
+        <div class="card-header">
+    <h4>商品介绍</h4>
+        </div>
+    <div class="card-block" style="word-break:break-all">{!! $good->description !!}</div>
+    </div>
     </div>
     <script>
         function add_favlist() {
@@ -134,7 +141,7 @@
                 @endif
                 @if(count($inFvlst) != 0)
                     <button class="fa fa-star btn btn-primary" onclick="del_favlist()" href="#" title="取消收藏QAQ" style="position:relative;top:4px"></button>
-                 @endif
+                @endif
             @else
                 <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO" style="position:relative;top:4px"></button>
             @endif
