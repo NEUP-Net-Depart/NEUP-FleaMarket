@@ -11,7 +11,7 @@
               @if(Session::has('user_id'))
                 <li><a class="top-bar-list" data-toggle="offCanvas">≡</a></li>
                 <li><a class="top-bar-list" href="/">首页</a></li>
-                <li><a class="top-bar-list" href="/message">消息 <span class="label" style="cursor:pointer">2</span></a></li>
+                <li><a class="top-bar-list" href="/message">消息 <span style="display: none" class="label message-num-tip">0</span></a></li>
               @else
               <li><a class="top-bar-list" href="/">首页</a></li>
               <li class="is-dropdown-submenu-parent">
@@ -48,7 +48,7 @@
                   <li><a href="/logout">登出</a></li>
                 </ul>
               </li>
-              <li><a class="top-bar-list" href="/message">消息 <span class="label" style="cursor:pointer">2</span></a></li>
+              <li><a class="top-bar-list" href="/message">消息 <span style="display: none" class="label message-num-tip">0</span></a></li>
               <li><a href="/good/add" class="top-bar-button">出售</a></li>
             @else
               <li class="is-dropdown-submenu-parent">
@@ -116,3 +116,34 @@
     </ul>
 
 </div>
+
+@if(Session::has('user_id'))
+    <script>
+        $(document).ready(function() {
+            @if($_SERVER['REQUEST_URI'] != '/message')
+                getMsgNum();
+                window.setInterval(function(){getMsgNum()}, 5000)
+            @endif
+        });
+        function getMsgNum()
+        {
+            $.ajax({
+                type: "GET",
+                url: "/message/num",
+                success: function (msg) {
+                    msg = parseInt(msg);
+                    if(msg) {
+                        $(".message-num-tip").removeAttr("style");
+                        if(msg > 99)
+                            $(".message-num-tip").html("99+");
+                        else
+                            $(".message-num-tip").html(msg);
+                    }
+                    else {
+                        $(".message-num-tip").attr("style", "display: none;");
+                    }
+                }
+            })
+        }
+    </script>
+@endif

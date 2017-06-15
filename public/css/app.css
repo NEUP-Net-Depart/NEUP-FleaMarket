@@ -216,3 +216,8 @@ footer span {
 input::placeholder, textarea::placeholder {
     color: #999999;
 }
+
+.message-num-tip {
+    cursor:pointer;
+    background-color: #e69d00;
+}
