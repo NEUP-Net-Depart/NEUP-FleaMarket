@@ -27,10 +27,10 @@
                 </div>
             </div>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-5">
                 <a>价格筛选</a> <input id="priceSet1" style="display:inline-block"maxlength="9" class="form-control" value="@if(isset($_GET['start_price'])){{ $_GET['start_price'] }}@endif"/> - <input id="priceSet2" class="form-control" style="display:inline-block" maxlength="9" value="@if(isset($_GET['end_price'])){{ $_GET['end_price'] }}@endif"/>&nbsp;<button class="btn btn-primary" onclick="setc('a')">确定</button>
             </div>
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-5">
                 <a>库存下限</a> <input id="pricec" style="display:inline-block" maxlength="9" class="form-control" value="@if(isset($_GET['start_count'])){{ $_GET['start_count'] }}@endif"/>&nbsp;<button class="btn btn-primary" id="subs" onclick="setc('a')">确定</button>
             </div>
         </div>

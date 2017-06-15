@@ -1,20 +1,22 @@
-<nav class="navbar navbar-toggleable-sm navbar-inverse">
-  <div class="navbar-back">
+  <div class="navbar-back" style="height:56px">
     <div class="navbar-bg"></div>
     <div class="navbar-filter"></div>
   </div>
+<div class="container">
+<nav class="navbar navbar-toggleable-sm navbar-inverse" style="box-shadow:#ffffff 0 0 0">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
     <a class="navbar-brand" href="/">先锋市场</a>
     <div class="collapse navbar-collapse" id="navbar">
-      <ul class="nav navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto">
         @if(Session::has('user_id'))
           <li class="nav-item dropdown">
             <a class="nav-link navbar-avatar dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar"/>
             </a>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu dropdown-menu-right">
+              <h6 class="dropdown-header">{{ Session::get('nickname') }}</h6>
               <a href="/user" class="dropdown-item">个人中心</a>
               <a href="/user/fav" class="dropdown-item">收藏夹</a>
               <a href="/user/trans" class="dropdown-item">我的购买</a>
@@ -31,7 +33,7 @@
         @else
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle navbar-li" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">登录 <span class="caret"></span></a>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu dropdown-menu-right">
               <a href="/login" class="dropdown-item">普通登录</a>
               <a href="/sso" class="dropdown-item">校卡平台快捷登录</a>
             </div>
@@ -41,6 +43,7 @@
       </ul>
   </div>
 </nav>
+</div>
 
 <div class="banner-back"><div class="banner"></div></div>
 

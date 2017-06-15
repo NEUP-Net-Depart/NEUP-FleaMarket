@@ -10,6 +10,11 @@
         }
     }
     </style>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
 @endsection
 
 @section('content')
@@ -49,20 +54,7 @@
             <div class="card-header"><h4>公告</h4></div>
             <div class="list-group list-group-flush">
             @foreach($announces as $announce)
-                <a href="#ann{{$announce->id}}" class="list-group-item" data-toggle="modal">{{ $announce->title }}</a>
-                <div class="modal fade" id="ann{{$announce->id}}" tabindex="-1" role="dialog" aria-labelledby="ann{{$announce->id}}Label">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel">{{ $announce->title }}</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="modal-body">
-                                {!! $announce->content !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <a tabindex="0" class="list-group-item" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content=" {{ $announce->content }} " style="outline:none">{{ $announce->title }}</a>
             @endforeach
             </div>
         </div>

@@ -9,14 +9,17 @@
             max-width: 200px;
         }
     </style>
-@endsection
-
-@section('content')
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        })
     </script>
+@endsection
+
+@section('content')
     <div class="row">
     <div class="col-12 col-md-5">
         <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%"/></a><br/>
@@ -130,10 +133,10 @@
                     <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" href="#" title="收藏OvO" style="position:relative;top:4px"></button>
                 @endif
                 @if(count($inFvlst) != 0)
-                    <button class="fa fa-star btn btn-primary" onclick="del_favlist()" href="#" title="取消收藏QAQ"></button>
+                    <button class="fa fa-star btn btn-primary" onclick="del_favlist()" href="#" title="取消收藏QAQ" style="position:relative;top:4px"></button>
                  @endif
             @else
-                <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO"></button>
+                <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" title="收藏OvO" style="position:relative;top:4px"></button>
             @endif
         </div>
         <div class="float-right">
