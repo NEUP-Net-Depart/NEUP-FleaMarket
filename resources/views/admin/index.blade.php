@@ -157,6 +157,12 @@
         requestWithCORS: true,
         pluginsEnabled: ['image', 'link', 'colors', 'emoticons',
             'fontSize', 'fontFamily', 'fullscreen'],
+        toolbarButtonsMD: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+            'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+        toolbarButtonsSM: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+            'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+        toolbarButtonsXS: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+            'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
         height: 300
     });
     // Hack the License

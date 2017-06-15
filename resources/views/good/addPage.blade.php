@@ -164,6 +164,12 @@
                 'fontSize', 'fontFamily', 'fullscreen'],
             toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
                 'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+            toolbarButtonsMD: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+                'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+            toolbarButtonsSM: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+                'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+            toolbarButtonsXS: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+                'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
             height: 150
             });
         // Hack the License
