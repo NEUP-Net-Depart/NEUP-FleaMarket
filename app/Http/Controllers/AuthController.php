@@ -443,12 +443,18 @@ class AuthController extends Controller
     {
         $data['method'] = 'POST';
         $data['sentence'] = '';
+        $data['alert'] = '';
+        $data['fa'] = '';
         $input = $request->all();
         $user = User::where('email', $input['email'])->first();
         if ($user == NULL) {
             $data['sentence'] = '已向你的邮箱发送一份包含重置密码的链接的邮件。';
+            $data['alert'] = 'success';
+            $data['fa'] = 'check';
         } else {
             $data['sentence'] = '已向你的邮箱发送一份包含重置密码的链接的邮件。';
+            $data['alert'] = 'success';
+            $data['fa'] = 'check';
             $password_reset = PasswordReset::where('user_id', $user->id)->first();
             $email = $user->email;
             if ($password_reset != NULL) {
@@ -491,9 +497,13 @@ class AuthController extends Controller
         $token = explode('#', base64_decode($token));
         $data['method'] = 'POST';
         $data['sentence'] = '';
+        $data['alert'] = '';
+        $data['fa'] = '';
         $password_reset = PasswordReset::where('token', $token[0])->first();
         if ($password_reset == NULL || substr(sha1($token[1] . env('APP_KEY')), 0, 6) != $token[2]) {
             $data['sentence'] = '无效的链接';
+            $data['alert'] = 'danger';
+            $data['fa'] = 'exclamation-circle';
             // log start
             $log = new AuthLog();
             $log->ip = $request->ip();
@@ -503,6 +513,8 @@ class AuthController extends Controller
             return View::make('user.resetPassword')->with($data);
         } else if (time() - $token[1] > 48 * 60 * 60) {
             $data['sentence'] = '此链接已过期';
+            $data['alert'] = 'danger';
+            $data['fa'] = 'exclamation-circle';
             // log start
             $log = new AuthLog();
             $log->ip = $request->ip();
@@ -517,6 +529,8 @@ class AuthController extends Controller
         $user->update();
         $password_reset->delete();
         $data['sentence'] = '成功重置密码！';
+        $data['alert'] = 'success';
+        $data['fa'] = 'check';
 
         // log start
         $log = new AuthLog();

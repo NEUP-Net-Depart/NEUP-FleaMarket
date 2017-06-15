@@ -14,7 +14,6 @@
                     </div>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
-                            <span class="sr-only">33% Complete</span>
                         </div>
                     </div><br/>
                     <form action="/register/2" method="POST" enctype="multipart/form-data">
