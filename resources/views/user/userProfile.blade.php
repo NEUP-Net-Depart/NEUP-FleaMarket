@@ -3,14 +3,16 @@
 @section('title', "用户")
 
 @section('asset')
-
+<style>
+    @media (max-width: 770px) {
+        #profile_bt {
+            height: 40px;
+        }
+    }
+</style>
 @endsection
 
 @section('content')
-
-    <div class="row">
-
-    </div>
 
     <div class="card" style="display:none;">
         <div class="card-header">
@@ -98,8 +100,8 @@
 
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-7">
+            <div class="row" style="margin-bottom:10px">
+                <div class="col-md-7 col-sm-12">
                     <img src="/avatar/{{ $user->id }}/150/150"  style="width:150px; height:150px; border-radius:50%; overflow:hidden;margin-bottom:10px" />
 
                     <div class="column" style="margin-bottom:10px;padding-left:5px">
@@ -141,19 +143,19 @@
                     </div>
 
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5 col-sm-12" id="profile_bt">
                     @if(Session::get('user_id') == $user->id)
                     @elseif(Session::get('is_admin') >= 1)
                         <form action="/user/{{ $user->id }}/banpage" method="GET" style="position:absolute;bottom:0px">
-                            <input type="submit" class="btn btn-secondary" value="封禁该用户">
-                            <input type="button" value="和他联系" class="btn btn-secondary"
+                            <input type="button" value="和他联系" class="btn btn-info"
                                    onclick="window.location.href='/message/startConversation/{{ $user->id }}'"/>
+                            <input type="submit" class="btn btn-danger" value="封禁该用户">
                         </form>
                     @else
                         <form action="/report/{{ $user->id }}" method="GET" style="position:absolute;bottom:0px">
-                            <input type="submit" class="btn btn-secondary" value="举报该用户">
-                            <input type="button" value="和他联系" class="btn btn-secondary"
+                            <input type="button" value="和他联系" class="btn btn-info"
                                    onclick="window.location.href='/message/startConversation/{{ $user->id }}'"/>
+                            <input type="submit" class="btn btn-danger" value="举报该用户">
                         </form>
                     @endif
                 </div>
