@@ -183,6 +183,6 @@
         });
         // Hack the License
         $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').css("opacity", "0");
-        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').attr("href", "#");
+        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').removeAttr("href");
     </script>
 @endsection
