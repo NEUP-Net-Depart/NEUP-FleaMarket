@@ -49,7 +49,7 @@
               标题
               <input type="text" placeholder="Title" name="title" class="form-control">
               内容
-			  <textarea rows="4" placeholder="Content" name="content" class="form-control"></textarea>
+			  <textarea rows="4" id="content" placeholder="Content" name="content" class="form-control"></textarea>
               <input type="submit" class="btn btn-primary" value="发布公告">
             </form>
         </div>
@@ -145,4 +145,18 @@
 			{{ $reports->links() }}
 		</div>
 </div>
+<script>
+        // WYSIWYG Editor
+        $("textarea#content").froalaEditor({
+            imageUploadParam: 'source',
+            imageUploadParams: {
+            key: "7e945496f2de8cbc710ecca702062e9b",
+                format: "flea-mart"
+            },
+            imageUploadURL: 'https://flimg.neupioneer.com/api/1/upload',
+            requestWithCORS: true,
+            pluginsEnabled: ['image', 'link', 'colors', 'emoticons',
+                        'fontSize', 'fontFamily', 'fullscreen']
+        });
+</script>
 @endsection

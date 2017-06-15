@@ -79,7 +79,7 @@
     </div>
     <br/>
     <h3>商品介绍</h3>
-        <div style="word-break:break-all">{{ $good->description }}</div>
+        <div style="word-break:break-all">{!! $good->description !!}</div>
     </div>
     <script>
         function add_favlist() {

@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">商品描述</label>
-                    <textarea name="description" id="description" placeholder="商品描述" class="form-control" style="resize:none" rows="6">{{count($errors) ? old('description') : $good->description}}</textarea>
+                    <textarea name="description" id="description" placeholder="商品描述" class="form-control" style="resize:none" rows="6">{!! count($errors) ? old('description') : $good->description !!}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="price">商品价格</label>
@@ -126,6 +126,19 @@
                 prevDiv.innerHTML = '<br/><div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
             }
         }
+        // WYSIWYG Editor
+        $("textarea#description").froalaEditor({
+            imageUploadParam: 'source',
+            imageUploadParams: {
+            key: "7e945496f2de8cbc710ecca702062e9b",
+                format: "flea-mart"
+            },
+            imageUploadURL: 'https://flimg.neupioneer.com/api/1/upload',
+            requestWithCORS: true,
+            pluginsEnabled: ['image', 'link', 'colors', 'emoticons',
+                        'fontSize', 'fontFamily', 'fullscreen'],
+            toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-', 'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo']
+        });
     </script>
 
 @endsection
