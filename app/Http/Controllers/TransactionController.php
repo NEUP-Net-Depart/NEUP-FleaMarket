@@ -301,11 +301,12 @@ class TransactionController extends Controller
     {
         $user_id = $request->session()->get('user_id');
         $trans = Transaction::find($trans_id);
-        if(!$trans)
+        if(!$trans || $trans->status < 2)
             return View::make('common.errorPage')->withErrors('交易ID错误！');
         $seller = User::with('user_infos')->find($trans->seller_id);
         $buyer = User::with('user_infos')->find($trans->buyer_id);
-        if(($user_id != $trans->buyer_id && $user_id != $trans->seller_id) || $trans->status != 2)
+        if($user_id != $trans->buyer_id
+            && (GoodInfo::where('id', $trans->good_id)->count() == 0 || $user_id != $trans->seller_id))
             return View::make('common.errorPage')->withErrors('交易ID错误！');
         $data['tran'] = $trans;
         $data['seller'] = $seller;
