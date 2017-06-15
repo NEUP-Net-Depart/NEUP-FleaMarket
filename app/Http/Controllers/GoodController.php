@@ -23,6 +23,7 @@ use Storage;
 use Image;
 use App\Http\Requests\AddGoodRequest;
 use App\Http\Requests\EditGoodRequest;
+use Mews\Purifier\Purifier;
 
 class GoodController extends Controller
 {
@@ -180,7 +181,7 @@ class GoodController extends Controller
         $good = new GoodInfo;
         $good->good_name = $input['good_name'];
         $good->cat_id = $input['cat_id'];
-        $good->description = $input['description'];
+        $good->description = clean($input['description']);
         $good->price = $input['price'];
         $good->type = $input['type'];
         $good->count = $input['count'];
@@ -245,7 +246,7 @@ class GoodController extends Controller
             return Redirect::to('/good/'.$good_id);
         $good->good_name=$input['good_name'];
         $good->cat_id=$input['cat_id'];
-        $good->description=$input['description'];
+        $good->description= clean($input['description']);
         $good->price=$input['price'];
         $good->type=$input['type'];
         $good->count=$input['count'];
