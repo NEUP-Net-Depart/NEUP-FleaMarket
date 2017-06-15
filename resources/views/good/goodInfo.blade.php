@@ -8,7 +8,7 @@
         .input-group:not(.search-group) {
             max-width: 200px;
         }
-        img{
+        p>img{
             max-width: 50%;
         }
     </style>
@@ -25,7 +25,7 @@
 @section('content')
     <div class="row">
         <div class="col-12 col-md-5">
-            <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%"/></a><br/>
+            <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="max-width:100%"/></a><br/>
         </div>
         <div class="col-12 col-md-7">
             <div>

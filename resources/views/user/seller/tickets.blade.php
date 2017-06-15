@@ -12,19 +12,24 @@
         <div role="tabpanel" class="tab-pane" id="trans">
         </div>
         <div role="tabpanel" class="tab-pane active" id="tickets">
-                <ul>
-                    @foreach($tickets as $ticket)
-                        <li>
-                            <label>{{ $ticket->created_at }}
-                                @if($ticket->type == 1)
-                                    评价
-                                @else
-                                    举报
-                                @endif
-                            </label>
-                            <p>{{ $ticket->message }}</p>
-                        </li>
-                    @endforeach
-                </ul>
+            <div id="tickets-container" class="card-section">
+                @foreach($tickets as $ticket)
+                    <div class="card card-block" style="margin-bottom: 5px">
+                        <label>{{ $ticket->created_at }}
+                            @if($ticket->type == 1)
+                                一只小萌妹评价了我说：
+                            @else
+                                一只小萌妹举报了我说：
+                            @endif
+                        </label>
+                        <p>{{ $ticket->message }}</p>
+                    </div>
+                @endforeach
+                @if(count($tickets)==0)
+                    <div class="row">
+                        <div style="margin-left:auto;margin-right:auto;">还没有人评价呢</div>
+                    </div>
+                @endif
+            </div>
         </div>
 @endsection
