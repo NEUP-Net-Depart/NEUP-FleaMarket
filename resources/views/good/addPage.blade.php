@@ -170,11 +170,11 @@
                 'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
             toolbarButtonsXS: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
                 'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
-            height: 150
+            height: 250
             });
         // Hack the License
-        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').css("background-color", "white");
-        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').attr("href", "#");
+        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').css("opacity", "0");
+        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').attr("href", "");
     </script>
 
 @endsection
