@@ -59,5 +59,16 @@ function setc(ha){
     if($("#searchq").val()!=""){
         hr=hr+"&query="+$("#searchq").val();
     }
+    if(getUrlParam('cat_id'))
+        hr = hr + '&cat_id=' + getUrlParam('cat_id');
     location.href=hr;
+}
+
+function getUrlParam(name)
+{
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)
+        return r[2];
+    return null;
 }
