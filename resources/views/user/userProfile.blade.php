@@ -13,97 +13,11 @@
 @endsection
 
 @section('content')
-
-    <div class="card" style="display:none;">
-        <div class="card-header">
-            <div class="col-12 col-md-7">
-                <div style="width:150px; height:150px; border-radius:50%; overflow:hidden;">
-                    <img src="/avatar/{{ $user->id }}/150/150"/></div>
-            </div>
-            <div class="col-12 col-md-5">
-                <input type="button" value="和他联系" class="btn btn-secondary"
-                       onclick="window.location.href='/message/startConversation/{{ $user->id }}'"/>
-                @if(Session::get('user_id') == $user->id)
-                @elseif(Session::get('is_admin') >= 1)
-                    <input type="button" value="和他联系" class="btn btn-secondary"
-                           onclick="window.location.href='/message/startConversation/{{ $user->id }}'"/>
-                    <form action="/user/{{ $user->id }}/banpage" method="GET">
-                        <input type="submit" class="btn btn-secondary" value="封禁该用户">
-                    </form>
-                @else
-                    <input type="button" value="和他联系" class="btn btn-secondary"
-                           onclick="window.location.href='/message/startConversation/{{ $user->id }}'"/>
-                    <form action="/report/{{ $user->id }}" method="GET">
-                        <input type="submit" class="btn btn-secondary" value="举报该用户">
-                    </form>
-                @endif
-            </div>
-            <div class="col-12">
-                <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                    <li class="nav-item active"><a class="nav-link" href="#goods" aria-controls="goods" role="tab" data-toggle="tab">他的商品</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#tickets" aria-controls="tickets" role="tab" data-toggle="tab">历史评价</a></li>
-                </ul>
-                <div class="tabs-content" data-tabs-content="editinfo">
-                    <div class="tabs-panel" id="goods">
-                        <div class="card-section">
-                            <div class="row table-responsive">
-                                <table class="table">
-                                    <tr>
-                                        <td>#</td>
-                                        <td>商品名称</td>
-                                        <td>商品价格</td>
-                                        <td>剩余库存</td>
-                                    </tr>
-                                    @foreach($goods as $good)
-                                        <tr id="good{{ $good->id }}">
-                                            <td>{{ $good->id }}</td>
-                                            <td><a href="/good/{{$good->id}}"
-                                                   onMouseOver="toolTip('<img src=/good/{{ sha1($good->id) }}/titlepic>')"
-                                                   onMouseOut="toolTip()">{{ $good->good_name }}</a></td>
-                                            <td>{{ $good->price }}</td>
-                                            <td>{{ $good->count }}</td>
-                                        </tr>
-
-                                    @endforeach
-                                    {{ $goods->links() }}
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tabs-panel" id="tickets">
-                        <div id="tickets-container" class="card-section">
-                            <ul>
-                                @foreach($tickets as $ticket)
-                                    <li>
-                                        <label>{{ $ticket->created_at }}
-                                            @if($ticket->type == 1)
-                                                评价
-                                            @else
-                                                举报
-                                            @endif
-                                        </label>
-                                        <p>{{ $ticket->message }}</p>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
     <div class="card">
         <div class="card-header">
             <div class="row" style="margin-bottom:10px">
                 <div class="col-md-7 col-sm-12">
                     <img src="/avatar/{{ $user->id }}/150/150"  style="width:150px; height:150px; border-radius:50%; overflow:hidden;margin-bottom:10px" />
-
                     <div class="column" style="margin-bottom:10px;padding-left:5px">
                         @if(isset($user->nickname))
                             用户名： {{ $user->nickname }}
@@ -167,30 +81,33 @@
         </div>
         <div class="tab-content card-block">
             <div role="tabpanel" class="tab-pane active" id="goods">
-                <div class="row table-responsive">
-                    <table class="table">
-                        <tr>
-                            <td>#</td>
-                            <td>商品名称</td>
-                            <td>商品价格</td>
-                            <td>剩余库存</td>
-                        </tr>
+                    <div class="row">
                         @foreach($goods as $good)
-                            <tr id="good{{ $good->id }}">
-                                <td>{{ $good->id }}</td>
-                                <td><a href="/good/{{$good->id}}"
-                                       onMouseOver="toolTip('<img src=/good/{{ sha1($good->id) }}/titlepic>')"
-                                       onMouseOut="toolTip()">{{ $good->good_name }}</a></td>
-                                <td>{{ $good->price }}</td>
-                                <td>{{ $good->count }}</td>
-                            </tr>
-
+                            <div class="col-6 col-md-4 col-lg-3">
+                                <div class="good" style="margin-bottom:20px;">
+                                    <a href="/good/{{ $good->id }}">
+                                        <div class="card">
+                                            <div class="card-img-top">
+                                                <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" style="width:100%"/>
+                                            </div>
+                                            <div class="card-block">
+                                                <div style="word-break:break-all">{{ $good->good_name }}</div>
+                                                <div class="text-warning"><b>￥{{ $good->price }}</b></div>
+                                                @if($good->count==0)
+                                                    <div class="text-danger">无库存QAQ</div>
+                                                @else
+                                                    <div>库存：{{ $good->count }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            {{ $goods->links() }}
                         @endforeach
-                        {{ $goods->links() }}
-                    </table>
-                </div>
+                    </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tickets">
+            <div role="tabpanel" class="tab-pane active" id="tickets">
                 <div class="card-section">
                     <div id="tickets-container" class="card-section">
                         <ul>
