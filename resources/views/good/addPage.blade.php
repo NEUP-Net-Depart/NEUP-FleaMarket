@@ -175,6 +175,7 @@
         // Hack the License
         $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').css("opacity", "0");
         $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').removeAttr("href");
+        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').wrap("<div hidden='hidden'></div>");
     </script>
 
 @endsection
