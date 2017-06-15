@@ -164,12 +164,13 @@
 						<tr>
 							<th>#</th>
 							<th>权限</th>
+                            <th>学号</th>
+                            <th>真实姓名</th>
+                            <th>昵称</th>
 							<th>用户名</th>
-							<th>学号</th>
-							<th>真名</th>
-							<th>昵称</th>
 							<th>邮箱</th>
 							<th>是否封禁</th>
+                            <th>注册时间</th>
 						</tr>
 					</thead>
 					@foreach($users as $user)
@@ -177,11 +178,11 @@
 						<tr>
 							<td>{{$user->id}}</td>
 							<td>{{$user->privilege}}</td>
+                            <td>{{$user->stuid}}</td>
+                            <td>{{$user->realname}}</td>
+                            <td>{{$user->nickname}}</td>
 							<td>{{$user->username}}</td>
-							<td>{{$user->stuid}}</td>
-							<td>{{$user->realname}}</td>
-							<td>{{$user->nickname}}</td>
-							<td>{{$user->email}}</td>
+                            <td>{{$user->email}}</td>
 							<td>
 								@if($user->baned == 0)
 									否
@@ -193,6 +194,7 @@
 									已永久封禁
 								@endif
 							</td>
+                            <td>{{$user->created_at}}</td>
 						</tr>
 					</tbody>
 				@endforeach
