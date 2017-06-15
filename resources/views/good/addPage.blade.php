@@ -167,7 +167,8 @@
             height: 150
             });
         // Hack the License
-        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').hide();
+        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').css("background-color: white");
+        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').href("href", "#");
     </script>
 
 @endsection
