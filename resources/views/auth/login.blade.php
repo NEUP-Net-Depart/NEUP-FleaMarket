@@ -2,83 +2,70 @@
 
 @section('title', "登录")
 
-@section('content')
-    <div class="row hidden-sm-down">
-    <div class="col-6">
-    <div class="card float-right">
-        <div class="card-block">
-            <img src="/img/loginpic.jpg" style="height:210px">
-        </div>
-    </div>
-    </div>
-    <div class="col-6">
-    <div class="card float-left">
-        <div class="card-block">
-            @if (count($errors) > 0)
-                <div class="alert alert-danger" role="alert">
-                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    {!! $errors->first() !!}
-                </div>
-            @endif
-            <form action="/login" method="POST">
-                <div class="form-group">
-                    <label for="username">用户名/邮箱</label>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="用户名/邮箱" style="width:373.63px">
-                </div>
-                <div class="form-group">
-                    <label for="password">密码</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="密码" style="width:373.63px">
-                </div>
-                {!! csrf_field() !!}
-                <div class="float-left">
-                    <input type="submit" class="btn btn-primary" value="登录">
-                </div>
-                <div class="float-right">
-                    <input type="button" class="btn btn-success" value="校卡平台快捷登录" onclick="window.location.href='/sso'">
-                </div>
-            </form>
-        </div>
-    </div>
-    </div>
-    </div>
-    <div class="hidden-md-up">
-        <div class="container">
-        <div class="card">
-            <div class="card-block">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger" role="alert">
-                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                        <span class="sr-only">Error:</span>
-                        {!! $errors->first() !!}
-                    </div>
-                @endif
-                <form action="/login" method="POST">
-                    <div class="form-group">
-                        <label for="username">用户名/邮箱</label>
-                        <input type="text" name="username" id="username" class="form-control" placeholder="用户名/邮箱">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">密码</label>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="密码">
-                    </div>
-                    {!! csrf_field() !!}
-                    <div class="float-left">
-                        <input type="submit" class="btn btn-primary" value="登录">
-                    </div>
-                    <div class="float-right">
-                        <input type="button" class="btn btn-success" value="校卡平台快捷登录" onclick="window.location.href='/sso'">
-                    </div>
-                </form>
-            </div>
-        </div>
-        </div><br/>
-        <div class="container">
-        <div class="card">
-            <div class="card-block">
-                <img src="/img/loginpic.jpg" style="width:100%">
-            </div>
-        </div>
-    </div>
+@section('asset')
+    <style>
+        @media (min-width: 992px) {
+            .login-card {
+                width:400px;
+            }
+        }
+    </style>
+    <script>
+        if (matchMedia) {
+            var mq = window.matchMedia("(min-width: 992px)");
+            mq.addListener(WidthChange);
+            WidthChange(mq);
+        }
 
+        function WidthChange(mq) {
+            if (mq.matches) {
+                $('.row-first').attr('class','row row-first');
+                $('.row-second').attr('class','mx-auto row row-second');
+            } else {
+                $('.row-first').attr('class','row-first');
+                $('.row-second').attr('class','mx-auto row-second');
+            }
+        }
+    </script>
+@endsection
+
+@section('content')
+    <div class="row row-first" style="margin-top:130px;margin-bottom:50px">
+        <div class="mx-auto row row-second">
+            <div class="hidden-md-down" style="width:380px;margin-right:20px">
+                <br/><br/>
+                <h2 style="text-align:right"><b>旧很靠谱</b></h2>
+                <br/><br/><br/>
+                <h4 style="text-align:right">自主研发 | 校卡绑定 | 安全便捷</h4>
+            </div>
+            <div class="card login-card">
+                <div class="card-header">登录</div>
+                <div class="card-block">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger" role="alert">
+                            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                            {!! $errors->first() !!}
+                        </div>
+                    @endif
+                    <form action="/login" method="POST">
+                        <div class="form-group">
+                            <label for="username">用户名/邮箱</label>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="如果都没有的话，就用校卡登录吧" tabindex="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密码（<a href="/iforgotit">忘记密码？</a>）</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="密码" tabindex="2">
+                        </div>
+                        {!! csrf_field() !!}
+                        <div class="float-left">
+                            <input type="submit" class="btn btn-primary" value="登录">
+                        </div>
+                        <div class="float-right">
+                            <input type="button" class="btn btn-success" value="校卡平台快捷登录" onclick="window.location.href='/sso'">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
