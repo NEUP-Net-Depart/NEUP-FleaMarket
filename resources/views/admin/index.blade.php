@@ -46,7 +46,7 @@
               标题
               <input type="text" placeholder="Title" name="title">
               内容
-			  <textarea rows="4" placeholder="Content" name="content"></textarea>
+			  <textarea id="content" rows="4" placeholder="Content" name="content"></textarea>
               <input type="submit" class="button" value="发布公告">
             </form>
         </div>
@@ -145,4 +145,28 @@
 		</div>
 
 </div>
+<script>
+    // WYSIWYG
+    $("textarea#content").froalaEditor({
+        imageUploadParam: 'source',
+        imageUploadParams: {
+            key: "7e945496f2de8cbc710ecca702062e9b",
+            format: "flea-mart"
+        },
+        imageUploadURL: 'https://flimg.neupioneer.com/api/1/upload',
+        requestWithCORS: true,
+        pluginsEnabled: ['image', 'link', 'colors', 'emoticons',
+            'fontSize', 'fontFamily', 'fullscreen'],
+        toolbarButtonsMD: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+            'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+        toolbarButtonsSM: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+            'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+        toolbarButtonsXS: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+            'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+        height: 300
+    });
+    // Hack the License
+    $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').css("opacity", "0");
+    $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').attr("href", "#");
+</script>
 @endsection

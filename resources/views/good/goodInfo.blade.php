@@ -111,7 +111,7 @@
     <div class="row">
         <div id="asd" class="small-12 medium-12 columns" style="background-color: white">
             <h3>商品介绍: </h3>
-            <p>{{ $good->description }}</p>
+            <p>{!! $good->description !!}</p>
         </div>
 
     </div>
