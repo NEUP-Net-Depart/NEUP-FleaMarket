@@ -10,6 +10,7 @@
         <li class="nav-item"><a class="nav-link active" href="#announcement" role="tab" data-toggle="tab" aria-controls="announcement">公告管理</a></li>
         <li class="nav-item"><a class="nav-link" href="#classify" role="tab" data-toggle="tab" aria-controls="classify">分类管理</a></li>
 		<li class="nav-item"><a class="nav-link" href="#report" role="tab" data-toggle="tab" aria-controls="report">查看举报记录</a></li>
+		<li class="nav-item"><a class="nav-link" href="#userlist" role="tab" data-toggle="tab" aria-controls="userlist">查看所有用户</a></li>
 </ul>
 </div>
 
@@ -100,9 +101,22 @@
 						@foreach($reports as $repo)
 						<tbody>
 							<tr>
-								<td>{{ $repo->id }}</td>
-								<td>{{ $repo->sender_id }}</td>
-								<td>{{ $repo->receiver_id }}</td>
+								<td><a href="#repo{{$repo->id}}" data-toggle="modal">{{ $repo->id }}</a></td>
+								<td><a href="#repo{{$repo->id}}" data-toggle="modal">{{ $repo->sender_id }}</a></td>
+								<td><a href="#repo{{$repo->id}}" data-toggle="modal">{{ $repo->receiver_id }}</a></td>
+							<div class="modal fade" id="repo{{$repo->id}}" tabindex="-1" role="dialog" aria-labelledby="repo{{$repo->id}}Label">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">举报理由：</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										</div>
+										<div class="modal-body">
+											{{ $repo->message }}
+										</div>
+									</div>
+								</div>
+							</div>
 								@if(!$repo->assignee)
 									<td>
 										<form action="/repo/{{ $repo->id }}/assign" method="POST">
@@ -143,6 +157,48 @@
 						@endforeach
 				</table>
 			{{ $reports->links() }}
+		</div>
+		<div class="tab-pane" id="userlist" role="tabpanel">
+			<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>权限</th>
+                            <th>学号</th>
+                            <th>真实姓名</th>
+                            <th>昵称</th>
+							<th>用户名</th>
+							<th>邮箱</th>
+							<th>是否封禁</th>
+                            <th>注册时间</th>
+						</tr>
+					</thead>
+					@foreach($users as $user)
+					<tbody>
+						<tr>
+							<td>{{$user->id}}</td>
+							<td>{{$user->privilege}}</td>
+                            <td>{{$user->stuid}}</td>
+                            <td>{{$user->realname}}</td>
+                            <td>{{$user->nickname}}</td>
+							<td>{{$user->username}}</td>
+                            <td>{{$user->email}}</td>
+							<td>
+								@if($user->baned == 0)
+									否
+								@endif
+								@if($user->baned == 1)
+									已封禁{{$user->banedtime}}天
+								@endif
+								@if($user->baned == -1)
+									已永久封禁
+								@endif
+							</td>
+                            <td>{{$user->created_at}}</td>
+						</tr>
+					</tbody>
+				@endforeach
+			</table>
 		</div>
 </div>
 <script>

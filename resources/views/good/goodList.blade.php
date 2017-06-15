@@ -57,9 +57,17 @@
                 </a>
             </div>
         </div>
-        {{ $goods->links() }}
-        @endforeach
+            @endforeach
         </div>
+        {{ $goods->appends([
+                'start_price' => $start_price,
+                'end_price' => $end_price,
+                'start_count' => $start_count,
+                'sort' => $sort,
+                'query' => $query,
+                'cat_id' => $cat_id
+            ])
+        ->links() }}
     </div>
     </div>
     <script src="/js/good/cat.js"></script>
