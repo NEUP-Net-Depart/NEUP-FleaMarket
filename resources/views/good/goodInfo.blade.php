@@ -37,7 +37,10 @@
             </span>
             <h2 style="margin-left:10px;display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h2>
         </div>
-		卖家：<a href="/user/{{ $user->id }}">{{ $user->nickname }}@if($user->baned)【已封禁】@endif</a> &nbsp; <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
+		卖家：<a href="/user/{{ $user->id }}">{{ $user->nickname }}@if($user->baned)【已封禁】@endif</a> &nbsp;
+        @if($user->baned)
+            <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
+        @endif
         <div><!-- 放tag 和更多图片缩略图 --></div>
         <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
         <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div><br/>
@@ -79,7 +82,7 @@
     </div>
     <br/>
     <h3>商品介绍</h3>
-        <div style="word-break:break-all">{{ $good->description }}</div>
+        <div style="word-break:break-all">{!! $good->description !!}</div>
     </div>
     <script>
         function add_favlist() {
