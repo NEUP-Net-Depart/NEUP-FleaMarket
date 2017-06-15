@@ -294,6 +294,13 @@ class GoodController extends Controller
         $good->delete();
         //$deleteGoodTag = GoodTag::where('good_id', $good_id)->delete();
         $deleteFavList = Favlist::where('good_id', $good_id)->delete();
+        $trans = Transaction::where('good_id', $good_id)->where('status', '<' , 3)->get();
+        foreach($trans as $tran)
+        {
+            $tran->status = 0;
+            MessageController::sendMessageHandle(0, $tran->buyer_id, "【系统消息】您好！由于该商品被卖家删除，您的<a href='/user/trans'>订单（编号：".$tran->id."）</a>已被取消。非常抱歉。");
+            $tran->update();
+        }
         return Redirect::to('/good');
     }
 
@@ -369,7 +376,7 @@ class GoodController extends Controller
 
 		MessageController::sendMessageHandle($admin_id, $good->user_id, "【系统消息】您好！您的<a href='/good/" . $good_id ."'>商品（编号：".$good_id."）</a>由于不符合有关规定已被管理员（ID：".$admin_id."）下架。请在此消息下询问具体细节。");
 
-		$trans = Transaction::where('good_id', $good_id)->get();
+		$trans = Transaction::where('good_id', $good_id)->where('status', '<' , 3)->get();
 		foreach($trans as $tran)
 		{
 			$tran->status = 0;
