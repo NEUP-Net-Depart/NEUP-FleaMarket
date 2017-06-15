@@ -1,6 +1,7 @@
 @extends('layout.master')
 
 @section('title', "收藏夹")
+
 @section('asset')
     <link rel="stylesheet" href="/css/favlist.css" />
 @endsection
@@ -14,10 +15,12 @@
             <div class="col-md-7">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
+            <div class="row">
             @foreach($goods as $good)
                 <?php $good = $good_info[$good->good_id] ?>
                 @include('good.goodInfoOnWelcome')
             @endforeach
+            </div>
             </div>
             <div class="col-md-3">
                 <button type="button" class="btn btn-primary" onclick="editfav()" id="editbutton">编辑收藏夹</button>

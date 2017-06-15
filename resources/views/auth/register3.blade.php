@@ -19,8 +19,8 @@
                     <div id="userinfo-container">
                         @include('user.userInfo')
                     </div>
-                    <div class="ml-auto">
-                        <a href="/" class="ml-auto btn btn-secondary">完成</a>
+                    <div class="float-right">
+                        <a href="/" class="btn btn-secondary">完成</a>
                     </div>
             </div>
             </div>

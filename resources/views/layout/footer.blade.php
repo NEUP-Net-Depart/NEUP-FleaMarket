@@ -17,7 +17,7 @@
 	</div>
 @if( env('SHOW_VER') || env('APP_DEBUG') )
     <footer class="row">
-        <div class="small-11 small-centered columns">
+        <div class="col-10 offset-1 columns">
 		<span>
 			<center>
 				@if(env('APP_DEBUG'))当前处于调试模式<br>@endif
