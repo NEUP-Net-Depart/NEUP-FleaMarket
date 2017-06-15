@@ -178,7 +178,10 @@
             pluginsEnabled: ['image', 'link', 'colors', 'emoticons',
                 'fontSize', 'fontFamily', 'fullscreen'],
             toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
-                'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo']
+                'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+            height: 150
         });
+        // Hack the License
+        $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').hide();
     </script>
 @endsection

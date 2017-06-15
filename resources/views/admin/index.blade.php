@@ -156,7 +156,10 @@
         imageUploadURL: 'https://flimg.neupioneer.com/api/1/upload',
         requestWithCORS: true,
         pluginsEnabled: ['image', 'link', 'colors', 'emoticons',
-            'fontSize', 'fontFamily', 'fullscreen']
+            'fontSize', 'fontFamily', 'fullscreen'],
+        height: 300
     });
+    // Hack the License
+    $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').hide();
 </script>
 @endsection
