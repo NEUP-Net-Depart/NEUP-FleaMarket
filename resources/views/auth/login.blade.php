@@ -15,7 +15,7 @@
     <div class="card float-left">
         <div class="card-block">
             @if (count($errors) > 0)
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger" role="alert" style="width:373.63px">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
                     <span class="sr-only">Error:</span>
                     {!! $errors->first() !!}
@@ -24,10 +24,10 @@
             <form action="/login" method="POST">
                 <div class="form-group">
                     <label for="username">用户名/邮箱</label>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="用户名/邮箱" style="width:373.63px">
+                    <input type="text" name="username" id="username" class="form-control" placeholder="如果都没有的话，就用校卡登录吧" style="width:373.63px">
                 </div>
                 <div class="form-group">
-                    <label for="password">密码</label>
+                    <label for="password">密码（<a href="/iforgotit">忘记密码？</a>）</label>
                     <input type="password" name="password" id="password" class="form-control" placeholder="密码" style="width:373.63px">
                 </div>
                 {!! csrf_field() !!}
@@ -80,5 +80,4 @@
             </div>
         </div>
     </div>
-
 @endsection
