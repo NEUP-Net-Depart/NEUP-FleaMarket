@@ -286,7 +286,7 @@ class AuthController extends Controller
         if ($user == NULL)
             abort(404);
         if (!$user->havecheckedemail) {
-            $user->email = '';
+            $user->email = null;
             $user->save();
             return true;
         }
@@ -419,7 +419,7 @@ class AuthController extends Controller
         $user = User::find($check_email->user_id);
         if($user->email != $token[2])
             return Redirect::to('/login')->withErrors('此链接已失效。');
-        $user->email = "";
+        $user->email = null;
         $user->update();
         $check_email->delete();
 
