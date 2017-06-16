@@ -40,7 +40,7 @@ function setprice(){
     location.href=hr;
 }
 function setc(ha){
-    var hr="/good/?";
+    var hr="/good?";
     if($("#priceSet1").val()!=""){
         hr=hr+"&start_price="+$("#priceSet1").val();
     }
@@ -61,6 +61,7 @@ function setc(ha){
     }
     if(getUrlParam('cat_id'))
         hr = hr + '&cat_id=' + getUrlParam('cat_id');
+    //alert(hr);
     location.href=hr;
 }
 
