@@ -96,26 +96,24 @@
       </form>
   </div>
 </div>
-<div class="off-canvas position-left" id="offCanvas" data-off-canvas>
-    <ul class="vertical menu">
-        @if(Session::has('user_id'))
-          <li><a href="/user/{{Session::get('user_id')}}"><img src="/avatar/{{ Session::get('user_id') }}/220/220"/><br/><br/>个人中心</a></li>
-          <li><a href="/logout">登出</a></li>
-          <hr>
-          <li><a href="/user/fav">收藏夹</a></li>
-          <li><a href="/user/trans">我的交易</a></li>
-          <li><a href="/user/sell">我的出售</a></li>
-          @if(Session::get('is_admin') >= 1)
-            <li><a href="/admin">管理中心</a></li>
-          @endif
-          <li><a href="/good/add" class="top-bar-button">出售</a></li>
-        @else
-          <li><a href="/register">注册</a></li>
-          <li><a href="/login">登录</a></li>
-        @endif
-    </ul>
+@if(Session::has('user_id'))
+    <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
+        <ul class="vertical menu">
+            <li><a href="/user/{{Session::get('user_id')}}"><img
+                            src="/avatar/{{ Session::get('user_id') }}/220/220"/><br/><br/>个人中心</a></li>
+            <li><a href="/logout">登出</a></li>
+            <hr>
+            <li><a href="/user/fav">收藏夹</a></li>
+            <li><a href="/user/trans">我的交易</a></li>
+            <li><a href="/user/sell">我的出售</a></li>
+            @if(Session::get('is_admin') >= 1)
+                <li><a href="/admin">管理中心</a></li>
+            @endif
+            <li><a href="/good/add" class="top-bar-button">出售</a></li>
+        </ul>
 
-</div>
+    </div>
+@endif
 
 @if(Session::has('user_id'))
     <script>
