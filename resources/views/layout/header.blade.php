@@ -120,7 +120,7 @@
 @if(Session::has('user_id'))
     <script>
         $(document).ready(function() {
-            @if($_SERVER['REQUEST_URI'] != '/message')
+            @if(Request::path() != 'message')
                 getMsgNum();
                 window.setInterval(function(){getMsgNum()}, 5000)
             @endif
