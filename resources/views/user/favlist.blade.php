@@ -10,7 +10,7 @@
         <form method="POST" id="favdel">
             <div class="row">
             <div class="col-md-2">
-                <h4>收藏商品</h4><br/>
+                <p><h4>收藏商品</h4></p>
             </div>
             <div class="col-md-7">
             {!! csrf_field() !!}

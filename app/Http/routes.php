@@ -58,9 +58,9 @@ Route::group(['middleware' => ['web']],function () {
         Route::post('/register/2', "UserController@completeUser");
         Route::get('/register/3', "UserController@regUserInfo");
 
-        Route::get('user/userinfo', "UserController@userInfo");
+        Route::get('/user/userinfo', "UserController@userInfo");
         Route::get('/user/userinfo/create', "UserController@createUserInfo");
-        Route::post('user/userinfo', "UserController@storeUserInfo");
+        Route::post('/user/userinfo', "UserController@storeUserInfo");
 
         Route::get('/user/fav', "UserController@getFavlist");
         Route::get('/user/fav/edit', "UserController@editFavlist");

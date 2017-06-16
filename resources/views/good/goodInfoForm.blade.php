@@ -69,10 +69,12 @@
                     </div>
                 </div>
                 --}}
+                <p>
                 <div>
                     <label for="goodTitleUpload" class="btn btn-primary">上传封面</label>
-                    <div id="preview"></div>
-                </div><br/>
+                    <p><div id="preview"></div></p>
+                </div>
+                </p>
                 <div style="display: none">
                     <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic"
                             onchange="preview(this)"/>
@@ -96,7 +98,7 @@
                 var prreader = new FileReader();
                 var reader = new FileReader();
                 reader.onload = function (evt) {
-                    prevDiv.innerHTML = '<br/><img id="goodimgpreview" src="' + evt.target.result + '" />';
+                    prevDiv.innerHTML = '<img id="goodimgpreview" src="' + evt.target.result + '" />';
                     $('#goodimgpreview').cropper({
                         aspectRatio: 16 / 9,
                         crop: function (e) {
@@ -122,7 +124,7 @@
                 prreader.readAsArrayBuffer(file.files[0]);
             }
             else {
-                prevDiv.innerHTML = '<br/><div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+                prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
             }
         }
         // WYSIWYG Editor

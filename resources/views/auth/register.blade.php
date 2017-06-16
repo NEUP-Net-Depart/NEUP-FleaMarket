@@ -3,7 +3,7 @@
 @section('title', "注册")
 
 @section('content')
-
+    Poor!!!!!!
     <div class="row card">
         <div class="large-4 large-centered medium-6 medium-centered small-12 small-centered columns card-section">
             @if (count($errors) > 0)

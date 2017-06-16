@@ -9,20 +9,20 @@
                 <img src="/good/{{ sha1($good->id) }}/titlepic" class="titlepic"/>
                 <div class="details" style="position:absolute;z-index:200;width:100%;display:none;">
                     <div class="det-d hidden-sm-down" style="position:absolute;z-index:200;top:-37px;left:5px;color:white;font-size:12px;">
-                        售价：￥{{ $good->price }}<br/>
-                        @if($good->count==0)
+                        <p>售价：￥{{ $good->price }}</p>
+                        <p>@if($good->count==0)
                             无库存QAQ
                         @else
                             库存：{{ $good->count }}
-                        @endif
+                        @endif</p>
                     </div>
                     <div class="det-d hidden-md-up" style="position:absolute;z-index:200;top:-43px;left:5px;color:white;font-size:15px;">
-                        售价：￥{{ $good->price }}<br/>
-                        @if($good->count==0)
+                        <p>售价：￥{{ $good->price }}</p>
+                        <p>@if($good->count==0)
                             无库存QAQ
                         @else
                             库存：{{ $good->count }}
-                        @endif
+                        @endif</p>
                     </div>
                 </div>
             </div>

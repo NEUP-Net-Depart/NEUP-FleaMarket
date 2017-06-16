@@ -4,19 +4,17 @@
 
 @section('asset')
     <style>
-        @media (min-width: 992px) {
+        @media (min-width: 768px) {
             .reset-card {
                 width:400px;
+            }
+            .row-first {
+                margin-top:130px;
+                margin-bottom:50px;
             }
         }
     </style>
     <script>
-        if (matchMedia) {
-            var mq = window.matchMedia("(min-width: 992px)");
-            mq.addListener(WidthChange);
-            WidthChange(mq);
-        }
-
         function WidthChange(mq) {
             if (mq.matches) {
                 $('.row-first').attr('class','row row-first');
@@ -28,7 +26,7 @@
 @endsection
 
 @section('content')
-    <div class="row row-first">
+    <div class="row-first">
         <div class="mx-auto">
             <div class="card reset-card">
                 <div class="card-header">重置密码</div>

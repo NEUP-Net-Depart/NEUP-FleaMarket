@@ -1,31 +1,45 @@
-    @if (count($errors) > 0)
-        <div class="alert alert-danger" role="alert">
-            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-            {!! $errors->first() !!}
+    <style>
+        .cropper-crop-box, .cropper-view-box {
+            border-radius: 50%;
+        }
+
+        .cropper-view-box {
+            box-shadow: 0 0 0 1px #39f;
+            outline: 0;
+        }
+    </style>
+    <div class="row">
+        <div class="mx-auto">
+            <div id="preview"><img id="avatarpreview" class="avatar" src="/avatar/{{Session::get('user_id')}}"/></div>
+            <div style="display: none">
+                <input type="file" id="avatarUpload" name="avatarPic" onchange="preview(this)"/>
+            </div>
         </div>
-    @endif
-    @if(isset($user->nickname))
-        <div class="form-group">
-            <label for="nickname">昵称</label>
-            <input type="text" name="nickname" id="nickname" class="form-control" value="{{ $user->nickname }}"></label>
-        </div>
-    @else
-        <div class="form-group">
-            <label for="nickname">昵称</label>
-            <input type="text" name="nickname" id="nickname" class="form-control"></label>
-        </div>
-    @endif
-    {!! csrf_field() !!}
-    <label for="avatarUpload" class="btn btn-primary">选择头像</label>
-    <div id="preview"></div>
-    <div style="display: none">
-        <input type="file" id="avatarUpload" class="show-for-sr" name="avatarPic"
-               onchange="preview(this)"/>
     </div>
     <input id="avatarUploadCpWidth" type="hidden" name="crop_width">
     <input id="avatarUploadCpHeight" type="hidden" name="crop_height">
     <input id="avatarUploadCpX" type="hidden" name="crop_x">
     <input id="avatarUploadCpY" type="hidden" name="crop_y">
+    <p>
+    <div class="row">
+        <div class="mx-auto">
+            <label for="avatarUpload" class="btn btn-secondary">更改头像</label>
+        </div>
+    </div>
+    </p>
+    {!! csrf_field() !!}
+    <div class="nickname-form">
+        <div class="mx-auto">
+            <div class="form-group">
+                <label for="nickname">昵称</label>
+                @if(isset($user->nickname))
+                    <input type="text" name="nickname" id="nickname" class="form-control nickname-input" value="{{ $user->nickname }}">
+                @else
+                    <input type="text" name="nickname" id="nickname" class="form-control nickname-input">
+                @endif
+            </div>
+        </div>
+    </div>
 
 <script>
     function preview(file) {
@@ -34,9 +48,11 @@
             var prreader = new FileReader();
             var reader = new FileReader();
             reader.onload = function (evt) {
-                prevDiv.innerHTML = '<img id="avatarpreview" src="' + evt.target.result + '" />';
+                prevDiv.innerHTML = '<img id="avatarpreview" class="avatar" src="' + evt.target.result + '"/>';
                 $('#avatarpreview').cropper({
                     aspectRatio: 1 / 1,
+                    autoCropArea: 1,
+                    dragCrop: false,
                     crop: function (e) {
                         $('#avatarUploadCpX').val(e.x);
                         $('#avatarUploadCpY').val(e.y);
@@ -57,7 +73,7 @@
             };
             prreader.readAsArrayBuffer(file.files[0]);
         } else {
-            prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+            prevDiv.innerHTML = '<div class="img" class="avatar" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
         }
     }
 </script>

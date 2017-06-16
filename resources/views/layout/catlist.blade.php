@@ -1,8 +1,8 @@
-<div class="col-md-2 hidden-sm-down" style="position:sticky;top:0">
+<div class="col-md-2 hidden-sm-down" style="position:sticky;top:0;left:0">
     <ul class="nav nav-pills flex-column">
         <li class="nav-item"><a href="/good" class="nav-link @if(isset($cat_id)&&$cat_id == 0) active @endif" style="white-space:nowrap;overflow:hidden">所有商品</a></li>
         @foreach($cats as $cat)
-            <li class="nav-item"><a href="/good?cat_id={{ $cat->id }}" class="nav-link @if(isset($cat_id)&&$cat_id == $cat->id) active @endif" style="white-space:nowrap;overflow:hidden">{{ $cat->cat_name }}</a></li>
+            <li class="nav-item"><a href="/good?cat_id={{ $cat->id }}" class="nav-link @if(isset($cat_id)&&$cat_id == $cat->id) active @endif" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $cat->cat_name }}</a></li>
         @endforeach
     </ul>
 </div>

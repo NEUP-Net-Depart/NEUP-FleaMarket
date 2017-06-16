@@ -6,11 +6,11 @@
 
     <div class="page-content">
         <form action="/message" method="post">
-            Title:<input type="text" name="title"><br/>
-            Content:<textarea name="content" row="15" cols="45"></textarea><br/>
-            Receiver:<input type="text" name="receiver"><br/>
+            <p>Title:<input type="text" name="title"></p>
+            <p>Content:<textarea name="content" row="15" cols="45"></textarea></p>
+            <p>Receiver:<input type="text" name="receiver"></p>
             {!! csrf_field() !!}
-            <input type="submit" value="Send"><br/>
+            <p><input type="submit" value="Send"></p>
         </form>
     </div>
 
