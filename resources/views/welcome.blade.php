@@ -52,10 +52,10 @@
                         <br/>
                     @endif
                     </div>
-                    @if(count($populargoods)>0)
-                        <h3>热门</h3>
+                    @if(count($newgoods)>0)
+                        <h3>新品</h3>
                         <div class="row small-up-2 medium-up-4 large-up-3">
-                            @foreach($populargoods as $good)
+                            @foreach($newgoods as $good)
                                 <div class="columns">
                                     <div class="good">
                                         <a href="/good/{{ $good->id }}">
@@ -91,10 +91,10 @@
                             @endforeach
                         </div>
                     @endif
-                    @if(count($newgoods)>0)
-                        <h3>新品</h3>
+                    @if(count($populargoods)>0)
+                        <h3>热门</h3>
                         <div class="row small-up-2 medium-up-4 large-up-3">
-                            @foreach($newgoods as $good)
+                            @foreach($populargoods as $good)
                                 <div class="columns">
                                     <div class="good">
                                         <a href="/good/{{ $good->id }}">
