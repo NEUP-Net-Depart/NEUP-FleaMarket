@@ -62,6 +62,7 @@
                 <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
             @endif
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
+            <p id="ach" class="show-for-small-only gb_right">@if($good->count > 1)(库存:{{ $good->count }}件)@else 仅一件 @endif</p>
             @if (count($errors) > 0)
                 <label>
                     <span class="form-error is-visible">{!! $errors->first() !!}</span>
@@ -80,7 +81,7 @@
                             </div>
                         </form>
                     @endif
-                    <p id="ach" class="gb_right">(库存:{{ $good->count }}件)</p>
+                    <p id="ach" class="gb_right">@if($good->count > 1)(库存:{{ $good->count }}件)@else 仅一件 @endif</p>
                     @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
                         <form class="hide-for-small-only" action="/good/{{ $good->id }}/edit"
                               style="margin:0px;display:inline;">
