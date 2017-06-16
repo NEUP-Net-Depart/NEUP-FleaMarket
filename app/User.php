@@ -9,6 +9,8 @@ class User extends Model
 {
     protected $table = 'users';
 
+    protected $fillable = ['last_get_new_message_time', 'last_send_email_time'];
+
     public function user_infos()
     {
         return $this->hasMany('App\UserInfo');

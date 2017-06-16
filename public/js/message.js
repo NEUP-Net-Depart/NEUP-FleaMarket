@@ -157,8 +157,12 @@ Vue.component('message-dialog', {
     mounted: function () {
         this.$nextTick(function () {
             this.$on('loadDialogHandler', function (id) {
-                this.clearMessage(id);
-                this.getHistoryMessage(id);
+                var vm = this;
+                if (vm.contact_id != id)
+                {
+                    this.clearMessage(id);
+                    this.getHistoryMessage(id);
+                }
             });
             this.$on('refreshMessageEvent', function () {
                 this.getNewMessage();
