@@ -32,4 +32,5 @@ class Transaction extends Model
 	{
 		return $this->hasOne('App\Ticket', 'trans_id');
 	}
+
 }

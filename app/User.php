@@ -34,4 +34,14 @@ class User extends Model
         return $this->nickname != "" ? $this->nickname : "一位先锋市场用户";
     }
 
+	public function getcoding()
+	{
+		$len=strlen($this->stuid);
+		$ans = "";
+		$ans = $ans . ($this->stuid)[0];
+		for($i=1; $i<($len-1); $i++) $ans = $ans . '*';
+		$ans = $ans . ($this->stuid)[$len-1];
+		return $ans;
+	}
+
 }

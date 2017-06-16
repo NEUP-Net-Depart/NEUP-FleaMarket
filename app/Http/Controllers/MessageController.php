@@ -23,16 +23,6 @@ class MessageController extends Controller
 {
     public function showMessageView(Request $request)
 	{
-		$user_id = $request->session()->get('user_id');
-		$post_data = 'user_id='.$user_id.'';
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, '127.0.0.1:6565/notify');
-		curl_setopt($ch, CURLOPT_HEADER, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-		$output = curl_exec($ch);
-		curl_close($ch);
         return View::make('message.message');
     }
 
@@ -49,6 +39,16 @@ class MessageController extends Controller
         MessageContact::where('user_id', $user_id)
             ->where('contact_id', $contact_id)
             ->update(['unread_count' => 0]);
+	$user_id = $request->session()->get('user_id');
+	$post_data = 'user_id='.$user_id.'';
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, '127.0.0.1:6565/notify');
+	curl_setopt($ch, CURLOPT_HEADER, 1);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+	$output = curl_exec($ch);
+	curl_close($ch);
         return json_encode($messages);
     }
 
