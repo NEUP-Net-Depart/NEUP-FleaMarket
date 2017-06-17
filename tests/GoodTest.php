@@ -38,7 +38,7 @@ class GoodTest extends BrowserKitTestCase
             ->see('库存数必须是整数')
             ->type('10', 'count')
             ->press('添加')
-            ->see('必须为商品上传一张图片')
+            ->see('必须为商品上传封面')
             ->attach(__DIR__ . '/resources/good.jpg', 'goodTitlePic')
             ->press('添加')
             ->see('请按要求裁剪图片')
