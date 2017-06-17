@@ -1,4 +1,16 @@
-<div class="col-12 col-md-4">
+<div class="row">
+<div class="mx-auto">
+    @if (count($errors) > 0)
+        <div class="alert alert-danger" role="alert">
+            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+            {!! $errors->first() !!}
+        </div>
+    @endif
+</div>
+</div>
+<div class="row">
+<div class="mx-auto">
+    <p>
     <form action="/user/edit/username" method="POST">
         {{ csrf_field() }}
         @if($user->username=='')
@@ -8,9 +20,11 @@
                 <input type="submit" class="btn btn-primary" value="设置">
             </div>
         @else
-            <label>用户名：{{$user->username}}</label>
+            <label style="font-size:13px;line-height:38px">用户名：{{$user->username}}</label>
         @endif
     </form>
+    </p>
+    <p>
     <form action="/user/edit/stuid" method="POST">
         {{ csrf_field() }}
         @if($user->stuid=='')
@@ -20,41 +34,46 @@
             </div>
             <input type="submit" class="btn btn-primary" name="stuid_submit" value="绑定">
         @else
-            <label>学号：{{$user->stuid}}</label>
+            <label style="font-size:13px;line-height:38px">学号：　{{$user->stuid}}</label>
         @endif
+    </p>
     </form>
+    <p>
     <form action="/user/edit/email" method="POST">
         {{ csrf_field() }}
         @if($user->email=='')
-            <div class="form-group">
-                <label for="email">邮箱</label>
-                <input type="email" name="email" id="email" class="form-control" value="{{$user->email}}" required>
+            <p><input type="email" name="email" id="email" class="form-control" value="{{$user->email}}" placeholder="邮箱" required></p>
+            <div class="row">
+            <div class="mx-auto">
                 <input type="submit" class="btn btn-primary" name="email_submit" value="绑定">
+            </div>
             </div>
         @else
             <div class="form-group">
-                <label>邮箱：{{$user->email}}（@if($user->havecheckedemail) 已验证 @else 未验证 @endif）</label>
+                <label style="font-size:13px">邮箱：　{{$user->email}}（@if($user->havecheckedemail)已验证@else未验证@endif）</label>
                 <input type="hidden" name="email" id="email" class="form-control" value="{{$user->email}}">
-                <input type="submit" class="btn btn-primary" value="解绑">
+                <input type="submit" class="btn btn-warning" value="解绑">
             </div>
         @endif
     </form>
-    <form action="/user/edit/password" method="POST">
+    </p>
+</div>
+</div>
+<hr>
+<div class="row row-password">
+<div class="mx-auto">
+    <form action="/user/edit/password" method="POST" class="password-form">
         {{ csrf_field() }}
         @if($user->password!='')
-            <div class="form-group">
-                <label for="password">当前密码</label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="必填" required>
-            </div>
+            <p><input type="password" name="password" id="password" class="form-control" placeholder="当前密码" required></p>
         @endif
-        <div class="form-group">
-            <label for="newPassword">新密码</label>
-            <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="必填" required>
+        <p><input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="新密码" required></p>
+        <p><input type="password" name="newPassword_confirmation" id="newPassword_confirmation" class="form-control" placeholder="确认新密码" required></p>
+        <div class="row">
+        <div class="mx-auto">
+            <input type="submit" class="btn btn-success" name="password_submit" value="保存">
         </div>
-        <div class="form-group">
-            <label for="newPassword_confirmation">确认新密码</label>
-            <input type="password" name="newPassword_confirmation" id="newPassword_confirmation" class="form-control" placeholder="必填" required>
         </div>
-        <input type="submit" class="btn btn-primary" name="password_submit" value="保存">
     </form>
+</div>
 </div>

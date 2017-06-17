@@ -21,6 +21,28 @@
             .nav-pills {
                  width:100px;
             }
+            .password-form {
+                width:300px;
+            }
+            .register-card {
+                width:768px;
+            }
+            #modify_user_info_form {
+                width:300px;
+            }
+        }
+        @media (max-width: 991px) {
+            .address-th {
+                max-width: 200px;
+            }
+        }
+        .table {
+            table-layout: fixed;
+        }
+        .table td {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
     </style>
     <script>
@@ -30,15 +52,21 @@
             if (mq.matches) {
                 $('.row-first').attr('class','row row-first');
                 $('.row-card').attr('class','row row-card');
+                $('.row-password').attr('class','row row-password');
                 $('.nickname-form').attr('class','nickname-form row');
                 $('.nav-pills').attr('class','nav nav-pills flex-column');
                 $('.paowa').attr('class','paowa');
+                $('.table').attr('class','table table-hover');
+                $('.row-form').attr('class','row row-form');
             } else {
                 $('.row-first').attr('class','row-first');
                 $('.row-card').attr('class','row-card');
+                $('.row-password').attr('class','row-password');
                 $('.nickname-form').attr('class','nickname-form');
                 $('.nav-pills').attr('class','nav nav-pills');
                 $('.paowa').attr('class','row paowa');
+                $('.table').attr('class','table table-hover table-responsive');
+                $('.row-form').attr('class','row-form');
             }
         }
     </script>
@@ -46,11 +74,6 @@
 
 @section('content')
 
-    @if (count($errors) > 0)
-        <label>
-            <span class="form-error is-visible">{{$errors->first()}}</span>
-        </label>
-    @endif
 <div class="row-first" style="margin-top:20px">
     <div class="mx-auto">
     <div class="card main-card">
@@ -74,7 +97,7 @@
                         <form action="/user" method="POST" enctype="multipart/form-data">
                             @include('user.editUserExtra')
                             <div class="row">
-                                <div class="ml-auto" style="margin-right:5px">
+                                <div class="mx-auto">
                                     <input class="btn btn-success" type="submit" name="submit" value="保存">
                                 </div>
                             </div>

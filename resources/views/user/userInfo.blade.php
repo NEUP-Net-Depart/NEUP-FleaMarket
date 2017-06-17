@@ -1,3 +1,4 @@
+    <div id="userinfo-container">
         <table class="table table-hover table-responsive" style="width:100%">
             <tr>
                 <th style="width:130px">手机</th>
@@ -35,6 +36,7 @@
                 </p>
             </div>
         </div>
+    </div>
     </div>
 <script>
     function editUserInfo(userinfo_id) {
