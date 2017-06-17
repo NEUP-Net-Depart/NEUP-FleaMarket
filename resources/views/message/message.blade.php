@@ -70,7 +70,7 @@
                             <p v-if="contact_id == 0" class="message-content" v-html="message.content"></p>
                             <p v-else class="message-content">@{{ message.content }}</p>
                             <br/><br/>
-                        <i class="time-tag">@{{ message.updated_at }}</i>
+                        <i class="time-tag">@{{ message.created_at }}</i>
                         </span>
                             <span v-else>
                             <i class="history-text">以上是历史消息</i>
