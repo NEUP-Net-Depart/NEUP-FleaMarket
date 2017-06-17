@@ -30,6 +30,14 @@
             <input type="submit" class="hollow button" value="解绑">
         @endif
     </form>
+    <form>
+        @if($user->wechat_open_id)
+            <label>微信：已关联 {{$user->wechat->nick_name}}</label>
+            <img class="head-img" src="{{$user->wechat->head_img_url}}" width="64px" height="64px">
+        @else
+            <label>微信：请在东大小秘书中点击“闲置市场”链接来关联微信。</label>
+        @endif
+    </form>
     <form action="/user/edit/password" method="POST">
         {{ csrf_field() }}
         @if($user->password!='')
@@ -40,3 +48,5 @@
         <input type="submit" class="hollow button" name="password_submit" value="保存">
     </form>
 </div>
+
+<link rel="stylesheet" href="/css/wechat.css"/>

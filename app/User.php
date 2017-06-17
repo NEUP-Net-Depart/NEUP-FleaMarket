@@ -34,4 +34,9 @@ class User extends Model
         return $this->nickname != "" ? $this->nickname : "一位先锋市场用户";
     }
 
+    public function wechat()
+    {
+        return $this->belongsTo('App\Wechat', "wechat_open_id", "open_id");
+    }
+
 }
