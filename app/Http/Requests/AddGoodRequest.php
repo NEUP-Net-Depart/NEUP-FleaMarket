@@ -51,7 +51,7 @@ class addGoodRequest extends Request
 			'count.max' => '库存数不能超过2147483647！',
             //'good_tag.required' => '商品标签不能为空！',
             //'other_tag.max' => '自定义标签不能多于2048个字符！',
-			'goodTitlePic.required' => '必须为商品上传一张图片！',
+			'goodTitlePic.required' => '必须为商品上传封面！',
             'crop_width.required' => '请按要求裁剪图片',
             'crop_height.required' => '请按要求裁剪图片',
             'crop_x.required' => '请按要求裁剪图片',

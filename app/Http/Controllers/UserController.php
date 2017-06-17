@@ -172,7 +172,7 @@ class UserController extends Controller
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
-        $data['user'] = User::find($user_id);
+        $data['user'] = User::with('wechat')->find($user_id);
         $data['userinfos'] = UserInfo::where('user_id', $user_id)->get();
         $data['tab'] = isset($request->tab) ? $request->tab : "profile";
         return View::make('user.user')->with($data);

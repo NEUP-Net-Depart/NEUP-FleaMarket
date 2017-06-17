@@ -53,13 +53,13 @@
             </span>
             </h2>
             <div><!-- 放tag 和更多图片缩略图 --></div>
-            货主：<a href="/user/{{ $user->id }}">@if(isset($user->nickname)){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif
+            卖家：<a href="/user/{{ $user->id }}">@if(isset($user->nickname)){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif
                 @if($user->baned)
                     【已封禁】
                 @endif
             </a>
             @if ($user->id != session('user_id'))
-                <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
+                <a href="/message/startConversation/{{ $user->id }}">联系卖家</a>
             @endif
             <h4 style="color: #cc4b37"><b>￥{{ $good->price }}</b></h4>
             <p id="ach" class="show-for-small-only gb_right">@if($good->count > 1)(库存:{{ $good->count }}件)@else 仅一件 @endif</p>
@@ -169,7 +169,7 @@
                             <li style="width:25%">
                                 <button class="button warning"
                                         style="color:white;font-size: 15px;width:100%;height:40px;padding-left:0;padding-right:0;" onclick="window.location.href='/message/startConversation/{{ $user->id }}'">
-                                    联系货主
+                                    联系卖家
                                 </button>
                             </li>
                             <li style="width:50%">

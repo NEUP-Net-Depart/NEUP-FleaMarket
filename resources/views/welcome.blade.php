@@ -4,7 +4,84 @@
 
 @section('asset')
     <link rel="stylesheet" href="/css/wel.css" />
+
+<style>
+.slide-title{
+    background: rgba(0,0,0,.5);
+    color: #fff;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: bold;    
+}
+.slide-title span{
+    float: left;
+    margin-right: 0px;    
+}
+.slide-title span:nth-child(1),
+.slide-list li span:nth-child(1){
+    width: 1500px;
+}
+.slide-title span:nth-child(2),
+.slide-list li span:nth-child(2){
+    width: 1500px;
+}
+.slide-title span:nth-child(3),
+.slide-list li span:nth-child(3){
+	width: 1500px;
+}
+
+.slide-container{
+	position: relative;
+	overflow: hidden;
+	height: 90px;
+}
+.slide-list{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	color: #000;
+	margin: 0;
+    padding: 0;
+}
+.slide-list li {
+	height: 30px;
+	line-height: 30px;
+	list-style: none;
+	margin: 0;
+	padding: 3px;
+}
+.slide-list li span {
+	display: inline-block;
+	margin-right: 0px;
+	font-size: 13px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.slide-list li.odd{
+    background: rgba(51,79,109,.2);
+}
+</style>
+
+<script>
+var doscroll = function(){
+	var $parent = $('.js-slide-list');
+	var $first = $parent.find('li:first');
+	var height = $first.height();
+	$first.animate({
+		marginTop: -height + 'px'
+		}, 500, function() {
+		$first.css('marginTop', 0).appendTo($parent);
+	});    
+};
+setInterval(function(){doscroll()}, 2000);
+</script>
+
 @endsection
+
 
 @section('content')
 
@@ -165,7 +242,7 @@
                         @endif
                     @endforeach
                 </div>
-                <div class="hide-for-medium-only large-5 columns">
+                <div class="large-5 columns">
                     <div class="row">
                         <div class="medium-10 medium-offset-2 columns">
                             <div class="card">
@@ -178,6 +255,22 @@
                             </div>
                         </div>
                     </div>
+					<div class="row">
+						<div class="medium-10 medium-offset-2 columns">
+							<div class="slide-title">
+								<h4>交易公示牌OvO</h4>
+							</div>
+							<div class="slide-container">
+								<ul class="slide-list js-slide-list">
+								@foreach($trans as $tran)
+								@if($tran->seller != NULL)
+									<li class="odd"><span>恭喜{{$tran->seller->getcoding()}}和{{$tran->buyer->getcoding()}}成功完成了一笔交易！OvO</span></li>
+								@endif
+								@endforeach
+								</ul>
+							</div>
+						</div>
+					</div>
                 </div>
             </div>
             <script src="/js/good/cat.js"></script>
