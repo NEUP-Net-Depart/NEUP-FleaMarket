@@ -39,4 +39,14 @@ class User extends Model
         return $this->belongsTo('App\Wechat', "wechat_open_id", "open_id");
     }
 
+	public function getcoding()
+	{
+		$len=strlen($this->stuid);
+		$ans = "";
+		$ans = $ans . substr($this->stuid, 0, 1);
+		for($i=1; $i<($len-1); $i++) $ans = $ans . '*';
+		$ans = $ans . substr($this->stuid, -1);
+		return $ans;
+	}
+
 }

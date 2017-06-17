@@ -20,7 +20,8 @@ class Transaction extends Model
 
     public function getSellerIdAttribute()
     {
-        return $this->good->user_id;
+		if($this->good != NULL)
+			return $this->good->user_id;
     }
 
     public function seller()
@@ -32,4 +33,5 @@ class Transaction extends Model
 	{
 		return $this->hasOne('App\Ticket', 'trans_id');
 	}
+
 }
