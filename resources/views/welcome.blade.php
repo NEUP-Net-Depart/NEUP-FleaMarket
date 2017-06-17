@@ -4,7 +4,6 @@
 
 @section('asset')
     <link rel="stylesheet" href="/css/wel.css" />
-@endsection
 
 <style>
 .slide-title{
@@ -55,14 +54,34 @@
 	padding: 3px;
 }
 .slide-list li span {
-  display: inline-block;
-  margin-right: 0px;
-  font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+	display: inline-block;
+	margin-right: 0px;
+	font-size: 13px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.slide-list li.odd{
+    background: rgba(51,79,109,.2);
 }
 </style>
+
+<script>
+var doscroll = function(){
+	var $parent = $('.js-slide-list');
+	var $first = $parent.find('li:first');
+	var height = $first.height();
+	$first.animate({
+		marginTop: -height + 'px'
+		}, 500, function() {
+		$first.css('marginTop', 0).appendTo($parent);
+	});    
+};
+setInterval(function(){doscroll()}, 2000);
+</script>
+
+@endsection
+
 
 @section('content')
 
@@ -245,7 +264,7 @@
 								<ul class="slide-list js-slide-list">
 								@foreach($trans as $tran)
 								@if($tran->seller != NULL)
-									<li><span>恭喜{{$tran->seller->getcoding()}}和{{$tran->buyer->getcoding()}}成功完成了一笔交易！OvO</span></li>
+									<li class="odd"><span>恭喜{{$tran->seller->getcoding()}}和{{$tran->buyer->getcoding()}}成功完成了一笔交易！OvO</span></li>
 								@endif
 								@endforeach
 								</ul>
@@ -260,17 +279,3 @@
         </div>
     </div>
 @endsection
-
-<script>
-var doscroll = function(){
-     var $parent = $('.js-slide-list');
-     var $first = $parent.find('li:first');
-     var height = $first.height();
-     $first.animate({
-         height: 0
-         }, 500, function() {
-         $first.css('height', height).appendTo($parent);
-     });    
-};
-setInterval(function(){doscroll()}, 2000);
-</script>

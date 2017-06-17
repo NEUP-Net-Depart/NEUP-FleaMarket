@@ -20,7 +20,8 @@ class Transaction extends Model
 
     public function getSellerIdAttribute()
     {
-        return $this->good->user_id;
+		if($this->good != NULL)
+			return $this->good->user_id;
     }
 
     public function seller()

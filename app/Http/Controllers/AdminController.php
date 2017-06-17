@@ -29,9 +29,9 @@ class AdminController extends Controller
         $data['users'] = User::orderby('id', 'asc')->get();
         $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
 		$data['announcements'] = Announcement::orderby('id', 'dsc')->get();
-		$data['reports'] = Ticket::where('type', '2')->orderby('id', 'dsc')->paginate(16);
-		$data['users'] = User::orderby('id', 'asc')->paginate(16);
-		$data['trans'] = Transaction::orderby('id', 'asc')->paginate(16);
+		$data['reports'] = Ticket::where('type', '2')->orderby('id', 'dsc')->paginate(40);
+		$data['users'] = User::orderby('id', 'asc')->paginate(40);
+		$data['trans'] = Transaction::orderby('id', 'asc')->paginate(40);
         return View::make('admin.index')->with($data);
     }
 

@@ -153,7 +153,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th>#</th>
+							<th>用户ID</th>
 							<th>权限</th>
                             <th>学号</th>
                             <th>真实姓名</th>
@@ -171,7 +171,7 @@
 							<td>{{$user->privilege}}</td>
                             <td>{{$user->stuid}}</td>
                             <td>{{$user->realname}}</td>
-                            <td>{{$user->nickname}}</td>
+                            <td><a href="/user/{{$user->id}}">{{$user->nickname}}</a></td>
 							<td>{{$user->username}}</td>
                             <td>{{$user->email}}</td>
 							<td>
@@ -199,7 +199,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th>#</th>
+							<th>交易单号</th>
 							<th>卖家学号</th>
 							<th>买家学号</th>
 							<th>商品ID</th>

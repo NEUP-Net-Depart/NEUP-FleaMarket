@@ -38,9 +38,9 @@ class User extends Model
 	{
 		$len=strlen($this->stuid);
 		$ans = "";
-		$ans = $ans . ($this->stuid)[0];
+		$ans = $ans . substr($this->stuid, 0, 1);
 		for($i=1; $i<($len-1); $i++) $ans = $ans . '*';
-		$ans = $ans . ($this->stuid)[$len-1];
+		$ans = $ans . substr($this->stuid, -1);
 		return $ans;
 	}
 
