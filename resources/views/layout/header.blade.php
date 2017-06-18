@@ -1,22 +1,47 @@
-  <div class="navbar-back" style="height:56px">
-    <div class="navbar-bg"></div>
-    <div class="navbar-filter"></div>
-  </div>
+<div class="navbar-back">
+  <div class="navbar-bg"></div>
+  <div class="navbar-filter"></div>
+</div>
 <div class="container">
-<nav class="navbar navbar-toggleable-sm navbar-inverse" style="box-shadow:#ffffff 0 0 0">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-toggleable navbar-inverse" style="box-shadow:#ffffff 0 0 0">
+  <div class="nav-item">
+  <a class="navbar-toggler navbar-toggler-right nav-link" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
     <span class="navbar-toggler-icon"></span>
-  </button>
+  </a>
+  <div class="dropdown-menu dropdown-menu-right">
+  @if(Session::has('user_id'))
+    <a href="/user" class="dropdown-item">
+      <img src="/avatar/{{ Session::get('user_id') }}/110/110" class="avatar"/>
+      <label class="dropdown-header"><center>{{ Session::get('nickname') }}</center></label>
+    </a>
+    <a href="/logout" class="dropdown-item">登出</a>
+    <div class="dropdown-divider"></div>
+    <a href="/user/fav" class="dropdown-item">收藏夹</a>
+    <a href="/user/trans" class="dropdown-item">我的购买</a>
+    <a href="/user/sell" class="dropdown-item">我的出售</a>
+    @if(Session::get('is_admin') >= 1)
+      <a href="/admin" class="dropdown-item">管理中心</a>
+    @endif
+    <div class="dropdown-divider"></div>
+    <a href="/good/add" class="dropdown-item">出售</a>
+  @else
+    <a href="/login" class="dropdown-item">普通登录</a>
+    <a href="/sso" class="dropdown-item">校卡平台快捷登录</a>
+    <div class="dropdown-divider"></div>
+    <a href="/register" class="dropdown-item">注册</a>
+  @endif
+  </div>
+  </div>
     <a class="navbar-brand" href="/">先锋市场</a>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav ml-auto">
         @if(Session::has('user_id'))
           <li class="nav-item dropdown">
             <a class="nav-link navbar-avatar dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar"/>
+              <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar"/> <span class="caret"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <h6 class="dropdown-header">{{ Session::get('nickname') }}</h6>
+              <label class="dropdown-header"><center>{{ Session::get('nickname') }}</center></label>
               <a href="/user" class="dropdown-item">个人中心</a>
               <a href="/user/fav" class="dropdown-item">收藏夹</a>
               <a href="/user/trans" class="dropdown-item">我的购买</a>
@@ -47,8 +72,7 @@
 
 <div class="banner-back"><div class="banner"></div></div>
 
-<br/>
-
+  <p>
   <div class="container hidden-sm-down">
       <form action="/good" method="GET">
         <div class="input-group float-right search-group" style="width:250px">
@@ -69,3 +93,4 @@
         </div>
       </form>
   </div>
+  </p>

@@ -8,14 +8,14 @@
             .login-card {
                 width:400px;
             }
+            .row-first {
+                margin-top:130px;
+                margin-bottom:50px;
+            }
         }
     </style>
     <script>
-        if (matchMedia) {
-            var mq = window.matchMedia("(min-width: 992px)");
-            mq.addListener(WidthChange);
-            WidthChange(mq);
-        }
+        match_media = "(min-width:992px)";
 
         function WidthChange(mq) {
             if (mq.matches) {
@@ -30,13 +30,12 @@
 @endsection
 
 @section('content')
-    <div class="row row-first" style="margin-top:130px;margin-bottom:50px">
-        <div class="mx-auto row row-second">
-            <div class="hidden-md-down" style="width:380px;margin-right:20px">
-                <br/><br/>
-                <h2 style="text-align:right"><b>旧很靠谱</b></h2>
+    <div class="row-first">
+        <div class="mx-auto row-second">
+            <div class="hidden-md-down my-auto" style="width:380px;margin-right:20px:height:100%">
+                <h2 style="text-align:center"><b>旧很靠谱</b></h2>
                 <br/><br/><br/>
-                <h4 style="text-align:right">自主研发 | 校卡绑定 | 安全便捷</h4>
+                <h4 style="text-align:center">自主研发 | 校卡绑定 | 安全便捷</h4>
             </div>
             <div class="card login-card">
                 <div class="card-header">登录</div>
@@ -50,7 +49,7 @@
                     <form action="/login" method="POST">
                         <div class="form-group">
                             <label for="username">用户名/邮箱</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="如果都没有的话，就用校卡登录吧" tabindex="1">
+                            <input type="text" name="username" id="username" class="form-control" placeholder="你也可以使用校卡平台登录" tabindex="1">
                         </div>
                         <div class="form-group">
                             <label for="password">密码（<a href="/iforgotit">忘记密码？</a>）</label>

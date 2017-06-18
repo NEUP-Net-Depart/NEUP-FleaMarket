@@ -1,11 +1,11 @@
-    @if(count($userinfos) != 0)
-        <table class="table table-hover table-responsive">
+    <div id="userinfo-container">
+        <table class="table table-hover table-responsive" style="width:100%">
             <tr>
-                <th>手机</th>
-                <th>QQ</th>
-                <th>微信</th>
+                <th style="width:130px">手机</th>
+                <th style="width:110px">QQ</th>
+                <th style="width:110px">微信</th>
                 <th>地址</th>
-                <th>操作</th>
+                <th style="width:165px">操作</th>
             </tr>
 
             @foreach($userinfos as $userinfo)
@@ -13,19 +13,31 @@
                     <td>{{ isset($userinfo->tel_num) ? $userinfo->tel_num : "" }}</td>
                     <td>{{ isset($userinfo->QQ) ? $userinfo->QQ : "" }}</td>
                     <td>{{ isset($userinfo->wechat) ? $userinfo->wechat : "" }}</td>
-                    <td>{{ isset($userinfo->address) ? $userinfo->address : "" }}</td>
+                    <td class="address-th">{{ isset($userinfo->address) ? $userinfo->address : "" }}</td>
                     <td>
                         <button type="button" class="btn btn-primary" onclick="editUserInfo({{$userinfo->id}})">修改</button>
-                        <button type="button" class="btn btn-primary" onclick="deleteUserInfo({{$userinfo->id}})">删除</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteUserInfo({{$userinfo->id}})">删除</button>
                     </td>
                 </tr>
             @endforeach
         </table>
-    @endif
-    <a href="javascript: createUserInfo()">
-        <center>添加联系方式</center>
-    </a>
-
+    <div class="row">
+        <div class="mx-auto">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#add-form" aria-expanded="false" aria-controls="add-form"><span class="fa fa-plus"> 添加联系方式</span></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mx-auto">
+            <div class="collapse" id="add-form">
+                <p>
+                <div class="card card-block">
+                    @include('user.createUserInfo')
+                </div>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
 <script>
     function editUserInfo(userinfo_id) {
         $.ajax({
@@ -33,6 +45,7 @@
             url: "/user/userinfo/edit/" + userinfo_id,
             success: function (msg) {
                 $('#userinfo-container').html(msg);
+                WidthChange(window.matchMedia(match_media));
             }
         })
     }
@@ -52,6 +65,7 @@
                     url: "/user/userinfo",
                     success: function (msg) {
                         $('#userinfo-container').html(msg);
+                        WidthChange(window.matchMedia(match_media));
                     }
                 })
             },
@@ -76,6 +90,7 @@
                     url: "/user/userinfo",
                     success: function (msg) {
                         $('#userinfo-container').html(msg);
+                        WidthChange(window.matchMedia(match_media));
                     }
                 })
             },
@@ -109,6 +124,7 @@
                     url: "/user/userinfo",
                     success: function (msg) {
                         $('#userinfo-container').html(msg);
+                        WidthChange(window.matchMedia(match_media));
                     }
                 })
             },

@@ -79,7 +79,7 @@
                 </transition-group>
             </ul>
             <p class="err-msg" v-if="errorMessage">@{{ errorMessage }}</p>
-            <textarea placeholder="键入要发送的内容:" v-model="inputMessage" class="form-control"></textarea><br/>
+            <p><textarea placeholder="键入要发送的内容:" v-model="inputMessage" class="form-control"></textarea></p>
             <input type="button" class="btn btn-primary" value="发送" v-on:click="sendMessage"/>
             <input id="token" type="hidden" value="{{ csrf_token() }}"/>
             {{--<a v-on:click="getNewMessage">!!!</a>--}}

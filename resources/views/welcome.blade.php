@@ -54,7 +54,7 @@
             <div class="card-header"><h4>公告</h4></div>
             <div class="list-group list-group-flush">
             @foreach($announces as $announce)
-                <a tabindex="0" class="list-group-item" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content=" {{ $announce->content }} " style="outline:none">{{ $announce->title }}</a>
+                <a class="list-group-item" href="/notice/{{$announce->id}}">{{ $announce->title }}</a>
             @endforeach
             </div>
         </div>

@@ -11,6 +11,7 @@
         @include('layout.catlist')
         <div class="hidden-md-up">&nbsp;</div>
         <div class="col-12 col-md-10">
+            <p>
             <div class="row">
                 <div class="col-12 col-md-2">
                     <div class="dropdown">
@@ -34,7 +35,7 @@
                     <a>库存下限</a> <input id="pricec" style="display:inline-block" maxlength="9" class="form-control" value="@if(isset($_GET['start_count'])){{ $_GET['start_count'] }}@endif"/>&nbsp;<button class="btn btn-primary" id="subs" onclick="setc('a')">确定</button>
                 </div>
             </div>
-            <br/>
+            </p>
             <div class="row">
                 @foreach($goods as $good)
                     <div class="col-6 col-md-4 col-lg-3">

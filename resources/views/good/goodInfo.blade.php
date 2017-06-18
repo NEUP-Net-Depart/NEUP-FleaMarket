@@ -23,9 +23,10 @@
 @endsection
 
 @section('content')
+    <p>
     <div class="row">
         <div class="col-12 col-md-5">
-            <a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="max-width:100%"/></a><br/>
+            <p><a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="max-width:100%"/></a></p>
         </div>
         <div class="col-12 col-md-7">
             <div>
@@ -49,7 +50,7 @@
             @endif
             <div><!-- 放tag 和更多图片缩略图 --></div>
             <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
-            <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div><br/>
+            <p><div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div></p>
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -85,7 +86,7 @@
             @endif
         </div>
     </div>
-    <br/>
+    </p>
     <div class="card">
         <div class="card-header">
     <h4>商品介绍</h4>
