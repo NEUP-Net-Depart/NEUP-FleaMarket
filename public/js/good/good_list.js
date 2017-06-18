@@ -1,13 +1,13 @@
 $(document).ready(function(){
     switch ($("#nm").prop("className")){
         case "p":
-            $("#nm").text('按价格从低到高');break;
+            $("#sort").text('按价格从低到高');break;
         case "pd":
-            $("#nm").text("按价格从高到低");break;
+            $("#sort").text("按价格从高到低");break;
         case "c":
-            $("#nm").text("按库存从少到多");break;
+            $("#sort").text("按库存从少到多");break;
         case "cd":
-            $("#nm").text("按库存从多到少");break;
+            $("#sort").text("按库存从多到少");break;
     }
 });
 
