@@ -50,7 +50,7 @@
             @endif
             <div><!-- 放tag 和更多图片缩略图 --></div>
             <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
-            <p><div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div></p>
+            <p><div @if($good->count==0) class="text-danger" @endif >@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div></p>
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -91,7 +91,7 @@
         <div class="card-header">
     <h4>商品介绍</h4>
         </div>
-    <div class="card-block" style="word-break:break-all">{!! $good->description !!}</div>
+    <div class="card-block" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
     </div>
     </div>
     <script>
