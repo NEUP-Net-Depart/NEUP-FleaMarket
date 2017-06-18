@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', "注册")
+@section('title', "emmmmm...")
 
 @section('content')
     <div class="jumbotron">

@@ -10,7 +10,7 @@
     </style>
     <div class="row">
         <div class="mx-auto">
-            <div id="preview"><img id="avatarpreview" class="avatar" src="/avatar/{{Session::get('user_id')}}"/></div>
+            <div id="preview"><label for="avatarUpload"><img id="avatarpreview" class="avatar" src="/avatar/{{Session::get('user_id')}}"/></label></div>
             <div style="display: none">
                 <input type="file" id="avatarUpload" name="avatarPic" onchange="preview(this)"/>
             </div>

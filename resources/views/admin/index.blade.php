@@ -212,7 +212,15 @@
             imageUploadURL: 'https://flimg.neupioneer.com/api/1/upload',
             requestWithCORS: true,
             pluginsEnabled: ['image', 'link', 'colors', 'emoticons',
-                        'fontSize', 'fontFamily', 'fullscreen']
+                        'fontSize', 'fontFamily', 'fullscreen'],
+			toolbarButtonsMD: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+				'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+			toolbarButtonsSM: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+				'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+			toolbarButtonsXS: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
+				'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
+			height: 300
         });
+		$('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').wrap("<div hidden='hidden'></div>");
 </script>
 @endsection

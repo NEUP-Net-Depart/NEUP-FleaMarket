@@ -44,13 +44,13 @@
             </span>
                 <h2 style="margin-left:10px;display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h2>
             </div>
-            卖家：<a href="/user/{{ $user->id }}">{{ $user->nickname }}@if($user->baned)【已封禁】@endif</a> &nbsp;
+            卖家：<a href="/user/{{ $user->id }}">@if(isset($user->nickname)){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif @if($user->baned)【已封禁】@endif</a> &nbsp;
             @if($user->baned)
-                <a href="/message/startConversation/{{ $user->id }}">和我联系</a>
+                <a href="/message/startConversation/{{ $user->id }}">联系卖家</a>
             @endif
             <div><!-- 放tag 和更多图片缩略图 --></div>
             <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
-            <p><div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) 库存：{{ $good->count }}件 @else 没库存了QAQ @endif</div></p>
+            <p><div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) @if($good->count > 1)(库存:{{ $good->count }}件)@else 仅一件 @endif @else 没库存了QAQ @endif</div></p>
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -106,6 +106,8 @@
                 success: function (msg) {
                     $('.fa-star-o').attr('title','取消收藏QAQ');
                     $('.fa-star-o').attr('onclick', 'del_favlist()');
+                    $('.fa-star-o').tooltip('dispose');
+                    $('.fa-star-o').tooltip('show');
                     $('.fa-star-o').attr('class','fa fa-star btn btn-primary');
                 }
             });
@@ -122,6 +124,8 @@
                 success: function (msg) {
                     $('.fa-star').attr('title','收藏OvO');
                     $('.fa-star').attr('onclick', 'add_favlist()');
+                    $('.fa-star').tooltip('dispose');
+                    $('.fa-star').tooltip('show');
                     $('.fa-star').attr('class','fa fa-star-o btn btn-primary');
                 }
             });

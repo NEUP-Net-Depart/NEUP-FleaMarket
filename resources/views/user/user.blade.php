@@ -14,6 +14,7 @@
             }
             .main-card {
                 width: 992px;
+                min-height: 400px;
             }
             .col-card {
                  max-width:130px;

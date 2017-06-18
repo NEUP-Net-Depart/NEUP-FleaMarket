@@ -23,6 +23,7 @@
       <a href="/admin" class="dropdown-item">管理中心</a>
     @endif
     <div class="dropdown-divider"></div>
+    <a href="/message" class="dropdown-item">消息 <span style="display: none" class="badge badge-warning message-num-tip">0</span></a>
     <a href="/good/add" class="dropdown-item">出售</a>
   @else
     <a href="/login" class="dropdown-item">普通登录</a>
@@ -53,7 +54,7 @@
               <a href="/logout" class="dropdown-item">登出</a>
             </div>
           </li>
-          <li class="nav-item"><a href="/message" class="nav-link">消息</a></li>
+          <li class="nav-item"><a href="/message" class="nav-link">消息 <span style="display: none" class="badge badge-warning message-num-tip">0</span></a></li>
           <li class="nav-item"><a href="/good/add" class="nav-link">出售</a></li>
         @else
           <li class="nav-item dropdown">
@@ -94,3 +95,32 @@
       </form>
   </div>
   </p>
+@if(Session::has('user_id'))
+  <script>
+    $(document).ready(function() {
+      @if(Request::path() != 'message')
+        getMsgNum();
+        window.setInterval(function(){getMsgNum()}, 5000)
+      @endif
+    });
+    function getMsgNum()
+    {
+      $.ajax({
+        type: "GET",
+        url: "/message/num",
+        success: function (msg) {
+          msg = parseInt(msg);
+          if(msg) {
+            $(".message-num-tip").removeAttr("style");
+            if(msg > 99)
+              $(".message-num-tip").html("99+");
+            else
+              $(".message-num-tip").html(msg);
+          } else {
+            $(".message-num-tip").attr("style", "display: none;");
+          }
+        }
+      })
+    }
+  </script>
+ @endif

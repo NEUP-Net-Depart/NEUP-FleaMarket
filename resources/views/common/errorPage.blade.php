@@ -1,14 +1,15 @@
 @extends('layout.master')
 
-@section('title', "出错辣！！！")
+@section('title', 'QAQ')
 
 @section('content')
 
     <div class="page-content">
         @if(count($errors) > 0)
-            <label>
-                <span class="form-error is-visible">{!! $errors->first() !!}</span>
-            </label>
+            <div class="alert alert-danger" role="alert">
+                <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                {!! $errors->first() !!}
+            </div>
         @endif
     </div>
 

@@ -11,51 +11,55 @@
 <div class="row">
 <div class="mx-auto">
     <p>
-    <form action="/user/edit/username" method="POST">
-        {{ csrf_field() }}
         @if($user->username=='')
-            <div class="form-group">
-                <label for="username">用户名</label>
-                <input placeholder="设置后不可修改" type="text" name="username" id="username" class="form-control" value="{{$user->username}}" required>
-                <input type="submit" class="btn btn-primary" value="设置">
+        <form action="/user/edit/username" method="POST" class="password-form">
+            {{ csrf_field() }}
+            <div class="input-group">
+                <input placeholder="用户名" type="text" name="username" id="username" class="form-control" required>
+                <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="设置"></span>
             </div>
+        </form>
         @else
-            <label style="font-size:13px;line-height:38px">用户名：{{$user->username}}</label>
+            <div class="input-group">
+                <input placeholder="用户名" type="text" name="username" id="username" class="form-control" value="{{$user->username}}" disabled>
+                <span class="input-group-btn"><input type="submit" class="btn btn-secondary disabled" value="设置"></span>
+            </div>
         @endif
-    </form>
     </p>
     <p>
-    <form action="/user/edit/stuid" method="POST">
-        {{ csrf_field() }}
         @if($user->stuid=='')
-            <div class="form-group">
-                <label for="stuid">学号</label>
-                <input placeholder="绑定后不可修改" type="text" name="stuid" id="stuid" class="form-control" value="{{$user->stuid}}" required>
+        <form action="/user/edit/stuid" method="POST" class="password-form">
+            {{ csrf_field() }}
+            <div class="input-group">
+                <input placeholder="学号" type="text" name="stuid" id="stuid" class="form-control" value="{{$user->stuid}}" required>
+                <span class="input-group-btn"><input type="submit" class="btn btn-primary" name="stuid_submit" value="绑定"></span>
             </div>
-            <input type="submit" class="btn btn-primary" name="stuid_submit" value="绑定">
+        </form>
         @else
-            <label style="font-size:13px;line-height:38px">学号：　{{$user->stuid}}</label>
+            <div class="input-group">
+                <input placeholder="学号" type="text" name="stuid" id="stuid" class="form-control" value="{{$user->stuid}}" disabled>
+                <span class="input-group-btn"><input type="submit" class="btn btn-secondary disabled" name="stuid_submit" value="绑定"></span>
+            </div>
         @endif
     </p>
-    </form>
     <p>
-    <form action="/user/edit/email" method="POST">
-        {{ csrf_field() }}
         @if($user->email=='')
-            <p><input type="email" name="email" id="email" class="form-control" value="{{$user->email}}" placeholder="邮箱" required></p>
-            <div class="row">
-            <div class="mx-auto">
-                <input type="submit" class="btn btn-primary" name="email_submit" value="绑定">
+        <form action="/user/edit/email" method="POST" class="password-form">
+            {{ csrf_field() }}
+            <div class="input-group">
+                <input type="email" name="email" id="email" class="form-control" value="{{$user->email}}" placeholder="邮箱" required>
+                <span class="input-group-btn"><input type="submit" class="btn btn-primary" name="email_submit" value="绑定"></span>
             </div>
-            </div>
+        </form>
         @else
-            <div class="form-group">
-                <label style="font-size:13px">邮箱：　{{$user->email}}（@if($user->havecheckedemail)已验证@else未验证@endif）</label>
+        <form action="/user/edit/email" method="POST" class="password-form">
+            <div class="input-group">
+                <input type="email" id="email" class="form-control" value="@if(!$user->havecheckedemail)[未验证]@endif{{$user->email}}" disabled>
                 <input type="hidden" name="email" id="email" class="form-control" value="{{$user->email}}">
-                <input type="submit" class="btn btn-warning" value="解绑">
+                <span class="input-group-btn"><input type="submit" class="btn btn-warning" name="email_submit" value="解绑"></span>
             </div>
+        </form>
         @endif
-    </form>
     </p>
 </div>
 </div>

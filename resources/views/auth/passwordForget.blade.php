@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', "重置密码")
+@section('title', "忘记密码")
 
 @section('asset')
     <style>
@@ -29,7 +29,7 @@
     <div class="row-first">
         <div class="mx-auto">
             <div class="card reset-card">
-                <div class="card-header">重置密码</div>
+                <div class="card-header">忘记密码</div>
                     <div class="card-block">
                         @if($method=="GET")
                         <form action="/iforgotit" method="POST">
@@ -51,7 +51,7 @@
                             </div>
                             <div class="row">
                                 <div class="mx-auto">
-                                    <a href="/iforgotit" class="btn btn-primary">返回</a>
+                                    <button onclick="window.location.href='/iforgotit'" class="btn btn-primary">返回</a>
                                 </div>
                             </div>
                         @endif

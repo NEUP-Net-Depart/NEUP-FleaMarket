@@ -29,14 +29,14 @@
                 @endforeach
                 </div>
         @endif
-            @if(count($populargoods)>0)
-                <h3>热门</h3>
-                <div class="row">
-                    @foreach($populargoods as $good)
-                        @include('good.goodInfoOnWelcome')
-                    @endforeach
-                </div>
-            @endif
+        @if(count($populargoods)>0)
+            <h3>热门</h3>
+            <div class="row">
+                @foreach($populargoods as $good)
+                    @include('good.goodInfoOnWelcome')
+                @endforeach
+            </div>
+        @endif
         <h3>随便看看</h3>
         @foreach($cats as $cat)
             @if(count($catgoods[$cat->cat_name]))
