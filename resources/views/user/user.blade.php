@@ -19,7 +19,7 @@
             <span class="form-error is-visible">{{$errors->first()}}</span>
         </label>
     @endif
-    <div class="card">
+    <div class="card" style="min-height:400px">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
                 <li class="nav-item"><a class="nav-link @if($tab == "profile") active @endif" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">个人信息</a></li>
@@ -32,7 +32,10 @@
             <div class="card-section">
                 <form action="/user" method="POST" enctype="multipart/form-data">
                     @include('user.editUserExtra')
-                    <br/><input class="btn btn-primary" type="submit" name="submit" value="保存">
+                    <br/>
+                    <div class="col-md-12">
+                    <input class="btn btn-primary" type="submit" name="submit" value="保存">
+                    </div>
                 </form>
             </div>
         </div>

@@ -16,18 +16,17 @@
                             库存：{{ $good->count }}
                         @endif
                     </div>
-                    <div class="det-d hidden-md-up" style="position:absolute;z-index:200;top:-43px;left:5px;color:white;font-size:15px;">
-                        售价：￥{{ $good->price }}<br/>
-                        @if($good->count==0)
-                            无库存QAQ
-                        @else
-                            库存：{{ $good->count }}
-                        @endif
-                    </div>
                 </div>
             </div>
-            <div class="card-block" style="word-break:break-all">
+            <div class="card-block" style="word-break:break-all;">
                 {{ $good->good_name }}
+                <div class="hidden-md-up" style="font-size:14px;color:black"> 售价：￥{{ $good->price }}<br/>
+                    @if($good->count==0)
+                        无库存QAQ
+                    @else
+                        库存：{{ $good->count }}
+                    @endif
+                </div>
             </div>
         </div>
     </a>

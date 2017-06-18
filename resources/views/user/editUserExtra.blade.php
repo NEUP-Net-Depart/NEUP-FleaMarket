@@ -5,17 +5,18 @@
         </div>
     @endif
     @if(isset($user->nickname))
-        <div class="form-group">
+        <div class="form-group col-md-4 col-sm-8">
             <label for="nickname">昵称</label>
             <input type="text" name="nickname" id="nickname" class="form-control" value="{{ $user->nickname }}"></label>
         </div>
     @else
-        <div class="form-group">
+        <div class="form-group col-md-4">
             <label for="nickname">昵称</label>
             <input type="text" name="nickname" id="nickname" class="form-control"></label>
         </div>
     @endif
     {!! csrf_field() !!}
+    <div class="col-md-12">
     <label for="avatarUpload" class="btn btn-primary">选择头像</label>
     <div id="preview"></div>
     <div style="display: none">
@@ -26,7 +27,7 @@
     <input id="avatarUploadCpHeight" type="hidden" name="crop_height">
     <input id="avatarUploadCpX" type="hidden" name="crop_x">
     <input id="avatarUploadCpY" type="hidden" name="crop_y">
-
+    </div>
 <script>
     function preview(file) {
         var prevDiv = document.getElementById('preview');
