@@ -11,6 +11,7 @@
 |
 */
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 
 /*
@@ -62,6 +63,9 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/register/2', "UserController@showCompleteUser");
         Route::post('/register/2', "UserController@completeUser");
         Route::get('/register/3', "UserController@regUserInfo");
+        Route::get('/register/4', function () {
+            return Redirect::to('/user?tab=account')->withErrors('您没有绑定邮箱，这可能导致您不能及时收到消息，请绑定邮箱。');
+        });
 
         Route::get('user/userinfo', "UserController@userInfo");
         Route::get('/user/userinfo/create', "UserController@createUserInfo");
