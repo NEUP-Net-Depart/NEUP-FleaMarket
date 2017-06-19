@@ -34,30 +34,15 @@ class AuthTest extends BrowserKitTestCase
 
         //test register
         $this->visit('/register')
-            ->see('邮箱')
-            ->press('注册')
-            ->see("邮箱不能为空")
-            ->type('test', 'email')
-            ->press('注册')
-            ->see('邮箱格式不正确')
-            ->type('test@example.com', 'email')
-            ->type('test@example.com', 'password')
-            ->type('test@example.com2', 'password_confirmation')
-            ->press('注册')
-            ->see('两次输入的密码不一致')
-            ->type('test@example.com', 'email')
-            ->type('test@example.com', 'password')
-            ->type('test@example.com', 'password_confirmation')
-            ->press('注册')
-            ->see('已向您的邮箱发送一封验证邮件，请查收');
+            ->see('校园统一身份认证服务平台');
 
-        //test register again
-        $this->visit('/register')
-            ->type('test@example.com', 'email')
-            ->type('test@example.com', 'password')
-            ->type('test@example.com', 'password_confirmation')
-            ->press('注册')
-            ->see('已有用户使用该邮箱注册');
+        $user = new User;
+        $user->username = '';
+        $user->stuid = '';
+        $user->email = 'test@example.com';
+        $user->password = Hash::make('test@example.com');
+        $user->havecheckedemail = 0;
+        $user->save();
 
         //test login
         $this->visit('/login')
@@ -79,9 +64,9 @@ class AuthTest extends BrowserKitTestCase
             ->type('test@example.com', 'password')
             ->press('登录')
             ->see('昵称')
-            ->see('上传头像')
+            ->see('更改头像')
             ->type('aaa', 'nickname')
-            ->press('保存')
+            ->press('下一步')
             ->seePageIs('/register/2')
             ->see('aaa');
 
@@ -105,7 +90,7 @@ class AuthTest extends BrowserKitTestCase
             ->type('500', 'crop_height')
             ->type('0', 'crop_x')
             ->type('0', 'crop_y')
-            ->press('保存')
+            ->press('下一步')
             ->seePageIs('/register/3');
 
         //test 3
@@ -163,7 +148,7 @@ class AuthTest extends BrowserKitTestCase
     public function testPasswordForget()
     {
         $this->visit('/iforgotit')
-            ->see('重置密码')
+            ->see('忘记密码')
             ->type('admin@example.com', 'email')
             ->press('确定')
             ->see('已向你的邮箱发送一份包含重置密码的链接的邮件');

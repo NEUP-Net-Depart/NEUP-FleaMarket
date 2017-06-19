@@ -52,7 +52,7 @@ class UserTest extends BrowserKitTestCase
 
         // test add username
         $this->withSession(['user_id' => 1])
-            ->visit('/user')
+            ->visit('/user?tab=account')
             ->press('设置')
             ->see('用户名不可为空')
             ->type('*#^$%', 'username')
@@ -69,7 +69,7 @@ class UserTest extends BrowserKitTestCase
         $this->withSession(['user_id' => 1])
             ->post('/user/edit/username', ['username' => 'newnewnew'])
             ->seeStatusCode(302);
-        $this->visit('/user')
+        $this->visit('/user?tab=account')
             ->dontSee('newnewnew')
             ->see('testusernameuname');
 
@@ -107,9 +107,6 @@ class UserTest extends BrowserKitTestCase
             ->see('解绑')
             ->press('解绑')
             ->see('验证完成后即可解绑此邮箱');
-
-
-
 
         //test change password
         $this->withSession(['user_id' => $nu->id])
@@ -205,8 +202,6 @@ class UserTest extends BrowserKitTestCase
         $this->withSession(['user_id' => 1])
             ->visit('/user/fav')
             ->see('编辑收藏夹')
-            ->click('编辑收藏夹')
-            ->seePageIs('/user/fav/edit')
             ->see('fav_test');
         $this->withSession(['user_id' => 1])
             ->delete('/user/fav/del', ["del_goods" => [$good->id]])
@@ -217,5 +212,69 @@ class UserTest extends BrowserKitTestCase
         $this->withSession(['user_id' => 1])
             ->visit('/user/fav')
             ->dontSee('fav_test');
+    }
+
+    public function testAdminManage()
+    {
+        $this->visit('login')
+            ->type('admin@example.com', 'username')
+            ->type('admin@example.com', 'password')
+            ->press('登录');
+        
+        //test new notice
+        $this->visit('admin')
+            ->type('testnotice', 'title')
+            ->type('testnotice', 'content')
+            ->press('发布公告')
+            ->see('testnotice')
+            ->visit('/')
+            ->see('testnotice')
+            ->visit('admin')
+            ->press('删除')
+            ->dontSee('testnotice');
+        
+        //test new cat_name
+        $this->visit('admin')
+            ->type('testcat', 'cat_name')
+            ->press('提交')
+            ->see('testcat')
+            ->visit('/')
+            ->see('testcat')
+            ->visit('admin')
+            ->press('删除')
+            ->dontSee('testcat');
+        
+        //test report
+        $this->withSession(['user_id' => 1, 'is_admin' => 0])
+            ->visit('/user/2')
+            ->press('举报该用户')
+            ->type('He is selling a gay!', 'reason')
+            ->press('确认举报')
+            ->see('举报成功')
+            ->visit('logout');
+
+        $this->visit('login')
+            ->type('admin@example.com', 'username')
+            ->type('admin@example.com', 'password')
+            ->press('登录')
+            ->visit('admin')
+            ->see('He is selling a gay!')
+            ->press('领取')
+            ->seePageIs('/message')
+            ->visit('admin')
+            ->see('批准显示')
+            ->see('驳回此条')
+            ->press('批准显示')
+            ->see('已批准');
+        
+        //test list all users
+        $this->visit('admin')
+            ->see('test@example.com')
+            ->see('admin@example.com');
+
+        //test ban
+        $this->visit('/user/1')
+            ->press('封禁该用户')
+            ->seePageIs('/user/1/banpage');
     }
 }

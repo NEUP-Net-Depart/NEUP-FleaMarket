@@ -70,6 +70,7 @@
             }
         }
     </script>
+    <script src="/js/avatar_crop.js"></script>
 @endsection
 
 @section('content')

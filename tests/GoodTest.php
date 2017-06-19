@@ -12,8 +12,9 @@ class GoodTest extends BrowserKitTestCase
     {
         //add good_cat
         $cat = new GoodCat;
+        $cat->id = 1;
         $cat->cat_name = '测试';
-        $cat->cat_index = '0';
+        $cat->cat_index = 0;
         $cat->save();
 
         //test add good
@@ -23,13 +24,12 @@ class GoodTest extends BrowserKitTestCase
             ->see('商品名不能为空')
             ->type('算法竞赛入门经典', 'good_name')
             ->select('1', 'cat_id')
-            ->type('刘汝佳', 'description')
             ->press('添加')
             ->see('商品价格不能为空')
             ->type('aaa', 'price')
             ->press('添加')
             ->see('商品价格必须为数值')
-            ->type('65.5', 'price')
+            ->type('65', 'price')
             ->press('添加')
             ->see('库存数不能为空')
             ->select('1', 'type')
@@ -48,7 +48,7 @@ class GoodTest extends BrowserKitTestCase
             ->type('50', 'crop_x')
             ->type('137.5', 'crop_y')
             ->press('添加')
-            ->see('65.5');
+            ->see('65');
     }
 
     public function testGoodPic()
@@ -79,7 +79,6 @@ class GoodTest extends BrowserKitTestCase
             ->visit('/good/add')
             ->type('第二版', 'good_name')
             ->select('1', 'cat_id')
-            ->type('刘汝佳', 'description')
             ->type('50', 'price')
             ->select('1', 'type')
             ->type('20', 'count')
@@ -152,7 +151,6 @@ class GoodTest extends BrowserKitTestCase
             ->press('更改')
             ->see('库存数必须是整数')
             ->type('10', 'count')
-            ->type('汝佳大法好', 'description')
             ->type('666', 'price')
             ->type('10', 'count')
             ->attach(__DIR__ . '/resources/good.jpg', 'goodTitlePic')
@@ -162,7 +160,6 @@ class GoodTest extends BrowserKitTestCase
             ->type('108', 'crop_y')
             ->press('更改')
             ->see('￥666')
-            ->see('汝佳大法好')
             ->visit('/good/'. sha1(1) .'/titlepic')
             ->seeHeader('Content-Type', 'image/jpeg')
             ->visit('/good/'. sha1(1) .'/titlepic/640/480')
@@ -202,6 +199,7 @@ class GoodTest extends BrowserKitTestCase
         //test super administrator access and delete good
         $this->withSession(['user_id' => 2, 'is_admin' => 2])
             ->visit('/good/1')
+            ->see('算法竞赛入门经典')
             ->see('修改')
             ->see('删除')
             ->press('修改')
@@ -216,5 +214,4 @@ class GoodTest extends BrowserKitTestCase
             ->visit('/good/1/edit')
             ->see('商品ID错误');
     }
-
 }
