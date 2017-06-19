@@ -19,12 +19,75 @@ use App\PasswordReset;
 use Mail;
 use App\AuthLog;
 use phpCAS;
+use App\Wechat;
 
 class AuthController extends Controller
 {
     public function showLogin()
     {
         return View::make('auth.login');
+    }
+
+    public function wx(Request $request)
+    {
+        if(isset($request->data) && $request->sign == substr(md5($request->data . env('WECHAT_KEY')), 8, 16))
+        {
+            $data['wechat'] = json_decode(base64_decode($request->data));
+            $user = User::where('wechat_open_id', $data['wechat']->openId)->first();
+            $request->session()->put('wechat_open_id', $data['wechat']->openId);
+            if(!$user) {
+                $wechat = Wechat::firstOrNew(['open_id' => $data['wechat']->openId]);
+                $wechat->head_img_url = $data['wechat']->headImgUrl;
+                $wechat->nick_name = $data['wechat']->nickName;
+                $wechat->sex = $data['wechat']->sex;
+                $wechat->save();
+
+                return view('auth.wechatGuide')->with($data);
+            }
+            else {
+                if ($user->baned) {
+                    $nowdate = time();
+                    $banedstart = $user->banedstart;
+                    $date = $nowdate-$banedstart;
+                    if($date>($user->banedtime)*86400 && $user->banedtime!=-1)
+                    {
+                        $user->baned = 0;
+                        return Redirect::to('/');
+                    }
+                    // log start
+                    $log = new AuthLog();
+                    $log->user_id = $user->id;
+                    $log->ip = $request->ip();
+                    $log->event = "wechat_oauth_login_banned";
+                    $log->save();
+                    // log end
+
+                    if($user->banedtime == -1)
+                        return Redirect::to('/login')->withInput()->withErrors('你已经被永久封禁!');
+                    return Redirect::to('/login')->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime-($date/86400)).'天后解禁!');
+                }
+
+                // log start
+                $log = new AuthLog();
+                $log->user_id = $user->id;
+                $log->ip = $request->ip();
+                $log->event = "wechat_oauth_login_success";
+                $log->save();
+                // log end
+
+                $request->session()->put('user_id', $user->id);
+                $request->session()->put('username', $user->username);
+                $request->session()->put('nickname', $user->nickname);
+                if ($user->privilege)
+                    $request->session()->put('is_admin', $user->privilege);
+
+                if ($user->registerCompletion() != 0)
+                    return Redirect::to('/register/' . $user->registerCompletion());
+                else
+                    return Redirect::to('/');
+            }
+        }
+        return Redirect::to("http://api.xms.rmbz.net/open/oauth?path=" . env("APP_URL") . "/wx");
     }
 
     public function cas(Request $request)
@@ -53,6 +116,18 @@ class AuthController extends Controller
             $log->save();
             // log end
 
+            if($request->session()->has('wechat_open_id')) {
+                $user->wechat_open_id = $request->session()->get('wechat_open_id');
+                $user->save();
+                // log start
+                $log = new AuthLog();
+                $log->user_id = $user->id;
+                $log->ip = $request->ip();
+                $log->event = "wechat_oauth_sso_bind_success";
+                $log->save();
+                // log end
+            }
+
             $request->session()->put('user_id', $user->id);
 
             return Redirect::to('/register/' . $user->registerCompletion());
@@ -75,10 +150,10 @@ class AuthController extends Controller
                 $log->event = "cas_login_banned";
                 $log->save();
                 // log end
-				
+
 				if($user->banedtime == -1)
-					return Redirect::back()->withInput()->withErrors('你已经被永久封禁!');
-                return Redirect::back()->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime-($date/86400)).'天后解禁!');
+					return Redirect::to('/login')->withInput()->withErrors('你已经被永久封禁!');
+                return Redirect::to('/login')->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime-($date/86400)).'天后解禁!');
             }
 
             // log start
@@ -94,6 +169,18 @@ class AuthController extends Controller
             $request->session()->put('nickname', $user->nickname);
             if ($user->privilege)
                 $request->session()->put('is_admin', $user->privilege);
+
+            if($request->session()->has('wechat_open_id')) {
+                $user->wechat_open_id = $request->session()->get('wechat_open_id');
+                $user->save();
+                // log start
+                $log = new AuthLog();
+                $log->user_id = $user->id;
+                $log->ip = $request->ip();
+                $log->event = "wechat_oauth_sso_bind_success";
+                $log->save();
+                // log end
+            }
 
             if ($user->registerCompletion() != 0)
                 return Redirect::to('/register/' . $user->registerCompletion());
@@ -144,7 +231,7 @@ class AuthController extends Controller
                 $log->event = "login_banned";
                 $log->save();
                 // log end
-				
+
 				if($user->banedtime == -1)
 					return Redirect::back()->withInput()->withErrors('你已经被永久封禁!');
                 return Redirect::back()->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime-($date/86400)).'天后解禁!');
@@ -165,6 +252,18 @@ class AuthController extends Controller
             $request->session()->put('nickname', $user->nickname);
             if ($user->privilege)
                 $request->session()->put('is_admin', $user->privilege);
+
+            if($request->session()->has('wechat_open_id')) {
+                $user->wechat_open_id = $request->session()->get('wechat_open_id');
+                $user->save();
+                // log start
+                $log = new AuthLog();
+                $log->user_id = $user->id;
+                $log->ip = $request->ip();
+                $log->event = "wechat_oauth_bind_success";
+                $log->save();
+                // log end
+            }
 
             if ($user->registerCompletion() != 0)
                 return Redirect::to('/register/' . $user->registerCompletion());
@@ -229,6 +328,7 @@ class AuthController extends Controller
         $request->session()->forget('username');
         $request->session()->forget('nickname');
         $request->session()->forget('is_admin');
+        $request->session()->forget('wechat_open_id');
 
         return Redirect::to('/');
     }
@@ -286,7 +386,7 @@ class AuthController extends Controller
         if ($user == NULL)
             abort(404);
         if (!$user->havecheckedemail) {
-            $user->email = '';
+            $user->email = null;
             $user->save();
             return true;
         }
@@ -419,7 +519,7 @@ class AuthController extends Controller
         $user = User::find($check_email->user_id);
         if($user->email != $token[2])
             return Redirect::to('/login')->withErrors('此链接已失效。');
-        $user->email = "";
+        $user->email = null;
         $user->update();
         $check_email->delete();
 

@@ -17,6 +17,7 @@
     </script>
 @endsection
 
+
 @section('content')
 <div class="row">
     @include('layout.catlist')

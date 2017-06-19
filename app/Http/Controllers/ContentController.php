@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\GoodInfo;
 use App\GoodCat;
 use App\Announcement;
+use App\Transaction;
 
 class ContentController extends Controller
 {
@@ -22,9 +23,10 @@ class ContentController extends Controller
         $data['populargoods'] = GoodInfo::where('baned', false)->where('count', '>', 0)->where('fav_num', '>', 0)->orderby('fav_num', 'desc')->limit(8)->get();
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         foreach($data['cats'] as $cat){
-            $data['catgoods'][$cat->cat_name] = GoodInfo::where('cat_id', $cat->id)->where('baned', false)->inRandomOrder()->limit(4)->get();
+            $data['catgoods'][$cat->cat_name] = GoodInfo::where('cat_id', $cat->id)->where('baned', false)->where('count', '>', 0)->inRandomOrder()->limit(4)->get();
         }
         $data['announces'] = Announcement::orderby('id', 'dsc')->limit(5)->get();
+		$data['trans'] = Transaction::where('status', '>', 3)->orderby('id', 'dsc')->limit(20)->get();
         return View::make('welcome')->with($data);
     }
 

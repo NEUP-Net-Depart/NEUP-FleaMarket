@@ -11,6 +11,7 @@
         <li class="nav-item"><a class="nav-link" href="#classify" role="tab" data-toggle="tab" aria-controls="classify">分类管理</a></li>
 		<li class="nav-item"><a class="nav-link" href="#report" role="tab" data-toggle="tab" aria-controls="report">查看举报记录</a></li>
 		<li class="nav-item"><a class="nav-link" href="#userlist" role="tab" data-toggle="tab" aria-controls="userlist">查看所有用户</a></li>
+		<li class="nav-item"><a class="nav-link" href="#translist" role="tab" data-toggle="tab" aria-controls="translist">交易列表</a></li>
 </ul>
 </div>
 
@@ -94,6 +95,7 @@
 							<th>#</th>
 							<th>举报者ID</th>
 							<th>被举报者ID</th>
+							<th>举报理由</th>
 							<th>受理管理员ID</th>
 							<th colspan="2">状态</th>
 						</tr>
@@ -176,11 +178,11 @@
 					@foreach($users as $user)
 					<tbody>
 						<tr>
-							<td>{{$user->id}}</td>
+							<td><a href="/user/{{$user->id}}">{{$user->id}}</a></td>
 							<td>{{$user->privilege}}</td>
                             <td>{{$user->stuid}}</td>
                             <td>{{$user->realname}}</td>
-                            <td>{{$user->nickname}}</td>
+                            <td><a href="/user/{{$user->id}}">{{$user->nickname}}</a></td>
 							<td>{{$user->username}}</td>
                             <td>{{$user->email}}</td>
 							<td>
@@ -199,7 +201,65 @@
 					</tbody>
 				@endforeach
 			</table>
+			{{ $users->links() }}
 		</div>
+		<div class="tab-pane" id="translist" role="tabpanel">
+			<table class="table table-hover">
+				<thead>
+				<tr>
+					<th>交易单号</th>
+					<th>卖家学号</th>
+					<th>买家学号</th>
+					<th>商品ID</th>
+					<th>交易数目</th>
+					<th>交易状态</th>
+					<th>评价</th>
+				</tr>
+				</thead>
+				@foreach($trans as $tran)
+					@if($tran->seller != NULL)
+						<tbody>
+						<tr>
+							<td>{{$tran->id}}</td>
+							<td><a href="/user/{{$tran->seller->id}}">{{$tran->seller->stuid}}</a></td>
+							<td><a href="/user/{{$tran->buyer_id}}">{{$tran->buyer->stuid}}</a></td>
+							<td><a href="/good/{{$tran->good_id}}">{{$tran->good_id}}</a></td>
+							<td>{{$tran->number}}</td>
+							<td>
+								@if($tran->status == 0)
+									订单已取消
+								@endif
+								@if($tran->status == 1)
+									买家已购买，卖家未确认
+								@endif
+								@if($tran->status == 2)
+									卖家已确认
+								@endif
+								@if($tran->status == 3)
+									交易失败
+								@endif
+								@if($tran->status == 4)
+									交易成功待评价
+								@endif
+								@if($tran->status == 5)
+									交易成功已评价
+								@endif
+							</td>
+							<td>
+								@if($tran->status == 5)
+									{{$tran->reason}}
+								@else
+									无
+								@endif
+							</td>
+						</tr>
+						</tbody>
+					@endif
+				@endforeach
+			</table>
+			{{ $trans->links() }}
+		</div>
+	</div>
 </div>
 <script>
         // WYSIWYG Editor
@@ -224,3 +284,4 @@
 		$('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').wrap("<div hidden='hidden'></div>");
 </script>
 @endsection
+

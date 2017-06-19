@@ -53,12 +53,21 @@
         </form>
         @else
         <form action="/user/edit/email" method="POST" class="password-form">
+            {{ csrf_field() }}
             <div class="input-group">
                 <input type="email" id="email" class="form-control" value="@if(!$user->havecheckedemail)[未验证]@endif{{$user->email}}" disabled>
                 <input type="hidden" name="email" id="email" class="form-control" value="{{$user->email}}">
                 <span class="input-group-btn"><input type="submit" class="btn btn-warning" name="email_submit" value="解绑"></span>
             </div>
         </form>
+        @endif
+    </p>
+    <p>
+        @if($user->wechat_open_id=='')
+            <label>微信：请在东大小秘书中点击“闲置市场”链接来关联微信。</label>
+        @else
+            <label>微信：已关联 {{$user->wechat->nick_name}}</label>
+            <img class="head-img" src="{{$user->wechat->head_img_url}}" width="64px" height="64px">
         @endif
     </p>
 </div>
@@ -81,3 +90,5 @@
     </form>
 </div>
 </div>
+
+<link rel="stylesheet" href="/css/wechat.css"/>

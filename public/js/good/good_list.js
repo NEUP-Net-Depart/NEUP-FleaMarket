@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    switch ($("#nm").prop("className")){
+    switch ($("#nm").val()){
         case "p":
             $("#sort").text('按价格从低到高');break;
         case "pd":
@@ -53,8 +53,8 @@ function setc(ha){
     if(ha!="a"){
         hr=hr+"&sort="+ha;
     }
-    else if($("#nm").prop("className")!=""){
-        hr=hr+"&sort="+$("#nm").prop("className");
+    else if($("#nm").val()!=""){
+        hr=hr+"&sort="+$("#nm").val();
     }
     if($("#searchq").val()!=""){
         hr=hr+"&query="+$("#searchq").val();

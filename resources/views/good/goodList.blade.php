@@ -13,10 +13,10 @@
             <p>
             <div class="row">
                 <div class="col-12 col-md-3">
+                    <input type="hidden" id="nm" value="@if(isset($_GET['sort'])){{ $_GET['sort'] }}@endif" style="display: none" />
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" id="sort" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <input type="hidden" id="nm" class="@if(isset($_GET['sort'])){{ $_GET['sort'] }}@endif"  />
-                            排序
+                            综合排序
                         </button>
                         <div class="dropdown-menu" aria-labelledby="sort">
                             <a href="/good/" class="dropdown-item">综合排序</a>

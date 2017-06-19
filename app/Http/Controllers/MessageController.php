@@ -22,7 +22,7 @@ use App\Http\Controllers\Controller;
 class MessageController extends Controller
 {
     public function showMessageView(Request $request)
-    {
+	{
         return View::make('message.message');
     }
 
@@ -55,6 +55,8 @@ class MessageController extends Controller
         MessageContact::where('user_id', $user_id)
             ->where('contact_id', $contact_id)
             ->update(['unread_count' => 0]);
+        User::where('id', $user_id)
+            ->update(['last_get_new_message_time' => time()]);
         return json_encode($messages);
     }
 

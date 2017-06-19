@@ -93,7 +93,6 @@
         </div>
     <div class="card-block" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
     </div>
-    </div>
     <script>
         function add_favlist() {
             var str_data = $("#fav input").map(function () {
