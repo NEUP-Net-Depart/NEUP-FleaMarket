@@ -9,7 +9,7 @@
             max-width: 200px;
         }
         p>img{
-            max-width: 50%;
+            max-width: 100%;
         }
     </style>
     <script>
@@ -60,7 +60,7 @@
             @if(($good->user_id) != Session::get('user_id') && !$good->baned)
                 <form action="/good/{{ $good->id }}/buy" method="post">
                     <div class="input-group">
-                        <input type="number" name="count" value="1" class="form-control"/>
+                        <input type="number" name="count" value="1" class="form-control" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
                         {!! csrf_field() !!}
                         <span class="input-group-btn">
                         <input type="submit" class="btn btn-primary" value="购买"/>
@@ -91,7 +91,7 @@
         <div class="card-header">
     <h4>商品介绍</h4>
         </div>
-    <div class="card-block" style="word-break:break-all">{!! $good->description !!}</div>
+    <div class="card-block" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
     </div>
     </div>
     <script>

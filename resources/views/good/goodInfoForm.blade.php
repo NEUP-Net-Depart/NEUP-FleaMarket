@@ -38,11 +38,11 @@
                 </div>
                 <div class="form-group">
                     <label for="description">商品描述</label>
-                    <textarea name="description" id="description" placeholder="商品描述" class="form-control" style="resize:none" rows="6">{!! count($errors) ? old('description') : $good->description !!}</textarea>
+                    <textarea name="description" id="description" placeholder="商品描述" class="form-control" style="resize:none;" rows="6">{!! count($errors) ? old('description') : $good->description !!}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="price">商品价格</label>
-                    <input type="number" min="0" name="price" id="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格" class="form-control">
+                    <input type="number" min="0" name="price" id="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格" class="form-control"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                 </div>
                 <div class="form-group hidden-xs-up">
                     <label>商品类型</label>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label for="count">商品数量</label>
-                    <input type="number" name="count" id="count" min="0" value="{{count($errors) ? old('count') : $good->count}}" placeholder="库存" class="form-control">
+                    <input type="number" name="count" id="count" min="0" value="{{count($errors) ? old('count') : $good->count}}" placeholder="库存" class="form-control" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />
                 </div>
                 {{--
                 <div class="row">

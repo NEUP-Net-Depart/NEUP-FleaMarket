@@ -17,10 +17,10 @@
                 min-height: 400px;
             }
             .col-card {
-                 max-width:130px;
+                max-width:130px;
             }
             .nav-pills {
-                 width:100px;
+                width:100px;
             }
             .password-form {
                 width:300px;
@@ -48,7 +48,6 @@
     </style>
     <script>
         match_media = "(min-width:992px)";
-
         function WidthChange(mq) {
             if (mq.matches) {
                 $('.row-first').attr('class','row row-first');
@@ -75,51 +74,51 @@
 
 @section('content')
 
-<div class="row-first" style="margin-top:20px">
-    <div class="mx-auto">
-    <div class="card main-card">
-        <div class="card-block">
-            <div class="row-card">
-                <div class="col col-card">
-                    <div class="row paowa">
-                        <div class="mx-auto">
-                            <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link @if(!isset($tab) || ($tab != 'account') && ($tab != 'contact')) active @endif" href="/user">个人信息</a></li>
-                                <li class="nav-item"><a class="nav-link @if($tab == 'account') active @endif" href="/user?tab=account">用户帐户</a></li>
-                                <li class="nav-item"><a class="nav-link @if($tab == 'contact') active @endif" href="/user?tab=contact">联系方式</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <p>
-                <div class="col">
-                    @if(!isset($tab) || $tab == 'profile')
-                    <div id="profile">                
-                        <form action="/user" method="POST" enctype="multipart/form-data">
-                            @include('user.editUserExtra')
-                            <div class="row">
+    <div class="row-first" style="margin-top:20px">
+        <div class="mx-auto">
+            <div class="card main-card">
+                <div class="card-block">
+                    <div class="row-card">
+                        <div class="col col-card">
+                            <div class="row paowa">
                                 <div class="mx-auto">
-                                    <input class="btn btn-success" type="submit" name="submit" value="保存">
+                                    <ul class="nav nav-pills">
+                                        <li class="nav-item"><a class="nav-link @if(!isset($tab) || ($tab != 'account') && ($tab != 'contact')) active @endif" href="/user">个人信息</a></li>
+                                        <li class="nav-item"><a class="nav-link @if($tab == 'account') active @endif" href="/user?tab=account">用户帐户</a></li>
+                                        <li class="nav-item"><a class="nav-link @if($tab == 'contact') active @endif" href="/user?tab=contact">联系方式</a></li>
+                                    </ul>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                        <p>
+                        <div class="col">
+                            @if(!isset($tab) || $tab == 'profile')
+                                <div id="profile">
+                                    <form action="/user" method="POST" enctype="multipart/form-data">
+                                        @include('user.editUserExtra')
+                                        <div class="row">
+                                            <div class="mx-auto">
+                                                <input class="btn btn-success" type="submit" name="submit" value="保存">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                            @if($tab == 'account')
+                                <div id="account">
+                                    @include('user.editUserAccount')
+                                </div>
+                            @endif
+                            @if($tab == 'contact')
+                                <div id="contact">
+                                    @include('user.userInfo')
+                                </div>
+                            @endif
+                        </div>
+                        </p>
                     </div>
-                    @endif
-                    @if($tab == 'account')
-                    <div id="account">
-                        @include('user.editUserAccount')
-                    </div>
-                    @endif
-                    @if($tab == 'contact')
-                    <div id="contact">
-                        @include('user.userInfo')
-                    </div>
-                    @endif
                 </div>
-                </p>
             </div>
         </div>
     </div>
-    </div>
-</div>
 @endsection
