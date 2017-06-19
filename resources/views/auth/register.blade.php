@@ -18,6 +18,8 @@
                 {{--<label>用户名<input type="text" name="username" placeholder="必填，3-64"></label>
                 <label>昵称<input type="text" name="nickname" placeholder="<=128"></label>--}}
                 {!! csrf_field() !!}
+                <label>点击注册即表示您已阅读并接受<a href="/pp">隐私政策</a>和<a href="/tos">服务条款</a></label>
+                <br>
                 <input type="submit" class="hollow button" value="注册"> <a href="/sso" style="float: right" class="button small-centered">校园统一身份认证服务平台注册</a>
             </form>
         </div>

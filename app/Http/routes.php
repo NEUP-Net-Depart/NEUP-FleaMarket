@@ -27,6 +27,10 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['web']],function () {
 
+    Route::get('/tos', "ContentController@tos");
+    Route::get('/pp', "ContentController@pp");
+    Route::get('/faq', "ContentController@faq");
+
     Route::group(['middleware' => ['authredirect']], function() {
         Route::get('/login', "AuthController@showLogin");
         Route::get('/sso', "AuthController@cas");
