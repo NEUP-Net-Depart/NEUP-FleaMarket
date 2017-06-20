@@ -67,8 +67,7 @@ class AuthTest extends BrowserKitTestCase
             ->see('更改头像')
             ->type('aaa', 'nickname')
             ->press('下一步')
-            ->seePageIs('/register/2')
-            ->see('aaa');
+            ->seePageIs('/register/3');
 
         //test redirect
         $this->visit('/login')

@@ -60,7 +60,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="ml-auto" style="margin-right:5px">
-                        <button onclick="window.location.href='/'" class="btn btn-success">完成</a>
+                        <button onclick="window.location.href='/register/4'" class="btn btn-success">完成</button>
                     </div>
                 </div>
             </div>

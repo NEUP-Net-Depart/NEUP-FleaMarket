@@ -51,8 +51,19 @@ class UserController extends Controller
                 'avatar/' . $user->id,
                 Image::make($request->file('avatarPic'))->crop(round($input['crop_width']), round($input['crop_height']), round($input['crop_x']), round($input['crop_y']))->resize(800, 450)->encode('data-url')
             );
-        if ($user->registerCompletion() != 0)
+        if($user->registerCompletion() == 2)
+            return Redirect::to('/register/3');
+        else if ($user->registerCompletion() != 0)
             return Redirect::to('/register/' . $user->registerCompletion());
+        else
+            return Redirect::to('/');
+    }
+
+    public function completeAccount(Request $request)
+    {
+        $user = User::find($request->session()->get('user_id'));
+        if($user->email == null && $user->wechat_open_id == null)
+            return Redirect::to('user?tab=account');
         else
             return Redirect::to('/');
     }

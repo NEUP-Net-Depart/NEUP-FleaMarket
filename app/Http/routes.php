@@ -59,9 +59,7 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/register/2', "UserController@showCompleteUser");
         Route::post('/register/2', "UserController@completeUser");
         Route::get('/register/3', "UserController@regUserInfo");
-        Route::get('/register/4', function (){
-            return Redirect::to('user?tab=account');
-        });
+        Route::get('/register/4', "UserController@completeAccount");
 
         Route::get('/user/userinfo', "UserController@userInfo");
         Route::get('/user/userinfo/create', "UserController@createUserInfo");
