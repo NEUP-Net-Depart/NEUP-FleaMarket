@@ -62,10 +62,9 @@ class UserController extends Controller
     public function completeAccount(Request $request)
     {
         $user = User::find($request->session()->get('user_id'));
-        if($user->email == null && $user->wechat_open_id == null)
-            return Redirect::to('user?tab=account');
-        else
+        if($user->registerCompletion() == 0)
             return Redirect::to('/');
+        return view('auth.register4')->with(['user' => $user]);
     }
 
     public function regUserInfo(Request $request)
