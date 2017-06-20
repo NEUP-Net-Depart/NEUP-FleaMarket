@@ -77,7 +77,7 @@
 
     <div class="row-first" style="margin-top:20px">
         <div class="mx-auto col">
-            <div class="card main-card col">
+            <div class="card main-card row">
                 <div class="card-block">
                     <div class="row-card">
                         <div class="col col-card">

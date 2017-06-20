@@ -11,7 +11,7 @@
   <div class="dropdown-menu dropdown-menu-right">
   @if(Session::has('user_id'))
     <a href="/user" class="dropdown-item">
-      <img src="/avatar/{{ Session::get('user_id') }}/110/110" class="avatar"/>
+      <center><img src="/avatar/{{ Session::get('user_id') }}/110/110" class="avatar"/></center>
       <label class="dropdown-header"><center>{{ Session::get('nickname') }}</center></label>
     </a>
     <a href="/logout" class="dropdown-item">登出</a>
