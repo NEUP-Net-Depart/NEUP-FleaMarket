@@ -17,6 +17,7 @@ use App\User;
 use App\CheckEmail;
 use App\PasswordReset;
 use Mail;
+use Illuminate\Support\Facades\Storage;
 use App\AuthLog;
 use phpCAS;
 use App\Wechat;
@@ -32,12 +33,33 @@ class AuthController extends Controller
         $log->save();
     }
 
+    function http_get_data($url) {
+
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
+        curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        ob_start ();
+        curl_exec ( $ch );
+        $return_content = ob_get_contents ();
+        ob_end_clean ();
+
+        $return_code = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
+        return $return_content;
+    }
+
     private function wechatReg($user, $request) {
         if($request->session()->has('wechat_open_id') && !$user->baned) {
             $user->wechat_open_id = $request->session()->get('wechat_open_id');
             $user->save();
 
-            
+            $wechat = Wechat::where('open_id', $user->wechat_open_id)->first();
+            if($wechat && !Storage::exists('avatar/' . $user->id))
+                Storage::put('avatar/' . $user->id, $this->http_get_data($wechat->head_img_url));
+            if($wechat && !$user->nickname) {
+                $user->nickname = $wechat->nick_name;
+                $user->save();
+            }
 
             $this->log($user->id, "WechatBind_Success", $request);
         }

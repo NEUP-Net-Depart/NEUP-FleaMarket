@@ -20,7 +20,7 @@ class User extends Model
     {
         if ($this->nickname == null || !Storage::exists('avatar/' . $this->id)) {
             return 2;
-        } else if (count($this->user_infos) == 0) {
+        } else if (count($this->user_infos) == 0 && $this->wechat_open_id == null) {
             return 3;
         } else if ($this->email == null && $this->wechat_open_id == null) {
             return 4;
