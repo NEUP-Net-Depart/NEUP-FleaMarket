@@ -23,6 +23,11 @@ class Authenticate
         }
         else
         {
+            if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false
+                && !$request->session()->has('wechat_open_id')
+            ) {
+                return Redirect::to('/wx');
+            }
             return Redirect::to('/login');
         }
     }
