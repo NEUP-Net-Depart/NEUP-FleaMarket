@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Jenssegers\Agent\Agent;
 
 class Authenticate
 {
@@ -23,7 +24,8 @@ class Authenticate
         }
         else
         {
-            if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false
+            $agent = new Agent();
+            if (strpos($agent->getUserAgent(), 'MicroMessenger') !== false
                 && !$request->session()->has('wechat_open_id')
             ) {
                 return Redirect::to('/wx');

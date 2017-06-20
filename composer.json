@@ -11,7 +11,8 @@
         "laravel/browser-kit-testing": "^1.0",
         "satooshi/php-coveralls": "^1.0",
         "jasig/phpcas": "^1.3",
-        "mews/purifier": "^2.0"
+        "mews/purifier": "^2.0",
+        "jenssegers/agent": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
