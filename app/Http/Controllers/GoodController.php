@@ -186,6 +186,8 @@ class GoodController extends Controller
             return view::make('good.addPage')->with($data)->withErrors('您的账号被封禁，无法出售商品，请联系系统管理员');
         if(UserInfo::where('user_id', $user_id)->count() == 0)
             return view::make('good.addPage')->with($data)->withErrors('你必须先添加联系方式才能出售');
+        if(!$user->email)
+            return Redirect::to('register/4');
         return view::make('good.addPage')->with($data);
     }
 
