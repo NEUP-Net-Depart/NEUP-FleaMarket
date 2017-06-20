@@ -21,28 +21,28 @@
     <label>友情提示：如果需要取消订单，请务必和对方沟通说明理由。恶意取消订单的行为可以举报。</label>
     <table class="table table-hover table-responsive">
         <tr>
-            <td>订单编号</td>
-            <td>商品名称</td>
-            <td>数量</td>
-            <td>订单状态</td>
-            <td>操作</td>
+            <td nowrap="nowrap">订单编号</td>
+            <td nowrap="nowrap">商品名称</td>
+            <td nowrap="nowrap">数量</td>
+            <td nowrap="nowrap">订单状态</td>
+            <td nowrap="nowrap">操作</td>
         </tr>
         @foreach($trans as $tran)
             <tr id="tran{{ $tran->id }}">
-                <td>{{ $tran->id }}</td>
-                <td><a href="/good/{{$tran->good_id}}"
+                <td nowrap="nowrap">{{ $tran->id }}</td>
+                <td nowrap="nowrap"><a href="/good/{{$tran->good_id}}"
                        @if(isset($tran->good))
                        onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
                        onMouseOut="toolTip()"
                             @endif
                     >{{ isset($tran->good) ? $tran->good->good_name : "此商品已删除" }}</a></td>
-                <td>{{ $tran->number }}</td>
+                <td nowrap="nowrap">{{ $tran->number }}</td>
                 @if($tran->status == 0)
-                    <td>
+                    <td nowrap="nowrap">
                         已取消
                     </td>
                 @elseif($tran->status == 1)
-                    <td>
+                    <td nowrap="nowrap">
                         等待卖家确认
                     </td>
                     <td>
@@ -54,18 +54,18 @@
                         </form>
                     </td>
                 @elseif($tran->status == 2)
-                    <td>
+                    <td nowrap="nowrap">
                         交易已成立
                     </td>
-                    <td>
+                    <td nowrap="nowrap">
                         <a href="/trans/{{ $tran->id }}">查看交易</a>
                     </td>
                 @elseif($tran->status == 3)
-                    <td>
+                    <td nowrap="nowrap">
                         交易失败
                     </td>
                 @elseif($tran->status == 4)
-                    <td>
+                    <td nowrap="nowrap">
                         交易成功待评价
                     </td>
                     <td>
@@ -75,7 +75,7 @@
                         </form>
                     </td>
                 @elseif($tran->status == 5)
-                    <td>
+                    <td nowrap="nowrap">
                         已评价
                     </td>
                 @endif
