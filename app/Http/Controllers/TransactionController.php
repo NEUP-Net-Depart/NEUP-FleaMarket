@@ -29,7 +29,7 @@ class TransactionController extends Controller
         $user = User::find($user_id);
         if(!$user || $user->baned)
             return Redirect::back()->withInput()->withErrors('您的账号被封禁，请联系系统管理员');
-        if(UserInfo::where('user_id', $user_id)->count() == 0)
+        if(UserInfo::where('user_id', $user_id)->count() == 0 && !$user->wechat_open_id)
             return Redirect::back()->withInput()->withErrors('你必须添加联系方式才能购买');
         $count = $request->count;
         $result = $this->buy($good_id, $user_id, $count, $request->ip());

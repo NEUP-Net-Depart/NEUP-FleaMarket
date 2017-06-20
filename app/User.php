@@ -16,9 +16,9 @@ class User extends Model
         return $this->hasMany('App\UserInfo');
     }
 
-    public function registerCompletion()
+    public function registerCompletion($force = false)
     {
-        if ($this->nickname == null || !Storage::exists('avatar/' . $this->id)) {
+        if (!$force && ($this->nickname == null || !Storage::exists('avatar/' . $this->id))) {
             return 2;
         } else if (count($this->user_infos) == 0 && $this->wechat_open_id == null) {
             return 3;

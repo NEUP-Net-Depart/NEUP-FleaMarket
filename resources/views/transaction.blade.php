@@ -79,6 +79,9 @@
                     <th nowrap="nowrap">地址</th>
                 </tr>
 
+                @if(count($seller->user_infos) == 0)
+                    <tr><td nowrap="nowrap" colspan="5">该用户没有填写联系方式，你们可以通过“消息”来联系。“消息”会通过东大小秘书微信公众号进行推送。</td></tr>
+                @endif
                 @foreach($seller->user_infos as $userinfo)
                     <tr>
                         <td nowrap="nowrap">{{ $seller->realname }}</td>
@@ -103,6 +106,9 @@
                     <th nowrap="nowrap">地址</th>
                 </tr>
 
+                @if(count($buyer->user_infos) == 0)
+                    <tr><td nowrap="nowrap" colspan="5">该用户没有填写联系方式，你们可以通过“消息”来联系。“消息”会通过东大小秘书微信公众号进行推送。</td></tr>
+                @endif
                 @foreach($buyer->user_infos as $userinfo)
                     <tr>
                         <td nowrap="nowrap">{{ $buyer->realname }}</td>

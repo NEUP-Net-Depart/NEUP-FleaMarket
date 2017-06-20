@@ -20,8 +20,8 @@ class RegisterComplete
         if($request->session()->has('user_id'))
         {
             $user = User::find($request->session()->get('user_id'));
-            if($user->registerCompletion())
-                return Redirect::to('/register/' . $user->registerCompletion());
+            if($user->registerCompletion(true))
+                return Redirect::to('/register/' . $user->registerCompletion(true));
             return $next($request);
         }
         else
