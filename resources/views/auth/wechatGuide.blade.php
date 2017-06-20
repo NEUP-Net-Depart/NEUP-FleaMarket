@@ -4,27 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="/css/foundation.css"/>
-    <link rel="stylesheet" href="/css/app.css"/>
-    <link rel="stylesheet" href="/css/cropper.min.css"/>
-    <link rel="stylesheet" href="/css/froala_editor.min.css">
-    <link rel="stylesheet" href="/css/froala_editor.pkgd.min.css">
+    <!-- Compressed CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css" integrity="sha256-itWEYdFWzZPBG78bJOOiQIn06QCgN/F0wMDcC4nOhxY=" crossorigin="anonymous" />
+
     <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link type="text/css" media="screen" rel="stylesheet" href="/css/responsive-tables.css" />
-    @yield('asset')
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/vendor/jquery.min.js"></script>
-    <script src="/js/vendor/what-input.min.js"></script>
-    <script src="/js/vendor/foundation.min.js"></script>
-    <script src="/js/cropper.min.js"></script>
-    <!--Pop foundation and cropper's old version jQuery-->
-    <script type="text/javascript">
-        var $jQuery_FOUNDATION = $.noConflict(true);
-    </script>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="/js/jquery.slides.min.js"></script>
-    <script src="/js/app.js"></script>
-    <script src="/js/froala_editor.pkgd.min.js"></script>
+    <link rel="stylesheet" href="/css/wechat.css"/>
+    <!-- Compressed JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js" integrity="sha256-Nd2xznOkrE9HkrAMi4xWy/hXkQraXioBg9iYsBrcFrs=" crossorigin="anonymous"></script>
     <title>微信登录 - 先锋市场</title>
 </head>
 <body>
@@ -47,7 +33,6 @@
         </div>
     </div>
 
-    <link rel="stylesheet" href="/css/wechat.css"/>
     <footer class="row hide-for-small-only">
         <div class="medium-9 medium-centered columns">
             <div class="float-left">
