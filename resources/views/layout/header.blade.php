@@ -26,6 +26,7 @@
     <a href="/message" class="dropdown-item">消息 <span style="display: none" class="badge badge-warning message-num-tip">0</span></a>
     <a href="/good/add" class="dropdown-item">出售</a>
   @else
+    <a href="/wx" class="dropdown-item" style="background-color: #009307; color: #ffffff;">微信快捷登录</a>
     <a href="/login" class="dropdown-item">普通登录</a>
     <a href="/sso" class="dropdown-item">校卡平台快捷登录</a>
     <div class="dropdown-divider"></div>
