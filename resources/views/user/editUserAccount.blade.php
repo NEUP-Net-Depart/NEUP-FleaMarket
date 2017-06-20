@@ -15,7 +15,7 @@
             <div class="input-group">
             <div class="alert alert-danger" role="alert">
                 <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                你既没有绑定邮箱也没有绑定微信，这可能导致你无法及时收到消息！
+                你{{--既没有绑定邮箱也没有绑定微信--}}没有绑定邮箱，这可能导致你无法及时收到消息！
             </div>
             </div>
         </div>
@@ -42,11 +42,11 @@
     </p>
     <p>
         @if($user->wechat_open_id=='')
-            <div class="password-form">
+            {{--<div class="password-form">
                 <div class="input-group">
                     <label>微信：请在东大小秘书中点击“闲置市场”链接来关联微信。</label>
                 </div>
-            </div>
+            </div>--}}
         @else
             <div class="password-form">
                 <div class="input-group">
