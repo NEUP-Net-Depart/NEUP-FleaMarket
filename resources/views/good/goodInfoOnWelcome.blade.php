@@ -17,14 +17,6 @@
                                 @endif
                            </p>
                         </div>
-                        <div class="det-d hidden-md-up" style="position:absolute;z-index:200;top:-43px;left:5px;color:white;font-size:15px;">
-                            <p>售价：￥{{ $good->price }}</p>
-                            <p>@if($good->count==0)
-                                    无库存QAQ
-                                @else
-                                    库存：{{ $good->count }}
-                                @endif</p>
-                        </div>
                     </div>
                 </div>
                 <div class="card-block" style="word-break:break-all">

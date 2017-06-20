@@ -22,7 +22,7 @@
                     <img src="/avatar/{{ $user->id }}/150/150"  style="width:150px; height:150px; border-radius:50%; overflow:hidden;margin-bottom:10px" />
                     <figcaption class="figure-caption text-center">
                         @if(isset($user->nickname))
-                            用户名： {{ $user->nickname }}
+                            用户昵称： {{ $user->nickname }}
                             @if($user->baned)
                                 【已封禁】
                             @endif
