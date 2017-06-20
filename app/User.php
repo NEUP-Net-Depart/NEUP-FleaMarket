@@ -22,7 +22,10 @@ class User extends Model
             return 2;
         } else if (count($this->user_infos) == 0) {
             return 3;
-        } else
+        } else if ($this->email == null && $this->wechat_open_id == null) {
+            return 4;
+        }
+        else
             return 0;
     }
 

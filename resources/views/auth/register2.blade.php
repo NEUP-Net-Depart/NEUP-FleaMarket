@@ -6,7 +6,7 @@
     <style>
         #preview, #avatarpreview {
             max-width: 100%;
-            height:230px;
+            max-height:230px;
         }
         @media (min-width: 768px) {
             .register-card {

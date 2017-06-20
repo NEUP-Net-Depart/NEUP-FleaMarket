@@ -11,6 +11,7 @@
 |
 */
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 
 /*
@@ -58,6 +59,9 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/register/2', "UserController@showCompleteUser");
         Route::post('/register/2', "UserController@completeUser");
         Route::get('/register/3', "UserController@regUserInfo");
+        Route::get('/register/4', function (){
+            return Redirect::to('user?tab=account');
+        });
 
         Route::get('/user/userinfo', "UserController@userInfo");
         Route::get('/user/userinfo/create', "UserController@createUserInfo");
@@ -101,7 +105,7 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::get('/good', "GoodController@getList");
 
-    Route::get('/good/add', "GoodController@showAddGood")->middleware('auth');
+    Route::get('/good/add', "GoodController@showAddGood")->middleware('regc');
     Route::post('/good/add', "GoodController@addGood")->middleware('auth');
 
     Route::get('/good/{good_id}', "GoodController@getInfo");
@@ -117,7 +121,7 @@ Route::group(['middleware' => ['web']],function () {
     Route::post('/good/{good_id}/add_favlist', "GoodController@addFavlist")->middleware('auth');
     Route::delete('/good/{good_id}/del_favlist', "GoodController@delFavList")->middleware('auth');
 
-    Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('auth');
+    Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('regc');
 
     Route::get('/message', "MessageController@showMessageView")->middleware('auth');
     Route::get('/test/sendmessagepage', "MessageController@sendMessagepage")->middleware('su');

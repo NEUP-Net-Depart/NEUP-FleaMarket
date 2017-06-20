@@ -6,7 +6,7 @@
     <style>
         #preview, #avatarpreview {
             max-width: 100%;
-            height: 230px;
+            max-height: 230px;
         }
         @media (min-width: 992px) {
             .nickname-input {
@@ -76,8 +76,8 @@
 @section('content')
 
     <div class="row-first" style="margin-top:20px">
-        <div class="mx-auto">
-            <div class="card main-card">
+        <div class="mx-auto col">
+            <div class="card main-card col">
                 <div class="card-block">
                     <div class="row-card">
                         <div class="col col-card">
