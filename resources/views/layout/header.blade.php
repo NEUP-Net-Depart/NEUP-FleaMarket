@@ -5,7 +5,7 @@
 <div class="container">
 <nav class="navbar navbar-toggleable navbar-inverse" style="box-shadow:#ffffff 0 0 0">
   <div class="nav-item">
-  <a class="navbar-toggler navbar-toggler-right nav-link" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+  <a class="navbar-toggler navbar-toggler-right nav-link" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height:40px">
     <span class="navbar-toggler-icon"></span>
   </a>
   <div class="dropdown-menu dropdown-menu-right">
@@ -112,6 +112,8 @@
         success: function (msg) {
           msg = parseInt(msg);
           if(msg) {
+            $(".navbar-toggler").html("<span class='badge badge-warning message-num-tip'>0</span>");
+            $(".navbar-toggler").attr("style", "padding-top:8.5px;padding-bottom:8.5px");
             $(".message-num-tip").removeAttr("style");
             if(msg > 99)
               $(".message-num-tip").html("99+");
