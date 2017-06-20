@@ -183,7 +183,7 @@ class AuthController extends Controller
             return $this->afterLogin($user, $request);
 
         } else {
-            $this->log($user->id, "login_authfail", $request);
+            $this->log($user == NULL ? "" : $user->id, "login_authfail", $request);
             return Redirect::back()->withInput()->withErrors('用户名或者密码错误！<a href="/iforgotit">忘记密码？</a>');
         }
     }
