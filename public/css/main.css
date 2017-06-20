@@ -109,3 +109,7 @@ a:hover, a:focus {
     float: none;
     margin: 0 auto;
 }
+
+img {
+    max-width: 100%;
+}

@@ -45,7 +45,7 @@
                 <h2 style="margin-left:10px;display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h2>
             </div>
             卖家：<a href="/user/{{ $user->id }}">@if(isset($user->nickname)){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif @if($user->baned)【已封禁】@endif</a> &nbsp;
-            @if($user->baned)
+            @if(!$user->baned)
                 <a href="/message/startConversation/{{ $user->id }}">联系卖家</a>
             @endif
             <div><!-- 放tag 和更多图片缩略图 --></div>

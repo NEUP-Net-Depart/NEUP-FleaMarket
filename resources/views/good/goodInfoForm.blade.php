@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="price">商品价格</label>
-                    <input type="number" min="0" name="price" id="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格" class="form-control"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                    <input type="number" step="0.01" min="0" name="price" id="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格" class="form-control">
                 </div>
                 <div class="form-group hidden-xs-up">
                     <label>商品类型</label>
