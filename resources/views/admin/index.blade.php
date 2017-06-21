@@ -104,8 +104,9 @@
 						<tbody>
 							<tr>
 								<td><a href="#repo{{$repo->id}}" data-toggle="modal">{{ $repo->id }}</a></td>
-								<td><a href="#repo{{$repo->id}}" data-toggle="modal">{{ $repo->sender_id }}</a></td>
-								<td><a href="#repo{{$repo->id}}" data-toggle="modal">{{ $repo->receiver_id }}</a></td>
+								<td><a href="/user/{{ $repo->sender_id }}">{{ $repo->sender_id }}</a></td>
+								<td><a href="/user/{{ $repo->receiver_id }}">{{ $repo->receiver_id }}</a></td>
+								<td><a class="btn btn-primary" href="#repo{{$repo->id}}" data-toggle="modal">查看</a></td>
 							<div class="modal fade" id="repo{{$repo->id}}" tabindex="-1" role="dialog" aria-labelledby="repo{{$repo->id}}Label">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
