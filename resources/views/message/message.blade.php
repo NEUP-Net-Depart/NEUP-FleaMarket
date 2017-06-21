@@ -59,15 +59,13 @@
             <p v-if="messages.length == 0" style="text-align: center">暂无消息</p>
             <div :class="{ hide: isHidden }">
                 <a href="javascript:void(0)" v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
-                <p v-else>没有更多了</p>
                 <ul id="message-container" class="message-container">
                     <transition-group name="message-list" tag="ul">
                         <li :class="{ box: message.type !== 'history-info' }" class="msg message-list-item"
                             v-for="message in messages" v-bind:key="message.id">
                         <span v-if="message.type !== 'history-info'">
                         <img class="mavatar" :src="'/avatar/' + message.sender_id + '/64/64'"/>
-                            <p v-if="contact_id == 0" class="message-content" v-html="message.content"></p>
-                            <p v-else class="message-content">@{{ message.content }}</p>
+                            <p class="message-content" v-html="message.content"></p>
                             <br/><br/>
                         <i class="time-tag">@{{ message.created_at }}</i>
                         </span>
