@@ -4,8 +4,18 @@
 
 @section('content')
 
-    <div id="message">
-        {{--<a v-on:click="refreshContact">???</a>--}}
+    <div id="vue-error-msg" class="container hide">
+        <div class="row col-xl-12 alert alert-danger" role="alert">
+            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+            <p>
+                如果您看到了这条消息，说明您使用的浏览器不兼容消息页面。建议您更换<strong>最新版Chrome浏览器</strong>
+                以获得最佳浏览体验，给您带来的不便敬请谅解。
+            </p>
+            <img src="/img/sorry.png" class="img-responsive center-block"/>
+        </div>
+    </div>
+
+    <div id="message" class="container">
         <div class="row">
             <div class="col-lg-8 col-12">
                 <message-dialog ref="messageDialog" v-on:top-contact="topContactCallback" v-on:network-error="stopTimerCallback"></message-dialog>
@@ -85,9 +95,14 @@
         </div>
     </script>
 
-    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/message.js"></script>
+    <script>
+        window.onload = function () {
+            setTimeout("$('#vue-error-msg').removeClass('hide')", 3000);
+        }
+    </script>
     <link rel="stylesheet" href="/css/message.css">
 
 @endsection

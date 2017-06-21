@@ -299,6 +299,7 @@ var Message = new Vue({
     },
     methods: {
         startLoop: function () {
+            $("#vue-error-msg").remove();
             var vm = this;
             vm.loadContact();
             vm.timer = window.setInterval(function() {
