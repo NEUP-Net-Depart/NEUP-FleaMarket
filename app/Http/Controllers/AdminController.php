@@ -11,7 +11,7 @@ use App\User;
 use App\Announcement;
 use App\Http\Controllers\Controller;
 use App\Ticket;
-
+use JsonRpcClient;
 use App\Transaction;
 use Mews\Purifier\Purifier;
 
@@ -173,6 +173,19 @@ class AdminController extends Controller
         }
 		return Redirect::to('/admin');
 	}
+
+	// This part gonna work with https://github.com/NEUP-Net-Depart/email-daemon/
+	public function testEmail()
+    {
+        $conn = new JsonRpcClient("127.0.0.1", 65525);
+        $mailSettings = [];
+        $mailSettings["Body"] = "<h1>PHP测试</h1>";
+        $mailSettings["To"] = "wangkule@cool2645.com";
+        $mailSettings["Subject"] = "PHP 邮件测试";
+        $mailSettings["SendID"] = "notify";
+        $response = $conn->Call("Daemon.SendMail", $mailSettings);
+        return $response;
+    }
 
     /**
      * @function AdminController@getAnnouncement

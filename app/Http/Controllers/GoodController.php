@@ -127,18 +127,6 @@ class GoodController extends Controller
         return view::make('good.goodList')->with($data);
     }
 
-    public function check(Request $request)
-    {
-        $data = [];
-        $user_id = $request->session()->get('user_id');
-        $data['goods'] = Transaction::where('seller_id',$user_id)->where('status',1)->get();
-        $data['sells'] = Transaction::where('seller_id',$user_id)->where('status',2)->get();
-        $data['mysells'] = Transaction::where('seller_id',$user_id)->where('status',4)->get();
-        $data['users'] = Transaction::where('buyer_id',$user_id)->where('status',3)->get();
-        $data['transactions'] = Transaction::where('buyer_id',$user_id)->where('status',2)->get();
-        return view::make('good.goodCheck')->with($data);
-    }
-
     /**
      * @function GoodController@getInfo
      * @input Request $request, $good_id
