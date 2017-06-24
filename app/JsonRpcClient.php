@@ -56,7 +56,7 @@ class JsonRpcClient {
     
     $jsonRequest = json_encode($request);
 
-    echo $jsonRequest . PHP_EOL;
+    //echo $jsonRequest . PHP_EOL;
     $this->__open();
 
     socket_bind($this->socket, $this->address);

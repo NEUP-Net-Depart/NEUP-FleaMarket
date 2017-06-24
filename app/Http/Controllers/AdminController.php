@@ -175,11 +175,11 @@ class AdminController extends Controller
 	}
 
 	// This part gonna work with https://github.com/NEUP-Net-Depart/email-daemon/
-	public function testEmail()
+	public function testEmail(Request $request)
     {
         $conn = new JsonRpcClient("127.0.0.1", 65525);
         $mailSettings = [];
-        $mailSettings["Body"] = "<h1>PHP测试</h1>";
+        $mailSettings["Body"] = view('auth.checkLetter')->with(['host' => $request->server("HTTP_HOST"), 'token' => "sometesttokenhhhh"])->render();
         $mailSettings["To"] = "wangkule@cool2645.com";
         $mailSettings["Subject"] = "PHP 邮件测试";
         $mailSettings["SendID"] = "notify";
