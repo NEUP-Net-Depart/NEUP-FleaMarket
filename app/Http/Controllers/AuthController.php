@@ -16,7 +16,7 @@ use App\Http\Requests\ResetPassRequest;
 use App\User;
 use App\CheckEmail;
 use App\PasswordReset;
-use Mail;
+use JsonRpcClient;
 use Illuminate\Support\Facades\Storage;
 use App\AuthLog;
 use phpCAS;
@@ -259,11 +259,16 @@ class AuthController extends Controller
         $time = time();
         $data['token'] = base64_encode($token . "#" . $time . "#" . $email . "#" . substr(sha1($time . $email . env('APP_KEY')), 0, 6));
         $data['host'] = $request->server("HTTP_HOST");
-        if (env('APP_ENV') != "testing")
-            Mail::send('auth.checkLetter', $data, function ($m) use ($user, $email) {
-                $m->from(env('MAIL_USERNAME'), "先锋市场");
-                $m->to($email, $user->username)->subject('验证你的邮箱');
-            });
+        if (env('APP_ENV') != "testing") {
+            $conn = new JsonRpcClient(env('MAIL_RPC_HOST', "127.0.0.1"), env('MAIL_RPC_PORT', 65525));
+            $mailSettings = [];
+            $mailSettings["Body"] = view('auth.checkLetter')->with($data)->render();
+            $mailSettings["To"] = $email;
+            $mailSettings["FromName"] = "先锋市场";
+            $mailSettings["Subject"] = "验证你的邮箱";
+            $mailSettings["SendID"] = "service";
+            $conn->Call("Daemon.SendMail", $mailSettings);
+        }
 
         self::log($user->id, "sendcheckletter", $request);
     }
@@ -295,11 +300,16 @@ class AuthController extends Controller
         $time = time();
         $data['token'] = base64_encode($token . "#" . $time . "#" . $email . "#" . substr(sha1($time . $email . env('APP_KEY')), 0, 6));
         $data['host'] = $request->server("HTTP_HOST");
-        if (env('APP_ENV') != "testing")
-            Mail::send('auth.unbindLetter', $data, function ($m) use ($user, $email) {
-                $m->from(env('MAIL_USERNAME'), "先锋市场");
-                $m->to($email, $user->username)->subject('邮箱解绑请求');
-            });
+        if (env('APP_ENV') != "testing") {
+            $conn = new JsonRpcClient(env('MAIL_RPC_HOST', "127.0.0.1"), env('MAIL_RPC_PORT', 65525));
+            $mailSettings = [];
+            $mailSettings["Body"] = view('auth.unbindLetter')->with($data)->render();
+            $mailSettings["To"] = $email;
+            $mailSettings["FromName"] = "先锋市场";
+            $mailSettings["Subject"] = "邮箱解绑请求";
+            $mailSettings["SendID"] = "service";
+            $conn->Call("Daemon.SendMail", $mailSettings);
+        }
 
         self::log($user->id, "sendunbindletter", $request);
     }
@@ -442,11 +452,16 @@ class AuthController extends Controller
             $time = time();
             $data['token'] = base64_encode($token . "#" . $time . "#" . substr(sha1($time . env('APP_KEY')), 0, 6));
             $data['host'] = $request->server("HTTP_HOST");
-            if (env('APP_ENV') != "testing")
-                Mail::send('auth.resetLetter', $data, function ($m) use ($user, $email) {
-                    $m->from(env('MAIL_USERNAME'), '先锋市场');
-                    $m->to($email, $user->username)->subject('重置密码');
-                });
+            if (env('APP_ENV') != "testing") {
+                $conn = new JsonRpcClient(env('MAIL_RPC_HOST', "127.0.0.1"), env('MAIL_RPC_PORT', 65525));
+                $mailSettings = [];
+                $mailSettings["Body"] = view('auth.resetLetter')->with($data)->render();
+                $mailSettings["To"] = $email;
+                $mailSettings["FromName"] = "先锋市场";
+                $mailSettings["Subject"] = "重置密码";
+                $mailSettings["SendID"] = "service";
+                $conn->Call("Daemon.SendMail", $mailSettings);
+            }
 
             $this->log($user->id, "sendpwdresetletter", $request);
 

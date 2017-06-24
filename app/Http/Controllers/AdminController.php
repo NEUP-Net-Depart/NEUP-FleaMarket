@@ -181,6 +181,7 @@ class AdminController extends Controller
         $mailSettings = [];
         $mailSettings["Body"] = view('auth.checkLetter')->with(['host' => $request->server("HTTP_HOST"), 'token' => "sometesttokenhhhh"])->render();
         $mailSettings["To"] = "wangkule@cool2645.com";
+        $mailSettings["FromName"] = "先锋市场";
         $mailSettings["Subject"] = "PHP 邮件测试";
         $mailSettings["SendID"] = "notify";
         $response = $conn->Call("Daemon.SendMail", $mailSettings);
