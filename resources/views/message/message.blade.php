@@ -4,8 +4,18 @@
 
 @section('content')
 
-    <div id="message">
-        {{--<a v-on:click="refreshContact">???</a>--}}
+    <div id="vue-error-msg" class="container hide">
+        <div class="row col-xl-12 alert alert-danger" role="alert">
+            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+            <p>
+                如果您看到了这条消息，说明您使用的浏览器不兼容消息页面。建议您更换<strong>最新版Chrome浏览器</strong>
+                以获得最佳浏览体验，给您带来的不便敬请谅解。
+            </p>
+            <img src="/img/sorry.png" class="img-responsive center-block"/>
+        </div>
+    </div>
+
+    <div id="message" class="container">
         <div class="row">
             <div class="col-lg-8 col-12">
                 <message-dialog ref="messageDialog" v-on:top-contact="topContactCallback" v-on:network-error="stopTimerCallback"></message-dialog>
@@ -59,15 +69,13 @@
             <p v-if="messages.length == 0" style="text-align: center">暂无消息</p>
             <div :class="{ hide: isHidden }">
                 <a href="javascript:void(0)" v-if="hasMore" v-on:click="getHistoryMessage(-1)">加载更多</a>
-                <p v-else>没有更多了</p>
                 <ul id="message-container" class="message-container">
                     <transition-group name="message-list" tag="ul">
                         <li :class="{ box: message.type !== 'history-info' }" class="msg message-list-item"
                             v-for="message in messages" v-bind:key="message.id">
                         <span v-if="message.type !== 'history-info'">
                         <img class="mavatar" :src="'/avatar/' + message.sender_id + '/64/64'"/>
-                            <p v-if="contact_id == 0" class="message-content" v-html="message.content"></p>
-                            <p v-else class="message-content">@{{ message.content }}</p>
+                            <p class="message-content" v-html="message.content"></p>
                             <br/><br/>
                         <i class="time-tag">@{{ message.created_at }}</i>
                         </span>
@@ -87,9 +95,14 @@
         </div>
     </script>
 
-    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/js/message.js"></script>
+    <script src="/js/message-20170622.js"></script>
+    <script>
+        window.onload = function () {
+            setTimeout("$('#vue-error-msg').removeClass('hide')", 3000);
+        }
+    </script>
     <link rel="stylesheet" href="/css/message.css">
 
 @endsection

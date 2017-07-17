@@ -18,6 +18,7 @@ use App\Message;
 use App\User;
 use App\MessageContact;
 use App\Http\Controllers\Controller;
+use Mews\Purifier\PurifierServiceProvider;
 
 class MessageController extends Controller
 {
@@ -83,7 +84,7 @@ class MessageController extends Controller
         //Create Message
         $message = new Message;
         $user_id = $sender;
-        $message->content = $content;
+        $message->content = clean($content);
         $message->sender_id = $user_id;
         $message->receiver_id = $receiver;
         $message->save();
