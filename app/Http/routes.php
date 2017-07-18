@@ -141,7 +141,7 @@ Route::group(['middleware' => ['web']],function () {
     Route::post('/notice', "AdminController@sendAnnouncement")->middleware('admin');
     Route::delete('/notice/{ann_id}', "AdminController@delAnnouncement")->middleware('admin');
 
-    Route::get('/admin', "AdminController@adminIndex")->middleware('admin');
+    Route::get('/admin/{tab?}', "AdminController@adminIndex")->middleware('admin');
     Route::get('/test/email', "AdminController@testEmail")->middleware('su');
 
     Route::post('/user/{user_id}/updatePriv', [

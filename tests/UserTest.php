@@ -234,13 +234,13 @@ class UserTest extends BrowserKitTestCase
             ->dontSee('testnotice');
         
         //test new cat_name
-        $this->visit('admin')
+        $this->visit('admin/classify')
             ->type('testcat', 'cat_name')
             ->press('提交')
             ->see('testcat')
             ->visit('/')
             ->see('testcat')
-            ->visit('admin')
+            ->visit('admin/classify')
             ->press('删除')
             ->dontSee('testcat');
         
@@ -257,18 +257,18 @@ class UserTest extends BrowserKitTestCase
             ->type('admin@example.com', 'username')
             ->type('admin@example.com', 'password')
             ->press('登录')
-            ->visit('admin')
+            ->visit('admin/report')
             ->see('He is selling a gay!')
             ->press('领取')
             ->seePageIs('/message')
-            ->visit('admin')
+            ->visit('admin/report')
             ->see('批准显示')
             ->see('驳回此条')
             ->press('批准显示')
             ->see('已批准');
         
         //test list all users
-        $this->visit('admin')
+        $this->visit('admin/userlist')
             ->see('test@example.com')
             ->see('admin@example.com');
 

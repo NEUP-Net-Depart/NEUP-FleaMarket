@@ -39,8 +39,8 @@
       <ul class="navbar-nav ml-auto">
         @if(Session::has('user_id'))
           <li class="nav-item dropdown">
-            <a class="nav-link navbar-avatar dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar"/> <span class="caret"></span>
+            <a class="nav-link navbar-avatar nav-btn" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <label class="dropdown-header"><center>{{ Session::get('nickname') }}</center></label>
@@ -55,17 +55,17 @@
               <a href="/logout" class="dropdown-item">登出</a>
             </div>
           </li>
-          <li class="nav-item"><a href="/message" class="nav-link">消息 <span style="display: none" class="badge badge-warning message-num-tip">0</span></a></li>
-          <li class="nav-item"><a href="/good/add" class="nav-link">出售</a></li>
+          <li class="nav-item"><a href="/message" class="nav-link nav-btn">消息 <span style="display: none" class="badge badge-warning message-num-tip">0</span></a></li>
+          <li class="nav-item"><a href="/good/add" class="nav-link nav-btn">出售</a></li>
         @else
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle navbar-li" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">登录 <span class="caret"></span></a>
+            <a class="nav-link nav-btn" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">登录</a>
             <div class="dropdown-menu dropdown-menu-right">
               <a href="/login" class="dropdown-item">普通登录</a>
               <a href="/sso" class="dropdown-item">校卡平台快捷登录</a>
             </div>
           </li>
-          <li class="nav-item"><a href="/register" class="nav-link">注册</a></li>
+          <li class="nav-item"><a href="/register" class="nav-link nav-btn">注册</a></li>
         @endif
       </ul>
   </div>

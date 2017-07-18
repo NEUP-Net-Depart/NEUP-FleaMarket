@@ -34,7 +34,7 @@
         <div class="mx-auto row-second">
             <div class="hidden-md-down my-auto" style="width:380px;margin-right:20px:height:100%">
                 <h2 style="text-align:center"><b>旧很靠谱</b></h2>
-                <br/><br/><br/>
+                <p></p>
                 <h4 style="text-align:center">自主研发 | 校卡绑定 | 安全便捷</h4>
             </div>
             <div class="card login-card">
@@ -49,7 +49,7 @@
                     <form action="/login" method="POST">
                         <div class="form-group">
                             <label for="username">用户名/邮箱</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="你也可以使用校卡平台登录" tabindex="1">
+                            <input type="text" name="username" id="username" class="form-control" placeholder="可以使用校卡平台登录" tabindex="1">
                         </div>
                         <div class="form-group">
                             <label for="password">密码（<a href="/iforgotit">忘记密码？</a>）</label>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/cropper.min.css">
     <link rel="stylesheet" href="/css/froala_editor.min.css">
     <link rel="stylesheet" href="/css/froala_editor.pkgd.min.css">
-    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
     <script src="/js/tether.min.js"></script>
     <script src="/js/cropper.min.js"></script>
     <script src="/js/jquery.slides.min.js"></script>

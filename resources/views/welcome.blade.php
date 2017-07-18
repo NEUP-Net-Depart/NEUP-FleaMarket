@@ -24,8 +24,6 @@
     <div class="col-12 col-md-7">
         @if(count($newgoods)>0)
             <h3 style="display : inline">新品</h3>
-            <span style="font-size: 13px;margin-left:3px" class="text-warning hidden-md-up">点击分类查看更多商品哦↑</span>
-            <span style="font-size: 13px;margin-left:3px" class="text-warning hidden-sm-down">点击分类查看更多商品哦</span>
                 <div class="row">
                 @foreach($newgoods as $good)
                     @include('good.goodInfoOnWelcome')

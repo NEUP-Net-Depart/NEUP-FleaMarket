@@ -25,6 +25,10 @@ a:hover, a:focus {
     box-sizing: content-box;
 }
 
+.navbar {
+    padding: 0;
+}
+
 .navbar-back {
     position: absolute;
     top: 0;
@@ -59,8 +63,25 @@ a:hover, a:focus {
     box-sizing: content-box;
 }
 
+.nav-btn {
+    color: rgba(255,255,255,.75)!important;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+}
+
 .navbar-avatar {
-    padding: 0 !important;
+    padding-top: 8px!important;
+    padding-bottom: 8px!important;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.nav-btn:active {
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .avatar {
@@ -112,4 +133,8 @@ a:hover, a:focus {
 
 img {
     max-width: 100%;
+}
+
+.dropdown-menu {
+    margin: 0;
 }

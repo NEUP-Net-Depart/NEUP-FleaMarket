@@ -23,7 +23,7 @@ class AdminController extends Controller
      * @return View
      * @description The Index of administrator.
      */
-    public function adminIndex(Request $request)
+    public function adminIndex(Request $request, $tab = 'notice')
     {
         $data = [];
         $data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
@@ -33,7 +33,7 @@ class AdminController extends Controller
 		$data['reports'] = Ticket::where('type', '2')->orderby('id', 'dsc')->paginate(40);
 		$data['users'] = User::orderby('id', 'asc')->paginate(40);
 		$data['trans'] = Transaction::orderby('id', 'asc')->paginate(40);
-        return View::make('admin.index')->with($data);
+        return View::make('admin.'.$tab)->with($data);
     }
 
     /**
@@ -92,7 +92,7 @@ class AdminController extends Controller
         $cat = new GoodCat;
         $cat->cat_name = $input['cat_name'];
         $cat->save();
-        return Redirect::to('/admin');
+        return Redirect::to('/admin/classify');
     }
 
     /**
@@ -105,7 +105,7 @@ class AdminController extends Controller
     {
         $cat = GoodCat::find($cat_id);
         $cat->delete();
-        return Redirect::to('/admin');
+        return Redirect::to('/admin/classify');
     }
 
     /**
@@ -120,7 +120,7 @@ class AdminController extends Controller
         $cat = GoodCat::find($cat_id);
         $cat->cat_name = $input['cat_name'];
         $cat->update();
-        return Redirect::to('/admin');
+        return Redirect::to('/admin/classify');
     }
 
     /**
@@ -171,7 +171,7 @@ class AdminController extends Controller
             $repo->state = $input['setstate'];
             $repo->update();
         }
-		return Redirect::to('/admin');
+		return Redirect::to('/admin/report');
 	}
 
 	// This part gonna work with https://github.com/NEUP-Net-Depart/email-daemon/
