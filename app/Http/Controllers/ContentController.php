@@ -35,4 +35,19 @@ class ContentController extends Controller
         $data['announcement'] = Announcement::find($notice_id);
         return View::make('layout.announcement')->with($data);
     }
+
+    public function tos()
+    {
+        return view('common.tos');
+    }
+
+    public function faq()
+    {
+        return view('common.faq');
+    }
+
+    public function pp()
+    {
+        return view('common.pp');
+    }
 }
