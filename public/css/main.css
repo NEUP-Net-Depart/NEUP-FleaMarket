@@ -84,6 +84,16 @@ a:hover, a:focus {
     background: rgba(255, 255, 255, 0.5);
 }
 
+.navbar-brand {
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+
+.navbar-toggler {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
 .avatar {
     border: 0;
     border-radius: 50%;

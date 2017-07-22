@@ -2,11 +2,11 @@
 	<div class="hidden-md-down">
 	<ul class="float-left">
 		<li>© {{date("Y")}} 东北大学先锋网</li>
-		<li><a href="/">隐私政策</a></li>
-		<li><a href="/">服务条款</a></li>
+		<li><a href="/pp">隐私政策</a></li>
+		<li><a href="/tos">服务条款</a></li>
 	</ul>
 	<ul class="float-right">
-		<li><a href="/">帮助文档</a></li>
+		<li><a href="/faq">帮助文档</a></li>
 		<li><a href="/">申诉通道</a></li>
 		<li><a href="/">意见反馈</a></li>
 		<li><a href="/">关于我们</a></li>

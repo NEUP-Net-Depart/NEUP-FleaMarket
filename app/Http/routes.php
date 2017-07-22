@@ -154,4 +154,8 @@ Route::group(['middleware' => ['web']],function () {
         "middleware" => "admin"
     ]);
 
+    Route::get('/tos', "ContentController@tos");
+    Route::get('/pp', "ContentController@pp");
+    Route::get('/faq', "ContentController@faq");
+
 });
