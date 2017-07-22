@@ -15,8 +15,27 @@
             <div class="input-group">
             <div class="alert alert-danger" role="alert">
                 <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                你{{--既没有绑定邮箱也没有绑定微信--}}没有绑定邮箱，这可能导致你无法及时收到消息！
+                你{{--既没有绑定邮箱也没有绑定微信--}}没有绑定邮箱，这将导致你无法及时收到消息！
             </div>
+            </div>
+        </div>
+    @elseif($user->wechat_open_id=='' || true)
+        <div class="password-form">
+            <div class="input-group">
+                <div class="alert alert-warning" role="alert">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    {{--你没有绑定微信，这可能导致你无法及时收到消息！--}}
+                    目前短信和微信通知接口尚未开发完成，可能导致你无法及时收到消息，请谅解！
+                </div>
+            </div>
+        </div>
+    @elseif($user->email=='')
+        <div class="password-form">
+            <div class="input-group">
+                <div class="alert alert-info" role="alert">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    通过绑定邮箱，你可以通过邮箱登录和接收相关通知消息！
+                </div>
             </div>
         </div>
     @endif
@@ -42,11 +61,13 @@
     </p>
     <p>
         @if($user->wechat_open_id=='')
-            {{--<div class="password-form">
+            <div class="password-form">
                 <div class="input-group">
-                    <label>微信：请在东大小秘书中点击“闲置市场”链接来关联微信。</label>
+                    <label>微信：扫描二维码或在东大小秘书中点击“闲置市场”链接来关联微信。
+                        </label>
+                    <img src="/img/wxqr.png" height="72px" width="72px">
                 </div>
-            </div>--}}
+            </div>
         @else
             <div class="password-form">
                 <div class="input-group">
