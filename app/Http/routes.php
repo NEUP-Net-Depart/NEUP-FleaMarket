@@ -58,8 +58,8 @@ Route::group(['middleware' => ['web']],function () {
 
         Route::get('/register/2', "UserController@showCompleteUser");
         Route::post('/register/2', "UserController@completeUser");
-        Route::get('/register/3', "UserController@regUserInfo");
-        Route::get('/register/4', "UserController@completeAccount");
+        Route::get('/register/4', "UserController@regUserInfo");
+        Route::get('/register/3', "UserController@completeAccount");
 
         Route::get('/user/userinfo', "UserController@userInfo");
         Route::get('/user/userinfo/create', "UserController@createUserInfo");
@@ -104,7 +104,7 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/good', "GoodController@getList");
 
     Route::get('/good/add', "GoodController@showAddGood")->middleware('regc');
-    Route::post('/good/add', "GoodController@addGood")->middleware('auth');
+    Route::post('/good/add', "GoodController@addGood")->middleware('regc');
 
     Route::get('/good/{good_id}', "GoodController@getInfo");
     Route::get('/good/{good_id}/edit', "GoodController@showEditGood")->middleware('auth');

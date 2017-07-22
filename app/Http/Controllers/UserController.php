@@ -64,7 +64,7 @@ class UserController extends Controller
         $user = User::find($request->session()->get('user_id'));
         if($user->registerCompletion() == 0)
             return Redirect::to('/');
-        return view('auth.register4')->with(['user' => $user]);
+        return view('auth.register3')->with(['user' => $user]);
     }
 
     public function regUserInfo(Request $request)
@@ -73,7 +73,7 @@ class UserController extends Controller
         $data = [];
         $data['user'] = User::where('id', $user_id)->first();
         $data['userinfos'] = UserInfo::where('user_id', $user_id)->get();
-        return View::make('auth.register3')->with($data);
+        return View::make('auth.register4')->with($data);
     }
 
     public function userInfo(Request $request)

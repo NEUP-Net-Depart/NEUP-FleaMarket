@@ -50,11 +50,50 @@
     <div class="mx-auto">
         <div class="card register-card">
             <div class="card-block">
-                <div class="alert alert-warning" role="alert">
-                    如果你希望在先锋市场出售或购买物品，你还需要添加至少一种联系方式。系统会在你的交易开始时交换你与对方的联系方式。
-                </div>
-                <div id="userinfo-container">
-                    @include('user.userInfo')
+                @if(true || $user->email=='' && $user->wechat_open_id=='')
+                    <div class="alert alert-warning" role="alert">
+                        绑定邮箱{{--或微信--}}，系统将会在买家或卖家发来消息时利用它们来通知你！
+                    </div>
+                @endif
+                <div class="col col-xs-12 col-md-6 col-centered">
+                    <p>
+                    @if($user->email=='')
+                        <form action="/user/edit/email" method="POST" class="password-form">
+                            {{ csrf_field() }}
+                            <div class="input-group">
+                                <input type="email" name="email" id="email" class="form-control" value="{{$user->email}}" placeholder="邮箱" required>
+                                <span class="input-group-btn"><input type="submit" class="btn btn-primary" name="email_submit" value="绑定"></span>
+                            </div>
+                        </form>
+                    @else
+                        <form action="/user/edit/email" method="POST" class="password-form">
+                            {{ csrf_field() }}
+                            <div class="input-group">
+                                <input type="email" id="email" class="form-control" value="@if(!$user->havecheckedemail)[未验证]@endif{{$user->email}}" disabled>
+                                <input type="hidden" name="email" id="email" class="form-control" value="{{$user->email}}">
+                                <span class="input-group-btn"><input type="submit" class="btn btn-warning" name="email_submit" value="解绑"></span>
+                            </div>
+                        </form>
+                        @endif
+                        </p>
+                        <p>
+                        @if($user->wechat_open_id=='')
+                            {{--<div class="password-form">
+                                <div class="input-group">
+                                    <label>微信：请在东大小秘书中点击“闲置市场”链接来关联微信。</label>
+                                </div>
+                            </div>--}}
+                        @else
+                            <div class="password-form">
+                                <div class="input-group">
+                                    <label>微信：已关联 <span class="nickname">{{$user->wechat->nick_name}}</span></label>
+                                </div>
+                                <div class="input-group">
+                                    <img class="head-img col-centered" src="{{$user->wechat->head_img_url}}" width="64px" height="64px">
+                                </div>
+                            </div>
+                            @endif
+                            </p>
                 </div>
             </div>
             <div class="card-footer">

@@ -174,8 +174,6 @@ class GoodController extends Controller
         //$data['tags'] = Tag::orderby('id', 'asc')->get();
         if(!$user || $user->baned)
             return view::make('good.goodInfoForm')->with($data)->withErrors('您的账号被封禁，无法出售商品，请联系系统管理员');
-        if(UserInfo::where('user_id', $user_id)->count() == 0 && !$user->wechat_open_id)
-            return view::make('good.goodInfoForm')->with($data)->withErrors('你必须先添加联系方式才能出售');
         return view::make('good.goodInfoForm')->with($data);
     }
 
@@ -185,8 +183,6 @@ class GoodController extends Controller
         $user = User::find($user_id);
         if(!$user || $user->baned)
             return Redirect::back()->withInput()->withErrors('您的账号被封禁，请联系系统管理员');
-        if(UserInfo::where('user_id', $user_id)->count() == 0 && !$user->wechat_open_id)
-            return Redirect::back()->withInput()->withErrors('你必须添加联系方式才能出售');
         $input = $request->all();
         $good = new GoodInfo;
         $good->good_name = $input['good_name'];
