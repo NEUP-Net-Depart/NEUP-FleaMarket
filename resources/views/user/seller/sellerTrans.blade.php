@@ -29,9 +29,13 @@
                         @foreach($trans as $tran)
                             <tr id="tran{{ $tran->id }}">
                                 <td nowrap="nowrap">{{ $tran->id }}</td>
-                                <td nowrap="nowrap"><a href="/good/{{$tran->good_id}}"
+								@if($tran->good->deleted_at == NULL)
+								<td nowrap="nowrap"><a href="/good/{{$tran->good_id}}"
                                        onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
-                                       onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
+									   onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
+								@elseif($tran->good->deleted_at != NULL)
+								<td nowrap="nowrap">{{ $tran->good->good_name }} (已删除)</td>
+								@endif
                                 <td nowrap="nowrap"><a href="/user/{{ $tran->buyer_id }}">{{ $tran->buyer->nickname ? $tran->buyer->nickname : "无昵称用户" }}@if($tran->buyer->baned)【已封禁】@endif</a></td>
                                 <td nowrap="nowrap">{{ $tran->number }}</td>
                                 @if($tran->status == 0)

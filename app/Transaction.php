@@ -8,9 +8,14 @@ class Transaction extends Model
 {
     protected $table='transactions';
 
+	public function getTransIdAttribute()
+	{
+		return $this->belongsTo('App\Transaction', 'id');
+	}
+
     public function good()
     {
-        return $this->belongsTo('App\GoodInfo');
+        return $this->belongsTo('App\GoodInfo')->withTrashed();
     }
 
     public function buyer()

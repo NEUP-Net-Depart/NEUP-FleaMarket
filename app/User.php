@@ -29,10 +29,11 @@ class User extends Model
             return 0;
     }
 
-    public function trans()
+/*    public function trans()
     {
         return $this->hasManyThrough('App\Transaction', 'App\GoodInfo', 'user_id', 'good_id', 'id');
     }
+ */
 
     public function getNotNullNicknameAttribute()
     {
