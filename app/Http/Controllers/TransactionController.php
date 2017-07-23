@@ -82,8 +82,12 @@ class TransactionController extends Controller
     {
         $user_id = $request->session()->get('user_id');
         $trans = Transaction::find($trans_id);
+        $good = $trans->good;
+        $count=$request->number-$trans->number;
+        $good->count = $good->count - $count;
+        $good->save();
         $result = $this->update($trans, $user_id, $request->number, $request->ip());
-        $result = json_decode($result);
+        $result = json_decode($result,true);
         if($result['result']) {
             return Redirect::to('/user/sell/trans');
         }

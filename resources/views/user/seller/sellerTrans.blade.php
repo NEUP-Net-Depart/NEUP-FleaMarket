@@ -6,6 +6,50 @@
     <li class="nav-item"><a href="/user/sell/tickets" class="nav-link">历史评价</a></li>
 @endsection
 
+@section('asset')
+    <script>
+        function change(me,id){
+            if($(me).hasClass("fa-pencil")){
+                $(me).siblings("span").css("display","none");
+                $(me).siblings("input").css("display","inline");
+                $(me).removeClass("fa-pencil");
+                $(me).addClass("fa-check");
+            }
+            else{
+                if($(me).siblings("span").text()!=$(me).siblings("input[name='number']").val()){
+                    var str_data = $(me).parent().serialize();
+                    str_data+="&_method=PUT";
+                    $.ajax({
+                        type: "POST",
+                        url: "/trans/"+id+"/edit",
+                        data: str_data,
+                        success: function (msg) {
+                            alert("修改成功");
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert(XMLHttpRequest.readyState);
+                            alert(textStatus);
+                        }
+                    });
+                }
+                    $(me).siblings("span").text($(me).siblings("input[name='number']").val());
+                    $(me).siblings("span").css("display","inline");
+                    $(me).siblings("input").css("display","none");
+                    $(me).removeClass("fa-check");
+                    $(me).addClass("fa-pencil");
+            }
+        }
+        $(document).ready(function() {
+            $(".finish").hover(function(){
+                    $(this).find(".aban").css("visibility","visible");
+                },
+                function(){
+                    $(this).find(".aban").css("visibility","hidden");
+                })
+
+        });
+    </script>
+@endsection
 @section('tab-content')
         <div role="tabpanel" class="tab-pane" id="goods">
         </div>
@@ -30,10 +74,19 @@
                             <tr id="tran{{ $tran->id }}">
                                 <td nowrap="nowrap">{{ $tran->id }}</td>
                                 <td nowrap="nowrap"><a href="/good/{{$tran->good_id}}"
-                                       onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
+                                       onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic/>')"
                                        onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
                                 <td nowrap="nowrap"><a href="/user/{{ $tran->buyer_id }}">{{ $tran->buyer->nickname ? $tran->buyer->nickname : "无昵称用户" }}@if($tran->buyer->baned)【已封禁】@endif</a></td>
-                                <td nowrap="nowrap">{{ $tran->number }}</td>
+                                <td nowrap="nowrap" style="min-width:73px">
+                                    <form class="fuck">
+                                        {!! csrf_field() !!}
+                                    <span>{{ $tran->number }}</span>
+                                    @if($tran->status == 2)
+                                        <input type="input" name="number" value="{{ $tran->number }}" style="display: none;width:30px"/>
+                                        <span class="fa fa-pencil" onclick="change(this,'{{ $tran->id }}')"></span>
+                                        @endif
+                                    </form>
+                                </td>
                                 @if($tran->status == 0)
                                     <td nowrap="nowrap">
                                         已取消
@@ -61,18 +114,21 @@
                                         交易已成立
                                     </td>
                                     <td nowrap="nowrap">
-                                        <a href="/trans/{{ $tran->id }}">查看交易</a>
+                                        <a href="/trans/{{ $tran->id }}" class="btn btn-primary">查看交易</a>
                                     </td>
-                                    {{--<td>
-                                        <form action="#">
-                                            <input type="submit" class="button" value="修改订单" style="margin: 0;">
-                                        </form>
-                                    </td>--}}
-                                    <td>
-                                        <form method="POST" action="/trans/{{ $tran->id }}/confirm">
+
+                                    <td nowrap="nowrap" class="finish">
+                                        <form method="POST" action="/trans/{{ $tran->id }}/confirm" style="float: right">
                                             {!! csrf_field() !!}
                                             <input type="hidden" name="result" value="1">
-                                            <input type="submit" class="btn btn-primary" value="完成交易" style="margin: 0;">
+                                            <input type="submit" class="btn btn-success" value="完成交易" style="margin: 0;">
+                                        </form>
+                                    </td>
+                                    <td nowrap="nowrap" class="abantd">
+                                        <form method="POST" action="/trans/{{ $tran->id }}/confirm" style="float: right">
+                                            {!! csrf_field() !!}
+                                            <input type="hidden" name="result" value="0">
+                                            <input type="submit" class="btn btn-warning aban" value="交易失败" style="margin: 0;">
                                         </form>
                                     </td>
                                 @elseif($tran->status == 3)
