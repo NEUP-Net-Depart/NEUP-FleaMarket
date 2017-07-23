@@ -135,7 +135,8 @@ class GoodController extends Controller
     public function getInfo(Request $request, $good_id)
     {
         $data = [];
-        $data['good'] = GoodInfo::where('id', $good_id)->first();
+        $data['good'] = GoodInfo::with('tags')->where('id', $good_id)->first();
+        return json_encode($data['good']);
 		if($data['good']==NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
 		if(($data['good']->baned) && ($data['good']->user_id != $request->session()->get('user_id') && !$request->session()->get('is_admin')))
 			return View::make('common.errorPage')->withErrors('商品ID错误！');
@@ -151,7 +152,6 @@ class GoodController extends Controller
 		    $data['is_admin'] = $request->session()->get('is_admin');
 		else
 		    $data['is_admin'] = NULL;
-        $good = GoodInfo::where('id', $good_id)->first();
         return view::make('good.goodInfo')->with($data);
     }
 
@@ -193,24 +193,15 @@ class GoodController extends Controller
         $good->baned = '0';
         $good->save();
 
-        /*$good_tags = $input['good_tag'];
-        foreach($good_tags as $tag_id)
+        $tag_names = $input['tag_names'];
+        foreach($tag_names as $tag_name)
         {
-            $tag = new GoodTag;
-            if(!$tag_id)
-            {
-                $otherTag = new Tag;
-                $otherTag->tag_name = $input['other_tag'];
-                $otherTag->save();
-                $tag->tag_id = $otherTag->id;
-            }
-            else if($tag_id)
-            {
-                $tag->tag_id = $tag_id;
-            }
-            $tag->good_id = $good->id;
-            $tag->save();
-        }*/
+            $good_tag = new GoodTag;
+            $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $good->cat_id]);
+            $good_tag->tag_id = $tag->id;
+            $good_tag->good_id = $good->id;
+            $good_tag->save();
+        }
 
         Storage::put(
             'good/titlepic/'.sha1($good->id),
@@ -255,26 +246,20 @@ class GoodController extends Controller
         $good->count=$input['count'];
         $good->update();
 
-        /*
-        $deleteoldtags = GoodTag::where('good_id', $good_id)->delete();
-        $good_tags = $input['good_tag'];
-        foreach($good_tags as $tag_id)
+        $new_tag_names = $input['new_tag_names'];
+        $del_tag_names = $input['del_tag_names'];
+        foreach($new_tag_names as $tag_name)
         {
-            $tag = new GoodTag;
-            if(!$tag_id)
-            {
-                $otherTag = new Tag;
-                $otherTag->tag_name = $input['other_tag'];
-                $otherTag->save();
-                $tag->tag_id = $otherTag->id;
-            }
-            else if($tag_id)
-            {
-                $tag->tag_id = $tag_id;
-            }
-            $tag->good_id = $good->id;
-            $tag->save();
-        }*/
+            $good_tag = new GoodTag;
+            $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $good->cat_id]);
+            $good_tag->tag_id = $tag->id;
+            $good_tag->good_id = $good->id;
+            $good_tag->save();
+        }
+        foreach($del_tag_names as $tag_name)
+            GoodTag::where('good_id', $good_id)->where('tag_name', $tag_name)->delete();
+
+
         if($request->hasFile('goodTitlePic'))
             Storage::put(
                 'good/titlepic/'.sha1($good->id),
@@ -296,8 +281,8 @@ class GoodController extends Controller
             return Redirect::to('/good/'.$good_id);
         Storage::delete('good/titlepic/'.sha1($good->id));
         $good->delete();
-        //$deleteGoodTag = GoodTag::where('good_id', $good_id)->delete();
-        $deleteFavList = Favlist::where('good_id', $good_id)->delete();
+        GoodTag::where('good_id', $good_id)->delete();
+        Favlist::where('good_id', $good_id)->delete();
         $trans = Transaction::where('good_id', $good_id)->where('status', '<' , 3)->get();
         foreach($trans as $tran)
         {
@@ -389,5 +374,13 @@ class GoodController extends Controller
 
 		 return Redirect::to('/good/'.$good_id);
 	}
+
+	public function queryTags(Request $request) {
+	    $tag_name = $request->tag_name;
+	    $tags = Tag::where('tag_name', 'like', $tag_name . "%")
+            ->orderBy('tag_name', 'asc')
+            ->get();
+	    return json_encode($tags);
+    }
 
 }
