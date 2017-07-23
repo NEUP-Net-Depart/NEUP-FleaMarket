@@ -30,6 +30,7 @@ use Image;
 use JsonRpcClient;
 use App\Ticket;
 use App\AdminEvent;
+use DB;
 
 class UserController extends Controller
 {
@@ -263,11 +264,12 @@ class UserController extends Controller
         $data = [];
         $page = isset($request->page) ? $request->page : 1;
         $user_id = $request->session()->get('user_id');
-        $trans = User::with(['trans' => function ($query) use($page) {
-            $query->orderBy('id', 'desc')->offset(($page - 1) * 15)->limit(15);
-        }, 'trans.good', 'trans.buyer'])->find($user_id)->trans;
-
-        $data['trans'] = new Paginator($trans, 15, $page);
+		$data['trans'] = Transaction::with('buyer', 'good')
+			->leftJoin('good_info', 'transactions.good_id', '=', 'good_info.id')
+			->select('good_info.*', 'transactions.*')
+			->where('good_info.user_id', $user_id)
+			->orderBy('transactions.id', 'desc')
+			->paginate(15);
         return view::make('user.seller.sellerTrans')->with($data);
     }
 
