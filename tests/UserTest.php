@@ -242,7 +242,7 @@ class UserTest extends BrowserKitTestCase
             ->see('testcat')
             ->visit('admin/classify')
             ->press('删除')
-            ->dontSee('testcat');
+            ->dontSee('测试');
         
         //test report
         $this->withSession(['user_id' => 1, 'is_admin' => 0])
