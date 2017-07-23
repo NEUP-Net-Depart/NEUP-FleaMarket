@@ -29,7 +29,9 @@
 							<td>{{$tran->id}}</td>
 							<td><a href="/user/{{$tran->seller->id}}">{{$tran->seller->stuid}}</a></td>
 							<td><a href="/user/{{$tran->buyer_id}}">{{$tran->buyer->stuid}}</a></td>
-							<td><a href="/good/{{$tran->good_id}}">{{$tran->good_id}}</a></td>
+							<td><a href="/good/{{$tran->good_id}}"
+										onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic/>')"
+										onMouseOut="toolTip()">{{$tran->good_id}}</a></td>
 							<td>{{$tran->number}}</td>
 							<td>
 								@if($tran->status == 0)
@@ -65,4 +67,6 @@
 			</table>
 			{{ $trans->links() }}
 		</div>
+
+    <script src="/js/good/ToolTip.js"></script>
 @endsection
