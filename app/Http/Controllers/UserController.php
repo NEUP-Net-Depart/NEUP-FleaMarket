@@ -27,6 +27,7 @@ use App\Http\Controllers\Controller;
 use Hash;
 use Mail;
 use Image;
+use JsonRpcClient;
 use App\Ticket;
 use App\AdminEvent;
 
@@ -313,8 +314,30 @@ class UserController extends Controller
 		$ticket->type = 2;
 		$ticket->message = $input['reason'];
 		$ticket->save();
-		return view::make('common.errorPage')->withErrors('举报成功！');
+		return view::make('common.errorPage')->withErrors('举报成功！管理员收到后会通过站内消息和您联系。');
 	}
+	/*type: 3 使用帮助 4 账号申诉 5 bug 反馈*/
+	public function sendHelp(Request $request)
+    {
+        $input = $request->all();
+        $ticket = new Ticket;
+        $ticket->sender_id = $request->session()->get('user_id');
+        $ticket->receiver_id = 0;
+        $ticket->type = $input['type'];
+        $ticket->message = $input['reason'];
+        $ticket->save();
+        if($ticket->type == 5) {
+            $conn = new JsonRpcClient(env('MAIL_RPC_HOST', "127.0.0.1"), env('MAIL_RPC_PORT', 65525));
+            $mailSettings = [];
+            $mailSettings["Body"] = $ticket->message;
+            $mailSettings["To"] = env("SUPPORT_MAIL_ADDRESS", "support@neup.market");
+            $mailSettings["FromName"] = "先锋市场用户";
+            $mailSettings["Subject"] = "【Bug/功能意见反馈】";
+            $mailSettings["SendID"] = "service";
+            $conn->Call("Daemon.SendMail", $mailSettings);
+        }
+        return view::make('common.errorPage')->withErrors('发送成功！管理员收到后会通过站内消息或您留下的联系方式和您联系。');
+    }
 
 	public function banPage(Request $request, $user_id)
 	{

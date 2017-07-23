@@ -26,7 +26,15 @@
 							<tr>
 								<td><a href="#repo{{$repo->id}}" data-toggle="modal">{{ $repo->id }}</a></td>
 								<td><a href="/user/{{ $repo->sender_id }}">{{ $repo->sender_id }}</a></td>
-								<td><a href="/user/{{ $repo->receiver_id }}">{{ $repo->receiver_id }}</a></td>
+								@if($repo->type == 3)
+									<td>使用帮助</td>
+								@elseif($repo->type == 4)
+									<td>账号申诉</td>
+								@elseif($repo->type == 5)
+									<td>Bug/功能问题反馈</td>
+								@else
+									<td><a href="/user/{{ $repo->receiver_id }}">{{ $repo->receiver_id }}</a></td>
+								@endif
 								<td><a class="btn btn-primary" href="#repo{{$repo->id}}" data-toggle="modal">查看</a></td>
 							<div class="modal fade" id="repo{{$repo->id}}" tabindex="-1" role="dialog" aria-labelledby="repo{{$repo->id}}Label">
 								<div class="modal-dialog" role="document">
@@ -41,7 +49,9 @@
 									</div>
 								</div>
 							</div>
-								@if(!$repo->assignee)
+								@if($repo->type == 5)
+
+								@elseif(!$repo->assignee)
 									<td>
 										<form action="/repo/{{ $repo->id }}/assign" method="POST">
 											{!! csrf_field() !!}
@@ -51,7 +61,9 @@
 									<td>未领取</td>
 								@else
                                     <td>{{ $repo->assignee }}</td>
-                                    @if(!$repo->state)
+									@if($repo->type == 3 || $repo->type == 4)
+										<td>已处理</td>
+                                    @elseif(!$repo->state)
                                         @if(session('user_id') == $repo->assignee)
                                             <td>
                                                 <form action="/repo/{{ $repo->id }}/solve" method="POST">

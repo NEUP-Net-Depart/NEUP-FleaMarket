@@ -50,4 +50,10 @@ class ContentController extends Controller
     {
         return view('common.pp');
     }
+
+    public function help()
+    {
+        return view('help');
+    }
+
 }

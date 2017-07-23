@@ -30,7 +30,7 @@ class AdminController extends Controller
         $data['users'] = User::orderby('id', 'asc')->get();
         $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
 		$data['announcements'] = Announcement::orderby('id', 'dsc')->get();
-		$data['reports'] = Ticket::where('type', '2')->orderby('id', 'dsc')->paginate(40);
+		$data['reports'] = Ticket::where('type', '2')->orWhere('type', '3')->orWhere('type', '4')->orWhere('type', '5')->orderby('id', 'dsc')->paginate(40);
 		$data['users'] = User::orderby('id', 'asc')->paginate(40);
 		$data['trans'] = Transaction::orderby('id', 'asc')->paginate(40);
         return View::make('admin.'.$tab)->with($data);
@@ -154,13 +154,16 @@ class AdminController extends Controller
         $repo->assignee = $user_id;
         $repo->state = 0;
         $repo->save();
-
-        $result = MessageController::sendMessageHandle($user_id, $repo->sender_id, "【系统消息】您好！您的举报（编号：" . $repo_id . "）已由管理员（ID: " . $user_id . "）受理。请协助管理员核实举报具体细节。");
-        $result = json_decode($result);
-        if($result->result)
-            return Redirect::to('/message');
-        else
-            return View::make('common.errorPage')->withErrors($result->msg);
+        if($repo->type == 2) {
+            $result = MessageController::sendMessageHandle($user_id, $repo->sender_id, "【系统消息】您好！您的举报（编号：" . $repo_id . "）已由管理员（ID: " . $user_id . "）受理。请协助管理员核实举报具体细节。");
+            $result = json_decode($result);
+            if ($result->result)
+                return Redirect::to('/message');
+            else
+                return View::make('common.errorPage')->withErrors($result->msg);
+        } else {
+            return Redirect::to('/message/startConversation/' . $repo->sender_id);
+        }
     }
 
 	public function solveReport(Request $request, $repo_id)
