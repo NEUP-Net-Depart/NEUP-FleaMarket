@@ -8,7 +8,7 @@
 	<ul class="float-right">
 		<li><a href="/faq">帮助文档</a></li>
 		<li><a href="/help#complain">申诉通道</a></li>
-		<li><a href="/help/#bug">意见反馈</a></li>
+		<li><a href="/help#bug">意见反馈</a></li>
 		<li><a href="/">关于我们</a></li>
 	</ul>
 	</div>

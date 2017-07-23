@@ -42,7 +42,7 @@
                 $("#tips").html("请务必在内容中注明联系方式以便我们联系您。")
             }
         });
-        $(function () {
+        function refresh_hash () {
             if(window.location.hash == "#complain") {
                 $("#type").val(4);
                 $("#tips").html("如果您已经登录，我们的客服/管理员会通过站内消息联系您。如果您没有登录，请务必在内容中注明联系方式以便我们联系您。")
@@ -50,6 +50,10 @@
                 $("#type").val(5);
                 $("#tips").html("请务必在内容中注明联系方式以便我们联系您。")
             }
+        }
+        $(function () {
+            refresh_hash();
+            $(window).bind('hashchange', refresh_hash);
         })
     </script>
 

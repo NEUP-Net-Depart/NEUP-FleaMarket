@@ -321,7 +321,10 @@ class UserController extends Controller
     {
         $input = $request->all();
         $ticket = new Ticket;
-        $ticket->sender_id = $request->session()->get('user_id');
+        if($request->session()->has('user_id'))
+            $ticket->sender_id = $request->session()->get('user_id');
+        else
+            $ticket->sender_id = 0;
         $ticket->receiver_id = 0;
         $ticket->type = $input['type'];
         $ticket->message = $input['reason'];
