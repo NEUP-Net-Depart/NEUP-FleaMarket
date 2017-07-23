@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Validator::extend('non_numeric', function($attribute, $value, $parameters, $validator) {
+            if(is_numeric($value)){
+                return false;
+            }
+            return true;
+        });
     }
 
     /**

@@ -30,6 +30,7 @@ class SetUsernameRequest extends FormRequest
                 'required',
                 'alpha_dash',
                 'between:3,64',
+                'non_numeric',
                 Rule::unique('users')->ignore($this->session()->get('user_id'))
             ]
         ];
@@ -41,6 +42,7 @@ class SetUsernameRequest extends FormRequest
             'username.required' => '用户名不可为空！',
             'username.between' => '用户名长度必须为3-64个字符！',
             'username.alpha_dash' => '用户名只能为字母、数字、减号和下划线！',
+            'non_numeric' => '用户名不可由纯数字组成',
             'username.unique' => '该用户名已被注册！'
         ];
     }
