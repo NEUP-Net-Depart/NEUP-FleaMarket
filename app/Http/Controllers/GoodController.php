@@ -51,7 +51,6 @@ class GoodController extends Controller
         if(isset($input['sort']))
             $sort = $input['sort'];
         if(isset($input['query'])) $query = $input['query'];
-        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['goods'] = GoodInfo::where('good_name', 'like', "%$query%");
         //$data['cat_id'] = 0;
         if(isset($input['cat_id']) && $input['cat_id'] != ""){
@@ -136,7 +135,6 @@ class GoodController extends Controller
     public function getInfo(Request $request, $good_id)
     {
         $data = [];
-        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = GoodInfo::where('id', $good_id)->first();
 		if($data['good']==NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
 		if(($data['good']->baned) && ($data['good']->user_id != $request->session()->get('user_id') && !$request->session()->get('is_admin')))
@@ -168,7 +166,6 @@ class GoodController extends Controller
         $user_id = $request->session()->get('user_id');
         $user = User::find($user_id);
         $data = [];
-        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = new GoodInfo;
         $data['add'] = true;
         //$data['tags'] = Tag::orderby('id', 'asc')->get();
@@ -230,7 +227,6 @@ class GoodController extends Controller
     public function showEditGood(Request $request, $good_id)
     {
         $data = [];
-        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = GoodInfo::find($good_id);
         if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         if($request->session()->get('user_id')!=$data['good']->user_id && $request->session()->get('is_admin')!=2)
@@ -323,7 +319,6 @@ class GoodController extends Controller
 		$data = [];
         $input = $request->all();
 		$query = $input['query'];
-        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
 		$data['goods'] = GoodInfo::where('good_name', 'like', "%$query%")->get();
 		if($request->session()->has('user_id'))
 		    $data['user_id'] = $request->session()->get('user_id');

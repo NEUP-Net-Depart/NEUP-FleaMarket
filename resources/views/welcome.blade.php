@@ -21,7 +21,7 @@
 @section('content')
 <div class="row">
     @include('layout.catlist')
-    <div class="col-12 col-md-7">
+    <div class="col-12 col-md-9">
         @if(count($newgoods)>0)
             <h3 style="display : inline">新品</h3>
                 <div class="row">
