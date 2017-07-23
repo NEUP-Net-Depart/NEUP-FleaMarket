@@ -26,6 +26,7 @@ class AdminController extends Controller
     public function adminIndex(Request $request, $tab = 'notice')
     {
         $data = [];
+        $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
         $data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
         $data['users'] = User::orderby('id', 'asc')->get();
 		$data['announcements'] = Announcement::orderby('id', 'dsc')->get();

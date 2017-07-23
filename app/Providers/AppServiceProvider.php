@@ -6,7 +6,6 @@ use App\GoodCat;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 use Illuminate\Support\Facades\View;
-use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,12 +24,6 @@ class AppServiceProvider extends ServiceProvider
         });
         $cats = GoodCat::orderby('cat_index', 'asc')->get();
         View::share('cats', $cats);
-        Validator::extend('non_numeric', function($attribute, $value, $parameters, $validator) {
-            if(is_numeric($value)){
-                return false;
-            }
-            return true;
-        });
     }
 
     /**

@@ -166,6 +166,7 @@ class GoodController extends Controller
         $user_id = $request->session()->get('user_id');
         $user = User::find($user_id);
         $data = [];
+        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = new GoodInfo;
         $data['add'] = true;
         //$data['tags'] = Tag::orderby('id', 'asc')->get();
@@ -227,6 +228,7 @@ class GoodController extends Controller
     public function showEditGood(Request $request, $good_id)
     {
         $data = [];
+        $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['good'] = GoodInfo::find($good_id);
         if($data['good'] == NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
         if($request->session()->get('user_id')!=$data['good']->user_id && $request->session()->get('is_admin')!=2)
