@@ -108,8 +108,10 @@
   </div>
 </script>
 
-<script src="https://unpkg.com/vue@2.3.4/dist/vue.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{{--<script src="https://unpkg.com/vue@2.3.4/dist/vue.min.js"></script>--}}
+<script src="/js/vue.min.js"></script>
+{{--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>--}}
+<script src="/js/axios.min.js"></script>
 <script src="/js/message-20170724.js"></script>
 <script>
     window.onload = function () {
