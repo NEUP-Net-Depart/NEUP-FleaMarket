@@ -10,7 +10,7 @@ class Transaction extends Model
 
     public function good()
     {
-        return $this->belongsTo('App\GoodInfo');
+        return $this->belongsTo('App\GoodInfo')->withTrashed();
     }
 
     public function buyer()

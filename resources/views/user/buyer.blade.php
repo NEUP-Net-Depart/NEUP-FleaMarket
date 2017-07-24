@@ -23,19 +23,23 @@
         <tr>
             <td nowrap="nowrap">订单编号</td>
             <td nowrap="nowrap">商品名称</td>
+			<td nowrap="nowrap">卖家昵称</td>
             <td nowrap="nowrap">数量</td>
             <td nowrap="nowrap">订单状态</td>
             <td nowrap="nowrap">操作</td>
         </tr>
-        @foreach($trans as $tran)
+		@foreach($trans as $tran)
+			@if(isset($tran->good))
             <tr id="tran{{ $tran->id }}">
-                <td nowrap="nowrap">{{ $tran->id }}</td>
-                <td nowrap="nowrap"><a href="/good/{{$tran->good_id}}"
-                       @if(isset($tran->good))
-                       onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
-                       onMouseOut="toolTip()"
-                            @endif
-                    >{{ isset($tran->good) ? $tran->good->good_name : "此商品已删除" }}</a></td>
+				<td nowrap="nowrap">{{ $tran->id }}</td>
+				@if($tran->good->deleted_at == NULL)
+				<td nowrap="nowrap"><a href="/good/{{$tran->good_id}}"
+					onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
+					onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
+				@elseif($tran->good->deleted_at != NULL)
+				<td nowrap="nowrap">{{ $tran->good->good_name }} (已删除)</td>
+				@endif
+				<td nowrap="nowrap"><a href="/user/{{ $tran->seller->id }}">{{ $tran->seller->nickname ?  $tran->seller->nickname : "无昵称用户" }}@if($tran->seller->baned)【已封禁】@endif</a></td>
                 <td nowrap="nowrap">{{ $tran->number }}</td>
                 @if($tran->status == 0)
                     <td nowrap="nowrap">
@@ -80,9 +84,11 @@
                     </td>
                 @endif
             </tr>
-
+			@endif
         @endforeach
         {{ $trans->links() }}
     </table>
+
+    <script src="/js/good/ToolTip.js"></script>
 
 @endsection
