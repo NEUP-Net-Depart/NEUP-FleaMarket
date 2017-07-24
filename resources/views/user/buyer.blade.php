@@ -89,4 +89,6 @@
         {{ $trans->links() }}
     </table>
 
+    <script src="/js/good/ToolTip.js"></script>
+
 @endsection
