@@ -136,7 +136,7 @@ class GoodController extends Controller
     {
         $data = [];
         $data['good'] = GoodInfo::with('tags')->where('id', $good_id)->first();
-        return json_encode($data['good']);
+        //return json_encode($data['good']);
 		if($data['good']==NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
 		if(($data['good']->baned) && ($data['good']->user_id != $request->session()->get('user_id') && !$request->session()->get('is_admin')))
 			return View::make('common.errorPage')->withErrors('商品ID错误！');
@@ -193,14 +193,15 @@ class GoodController extends Controller
         $good->baned = '0';
         $good->save();
 
-        $tag_names = $input['tag_names'];
-        foreach($tag_names as $tag_name)
-        {
-            $good_tag = new GoodTag;
-            $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $good->cat_id]);
-            $good_tag->tag_id = $tag->id;
-            $good_tag->good_id = $good->id;
-            $good_tag->save();
+        if(isset($input['new_tag_names'])) {
+            $new_tag_names = $input['new_tag_names'];
+            foreach ($new_tag_names as $tag_name) {
+                $good_tag = new GoodTag;
+                $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $good->cat_id]);
+                $good_tag->tag_id = $tag->id;
+                $good_tag->good_id = $good->id;
+                $good_tag->save();
+            }
         }
 
         Storage::put(
@@ -246,18 +247,21 @@ class GoodController extends Controller
         $good->count=$input['count'];
         $good->update();
 
-        $new_tag_names = $input['new_tag_names'];
-        $del_tag_names = $input['del_tag_names'];
-        foreach($new_tag_names as $tag_name)
-        {
-            $good_tag = new GoodTag;
-            $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $good->cat_id]);
-            $good_tag->tag_id = $tag->id;
-            $good_tag->good_id = $good->id;
-            $good_tag->save();
+        if(isset($input['new_tag_names'])) {
+            $new_tag_names = $input['new_tag_names'];
+            foreach ($new_tag_names as $tag_name) {
+                $good_tag = new GoodTag;
+                $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $good->cat_id]);
+                $good_tag->tag_id = $tag->id;
+                $good_tag->good_id = $good->id;
+                $good_tag->save();
+            }
         }
-        foreach($del_tag_names as $tag_name)
-            GoodTag::where('good_id', $good_id)->where('tag_name', $tag_name)->delete();
+        if(isset($input['del_tag_names'])) {
+            $del_tag_names = $input['del_tag_names'];
+            foreach($del_tag_names as $tag_name)
+                GoodTag::where('good_id', $good_id)->where('tag_name', $tag_name)->delete();
+        }
 
 
         if($request->hasFile('goodTitlePic'))
