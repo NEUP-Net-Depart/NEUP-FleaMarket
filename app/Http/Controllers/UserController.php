@@ -264,7 +264,7 @@ class UserController extends Controller
         $data = [];
         $page = isset($request->page) ? $request->page : 1;
         $user_id = $request->session()->get('user_id');
-		$data['trans'] = Transaction::with('buyer', 'good')
+		$data['trans'] = Transaction::with('buyer', 'good', 'seller')
 			->leftJoin('good_info', 'transactions.good_id', '=', 'good_info.id')
 			->select('good_info.*', 'transactions.*')
 			->where('good_info.user_id', $user_id)

@@ -75,8 +75,8 @@
                                 <td nowrap="nowrap">{{ $tran->id }}</td>
 								@if($tran->good->deleted_at == NULL)
 								<td nowrap="nowrap"><a href="/good/{{$tran->good_id}}"
-                                       onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
-									   onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
+									onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic>')"
+									onMouseOut="toolTip()">{{ $tran->good->good_name }}</a></td>
 								@elseif($tran->good->deleted_at != NULL)
 								<td nowrap="nowrap">{{ $tran->good->good_name }} (已删除)</td>
 								@endif
