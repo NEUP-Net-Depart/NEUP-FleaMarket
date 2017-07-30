@@ -22,7 +22,7 @@
                     {!! $errors->first() !!}
                 </div>
             @endif
-            <form action= @if($add)"/good/add"@else"/good/{{$good->id}}/edit"@endif method="POST" enctype="multipart/form-data">
+            <form action= @if($add)"/good/add"@else"/good/{{$good->id}}/edit"@endif method="POST" enctype="multipart/form-data" id="add_form">
                 <div class="form-group">
                     <label for="good_name">商品名称</label>
                     <input type="text" name="good_name" id="good_name" class="form-control" value="{{count($errors) ? old('good_name') : $good->good_name}}" placeholder="商品名称">
@@ -38,7 +38,19 @@
                 </div>
                 <div class="form-group">
                     <label for="description">商品描述</label>
+                    <a style="float:right;font-size:13px;margin:0;" class="hidden-sm-up" href="#" id="trg">more</a>
                     <textarea name="description" id="description" placeholder="商品描述" class="form-control" style="resize:none;" rows="6">{!! count($errors) ? old('description') : $good->description !!}</textarea>
+                    <textarea id="full" placeholder="商品描述" style="resize:none;display:none" rows="6" class="form-control"></textarea>
+                    <div style="display:none" id="ele"></div>
+                    <div class="hidden-sm-up">
+                        <div id="imgdiv"></div>
+                        <div id="mb_div_upload" style="display:none">
+                        <label style="margin-bottom: 0">
+                        <img class="card" src="/img/plus.jpg" id="plus" style="max-width:25%;float:right"/>
+                        <input type="file" id="btn_file" style="display:none"  multiple="multiple">
+                        </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="price">商品价格</label>
@@ -84,14 +96,65 @@
                     <input id="goodTitleUploadCpY" type="hidden" name="crop_y">
                 </div>
                 {!! csrf_field() !!}
-                <input type="submit" class="btn btn-primary" value="@if($add)添加@else更改@endif"/>
+                <input type="button" class="btn btn-primary" value="@if($add)添加@else更改@endif" onclick="mb_upload()" />
                 <input type="button" class="btn btn-success" value="商品列表" onclick="window.location.href=('/good')">
             </form>
             </div>
             </div>
             </div>
         </div>
+        <script type="text/javascript">
+            function $_(id) {
+                return document.getElementById(id);
+            }
+        </script>
     <script type="text/javascript">
+        function together(){
+            var one=$("#description").froalaEditor('html.get');
+            var another=$("#full").val();
+            $("#description").val(another+one);
+            var forma = document.getElementById("add_form");
+            forma.submit();
+        }
+        $("#btn_file").change(function(){
+           mb_preview();
+        });
+        function mb_preview(){
+            var file = $_('btn_file').files[0];
+            r = new FileReader();
+            r.onload = function(evt){
+                var data1=evt.target.result.slice(evt.target.result.indexOf("base64,")+7);
+                $.ajax({
+                    type: "POST",
+                    url: "https://flimg.neupioneer.com/api/1/upload",
+                    async:false,
+                    data:{
+                        "source":data1,
+                        "key":"7e945496f2de8cbc710ecca702062e9b",
+                        "format": "flea-mart"
+                    },
+                    crossDomain:true,
+                    success: function (msg) {
+                        $_('imgdiv').innerHTML += '<img onclick="mb_delete(this)" src="' + msg.link + '" />';
+                    },
+                });
+            }
+            r.readAsDataURL(file);
+        }
+        function mb_upload(){
+            var pics=$("#imgdiv").children();
+            for(var i=0;i<pics.length;i++){
+                var myStr=  pics[i].getAttribute("src");
+                    var before= $("#description").val();
+                    var imgadd = "<img src='"+myStr+"'/>"
+                    $("#description").val(before+imgadd);
+            }
+            together();
+        }
+
+        function mb_delete(me){
+            $(me).remove();
+        }
         function preview(file) {
             var prevDiv = document.getElementById('preview');
             if (file.files && file.files[0]) {
@@ -128,7 +191,17 @@
             }
         }
         // WYSIWYG Editor
-        $("textarea#description").froalaEditor({
+        editor();
+        if($(window).width()<=640)
+        {
+            $("#trg").text('more');
+            $("#full").show();
+            $('.fr-box').hide();
+            $("#mb_div_upload").show();
+        }
+        function editor(){
+            $('#trg').text('less');
+        $("#description").froalaEditor({
             imageUploadParam: 'source',
             imageUploadParams: {
             key: "7e945496f2de8cbc710ecca702062e9b",
@@ -136,7 +209,7 @@
             },
             imageUploadURL: 'https://flimg.neupioneer.com/api/1/upload',
             requestWithCORS: true,
-            pluginsEnabled: ['image','link', 'colors', 'emoticons',
+            pluginsEnabled: ['image','link', 'colors',
                 'fontSize', 'fontFamily', 'fullscreen'],
 			toolbarButtonsMD: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-',
 				'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
@@ -147,7 +220,38 @@
             toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'align', 'quote', '-', 'insertImage', '|', 'emoticons', 'help', 'fullscreen', '|', 'undo', 'redo'],
             height: 150
         });
+        }
         $('a[href="https://www.froala.com/wysiwyg-editor?k=u"]').wrap("<div hidden='hidden'></div>");
+        $(document).ready(function(){
+            $('#trg').click(function(){
+                var one=$('#description').froalaEditor('html.get');
+                $("#ele").html(one);
+                var another=$("#full").val();
+                if( $('#trg').text()=="more"){
+                    var pics=$("#imgdiv").html();
+                    $('#description').froalaEditor('html.set',one+another+pics);
+                    $("#imgdiv").html("");
+                    $("#full").hide();
+                    $("#full").val("");
+                    $('#trg').text('less');
+                    $('.fr-box').show();
+                    $("#mb_div_upload").hide();
+                }
+                else{
+                    var pics=$("#ele").find("img");
+                    for(var i=0;i<pics.length;i++){
+                        $_('imgdiv').innerHTML += '<img onclick=mb_delete(this) src="' + pics[i].getAttribute('src') + '" />';
+                        $(pics[i]).remove();
+                    }
+                    var content=$("#ele").html().slice(3,-5);
+                    $("#full").val(content+another);
+                    $('#description').froalaEditor('html.set',"");
+                    $("#trg").text('more');
+                    $('.fr-box').hide();
+                    $("#full").show();
+                    $("#mb_div_upload").show();
+                }
+            });
+        });
     </script>
-
 @endsection
