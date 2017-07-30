@@ -1,5 +1,6 @@
 /**
  * Created by zhouz on 2017/6/10.
+ * Fixed by NightSiesta on 2017/7/24
  */
 
 // 联系人列表
@@ -7,6 +8,7 @@ Vue.component('contact-list', {
     template: '#contact_list',
     data: function () {
         return {
+            isHidden:true,
             contacts: [],
             errorMessage: '',
             current_page: 0,
@@ -31,7 +33,6 @@ Vue.component('contact-list', {
             });
             this.$on('topContactHandler', function (contact_id) {
                 this.setTop(this.contacts.filter(t => t.contact_id === contact_id));
-
             });
         })
     },
@@ -52,7 +53,8 @@ Vue.component('contact-list', {
                     for (var i in response.data.data)
                         vm.contacts.push(response.data.data[i]);
                     if (initialize && vm.contacts.length > 0)
-                        vm.loadDialog(0);
+                        {vm.loadDialog(0);}
+                        vm.isHidden = false;
                 })
                 .catch(function (error) {
                     vm.errorMessage = "服务器连接失败，请检查网络QAQ";

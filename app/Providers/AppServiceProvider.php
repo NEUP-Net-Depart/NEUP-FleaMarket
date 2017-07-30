@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
         view()->composer('*', function ($view) {
-            $cats = GoodCat::orderby('cat_index', 'asc')->get();
+            $cats = GoodCat::with('tags')->orderby('cat_index', 'asc')->get();
             $view->with('cats', $cats);
         });
     }
