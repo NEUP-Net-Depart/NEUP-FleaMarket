@@ -45,10 +45,12 @@
                     <div class="hidden-sm-up">
                         <div id="imgdiv"></div>
                         <div id="mb_div_upload" style="display:none">
-                        <label style="margin-bottom: 0">
-                        <img class="card" src="/img/plus.jpg" id="plus" style="max-width:25%;float:right"/>
-                        <input type="file" id="btn_file" style="display:none"  multiple="multiple">
-                        </label>
+                            <div style="margin-top: 8px;text-align:right;display:block">
+                                <label style="margin-bottom:0">
+                                    <a class="fa fa-plus-circle" style="font-size:60px;"></a>
+                                    <input type="file" id="btn_file" style="display:none"  multiple="multiple">
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -112,14 +114,22 @@
         function together(){
             var one=$("#description").froalaEditor('html.get');
             var another=$("#full").val();
-            $("#description").val(another+one);
+            var be=$("#description").val();
+            if( $('#trg').text()=="more"){
+                $("#description").val(be+another);
+            }
+            else{
+                $("#description").val(one);
+            }
             var forma = document.getElementById("add_form");
             forma.submit();
         }
         $("#btn_file").change(function(){
            mb_preview();
+            $("#btn_file").val("");
         });
         function mb_preview(){
+            $_('imgdiv').innerHTML+="<p style='text-align:center;margin-top:20px'><a class='fa fa-spinner fa-pulse'></a>上传中</p>"
             var file = $_('btn_file').files[0];
             r = new FileReader();
             r.onload = function(evt){
@@ -135,25 +145,30 @@
                     },
                     crossDomain:true,
                     success: function (msg) {
-                        $_('imgdiv').innerHTML += '<img onclick="mb_delete(this)" src="' + msg.link + '" />';
+                        $("#imgdiv").find('p').remove();
+                        $_('imgdiv').innerHTML += '<div><img style=border-radius:5px;margin-top:8px src="' + msg.link + '"/><a class="fa fa-trash" style="position:absolute;" onclick=mb_delete(this)></a></div>';
                     },
                 });
             }
             r.readAsDataURL(file);
         }
+
         function mb_upload(){
-            var pics=$("#imgdiv").children();
+            var pics=$("#imgdiv").find("img");
             for(var i=0;i<pics.length;i++){
-                var myStr=  pics[i].getAttribute("src");
+                var myStr = pics[i].getAttribute("src");
+                if(myStr!="null"){
                     var before= $("#description").val();
                     var imgadd = "<img src='"+myStr+"'/>"
                     $("#description").val(before+imgadd);
+                }
             }
             together();
         }
 
         function mb_delete(me){
-            $(me).remove();
+            if(confirm("放弃上传这张图片？"))
+           $(me).parent().remove();
         }
         function preview(file) {
             var prevDiv = document.getElementById('preview');
@@ -228,19 +243,25 @@
                 $("#ele").html(one);
                 var another=$("#full").val();
                 if( $('#trg').text()=="more"){
-                    var pics=$("#imgdiv").html();
-                    $('#description').froalaEditor('html.set',one+another+pics);
+                    var pics=$("#imgdiv").find("img");
+                    var imgs="";
+                    for(var i=0;i<pics.length;i++){
+                        imgs+='<img src="' + pics[i].getAttribute('src') + '" />'
+                    }
+                    $('#description').froalaEditor('html.set',one+another+imgs);
                     $("#imgdiv").html("");
+                    $('#description').val("");
                     $("#full").hide();
                     $("#full").val("");
                     $('#trg').text('less');
                     $('.fr-box').show();
                     $("#mb_div_upload").hide();
+                    $("#ele").html("");
                 }
                 else{
                     var pics=$("#ele").find("img");
                     for(var i=0;i<pics.length;i++){
-                        $_('imgdiv').innerHTML += '<img onclick=mb_delete(this) src="' + pics[i].getAttribute('src') + '" />';
+                        $_('imgdiv').innerHTML += '<div><img style=border-radius:5px;margin-top:8px src="' + pics[i].getAttribute('src') + '" /><a class="fa fa-trash" style="position:absolute" onclick=mb_delete(this)></a></div>';
                         $(pics[i]).remove();
                     }
                     var content=$("#ele").html().slice(3,-5);
@@ -250,6 +271,8 @@
                     $('.fr-box').hide();
                     $("#full").show();
                     $("#mb_div_upload").show();
+                    $('#description').val("");
+                    $("#ele").html("");
                 }
             });
         });
