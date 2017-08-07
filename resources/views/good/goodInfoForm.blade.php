@@ -86,7 +86,8 @@
                 <p>
                 <div>
                     <label for="goodTitleUpload" class="btn btn-primary">上传封面</label>
-                    <p><div id="preview"></div></p>
+                    <p><div id="preview">
+                </div></p>
                 </div>
                 </p>
                 <div style="display: none">
@@ -207,13 +208,6 @@
         }
         // WYSIWYG Editor
         editor();
-        if($(window).width()<=640)
-        {
-            $("#trg").text('more');
-            $("#full").show();
-            $('.fr-box').hide();
-            $("#mb_div_upload").show();
-        }
         function editor(){
             $('#trg').text('less');
         $("#description").froalaEditor({
@@ -275,6 +269,15 @@
                     $("#ele").html("");
                 }
             });
+            if($(window).width()<=640)
+            {
+                $("#trg").text('more');
+                $("#full").show();
+                $('.fr-box').hide();
+                $("#mb_div_upload").show();
+                $("#trg").click();
+                $("#trg").click();
+            }
         });
     </script>
 @endsection
