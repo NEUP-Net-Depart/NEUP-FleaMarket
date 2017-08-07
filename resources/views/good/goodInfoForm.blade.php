@@ -258,7 +258,13 @@
                         $_('imgdiv').innerHTML += '<div><img style=border-radius:5px;margin-top:8px src="' + pics[i].getAttribute('src') + '" /><a class="fa fa-trash" style="position:absolute" onclick=mb_delete(this)></a></div>';
                         $(pics[i]).remove();
                     }
-                    var content=$("#ele").html().slice(3,-5);
+                    var paras=$("#ele").find("p");
+                    for(var i=0;i<paras.length;i++){
+                        if(paras[i].innerHTML==""){
+                            $(paras[i]).remove();
+                        }
+                    }
+                    var content=$("#ele").html();
                     $("#full").val(content+another);
                     $('#description').froalaEditor('html.set',"");
                     $("#trg").text('more');
