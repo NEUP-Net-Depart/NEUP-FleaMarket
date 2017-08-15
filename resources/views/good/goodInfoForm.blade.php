@@ -117,7 +117,7 @@
             var another=$("#full").val();
             var be=$("#description").val();
             if( $('#trg').text()=="more"){
-                $("#description").val(be+another);
+                $("#description").val((be+another).replace(/\n|\r\n/g,'<br>'));
             }
             else{
                 $("#description").val(one);
@@ -242,6 +242,7 @@
                     for(var i=0;i<pics.length;i++){
                         imgs+='<img src="' + pics[i].getAttribute('src') + '" />'
                     }
+                    another=another.replace(/\n|\r\n/g,'<br/>');
                     $('#description').froalaEditor('html.set',one+another+imgs);
                     $("#imgdiv").html("");
                     $('#description').val("");
@@ -258,8 +259,19 @@
                         $_('imgdiv').innerHTML += '<div><img style=border-radius:5px;margin-top:8px src="' + pics[i].getAttribute('src') + '" /><a class="fa fa-trash" style="position:absolute" onclick=mb_delete(this)></a></div>';
                         $(pics[i]).remove();
                     }
-                    var content=$("#ele").html().slice(3,-5);
-                    $("#full").val(content+another);
+                    var paras=$("#ele").find("p");
+                    var content="";
+                    for(var i=0;i<paras.length;i++){
+                        if(paras[i].innerHTML==""){
+                            $(paras[i]).remove();
+                        }
+                        else{
+                            if(i!=0)
+                                content+='\r\n';
+                            content+=$(paras[i]).html();
+                        }
+                    }
+                    $("#full").val((content+another).replace("&nbsp;"," "));
                     $('#description').froalaEditor('html.set',"");
                     $("#trg").text('more');
                     $('.fr-box').hide();
