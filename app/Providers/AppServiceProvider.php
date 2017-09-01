@@ -6,6 +6,7 @@ use App\GoodCat;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
         Validator::extend('non_numeric', function($attribute, $value, $parameters, $validator) {
             if(is_numeric($value)){
                 return false;
