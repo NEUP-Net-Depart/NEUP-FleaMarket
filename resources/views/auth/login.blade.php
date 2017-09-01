@@ -9,7 +9,6 @@
                 width:400px;
             }
             .row-first {
-                margin-top:130px;
                 margin-bottom:50px;
             }
         }
