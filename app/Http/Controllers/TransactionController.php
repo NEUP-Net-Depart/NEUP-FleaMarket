@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Ticket;
 use App\UserInfo;
 use Illuminate\Support\Facades\View;
+use App\Http\Controllers\XMSHelper;
 
 class TransactionController extends Controller
 {
@@ -124,6 +125,9 @@ class TransactionController extends Controller
         $message->content = '您好！<a href="/user/' . $buyer_id . '">' . $buyer->not_null_nickname . '</a>购买了你的<a href="/good/' . $good_id . '">' . $good->good_name . '</a>，请及时前往<a href="/user/sell/trans">交易订单页</a>确认。';
         $message->save();
 
+        if($trans->seller->wechat_open_id)
+            XMSHelper::sendBuyerBoughtMessage($trans->seller->wechat_open_id, $trans);
+
         //Create or Update MessageContact
         $contact = MessageContact::firstOrNew([
             'user_id' => $message->receiver_id,
@@ -164,6 +168,10 @@ class TransactionController extends Controller
                 $contact->unread_count += 1;
                 $contact->last_contact_time = time();
                 $contact->save();
+
+                if($trans->seller->wechat_open_id)
+                    XMSHelper::sendBuyerCancelMessage($trans->seller->wechat_open_id, $trans);
+
                 return json_encode(['result' => true, 'character' => 'buyer', 'msg' => 'success']);
                 break;
             case $trans->seller_id:
@@ -192,6 +200,10 @@ class TransactionController extends Controller
                 $contact->unread_count += 1;
                 $contact->last_contact_time = time();
                 $contact->save();
+
+                if($trans->buyer->wechat_open_id)
+                    XMSHelper::sendSellerRejectMessage($trans->buyer->wechat_open_id, $trans);
+
                 return json_encode(['result' => true, 'character' => 'seller', 'msg' => 'success']);
                 break;
             default:
@@ -233,6 +245,10 @@ class TransactionController extends Controller
         $contact->unread_count += 1;
         $contact->last_contact_time = time();
         $contact->save();
+
+        if($trans->buyer->wechat_open_id)
+            XMSHelper::sendSellerConfirmMessage($trans->buyer->wechat_open_id, $trans);
+
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 
@@ -298,6 +314,10 @@ class TransactionController extends Controller
         $contact->unread_count += 1;
         $contact->last_contact_time = time();
         $contact->save();
+
+        if($trans->buyer->wechat_open_id)
+            XMSHelper::sendTransCompleteMessage($trans->buyer->wechat_open_id, $trans);
+
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 

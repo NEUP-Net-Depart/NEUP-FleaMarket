@@ -19,6 +19,7 @@ use App\User;
 use App\MessageContact;
 use App\Http\Controllers\Controller;
 use Mews\Purifier\PurifierServiceProvider;
+use App\Http\Controllers\XMSHelper;
 
 class MessageController extends Controller
 {
@@ -77,7 +78,7 @@ class MessageController extends Controller
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 
-    static public function sendMessageHandle($sender, $receiver, $content)
+    static public function sendMessageHandle($sender, $receiver, $content, $sys = false)
     {
         if (!User::where('id', $receiver)->count())
             return json_encode(['result' => false, 'msg' => 'no such receiver']);
@@ -104,6 +105,12 @@ class MessageController extends Controller
         $contact->last_contact_time = time();
         $contact->unread_count += 1;
         $contact->save();
+
+        $receive_user = User::find($receiver);
+
+        if(!$sys && $receive_user->wechat_open_id && time() - $receive_user->last_get_new_message_time > 90)
+            XMSHelper::sendReplyMessage($receive_user->wechat_open_id, $message);
+
         return json_encode(['result' => true, 'msg' => $message]);
     }
 
