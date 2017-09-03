@@ -206,10 +206,18 @@ class AdminController extends Controller
         $repo->state = 0;
         $repo->save();
         if($repo->type == 2) {
-            $result = MessageController::sendMessageHandle($user_id, $repo->sender_id, "【系统消息】您好！您的举报（编号：" . $repo_id . "）已由管理员（ID: " . $user_id . "）受理。请协助管理员核实举报具体细节。");
-            $result = json_decode($result);
-            if ($result->result)
+            $sender = User::find($repo->sender_id);
+            $msg = "【系统消息】您好！您的举报（编号：" . $repo_id . "）已由管理员（ID: " . $user_id . "）受理。请协助管理员核实举报具体细节。";
+            $result = MessageController::sendMessageHandle($user_id, $repo->sender_id, $msg);
+
+            if ($result['result']) {
+                if($sender->wechat_open_id) {
+                    XMSHelper::sendSysMessage($sender->wechat_open_id, $result['msg']);
+                    $result['msg']->wx_sent = true;
+                    $result['msg']->save();
+                }
                 return Redirect::to('/message');
+            }
             else
                 return View::make('common.errorPage')->withErrors($result->msg);
         } else {

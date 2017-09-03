@@ -106,7 +106,7 @@ class AuthController extends Controller
     {
         if(isset($request->data) && $request->sign == substr(md5($request->data . env('WECHAT_KEY')), 8, 16))
         {
-            $data['wechat'] = json_decode(base64_decode($request->data));
+            $data['wechat'] = json_decode(($request->data));
             $user = User::where('wechat_open_id', $data['wechat']->openId)->first();
             $request->session()->put('wechat_open_id', $data['wechat']->openId);
             if(!$user) {
@@ -123,7 +123,7 @@ class AuthController extends Controller
                 return $this->afterLogin($user, $request);
             }
         }
-        return Redirect::to("http://api.xms.rmbz.net/open/oauth?path=" . env("APP_URL") . "/wx");
+        return Redirect::to("https://api.xms.rmbz.net/open/auth/oauth?path=" . env("APP_URL") . "/wx&bizCode=market.neupioneer");
     }
 
     public function cas(Request $request)
