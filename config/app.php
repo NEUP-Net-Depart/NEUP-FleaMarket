@@ -160,6 +160,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Germey\Geetest\GeetestServiceProvider::class,
     ],
 
     /*
@@ -208,6 +209,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'Geetest' => Germey\Geetest\Geetest::class,
 
     ],
 

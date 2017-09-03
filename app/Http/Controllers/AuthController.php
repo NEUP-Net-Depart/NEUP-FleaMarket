@@ -72,6 +72,7 @@ class AuthController extends Controller
             $date = $nowdate - $banedstart;
             if ($date > ($user->banedtime) * 86400 && $user->banedtime != -1) {
                 $user->baned = 0;
+                $user->save();
                 return Redirect::to('/');
             }
 
