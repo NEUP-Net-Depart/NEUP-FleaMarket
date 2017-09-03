@@ -78,7 +78,7 @@ class MessageController extends Controller
         return json_encode(['result' => true, 'msg' => 'success']);
     }
 
-    static public function sendMessageHandle($sender, $receiver, $content, $sys = false)
+    static public function sendMessageHandle($sender, $receiver, $content)
     {
         if (!User::where('id', $receiver)->count())
             return json_encode(['result' => false, 'msg' => 'no such receiver']);
@@ -91,27 +91,26 @@ class MessageController extends Controller
         $message->save();
         //Create or Update MessageContact
         //A->B
-        $contact = MessageContact::firstOrNew([
-            'user_id' => $user_id,
-            'contact_id' => $receiver
-        ]);
-        $contact->last_contact_time = time();
-        $contact->save();
+        if($user_id != 0) {
+            $contact = MessageContact::firstOrNew([
+                'user_id' => $user_id,
+                'contact_id' => $receiver
+            ]);
+            $contact->last_contact_time = time();
+            $contact->save();
+        }
         //B->A
-        $contact = MessageContact::firstOrNew([
-            'user_id' => $receiver,
-            'contact_id' => $user_id
-        ]);
-        $contact->last_contact_time = time();
-        $contact->unread_count += 1;
-        $contact->save();
+        if($receiver != 0) {
+            $contact = MessageContact::firstOrNew([
+                'user_id' => $receiver,
+                'contact_id' => $user_id
+            ]);
+            $contact->last_contact_time = time();
+            $contact->unread_count += 1;
+            $contact->save();
+        }
 
-        $receive_user = User::find($receiver);
-
-        if(!$sys && $receive_user->wechat_open_id && time() - $receive_user->last_get_new_message_time > 90)
-            XMSHelper::sendReplyMessage($receive_user->wechat_open_id, $message);
-
-        return json_encode(['result' => true, 'msg' => $message]);
+        return ['result' => true, 'msg' => $message];
     }
 
     public function sendMessage(SendMessageRequest $request)
@@ -119,7 +118,7 @@ class MessageController extends Controller
         $input = $request->all();
         if(!isset($input['content']))
             $input['content'] = '';
-        return $this->sendMessageHandle($request->session()->get('user_id'), $input['receiver'], $input['content']);
+        return json_encode($this->sendMessageHandle($request->session()->get('user_id'), $input['receiver'], $input['content']));
     }
 
     public function sendMessagepage(Request $request)

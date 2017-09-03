@@ -120,4 +120,16 @@ class XMSHelper extends Controller
         self::sendXMSMessage($openid, "knlItrLhqCnJNIzQRntDIXggv4tpJJ0U_ODbm3kPIcc", $data, "/message");
 
     }
+
+    static function sendSysMessage($openid, $msg)
+    {
+        $data = [];
+        array_push($data, [ "name" => "first", "value" => "【先锋市场】新系统消息" ]);
+        array_push($data, [ "name" => "keyword1", "value" => $msg->sender_id == 0 ? "系统消息" : $msg->sender->nickname ]);
+        array_push($data, [ "name" => "keyword2", "value" => $msg->content ]);
+        array_push($data, [ "name" => "keyword3", "value" => $msg->created_at->toDateTimeString() ]);
+        array_push($data, [ "name" => "remark", "value" => "您收到一条系统消息，请及时查看。" ]);
+        self::sendXMSMessage($openid, "knlItrLhqCnJNIzQRntDIXggv4tpJJ0U_ODbm3kPIcc", $data, "/message");
+
+    }
 }
