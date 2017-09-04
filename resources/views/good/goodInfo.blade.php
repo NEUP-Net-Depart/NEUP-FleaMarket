@@ -11,16 +11,8 @@
         .table-goodinfo > tbody > tr > th {
             max-width: 90px;
         }
-        @media (min-width: 992px) {
-            .main-part{
-                max-width: 992px;
-            }
-            .left-part{
-                max-width: 692px;
-            }
-            .right-part{
-                max-width: 300px;
-            }
+        .left-part{
+            max-width: 692px;
         }
     </style>
     <script>
@@ -30,16 +22,6 @@
         $('.popover-dismiss').popover({
             trigger: 'focus'
         })
-        match_media = "(min-width:992px)";
-        function WidthChange(mq){
-            if (mq.matches) {
-                $('.row-first').attr('class','row row-first');
-                $('.left-row').attr('class','left-row');
-            } else {
-                $('.row-first').attr('class','row-first');
-                $('.left-row').attr('class','row left-row');
-            }
-        }
     </script>
 @endsection
 
@@ -47,8 +29,7 @@
 <div class="row-first">
     <div class="mx-auto col main-part">
         <div class="row">
-            <div class="row left-row">
-            <div class="col left-part">
+            <div class="left-part col-xs-12 col-lg-8">
                 <div class="row"><div class="mx-auto"><a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:560px;"/></a></div></div>
                 <p>
                 <div class="card">
@@ -57,31 +38,12 @@
                 </div>
                 </p>
             </div>
-            </div>
             <div class="col">
                 <table class="table" style="margin-bottom:0px">
                     <td style="border-top: 0px">
                         <h4 style="display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h4>
                     </td>
                 </table>
-            <!--<p>
-            @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
-                <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
-                    <input type="submit" class="btn btn-primary" value="修改">
-                </form>
-                <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
-                    {!! csrf_field() !!}
-                    {!! method_field('DELETE') !!}
-                    <input type="submit" class="btn btn-primary" value="删除">
-                </form>
-            @endif
-            @if(Session::get('is_admin') >= 1 && !$good->baned)
-                <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
-                    {!! csrf_field() !!}
-                    <input type="submit" class="btn btn-primary" value="封禁">
-                </form>
-            @endif
-            </p>-->
             <div style="margin-left:20px">
                 <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
                 <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) @if($good->count > 1)(库存:{{ $good->count }}件)@else 仅一件 @endif @else 没库存了QAQ @endif</div>
@@ -110,11 +72,11 @@
                     <tr>
                         <th>卖家</th>
                         <td><a href="/user/{{ $user->id }}">@if($user->nickname!=""&&$user->nickname!=NULL){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif @if($user->baned)【已封禁】@endif</a></td>
-                    <tr>
+                    </tr>
                     <tr>
                         <th>分类</th>
                         <td>{{$good->cat_id}}</td>
-                    <tr>
+                    </tr>
                     <tr>
                         <th>收藏</th>
                         <td>
@@ -129,15 +91,33 @@
                     <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
                 @endif   
                         </td>
-                    <tr>
+                    </tr>
                     <tr>
                         <th>收藏量</th>
                         <td>{{$good->fav_num}}</td>
+                    </tr>
                     <tr>
-                    <tr>
-                        <th>出售时间</th>
+                        <th>上架时间</th>
                         <td>{{$good->created_at}}</td>
+                    </tr>
                     <tr>
+                        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
+                            <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
+                                <input type="submit" class="btn btn-primary" value="修改">
+                            </form>
+                            <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                                <input type="submit" class="btn btn-primary" value="删除">
+                            </form>
+                        @endif
+                        @if(Session::get('is_admin') >= 1 && !$good->baned)
+                            <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
+                                {!! csrf_field() !!}
+                                <input type="submit" class="btn btn-primary" value="封禁">
+                            </form>
+                        @endif
+                    </tr>
                 </tbody>
             </table>
             </div>

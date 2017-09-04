@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-block">
             <div class="row">
-            <div class="col-10 offset-1 col-md-6 offset-md-3">
+            <div class="col-12 col-md-8 col-lg-6 offset-md-2 offset-lg-3">
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
