@@ -49,7 +49,7 @@
 <div class="row row-first" style="margin-top:20px">
     <div class="mx-auto">
         <div class="card register-card">
-            <div class="card-block">
+            <div class="card-body">
                 @if(true || $user->email=='' && $user->wechat_open_id=='')
                     <div class="alert alert-warning" role="alert">
                         绑定邮箱{{--或微信--}}，系统将会在买家或卖家发来消息时利用它们来通知你！

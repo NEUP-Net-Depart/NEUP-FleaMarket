@@ -8,7 +8,7 @@
                     </div>
                     <img src="/good/{{ sha1($good->id) }}/titlepic" class="titlepic"/>
                     <div class="details" style="position:absolute;z-index:200;width:100%;display:none;">
-                        <div class="det-d hidden-sm-down" style="position:absolute;z-index:200;top:-37px;left:5px;color:white;font-size:12px;">
+                        <div class="det-d d-sm-none d-md-block" style="position:absolute;z-index:200;top:-37px;left:5px;color:white;font-size:12px;">
                             售价：￥{{ $good->price }}
                            <p> @if($good->count==0)
                                     无库存QAQ
@@ -19,9 +19,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-block" style="word-break:break-all">
+                <div class="card-body" style="word-break:break-all">
                     {{ $good->good_name }}
-                    <div class="hidden-md-up" style="font-size: 13px;color:black">
+                    <div class="d-sm-none d-md-block" style="font-size: 13px;color:black">
                     <p class="text-warning" style="margin-bottom: 0">售价：￥{{ $good->price }}</p>
                     <p style="margin-bottom: 0">@if($good->count==0)
                             无库存QAQ

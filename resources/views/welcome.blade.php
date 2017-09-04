@@ -20,7 +20,32 @@
 
 @section('content')
 <div class="row">
-    @include('layout.catlist')
+    <div id="carouselStarGoodIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach($stargoods as $stargood)
+                <li data-target="#carouselStarGoodIndicators" data-slide-to="{{ $stargood->id }}" class="active"></li>
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+            @foreach($stargoods as $stargood)
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="/good/{{ sha1($stargood->id) }}/titlepic" alt="{{ $stargood->good_name }}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>{{ $stargood->good_name }}</h3>
+                        <p>{{ $stargood->user->nickname }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <a class="carousel-control-prev" href="#carouselStarGoodIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselStarGoodIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
     <div class="col-12 col-md-9">
         @if(count($newgoods)>0)
             <h3 style="display : inline">新品</h3>

@@ -44,7 +44,7 @@
                                     <div class="card-img-top">
                                         <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" style="width:100%"/>
                                     </div>
-                                    <div class="card-block">
+                                    <div class="card-body">
                                         <div style="word-break:break-all">{{ $good->good_name }}</div>
                                         <div class="text-warning" style="font-size: 13px"><b>￥{{ $good->price }}</b></div>
                                         @if($good->count==0)

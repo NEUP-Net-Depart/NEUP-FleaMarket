@@ -3,7 +3,7 @@
   <div class="navbar-filter"></div>
 </div>
 <div class="container">
-<nav class="navbar navbar-toggleable navbar-inverse" style="box-shadow:#ffffff 0 0 0">
+<nav class="navbar navbar-expand-lg navbar-dark" style="box-shadow:#ffffff 0 0 0">
   <div class="nav-item">
   <a class="navbar-toggler navbar-toggler-right nav-link" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height:40px">
     <span class="navbar-toggler-icon"></span>
@@ -75,7 +75,7 @@
 <div class="banner-back"><div class="banner"></div></div>
 
   <p>
-  <div class="container hidden-sm-down">
+  <div class="container d-sm-none d-md-block">
       <form action="/good" method="GET">
         <div class="input-group float-right search-group" style="width:250px">
             <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif">
@@ -85,7 +85,7 @@
         </div>
       </form>
   </div>
-  <div class="hidden-md-up container">
+  <div class="d-sm-block d-md-none container">
       <form action="/good" method="GET">
         <div class="input-group float-right search-group">
             <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif">

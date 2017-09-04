@@ -11,7 +11,7 @@
 </ul>
 </div>
 
-    <div class="tab-content card-block">
+    <div class="tab-content card-body">
             @yield('tab-announcement')
             @yield('tab-classify')
             @yield('tab-report')

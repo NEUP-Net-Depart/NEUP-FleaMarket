@@ -55,7 +55,7 @@
                 <p>
                 <div class="card">
                     <div class="card-header">商品介绍</div>
-                    <div class="card-block" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
+                    <div class="card-body" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
                 </div>
                 </p>
             </div>
@@ -198,7 +198,7 @@
         </div>
         <div class="col-12 col-md-7">
             <div>
-            <span class="hidden-sm-down" style="position:relative;top:-8px">
+            <span class="d-sm-none d-md-block" style="position:relative;top:-8px">
                 @if(isset($inFvlst))
                     @if(count($inFvlst) == 0)
                         <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
@@ -240,7 +240,7 @@
                 <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
                     <input type="submit" class="btn btn-primary" value="修改">
                 </form>
-                <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
+                <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="d-sm-none d-md-block">
                     {!! csrf_field() !!}
                     {!! method_field('DELETE') !!}
                     <input type="submit" class="btn btn-primary" value="删除">
@@ -259,7 +259,7 @@
         <div class="card-header">
     <h4>商品介绍</h4>
         </div>
-    <div class="card-block" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
+    <div class="card-body" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
     </div>
     <script>
         function add_favlist() {
@@ -304,7 +304,7 @@
 @endsection
 
 @section('navbm')
-    <div class="hidden-md-up col-12" style="position:sticky;bottom:37px">
+    <div class="d-sm-block d-md-none col-12" style="position:sticky;bottom:37px">
         <div class="float-left">
             @if(isset($inFvlst))
                 @if(count($inFvlst) == 0)

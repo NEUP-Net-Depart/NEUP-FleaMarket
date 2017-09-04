@@ -40,7 +40,7 @@
     <div class="mx-auto">
         <div class="card register-card">
             <form action="/register/2" method="POST" enctype="multipart/form-data">
-                <div class="card-block">
+                <div class="card-body">
                     <div class="alert alert-success" role="alert">
                         <span class="fa fa-check" aria-hidden="true"></span>
                         你已经成为了先锋市场的一份子啦！现在你可以为自己上传一个头像，以及取一个昵称。

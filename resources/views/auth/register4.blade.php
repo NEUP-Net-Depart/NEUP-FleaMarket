@@ -49,7 +49,7 @@
 <div class="row row-first" style="margin-top:20px">
     <div class="mx-auto">
         <div class="card register-card">
-            <div class="card-block">
+            <div class="card-body">
                 <div class="alert alert-warning" role="alert">
                     添加额外的联系方式：除了刚才设置的，这些联系方式也会在你的交易成立时传达给对方。
                 </div>

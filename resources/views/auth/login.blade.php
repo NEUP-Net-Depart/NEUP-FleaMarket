@@ -9,7 +9,7 @@
                 width:400px;
             }
             .row-first {
-                margin-top:130px;
+                margin-top:90px;
                 margin-bottom:50px;
             }
         }
@@ -32,14 +32,14 @@
 @section('content')
     <div class="row-first">
         <div class="mx-auto row-second">
-            <div class="hidden-md-down my-auto" style="width:380px;margin-right:20px:height:100%">
+            <div class="d-sm-none d-md-block my-auto" style="width:380px;margin-right:20px:height:100%">
                 <h2 style="text-align:center"><b>旧很靠谱</b></h2>
                 <p></p>
                 <h4 style="text-align:center">自主研发 | 校卡绑定 | 安全便捷</h4>
             </div>
             <div class="card login-card">
                 <div class="card-header">登录</div>
-                <div class="card-block">
+                <div class="card-body">
                     @if (count($errors) > 0)
                         <div class="alert alert-danger" role="alert">
                             <span class="fa fa-exclamation-circle" aria-hidden="true"></span>

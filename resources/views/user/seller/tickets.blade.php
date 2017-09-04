@@ -14,7 +14,7 @@
         <div role="tabpanel" class="tab-pane active" id="tickets">
             <div id="tickets-container" class="card-section">
                 @foreach($tickets as $ticket)
-                    <div class="card card-block" style="margin-bottom: 5px">
+                    <div class="card card-body" style="margin-bottom: 5px">
                         <label>{{ $ticket->created_at }}
                             @if($ticket->type == 1)
                                 一只小萌妹评价了我说：

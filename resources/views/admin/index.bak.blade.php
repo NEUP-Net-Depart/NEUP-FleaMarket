@@ -15,7 +15,7 @@
 </ul>
 </div>
 
-    <div class="tab-content card-block">
+    <div class="tab-content card-body">
         <div role="tabpanel" class="tab-pane active" id="announcement">
             <table class="table table-hover">
               <thead>
