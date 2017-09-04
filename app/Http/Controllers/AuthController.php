@@ -108,13 +108,27 @@ class AuthController extends Controller
             $data['wechat'] = json_decode(($request->data));
             $user = User::where('wechat_open_id', $data['wechat']->openId)->first();
             $request->session()->put('wechat_open_id', $data['wechat']->openId);
-            if(!$user) {
-                $wechat = Wechat::firstOrNew(['open_id' => $data['wechat']->openId]);
-                $wechat->head_img_url = $data['wechat']->headImgUrl;
-                $wechat->nick_name = $data['wechat']->nickName;
-                $wechat->sex = $data['wechat']->sex;
-                $wechat->save();
 
+            $cnt = Wechat::where('open_id', $data['wechat']->openId)->count();
+            if ($cnt != 0)
+                $wechat = Wechat::where('open_id', $data['wechat']->openId)->first();
+            else {
+                $wechat = new Wechat();
+                $wechat->open_id = $data['wechat']->openId;
+            }
+            $wechat->head_img_url = $data['wechat']->headImgUrl;
+            $wechat->nick_name = $data['wechat']->nickName;
+            $wechat->sex = $data['wechat']->sex;
+            $wechat->save();
+
+            //Buggy!!! https://stackoverflow.com/questions/35630384/laravel-firstornew-overwriting-all-entries
+            /*$wechat = Wechat::firstOrNew(['open_id' => $data['wechat']->openId]);
+            $wechat->head_img_url = $data['wechat']->headImgUrl;
+            $wechat->nick_name = $data['wechat']->nickName;
+            $wechat->sex = $data['wechat']->sex;
+            $wechat->save();*/
+
+            if(!$user) {
                 return view('auth.wechatGuide')->with($data);
             }
             else {
