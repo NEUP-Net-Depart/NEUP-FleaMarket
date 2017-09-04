@@ -81,7 +81,7 @@ class MessageController extends Controller
     static public function sendMessageHandle($sender, $receiver, $content)
     {
         if (!User::where('id', $receiver)->count())
-            return json_encode(['result' => false, 'msg' => 'no such receiver']);
+            return ['result' => false, 'msg' => 'no such receiver'];
         //Create Message
         $message = new Message;
         $user_id = $sender;
