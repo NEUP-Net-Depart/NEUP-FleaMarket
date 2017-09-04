@@ -6,10 +6,13 @@
     <link rel="stylesheet" href="/css/lrtk.css"/>
     <style>
         .input-group:not(.search-group) {
-            max-width: 200px;
+            max-width: 240px;
         }
-        p>img{
-            max-width: 100%;
+        .table-goodinfo > tbody > tr > th {
+            max-width: 90px;
+        }
+        .left-part{
+            max-width: 692px;
         }
     </style>
     <script>
@@ -20,6 +23,147 @@
             trigger: 'focus'
         })
     </script>
+@endsection
+
+@section('content')
+<div class="row-first">
+    <div class="mx-auto col main-part">
+        <div class="row">
+            <div class="left-part col-xs-12 col-lg-8">
+                <div class="row"><div class="mx-auto"><a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:560px;"/></a></div></div>
+                <p>
+                <div class="card">
+                    <div class="card-header">商品介绍</div>
+                    <div class="card-block" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
+                </div>
+                </p>
+            </div>
+            <div class="col">
+                <table class="table" style="margin-bottom:0px">
+                    <td style="border-top: 0px">
+                        <h4 style="display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h4>
+                    </td>
+                </table>
+            <div style="margin-left:20px">
+                <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
+                <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) @if($good->count > 1)(库存:{{ $good->count }}件)@else 仅一件 @endif @else 没库存了QAQ @endif</div>
+            @if (count($errors) > 0)
+                <div class="alert alert-danger" role="alert">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    {!! $errors->first() !!}
+                </div>
+            @endif
+            @if(($good->user_id) != Session::get('user_id') && !$good->baned)
+                <p>
+                <form action="/good/{{ $good->id }}/buy" method="post">
+                    <div class="input-group">
+                        <input type="number" name="count" value="1" class="form-control" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                        {!! csrf_field() !!}
+                        <span class="input-group-btn">
+                        <input type="submit" class="btn btn-primary" value="购买"/>
+                    </span>
+                    </div>
+                </form>
+                </p>
+            @endif
+            </div>
+            <table class="table table-hover table-goodinfo">
+                <tbody>
+                    <tr>
+                        <th>卖家</th>
+                        <td><a href="/user/{{ $user->id }}">@if($user->nickname!=""&&$user->nickname!=NULL){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif @if($user->baned)【已封禁】@endif</a></td>
+                    </tr>
+                    <tr>
+                        <th>分类</th>
+                        <td>{{$good->cat_id}}</td>
+                    </tr>
+                    <tr>
+                        <th>收藏</th>
+                        <td>
+                @if(isset($inFvlst))
+                    @if(count($inFvlst) == 0)
+                        <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
+                    @endif
+                    @if(count($inFvlst) != 0)
+                        <button class="fa fa-star btn btn-primary" onclick="del_favlist()" data-toggle="tooltip" data-placement="top" title="取消收藏QAQ"></button>
+                    @endif
+                @else
+                    <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
+                @endif   
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>收藏量</th>
+                        <td>{{$good->fav_num}}</td>
+                    </tr>
+                    <tr>
+                        <th>上架时间</th>
+                        <td>{{$good->created_at}}</td>
+                    </tr>
+                    <tr>
+                        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
+                            <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
+                                <input type="submit" class="btn btn-primary" value="修改">
+                            </form>
+                            <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                                <input type="submit" class="btn btn-primary" value="删除">
+                            </form>
+                        @endif
+                        @if(Session::get('is_admin') >= 1 && !$good->baned)
+                            <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
+                                {!! csrf_field() !!}
+                                <input type="submit" class="btn btn-primary" value="封禁">
+                            </form>
+                        @endif
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        function add_favlist() {
+            var str_data = $("#fav input").map(function () {
+                return ($(this).attr("name") + '=' + $(this).val());
+            }).get().join("&");
+            $.ajax({
+                type: "POST",
+                url: "/good/{{ $good->id }}/add_favlist",
+                data: str_data,
+                success: function (msg) {
+                    $('.fa-star-o').attr('title','取消收藏QAQ');
+                    $('.fa-star-o').attr('onclick', 'del_favlist()');
+                    $('.fa-star-o').tooltip('dispose');
+                    $('.fa-star-o').tooltip('show');
+                    $('.fa-star-o').attr('class','fa fa-star btn btn-primary');
+                }
+            });
+        }
+        function del_favlist() {
+            var str_data1 = $("#fav input").map(function () {
+                return ($(this).attr("name") + '=' + $(this).val());
+            }).get().join("&");
+            var str_data = str_data1 + '&_method=DELETE';
+            $.ajax({
+                type: "POST",
+                url: "/good/{{ $good->id }}/del_favlist",
+                data: str_data,
+                success: function (msg) {
+                    $('.fa-star').attr('title','收藏OvO');
+                    $('.fa-star').attr('onclick', 'add_favlist()');
+                    $('.fa-star').tooltip('dispose');
+                    $('.fa-star').tooltip('show');
+                    $('.fa-star').attr('class','fa fa-star-o btn btn-primary');
+                }
+            });
+        }
+    </script>
+    <form id="fav">
+        {!! csrf_field() !!}
+    </form>
 @endsection
 
 @section('content')

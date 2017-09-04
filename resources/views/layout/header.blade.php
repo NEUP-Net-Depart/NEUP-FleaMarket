@@ -128,7 +128,7 @@
   </script>
  @endif
 
-<div class="col-12" style="position:relation;top:15.5px;overflow:hidden;height:40px;border-bottom:1px solid #0275d8">
+<div class="col-12" style="top:16.5px;overflow:hidden;height:40px;border-bottom:1px solid #0275d8">
   <div class="container">
     <ul class="nav nav-pills" style="overflow-x: scroll;overflow-y: hidden;white-space: nowrap;height:58px;display:-webkit-box;display:-moz-box;">
         <li class="nav-item" style="float: none"><a href="/good" class="nav-link @if(isset($cat_id)&&$cat_id == 0) active @endif">所有商品</a></li>
