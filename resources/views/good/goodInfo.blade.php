@@ -35,11 +35,9 @@
             if (mq.matches) {
                 $('.row-first').attr('class','row row-first');
                 $('.left-row').attr('class','left-row');
-                $('.right-row').attr('class','right-row');
             } else {
                 $('.row-first').attr('class','row-first');
                 $('.left-row').attr('class','row left-row');
-                $('.right-row').attr('class','row right-row');
             }
         }
     </script>
@@ -60,8 +58,7 @@
                 </p>
             </div>
             </div>
-            <div class="row right-row">
-            <div class="col right-part row">
+            <div class="col">
                 <table class="table" style="margin-bottom:0px">
                     <td style="border-top: 0px">
                         <h4 style="display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h4>
@@ -143,7 +140,6 @@
                     <tr>
                 </tbody>
             </table>
-            </div>
             </div>
         </div>
     </div>
