@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\GoodTag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Ticket;
 use JsonRpcClient;
 use App\Transaction;
+use App\Tag;
 use Mews\Purifier\Purifier;
 
 class AdminController extends Controller
@@ -123,6 +125,55 @@ class AdminController extends Controller
         return Redirect::to('/admin/classify');
     }
 
+    public function mergeCategory(Request $request)
+    {
+        $input = $request->all();
+        $base = $input['base_cat'];
+        $head = $input['head_cat'];
+        // Head cat will be terminated and all good of head cat will be catted base cat.
+        GoodInfo::where('good_cat', $head)
+            ->update(['good_cat' => $base]);
+        GoodCat::destroy($head);
+        return Redirect::to('/admin/classify');
+    }
+
+    public function addTag(Request $request)
+    {
+        $input = $request->all();
+        $tag_name = $input['tag_name'];
+        $cat_id = $input['cat_id'];
+        Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $cat_id]);
+        return Redirect::to('/admin/classify');
+    }
+
+    public function editTag(Request $request, $tag_id)
+    {
+        $input = $request->all();
+        $tag = Tag::find($tag_id);
+        $tag->tag_name = $input['tag_name'];
+        $tag->update();
+        return Redirect::to('/admin/classify');
+    }
+
+    public function deleteTag(Request $request, $tag_id)
+    {
+        Tag::destroy($tag_id);
+        GoodTag::where('tag_id', $tag_id)->delete();
+        return Redirect::to('/admin/classify');
+    }
+
+    public function mergeTag(Request $request)
+    {
+        $input = $request->all();
+        $base = $input['base_tag'];
+        $head = $input['head_tag'];
+        // Head tag will be terminated and all good of head tag will be tagged base tag.
+        GoodTag::where('tag_id', $head)
+            ->update(['tag_id' => $base]);
+        Tag::destroy($head);
+        return Redirect::to('/admin/classify');
+    }
+
     /**
      * @function AdminController@sendAnnouncement
      * @input Request $request
@@ -155,10 +206,18 @@ class AdminController extends Controller
         $repo->state = 0;
         $repo->save();
         if($repo->type == 2) {
-            $result = MessageController::sendMessageHandle($user_id, $repo->sender_id, "【系统消息】您好！您的举报（编号：" . $repo_id . "）已由管理员（ID: " . $user_id . "）受理。请协助管理员核实举报具体细节。");
-            $result = json_decode($result);
-            if ($result->result)
+            $sender = User::find($repo->sender_id);
+            $msg = "【系统消息】您好！您的举报（编号：" . $repo_id . "）已由管理员（ID: " . $user_id . "）受理。请协助管理员核实举报具体细节。";
+            $result = MessageController::sendMessageHandle($user_id, $repo->sender_id, $msg);
+
+            if ($result['result']) {
+                if($sender->wechat_open_id) {
+                    XMSHelper::sendSysMessage($sender->wechat_open_id, $result['msg']);
+                    $result['msg']->wx_sent = true;
+                    $result['msg']->save();
+                }
                 return Redirect::to('/message');
+            }
             else
                 return View::make('common.errorPage')->withErrors($result->msg);
         } else {
@@ -190,19 +249,5 @@ class AdminController extends Controller
         $response = $conn->Call("Daemon.SendMail", $mailSettings);
         return $response;
     }
-
-    /**
-     * @function AdminController@getAnnouncement
-     * @input Request $request
-     * @return Redirect
-     * @description a function get announcement
-     */
-
-/*     public function getAnnouncement(Request $request)
-     {
-        $data = [];
-        $data['announcements'] = Announcement::Orderby('id','dsc')->get();
-        return View::make('admin.announcement')->with($data);
-	} */
 
 }

@@ -35,6 +35,7 @@ function submitdel(){
                     }
                 });
                 confirm("删除成功！");
+                $("#editbutton").trigger("click");
             }
         });
     }

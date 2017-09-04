@@ -1,10 +1,10 @@
-<div class="col-6 col-lg-4">
+<div class="col-6 col-lg-4 yesrpg">
     <div class="good" style="margin-bottom:20px;">
         <a href="/good/{{ $good->id }}">
             <div class="card">
                 <div class="card-img-top">
                     <div style="position:absolute;z-index:201">
-                        <input type="checkBox" name="del_goods[]" value="0" id="box{{ $good->good_id }}" class="cb" onclick="{setValue({{ $good->good_id }})}" style="visibility:hidden;width:20%;z-index:203" />
+                        <input type="checkBox" name="del_goods[]" value="0" id="box{{ $good->id }}" class="cb" onclick="{setValue({{ $good->id }})}" style="visibility:hidden;width:20%;z-index:203" />
                     </div>
                     <img src="/good/{{ sha1($good->id) }}/titlepic" class="titlepic"/>
                     <div class="details" style="position:absolute;z-index:200;width:100%;display:none;">

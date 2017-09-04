@@ -135,7 +135,8 @@ class GoodController extends Controller
     public function getInfo(Request $request, $good_id)
     {
         $data = [];
-        $data['good'] = GoodInfo::where('id', $good_id)->first();
+        $data['good'] = GoodInfo::with('tags')->where('id', $good_id)->first();
+        //return json_encode($data['good']);
 		if($data['good']==NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
 		if(($data['good']->baned) && ($data['good']->user_id != $request->session()->get('user_id') && !$request->session()->get('is_admin')))
 			return View::make('common.errorPage')->withErrors('商品ID错误！');
@@ -151,7 +152,6 @@ class GoodController extends Controller
 		    $data['is_admin'] = $request->session()->get('is_admin');
 		else
 		    $data['is_admin'] = NULL;
-        $good = GoodInfo::where('id', $good_id)->first();
         return view::make('good.goodInfo')->with($data);
     }
 
@@ -193,24 +193,16 @@ class GoodController extends Controller
         $good->baned = '0';
         $good->save();
 
-        /*$good_tags = $input['good_tag'];
-        foreach($good_tags as $tag_id)
-        {
-            $tag = new GoodTag;
-            if(!$tag_id)
-            {
-                $otherTag = new Tag;
-                $otherTag->tag_name = $input['other_tag'];
-                $otherTag->save();
-                $tag->tag_id = $otherTag->id;
+        if(isset($input['new_tag_names'])) {
+            $new_tag_names = $input['new_tag_names'];
+            foreach ($new_tag_names as $tag_name) {
+                $good_tag = new GoodTag;
+                $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $good->cat_id]);
+                $good_tag->tag_id = $tag->id;
+                $good_tag->good_id = $good->id;
+                $good_tag->save();
             }
-            else if($tag_id)
-            {
-                $tag->tag_id = $tag_id;
-            }
-            $tag->good_id = $good->id;
-            $tag->save();
-        }*/
+        }
 
         Storage::put(
             'good/titlepic/'.sha1($good->id),
@@ -255,26 +247,23 @@ class GoodController extends Controller
         $good->count=$input['count'];
         $good->update();
 
-        /*
-        $deleteoldtags = GoodTag::where('good_id', $good_id)->delete();
-        $good_tags = $input['good_tag'];
-        foreach($good_tags as $tag_id)
-        {
-            $tag = new GoodTag;
-            if(!$tag_id)
-            {
-                $otherTag = new Tag;
-                $otherTag->tag_name = $input['other_tag'];
-                $otherTag->save();
-                $tag->tag_id = $otherTag->id;
+        if(isset($input['new_tag_names'])) {
+            $new_tag_names = $input['new_tag_names'];
+            foreach ($new_tag_names as $tag_name) {
+                $good_tag = new GoodTag;
+                $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $good->cat_id]);
+                $good_tag->tag_id = $tag->id;
+                $good_tag->good_id = $good->id;
+                $good_tag->save();
             }
-            else if($tag_id)
-            {
-                $tag->tag_id = $tag_id;
-            }
-            $tag->good_id = $good->id;
-            $tag->save();
-        }*/
+        }
+        if(isset($input['del_tag_names'])) {
+            $del_tag_names = $input['del_tag_names'];
+            foreach($del_tag_names as $tag_name)
+                GoodTag::where('good_id', $good_id)->where('tag_name', $tag_name)->delete();
+        }
+
+
         if($request->hasFile('goodTitlePic'))
             Storage::put(
                 'good/titlepic/'.sha1($good->id),
@@ -296,13 +285,20 @@ class GoodController extends Controller
             return Redirect::to('/good/'.$good_id);
         Storage::delete('good/titlepic/'.sha1($good->id));
         $good->delete();
-        //$deleteGoodTag = GoodTag::where('good_id', $good_id)->delete();
-        $deleteFavList = Favlist::where('good_id', $good_id)->delete();
+        GoodTag::where('good_id', $good_id)->delete();
+        Favlist::where('good_id', $good_id)->delete();
         $trans = Transaction::where('good_id', $good_id)->where('status', '<' , 3)->get();
         foreach($trans as $tran)
         {
             $tran->status = 0;
-            MessageController::sendMessageHandle(0, $tran->buyer_id, "【系统消息】您好！由于该商品被卖家删除，您的<a href='/user/trans'>订单（编号：".$tran->id."）</a>已被取消。非常抱歉。");
+            $buyer = User::find($tran->buyer_id);
+            $msg = "【系统消息】您好！由于该商品被卖家删除，您的<a href='/user/trans'>订单（编号：".$tran->id."）</a>已被取消。非常抱歉。";
+            $result = MessageController::sendMessageHandle(0, $tran->buyer_id, $msg);
+            if($result['result'] && $buyer->wechat_open_id) {
+                XMSHelper::sendSysMessage($buyer->wechat_open_id, $result['msg']);
+                $result['msg']->wx_sent = true;
+                $result['msg']->save();
+            }
             $tran->update();
         }
         return Redirect::to('/good');
@@ -376,18 +372,40 @@ class GoodController extends Controller
 		$good->update();
 
 		$admin_id = $request->session()->get('user_id');
+		$user = User::find($good->user_id);
+		$msg = "【系统消息】您好！您的<a href='/good/" . $good_id ."'>商品（编号：".$good_id."）</a>由于不符合有关规定已被管理员（ID：".$admin_id."）下架。请在此消息下询问具体细节。";
 
-		MessageController::sendMessageHandle($admin_id, $good->user_id, "【系统消息】您好！您的<a href='/good/" . $good_id ."'>商品（编号：".$good_id."）</a>由于不符合有关规定已被管理员（ID：".$admin_id."）下架。请在此消息下询问具体细节。");
+		$result = MessageController::sendMessageHandle($admin_id, $good->user_id, $msg);
+		if($result['result'] && $user->wechat_open_id) {
+            XMSHelper::sendSysMessage($user->wechat_open_id, $result['msg']);
+            $result['msg']->wx_sent = true;
+            $result['msg']->save();
+        }
 
 		$trans = Transaction::where('good_id', $good_id)->where('status', '<' , 3)->get();
 		foreach($trans as $tran)
 		{
 			$tran->status = 0;
-			MessageController::sendMessageHandle(0, $tran->buyer_id, "【系统消息】您好！由于该商品不符合有关规定被下架，您的<a href='/user/trans'>订单（编号：".$tran->id."）</a>已被取消。非常抱歉。");
+			$buyer = User::find($tran->buyer_id);
+			$msg = "【系统消息】您好！由于该商品不符合有关规定被下架，您的<a href='/user/trans'>订单（编号：".$tran->id."）</a>已被取消。非常抱歉。";
+			$result = MessageController::sendMessageHandle(0, $tran->buyer_id, $msg);
+            if($result['result'] && $buyer->wechat_open_id) {
+                XMSHelper::sendSysMessage($buyer->wechat_open_id, $result['msg']);
+                $result['msg']->wx_sent = true;
+                $result['msg']->save();
+            }
 			$tran->update();
 		}
 
 		 return Redirect::to('/good/'.$good_id);
 	}
+
+	public function queryTags(Request $request) {
+	    $tag_name = $request->tag_name;
+	    $tags = Tag::where('tag_name', 'like', $tag_name . "%")
+            ->orderBy('tag_name', 'asc')
+            ->get();
+	    return json_encode($tags);
+    }
 
 }

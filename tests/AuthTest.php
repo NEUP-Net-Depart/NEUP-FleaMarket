@@ -34,7 +34,7 @@ class AuthTest extends BrowserKitTestCase
 
         //test register
         $this->visit('/register')
-            ->see('校园统一身份认证服务平台');
+            ->see('校园统一身份认证');
 
         $user = new User;
         $user->username = '';
