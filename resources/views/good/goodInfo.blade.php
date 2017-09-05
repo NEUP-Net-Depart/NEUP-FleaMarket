@@ -91,7 +91,7 @@
 								</div>
 								<div class="mx-auto">
 									<input type="submit" class="btn btn-primary" value="保存">
-								<div>
+								</div>
 							</div>
 							</form>
 						</td>
@@ -109,7 +109,7 @@
                     @endif
                 @else
                     <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
-                @endif   
+                @endif
                         </td>
                     </tr>
                     <tr>

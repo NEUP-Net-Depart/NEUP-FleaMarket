@@ -120,7 +120,7 @@ Route::group(['middleware' => ['web']],function () {
     Route::delete('/good/{good_id}/del_favlist', "GoodController@delFavList")->middleware('auth');
 
     Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('regc');
-	Route::post('/good/{good_id}/updateCat', "GoodController@updateCat")->middleware('auth');
+    Route::post('/good/{good_id}/updateCat', "GoodController@updateCat")->middleware('auth');
 
     Route::get('/message', "MessageController@showMessageView")->middleware('auth');
     Route::get('/test/sendmessagepage', "MessageController@sendMessagepage")->middleware('su');

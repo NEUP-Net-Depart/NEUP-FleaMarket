@@ -409,15 +409,15 @@ class GoodController extends Controller
 	    return json_encode($tags);
     }
 
-	public function updateCat(Request $request, $good_id)
-	{
-		$input = $request->all();
-		$good = GoodInfo::find($good_id);
-		if($good == NULL)
-			return View::make('common.errorPage')->withErrors('商品ID错误！');
-		$good->cat_id = $input['cat_id'];
-		$good->update();
-		return Redirect::to('/good/'.$good_id);
-	}
+    public function updateCat(Request $request, $good_id)
+    {
+        $input = $request->all();
+        $good = GoodInfo::find($good_id);
+        if ($good == NULL)
+            return View::make('common.errorPage')->withErrors('商品ID错误！');
+        $good->cat_id = $input['cat_id'];
+        $good->update();
+        return Redirect::to('/good/' . $good_id);
+    }
 
 }
