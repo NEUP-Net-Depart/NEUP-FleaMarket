@@ -155,6 +155,7 @@ Route::group(['middleware' => ['web']],function () {
     ]);
 
     Route::post('/captcha/sendText', "TelValidateController@sendRegTextCaptcha");
+    Route::post('/captcha/sendChangeText', "TelValidateController@sendChangeTextCaptcha");
     Route::post('/register/saveTel', "TelValidateController@saveUserTel");
 
     Route::get('/tos', "ContentController@tos");

@@ -236,6 +236,10 @@
         }
 
         function bindTel() {
+            if ($('#captcha').val() == '') {
+                toast('error', '请填写验证码');
+                return;
+            }
             var str_data = $("#tel-form input").map(function () {
                 return ($(this).attr("name") + '=' + $(this).val());
             }).get().join("&");
