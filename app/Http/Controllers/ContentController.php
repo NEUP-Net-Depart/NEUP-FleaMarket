@@ -19,10 +19,10 @@ class ContentController extends Controller
         $data = [];
         $data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         $data['stargoods'] = GoodInfo::where('baned', false)->where('stared', '1')->orderby('id', 'asc')->limit(5)->get();
-        $data['newgoods'] = GoodInfo::where('baned', false)->where('count', '>', 0)->orderby('id', 'dsc')->limit(8)->get();
+        $data['newgoods'] = GoodInfo::where('baned', false)->where('count', '>', 0)->orderby('id', 'dsc')->limit(4)->get();
         $data['populargoods'] = GoodInfo::where('baned', false)->where('count', '>', 0)->where('fav_num', '>', 0)->orderby('fav_num', 'desc')->limit(8)->get();
         foreach($data['cats'] as $cat){
-            $data['catgoods'][$cat->cat_name] = GoodInfo::where('cat_id', $cat->id)->where('baned', false)->where('count', '>', 0)->inRandomOrder()->limit(4)->get();
+            $data['catgoods'][$cat->cat_name] = GoodInfo::where('cat_id', $cat->id)->where('baned', false)->where('count', '>', 0)->inRandomOrder()->limit(6)->get();
         }
         $data['announces'] = Announcement::orderby('id', 'dsc')->limit(5)->get();
 		$data['trans'] = Transaction::where('status', '>', 3)->orderby('id', 'dsc')->limit(20)->get();

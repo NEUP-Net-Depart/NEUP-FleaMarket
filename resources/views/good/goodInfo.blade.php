@@ -75,7 +75,7 @@
                     </tr>
                     <tr>
                         <th>分类</th>
-						<td>{{$good->cat_id}}</td>
+						<td>{{$good->cat->cat_name}}</td>
 						@if(Session::get('is_admin')>=1 && !$good->baned)
 						<td>
 							<form action="/good/{{$good->id}}/updateCat" method="POST">
@@ -194,7 +194,7 @@
         </div>
         <div class="col-12 col-md-7">
             <div>
-            <span class="d-sm-none d-md-block" style="position:relative;top:-8px">
+            <span class="d-none d-md-block" style="position:relative;top:-8px">
                 @if(isset($inFvlst))
                     @if(count($inFvlst) == 0)
                         <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
@@ -236,7 +236,7 @@
                 <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
                     <input type="submit" class="btn btn-primary" value="修改">
                 </form>
-                <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="d-sm-none d-md-block">
+                <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="d-none d-md-block">
                     {!! csrf_field() !!}
                     {!! method_field('DELETE') !!}
                     <input type="submit" class="btn btn-primary" value="删除">
@@ -300,7 +300,7 @@
 @endsection
 
 @section('navbm')
-    <div class="d-sm-block d-md-none col-12" style="position:sticky;bottom:37px">
+    <div class="d--block d-md-none col-12" style="position:sticky;bottom:37px">
         <div class="float-left">
             @if(isset($inFvlst))
                 @if(count($inFvlst) == 0)

@@ -17,6 +17,11 @@ class GoodInfo extends Model
 		return $this->belongsTo('App\User');
 	}
 
+	public function cat()
+	{
+		return $this->belongsTo('App\GoodCat');
+	}
+
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'good_tags', 'good_id', 'tag_id');

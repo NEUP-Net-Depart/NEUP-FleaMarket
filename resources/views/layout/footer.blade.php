@@ -11,7 +11,7 @@
     </div>
 @endif
 <div class="footer container">
-    <div class="d-sm-none d-md-block">
+    <div class="d-none d-md-block">
         <ul class="float-left">
             <li>© {{date("Y")}} 东北大学先锋网</li>
             <li><a href="/pp">隐私政策</a></li>
@@ -24,7 +24,7 @@
             <li><a href="/">关于我们</a></li>
         </ul>
     </div>
-    <div class="d-sm-block d-md-none">
+    <div class="d--block d-md-none">
         <span><center>© {{date("Y")}} 东北大学先锋网</center></span>
         <ul class="float-left">
             <li><a href="/faq">帮助文档</a></li>
