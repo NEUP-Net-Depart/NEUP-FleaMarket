@@ -75,7 +75,27 @@
                     </tr>
                     <tr>
                         <th>分类</th>
-                        <td>{{$good->cat_id}}</td>
+						<td>{{$good->cat_id}}</td>
+						@if(Session::get('is_admin')>=1 && !$good->baned)
+						<td>
+							<form action="/good/{{$good->id}}/updateCat" method="POST">
+							{!! csrf_field() !!}
+							<div class="row">
+								<div class="mx-auto">
+									<select name="cat_id" id="cat_id" class="btn btn-secondary dropdown-toggle" style="width:100%">
+										@foreach($cats as $cat)
+										<option value="{{$cat->id}}" @if(($good->cat_id==$cat->id&&!count($errors))||(old('cat_id')==$cat->id&&count($errors)))
+											selected="selected" @endif>{{$cat->cat_name}}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="mx-auto">
+									<input type="submit" class="btn btn-primary" value="保存">
+								<div>
+							</div>
+							</form>
+						</td>
+						@endif
                     </tr>
                     <tr>
                         <th>收藏</th>
