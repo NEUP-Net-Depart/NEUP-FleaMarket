@@ -48,15 +48,16 @@
                                 <img class="mavatar" :src="'/avatar/' + contact.contact_id + '/64/64'"/>
                             </span>
                             </td>
+                            <span id="contact-closer" class="badge secondary" v-on:click="closeContact(index)">
+                                X
+                            </span>
                             <td>
-                              <div :class="{ hide: isHidden }">
                                 <p class="con-name"> @{{ contact.contact_id == 0 ? "系统消息" :
                                 (contact.contact.baned == 0 ? contact.contact.nickname :
                                 contact.contact.nickname + '【已封禁】') }}
                                     <img v-if="contact.contact_id != 0 && contact.contact.privilege == 1" src="https://img.shields.io/badge/%E5%85%88%E9%94%8B%E5%B8%82%E5%9C%BA-%E7%AE%A1%E7%90%86%E5%91%98-9300dd.svg">
                                     <img v-if="contact.contact_id != 0 && contact.contact.privilege == 2" src="https://img.shields.io/badge/%E5%85%88%E9%94%8B%E5%B8%82%E5%9C%BA-%E7%AE%A1%E7%90%86%E5%91%98-ee0000.svg">
                                 </p>
-                              </div>
                             </td>
                         </tr>
                         <span id="contact-closer" class="badge secondary" v-on:click="closeContact(index)">
@@ -73,7 +74,7 @@
 
 <script type="text/x-template" id="message_dialog">
   <div>
-    <div :class="{ hide: !isHidden }">
+    <div :class="{ hide: loadingHidden }">
       <span class="fa fa-spinner fa-spin" style="font-size:1.5em"></span>
       <span style="font-size:1.5em">Loading...</span>
     </div>
@@ -99,8 +100,10 @@
             </transition-group>
         </ul>
         <p class="err-msg" v-if="errorMessage">@{{ errorMessage }}</p>
-        <p><textarea placeholder="键入要发送的内容:" v-model="inputMessage" class="form-control"></textarea></p>
-        <input type="button" class="btn btn-primary" value="发送" v-on:click="sendMessage"/>
+        <p><textarea placeholder="键入要发送的内容:" v-model="inputMessage" class="form-control" id='textArea'></textarea></p>
+        <input type="button" class='btn btn-primary' value="发送" v-if="messageHidden" v-on:click="sendMessage"/>
+        <input type="button" class='btn btn-primary' value="发送中..." v-if="!messageHidden"/>
+        <p :class="{hide : messagesHidden}">请勿发送空字符</p>
         <input id="token" type="hidden" value="{{ csrf_token() }}"/>
         {{--<a v-on:click="getNewMessage">!!!</a>--}}
         </div>
@@ -112,7 +115,7 @@
 <script src="/js/vue.min.js"></script>
 {{--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>--}}
 <script src="/js/axios.min.js"></script>
-<script src="/js/message-20170724.js"></script>
+<script src="/js/message-20170907.js"></script>
 <script>
     window.onload = function () {
         setTimeout("$('#vue-error-msg').removeClass('hide')", 3000);

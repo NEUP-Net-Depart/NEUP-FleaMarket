@@ -1,9 +1,11 @@
 /**
  * Created by zhouz on 2017/6/10.
  * Fixed by NightSiesta on 2017/7/24
+ * Fixed by NightSiesta on 2017/9/7
  */
 
 // 联系人列表
+var bus = new Vue();
 Vue.component('contact-list', {
     template: '#contact_list',
     data: function () {
@@ -48,13 +50,17 @@ Vue.component('contact-list', {
             var vm = this;
             axios.get('/message/getHistoryMessageContact?page=' + (this.current_page + 1).toString())
                 .then(function (response) {
+                    vm.isHidden = false;
                     vm.current_page = response.data.current_page;
                     vm.last_page = response.data.last_page;
                     for (var i in response.data.data)
                         vm.contacts.push(response.data.data[i]);
                     if (initialize && vm.contacts.length > 0)
                         {vm.loadDialog(0);}
-                        vm.isHidden = false;
+                    else{
+                        console.log('123');
+                        bus.$emit('loadingHide','123');
+                    }
                 })
                 .catch(function (error) {
                     vm.errorMessage = "服务器连接失败，请检查网络QAQ";
@@ -145,6 +151,9 @@ Vue.component('message-dialog', {
     template: '#message_dialog',
     data: function () {
         return {
+            messagesHidden:true,
+            messageHidden:true,
+            loadingHidden:false,
             messages: [],
             errorMessage: '',
             current_page: 0,
@@ -157,6 +166,10 @@ Vue.component('message-dialog', {
         }
     },
     mounted: function () {
+          const that = this;
+        bus.$on('loadingHide',function(user){
+          that.loadingHidden = true;
+        })
         this.$nextTick(function () {
             this.$on('loadDialogHandler', function (id) {
                 var vm = this;
@@ -189,9 +202,10 @@ Vue.component('message-dialog', {
     },
     methods: {
         getHistoryMessage: function (contact_id) {
-            if (contact_id === -2)
-                return;
             var vm = this;
+            if (contact_id === -2){
+                vm.loadingHidden = true;
+                return;}
             if (contact_id === -1 || this.contact_id === contact_id) {
                 contact_id = this.contact_id;
                 axios.get('/message/getHistoryMessage?contact_id=' + contact_id.toString() + '&page=' + (this.current_page + 1).toString())
@@ -209,6 +223,7 @@ Vue.component('message-dialog', {
                                     type: 'history-info'
                                 });
                         }
+                        vm.loadingHidden = true;
                         vm.isHidden = false;
                     })
                     .catch(function (error) {
@@ -232,6 +247,7 @@ Vue.component('message-dialog', {
                                     type: 'history-info'
                                 });
                         }
+                        vm.loadingHidden = true;
                         vm.isHidden = false;
                     })
                     .catch(function (error) {
@@ -250,22 +266,34 @@ Vue.component('message-dialog', {
             {
                 this.contact_id = null;
                 this.isHidden = true;
+                this.loadingHidden = true;
             }
         },
         sendMessage: function () {
             var vm = this;
             vm.token = $('#token').val();
+            vm.content = $('#textArea').val();
+            console.log(vm.content);
+            if(vm.content!==""){
+              vm.messageHidden = false;
             axios.post('/message', this.postData)
                 .then(function (response) {
+                    vm.messagesHidden = true;
+                    vm.messageHidden = true;
                     vm.isLockScroll = false;
-                    vm.messages.push(response.data.msg);
                     vm.inputMessage = '';
+                    vm.messages.push(response.data.msg);
                     vm.$emit('top-contact', vm.contact_id);
                 })
                 .catch(function (error) {
                     vm.errorMessage = "服务器连接失败，请检查网络QAQ";
                     vm.$emit('network-error');
                 })
+                vm.content = '';
+              }
+              else {
+                vm.messagesHidden = false;
+              }
         },
         getNewMessage: function () {
             var vm = this;
@@ -278,6 +306,7 @@ Vue.component('message-dialog', {
                         {
                             vm.messages.push(response.data[i]);
                         }
+                        vm.loadingHidden = true;
                         vm.isHidden = false;
                     })
                     .catch(function (error) {
