@@ -15,7 +15,7 @@
   <div class="dropdown-menu dropdown-menu-right">
   @if(Session::has('user_id'))
     <a href="/user" class="dropdown-item">
-      <center><img src="/avatar/{{ Session::get('user_id') }}/110/110" class="avatar"/></center>
+      <center><img src="/avatar/{{ Session::get('user_id') }}/110/110" class="avatar" style="height:110px;width:110px"/></center>
       <label class="dropdown-header"><center>{{ Session::get('nickname') }}</center></label>
     </a>
     <a href="/logout" class="dropdown-item">登出</a>
@@ -44,7 +44,7 @@
         @if(Session::has('user_id'))
           <li class="nav-item dropdown">
             <a class="nav-link navbar-avatar nav-btn" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar"/>
+              <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar" style="height:40px;width:40px"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <label class="dropdown-header"><center>{{ Session::get('nickname') }}</center></label>

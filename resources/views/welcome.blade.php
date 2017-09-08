@@ -44,8 +44,8 @@
                 $('.goodinfo-col').attr('class','col yesrpg goodinfo-col');
             } else {
                 $('.popular-col').attr('class','col popular-col d-none');
-                $('.popular-col2').attr('class','col popular-col2');
-                $('.goodinfo-col').attr('class','yesrpg goodinfo-col col-md-4 col-sm-6');
+                $('.popular-col2').attr('class','popular-col2 row mx-auto');
+                $('.goodinfo-col').attr('class','yesrpg goodinfo-col col-lg-4 col-md-6');
             }
         }
     </script>
@@ -90,7 +90,7 @@
         @endif
     </div>
     </div>
-    <div class="col popular-col">
+    <div class="col popular-col d-none">
         <div class="row">
         @foreach($populargoods as $good)
             @include('good.goodSimpleInfoOnWelcome')
@@ -99,8 +99,8 @@
     </div>
 </div>
 </p>
-<div class="col popular-col2 d-none" style="top:12px;height:115px;overflow:hidden">
-    <div class="container">
+<div class="popular-col2 row mx-auto" style="margin-top:12px;height:115px;overflow:hidden">
+    <div class="row">
     <div style="overflow-x: scroll;overflow-y: hidden;height:133px;white-space: nowrap;display:-webkit-box;display:-moz-box;">
     @foreach($populargoods as $good)
         @include('good.goodSimpleInfoOnWelcome')
