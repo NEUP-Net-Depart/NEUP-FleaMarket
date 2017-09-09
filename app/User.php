@@ -18,15 +18,21 @@ class User extends Model
 
     public function registerCompletion($force = false)
     {
-        if (!$force && ($this->nickname == null || !Storage::exists('avatar/' . $this->id))) {
-            return 2;
-        } else if ($this->email == null && $this->wechat_open_id == null) {
-            return 3;
-        } else if (!$force && count($this->user_infos) == 0) {
-            return 4;
+        if($force) {
+            if ($this->email == null && $this->wechat_open_id == null && $this->tel == null) {
+                return 3;
+            } else
+                return 0;
+        } else {
+            if ($this->nickname == null || !Storage::exists('avatar/' . $this->id)) {
+                return 2;
+            } else if ($this->wechat_open_id == null && $this->tel == null) {
+                return 3;
+            } // 4 will be never returned unless he skip 3
+            else
+                return 0;
         }
-        else
-            return 0;
+
     }
 
 /*    public function trans()

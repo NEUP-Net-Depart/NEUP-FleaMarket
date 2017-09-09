@@ -90,7 +90,7 @@ class AuthTest extends BrowserKitTestCase
             ->type('0', 'crop_x')
             ->type('0', 'crop_y')
             ->press('下一步')
-            ->seePageIs('/register/4');
+            ->seePageIs('/register/3');
 
         //test 3
         $this->visit('logout')
@@ -98,7 +98,7 @@ class AuthTest extends BrowserKitTestCase
             ->type('test@example.com', 'username')
             ->type('test@example.com', 'password')
             ->press('登录')
-            ->seePageIs('/register/4');
+            ->seePageIs('/register/3');
 
         //test 0
         $this->visit('logout');
@@ -110,7 +110,7 @@ class AuthTest extends BrowserKitTestCase
             ->type('test@example.com', 'username')
             ->type('test@example.com', 'password')
             ->press('登录')
-            ->seePageIs('/')
+            ->seePageIs('/register/3')
             ->seeInSession('user_id');
     }
 

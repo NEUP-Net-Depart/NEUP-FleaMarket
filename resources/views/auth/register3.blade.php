@@ -56,7 +56,7 @@
                 <div class="card-block">
                     @if(true || $user->email=='' && $user->wechat_open_id=='')
                         <div class="alert alert-warning" role="alert">
-                            绑定邮箱或手机{{--或微信--}}，系统将会在买家或卖家发来消息时利用它们来通知你！
+                            绑定邮箱、微信或手机，系统将会在买家或卖家发来消息时利用它们来通知你！
                         </div>
                     @endif
                     <div class="col col-xs-12 col-md-6 col-centered">
@@ -89,13 +89,15 @@
                         @endif
 
                         @if($user->wechat_open_id=='')
-                            {{--<div class="password-form">
+                            <div class="password-form" style="padding-top: 1em;">
                                 <div class="input-group">
-                                    <label>微信：请在东大小秘书中点击“闲置市场”链接来关联微信。</label>
+                                    <label>微信：扫描二维码或在东大小秘书中点击“更多/先锋市场”链接来关联微信。
+                                    </label>
+                                    <img src="/img/wxqr.png" height="72px" width="72px">
                                 </div>
-                            </div>--}}
+                            </div>
                         @else
-                            <div class="password-form">
+                            <div class="password-form" style="padding-top: 1em;">
                                 <div class="input-group">
                                     <label>微信：已关联 <span class="nickname">{{$user->wechat->nick_name}}</span></label>
                                 </div>

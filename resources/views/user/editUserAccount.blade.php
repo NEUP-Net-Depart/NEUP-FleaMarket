@@ -10,22 +10,21 @@
 </div>
 <div class="row">
 <div class="mx-auto">
-    @if($user->email=='' && $user->wechat_open_id=='')
+    @if($user->email=='' && $user->wechat_open_id=='' && $user->tel == '')
         <div class="password-form">
             <div class="input-group">
             <div class="alert alert-danger" role="alert">
                 <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                你{{--既没有绑定邮箱也没有绑定微信--}}没有绑定邮箱，这将导致你无法及时收到消息！
+                你没有绑定邮箱、微信、手机，这将导致你无法及时收到消息！
             </div>
             </div>
         </div>
-    @elseif($user->wechat_open_id=='' || true)
+    @elseif($user->wechat_open_id=='' && $user->tel == '')
         <div class="password-form">
             <div class="input-group">
                 <div class="alert alert-warning" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                    {{--你没有绑定微信，这可能导致你无法及时收到消息！--}}
-                    目前短信和微信通知接口尚未开发完成，可能导致你无法及时收到消息，请谅解！
+                    你既没有绑定微信也没有绑定手机，这可能导致你无法及时收到消息！
                 </div>
             </div>
         </div>
@@ -57,6 +56,26 @@
                 <span class="input-group-btn"><input type="submit" class="btn btn-warning" name="email_submit" value="解绑"></span>
             </div>
         </form>
+        @endif
+    </p>
+    <p>
+        @if($user->wechat_open_id=='')
+            <div class="password-form">
+                <div class="input-group">
+                    <label>微信：扫描二维码或在东大小秘书中点击“更多/先锋市场”链接来关联微信。
+                        </label>
+                    <img src="/img/wxqr.png" height="72px" width="72px">
+                </div>
+            </div>
+        @else
+            <div class="password-form">
+                <div class="input-group">
+                    <label>微信：已关联 <span class="nickname">{{$user->wechat->nick_name}}</span></label>
+                </div>
+                <div class="input-group">
+                    <img class="head-img col-centered" src="{{$user->wechat->head_img_url}}" width="64px" height="64px">
+                </div>
+            </div>
         @endif
     </p>
     <p>
@@ -92,8 +111,7 @@
             <div id="tel-form-toast" class="alert hide" role="alert"
                  style="margin-top: 0.3em;"></div>
         </div>
-        <div id="tel-dis" class="input-group"
-             class="@if($user->tel == '') hide @endif">
+        <div id="tel-dis" class="input-group @if($user->tel == '') hide @endif">
             <input type="tel" name="tel-dis" id="tel-dis" class="form-control"
                    value="{{ $user->tel }}" placeholder="手机" disabled>
             <span class="input-group-btn">
@@ -102,32 +120,12 @@
             </span>
         </div>
     </p>
-    <p>
-        @if($user->wechat_open_id=='')
-            <div class="password-form">
-                <div class="input-group">
-                    <label>微信：扫描二维码或在东大小秘书中点击“闲置市场”链接来关联微信。
-                        </label>
-                    <img src="/img/wxqr.png" height="72px" width="72px">
-                </div>
-            </div>
-        @else
-            <div class="password-form">
-                <div class="input-group">
-                    <label>微信：已关联 <span class="nickname">{{$user->wechat->nick_name}}</span></label>
-                </div>
-                <div class="input-group">
-                    <img class="head-img col-centered" src="{{$user->wechat->head_img_url}}" width="64px" height="64px">
-                </div>
-            </div>
-        @endif
-    </p>
 </div>
 </div>
 <hr>
 <div class="row">
     <div class="mx-auto">
-        @if($user->username=='')
+        @if($user->username=='' || $user->stuid=='')
             <div class="alert alert-info" role="alert">
                 <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
                 为你的账户设置其他登录方式
