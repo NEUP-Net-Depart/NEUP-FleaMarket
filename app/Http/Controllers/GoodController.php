@@ -136,6 +136,7 @@ class GoodController extends Controller
     {
         $data = [];
         $data['good'] = GoodInfo::with('tags')->where('id', $good_id)->first();
+		$data['cats'] = GoodCat::orderby('cat_index', 'asc')->get();
         //return json_encode($data['good']);
 		if($data['good']==NULL) return View::make('common.errorPage')->withErrors('商品ID错误！');
 		if(($data['good']->baned) && ($data['good']->user_id != $request->session()->get('user_id') && !$request->session()->get('is_admin')))
@@ -406,6 +407,17 @@ class GoodController extends Controller
             ->orderBy('tag_name', 'asc')
             ->get();
 	    return json_encode($tags);
+    }
+
+    public function updateCat(Request $request, $good_id)
+    {
+        $input = $request->all();
+        $good = GoodInfo::find($good_id);
+        if ($good == NULL)
+            return View::make('common.errorPage')->withErrors('商品ID错误！');
+        $good->cat_id = $input['cat_id'];
+        $good->update();
+        return Redirect::to('/good/' . $good_id);
     }
 
 }
