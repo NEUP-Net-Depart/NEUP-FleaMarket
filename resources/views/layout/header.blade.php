@@ -2,8 +2,12 @@
   <div class="navbar-bg"></div>
   <div class="navbar-filter"></div>
 </div>
+<div class="navbar-back2">
+  <div class="navbar-bg2"></div>
+  <div class="navbar-filter2"></div>
+</div>
 <div class="container">
-<nav class="navbar navbar-toggleable navbar-inverse" style="box-shadow:#ffffff 0 0 0">
+<nav class="navbar navbar-expand-lg navbar-dark" style="box-shadow:#ffffff 0 0 0">
   <div class="nav-item">
   <a class="navbar-toggler navbar-toggler-right nav-link" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height:40px">
     <span class="navbar-toggler-icon"></span>
@@ -11,7 +15,7 @@
   <div class="dropdown-menu dropdown-menu-right">
   @if(Session::has('user_id'))
     <a href="/user" class="dropdown-item">
-      <center><img src="/avatar/{{ Session::get('user_id') }}/110/110" class="avatar"/></center>
+      <center><img src="/avatar/{{ Session::get('user_id') }}/110/110" class="avatar" style="height:110px;width:110px"/></center>
       <label class="dropdown-header"><center>{{ Session::get('nickname') }}</center></label>
     </a>
     <a href="/logout" class="dropdown-item">登出</a>
@@ -40,7 +44,7 @@
         @if(Session::has('user_id'))
           <li class="nav-item dropdown">
             <a class="nav-link navbar-avatar nav-btn" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar"/>
+              <img src="/avatar/{{ Session::get('user_id') }}/40/40" class="avatar" style="height:40px;width:40px"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <label class="dropdown-header"><center>{{ Session::get('nickname') }}</center></label>
@@ -75,7 +79,7 @@
 <div class="banner-back"><div class="banner"></div></div>
 
   <p>
-  <div class="container hidden-sm-down">
+  <div class="container d-none d-md-block">
       <form action="/good" method="GET">
         <div class="input-group float-right search-group" style="width:250px">
             <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif">
@@ -85,7 +89,7 @@
         </div>
       </form>
   </div>
-  <div class="hidden-md-up container">
+  <div class="d-block d-md-none container">
       <form action="/good" method="GET">
         <div class="input-group float-right search-group">
             <input type="text" class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif">
@@ -127,13 +131,12 @@
     }
   </script>
  @endif
-
-<div class="col-12" style="top:16.5px;overflow:hidden;height:40px;border-bottom:1px solid #0275d8">
+<div class="col" style="top:16.5px;overflow:hidden;height:40px">
   <div class="container">
     <ul class="nav nav-pills" style="overflow-x: scroll;overflow-y: hidden;white-space: nowrap;height:58px;display:-webkit-box;display:-moz-box;">
-        <li class="nav-item" style="float: none"><a href="/good" class="nav-link @if(isset($cat_id)&&$cat_id == 0) active @endif">所有商品</a></li>
+        <li class="nav-item" style="float: none"><a href="/good" class="nav-link @if(isset($cat_id)&&$cat_id == 0) active @endif" style="color:rgba(255,255,255,.75)">所有商品</a></li>
         @foreach($cats as $cat)
-            <li class="nav-item" style="float: none"><a href="/good?cat_id={{ $cat->id }}" class="nav-link @if(isset($cat_id)&&$cat_id == $cat->id) active @endif">{{ $cat->cat_name }}</a></li>
+            <li class="nav-item" style="float: none"><a href="/good?cat_id={{ $cat->id }}" class="nav-link @if(isset($cat_id)&&$cat_id == $cat->id) active @endif" style="color:rgba(255,255,255,.75)">{{ $cat->cat_name }}</a></li>
         @endforeach
     </ul>
   </div>

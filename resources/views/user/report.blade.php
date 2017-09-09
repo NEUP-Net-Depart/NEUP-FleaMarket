@@ -8,7 +8,7 @@
 		<div class="card-header">
 			<h3>举报</h3>
 		</div>
-		<div class="card-block">
+		<div class="card-body">
 			<form action="/sendRepo/{{ $seller_id }}" method="POST">
 				{!! csrf_field() !!}
 				<div class="row">

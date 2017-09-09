@@ -31,7 +31,7 @@
         <div class="mx-auto">
             <div class="card reset-card">
                 <div class="card-header">重置密码</div>
-                    <div class="card-block">
+                    <div class="card-body">
                         @if($method=="GET")
                         <form action="/passwordReset/{{$token}}" method="POST">
                             <div class="form-group">

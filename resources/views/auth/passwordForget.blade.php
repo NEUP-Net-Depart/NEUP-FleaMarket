@@ -9,7 +9,7 @@
                 width:400px;
             }
             .row-first {
-                margin-top:130px;
+                margin-top:90px;
                 margin-bottom:50px;
             }
         }
@@ -30,7 +30,7 @@
         <div class="mx-auto">
             <div class="card reset-card">
                 <div class="card-header">忘记密码</div>
-                    <div class="card-block">
+                    <div class="card-body">
                         @if($method=="GET")
                         <form action="/iforgotit" method="POST">
                             <div class="form-group">

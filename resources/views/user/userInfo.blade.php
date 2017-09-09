@@ -30,7 +30,7 @@
         <div class="mx-auto">
             <div class="collapse" id="add-form">
                 <p>
-                <div class="card card-block">
+                <div class="card card-body">
                     @include('user.createUserInfo')
                 </div>
                 </p>

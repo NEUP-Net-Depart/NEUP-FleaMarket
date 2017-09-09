@@ -13,9 +13,9 @@
 @section('content')
 
         <div class="card">
-            <div class="card-block">
+            <div class="card-body">
             <div class="row">
-            <div class="col-12 col-md-8 col-lg-6 offset-md-2 offset-lg-3">
+            <div class="col-12">
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -58,7 +58,7 @@
                     <label for="price">商品价格</label>
                     <input type="number" step="0.01" min="0" name="price" id="price" value="{{count($errors) ? old('price') : $good->price}}" placeholder="商品价格" class="form-control">
                 </div>
-                <div class="form-group hidden-xs-up">
+                <div class="form-group d-none">
                     <label>商品类型</label>
                     <select name="type" class="btn btn-secondary dropdown-toggle" style="width:100%" value="0">
                         <option value="0" @if(($good->type==0&&!count($errors))||(old('type')==0&&count($errors))) selected="selected" @endif>普通商品</option>

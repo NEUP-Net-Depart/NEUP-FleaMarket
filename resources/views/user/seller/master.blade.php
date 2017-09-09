@@ -25,7 +25,7 @@
             @yield('tab-list')
         </ul>
     </div>
-    <div class="tab-content card-block">
+    <div class="tab-content card-body">
         @yield('tab-content')
     </div>
     </div>

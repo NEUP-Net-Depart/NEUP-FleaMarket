@@ -143,7 +143,7 @@
         @else
             <div class="input-group">
                 <input placeholder="用户名" type="text" name="username" id="username" class="form-control" value="{{$user->username}}" disabled>
-                <span class="input-group-btn"><input type="submit" class="btn btn-secondary disabled" value="设置"></span>
+                <span class="input-group-btn"><input type="submit" class="btn btn-secondary" value="设置" disabled></span>
             </div>
         @endif
         </p>
@@ -159,7 +159,7 @@
             @else
                 <div class="input-group">
                     <input placeholder="学号" type="text" name="stuid" id="stuid" class="form-control" value="{{$user->stuid}}" disabled>
-                    <span class="input-group-btn"><input type="submit" class="btn btn-secondary disabled" name="stuid_submit" value="绑定"></span>
+                    <span class="input-group-btn"><input type="submit" class="btn btn-secondary" name="stuid_submit" value="绑定" disabled></span>
                 </div>
             @endif
         </p>

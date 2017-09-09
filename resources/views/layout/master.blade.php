@@ -37,13 +37,13 @@
     <title>@yield('title') - 先锋市场 Powered by NEUPioneer</title>
 </head>
 <body>
-@include('layout.header')
-<div class="load-part" style="display:none">
-<div class="page-content container">
-    @yield('content')
-</div>
-@yield('navbm')
-@include('layout.footer')
-</div>
+    @include('layout.header')
+    <div class="load-part" style="display:none">
+        <div class="page-content container">
+            @yield('content')
+        </div>
+        @yield('navbm')
+        @include('layout.footer')
+    </div>
 </body>
 </html>

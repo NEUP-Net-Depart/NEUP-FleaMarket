@@ -30,11 +30,11 @@
     <div class="mx-auto col main-part">
         <div class="row">
             <div class="left-part col-xs-12 col-lg-8">
-                <div class="row"><div class="mx-auto"><a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="width:560px;"/></a></div></div>
+                <div class="row"><div class="mx-auto"><a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%;padding-left:15px;padding-right:15px"/></a></div></div>
                 <p>
                 <div class="card">
                     <div class="card-header">商品介绍</div>
-                    <div class="card-block" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
+                    <div class="card-body" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
                 </div>
                 </p>
             </div>
@@ -44,15 +44,24 @@
                         <h4 style="display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h4>
                     </td>
                 </table>
-            <div style="margin-left:20px">
+            <p>
+            <div class="row">
+            <div class="row mx-auto">
                 <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
-                <div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) @if($good->count > 1)(库存:{{ $good->count }}件)@else 仅一件 @endif @else 没库存了QAQ @endif</div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="row mx-auto">
             @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
                     {!! $errors->first() !!}
                 </div>
             @endif
+            </div>
+            </div>
+            <div class="row">
+            <div class="row mx-auto">
             @if(($good->user_id) != Session::get('user_id') && !$good->baned)
                 <p>
                 <form action="/good/{{ $good->id }}/buy" method="post">
@@ -67,48 +76,74 @@
                 </p>
             @endif
             </div>
-            <table class="table table-hover table-goodinfo">
+            </div>
+            </p>
+            <p>
+                        <div class="row">
+                        <div class="row mx-auto">
+                        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
+                            <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
+                                <input type="submit" class="btn btn-primary" value="修改" style="margin-left:5px;margin-right:5px">
+                            </form>
+                            <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                                <input type="submit" class="btn btn-primary" value="删除" style="margin-left:5px;margin-right:5px">
+                            </form>
+                        @endif
+                        @if(Session::get('is_admin') >= 1 && !$good->baned)
+                            <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
+                                {!! csrf_field() !!}
+                                <input type="submit" class="btn btn-primary" value="封禁" style="margin-left:5px;margin-right:5px">
+                            </form>
+                        @endif
+                        </div>
+                        </div>
+            </p>
+            <div class="card">
+            <div class="card-header">
+            商品信息
+            </div>
+            <table class="table table-hover table-goodinfo" style="margin-bottom:0">
                 <tbody>
                     <tr>
                         <th>卖家</th>
                         <td><a href="/user/{{ $user->id }}">@if($user->nickname!=""&&$user->nickname!=NULL){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif @if($user->baned)【已封禁】@endif</a></td>
                     </tr>
                     <tr>
+                        <th>库存</th>
+                        <td @if($good->count==0) class="text-danger" @endif>@if($good->count>0) @if($good->count > 1){{ $good->count }} 件@else 仅一件 @endif @else 没库存了QAQ @endif</td>
+                    </tr>
+                    <tr>
                         <th>分类</th>
-						<td>{{$good->cat_id}}</td>
-						@if(Session::get('is_admin')>=1 && !$good->baned)
 						<td>
+						@if(Session::get('is_admin')>=1 && !$good->baned)
 							<form action="/good/{{$good->id}}/updateCat" method="POST">
 							{!! csrf_field() !!}
-							<div class="row">
-								<div class="mx-auto">
-									<select name="cat_id" id="cat_id" class="btn btn-secondary dropdown-toggle" style="width:100%">
-										@foreach($cats as $cat)
-										<option value="{{$cat->id}}" @if(($good->cat_id==$cat->id&&!count($errors))||(old('cat_id')==$cat->id&&count($errors)))
-											selected="selected" @endif>{{$cat->cat_name}}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="mx-auto">
-									<input type="submit" class="btn btn-primary" value="保存">
-								</div>
-							</div>
+								<select name="cat_id" id="cat_id" class="btn btn-secondary dropdown-toggle btn-sm" onchange="this.form.submit()">
+									@foreach($cats as $cat)
+									<option value="{{$cat->id}}" @if(($good->cat_id==$cat->id&&!count($errors))||(old('cat_id')==$cat->id&&count($errors)))
+										selected="selected" @endif>{{$cat->cat_name}}</option>
+									@endforeach
+								</select>
 							</form>
-						</td>
+                        @else
+                        {{$good->cat->cat_name}}
 						@endif
+                        </td>
                     </tr>
                     <tr>
                         <th>收藏</th>
                         <td>
                 @if(isset($inFvlst))
                     @if(count($inFvlst) == 0)
-                        <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
+                        <button class="fa fa-star-o btn btn-primary btn-sm" onclick="add_favlist()" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
                     @endif
                     @if(count($inFvlst) != 0)
-                        <button class="fa fa-star btn btn-primary" onclick="del_favlist()" data-toggle="tooltip" data-placement="top" title="取消收藏QAQ"></button>
+                        <button class="fa fa-star btn btn-primary btn-sm" onclick="del_favlist()" data-toggle="tooltip" data-placement="top" title="取消收藏QAQ"></button>
                     @endif
                 @else
-                    <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
+                    <button class="fa fa-star-o btn btn-primary btn-sm" onclick="window.location.href='/login'" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
                 @endif
                         </td>
                     </tr>
@@ -120,26 +155,9 @@
                         <th>上架时间</th>
                         <td>{{$good->created_at}}</td>
                     </tr>
-                    <tr>
-                        @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
-                            <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
-                                <input type="submit" class="btn btn-primary" value="修改">
-                            </form>
-                            <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
-                                {!! csrf_field() !!}
-                                {!! method_field('DELETE') !!}
-                                <input type="submit" class="btn btn-primary" value="删除">
-                            </form>
-                        @endif
-                        @if(Session::get('is_admin') >= 1 && !$good->baned)
-                            <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
-                                {!! csrf_field() !!}
-                                <input type="submit" class="btn btn-primary" value="封禁">
-                            </form>
-                        @endif
-                    </tr>
                 </tbody>
             </table>
+            </div>
             </div>
         </div>
     </div>
@@ -158,7 +176,7 @@
                     $('.fa-star-o').attr('onclick', 'del_favlist()');
                     $('.fa-star-o').tooltip('dispose');
                     $('.fa-star-o').tooltip('show');
-                    $('.fa-star-o').attr('class','fa fa-star btn btn-primary');
+                    $('.fa-star-o').attr('class','fa fa-star btn btn-primary btn-sm');
                 }
             });
         }
@@ -176,120 +194,7 @@
                     $('.fa-star').attr('onclick', 'add_favlist()');
                     $('.fa-star').tooltip('dispose');
                     $('.fa-star').tooltip('show');
-                    $('.fa-star').attr('class','fa fa-star-o btn btn-primary');
-                }
-            });
-        }
-    </script>
-    <form id="fav">
-        {!! csrf_field() !!}
-    </form>
-@endsection
-
-@section('content')
-    <p>
-    <div class="row">
-        <div class="col-12 col-md-5">
-            <p><a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img class="card" src="/good/{{ sha1($good->id) }}/titlepic" style="max-width:100%"/></a></p>
-        </div>
-        <div class="col-12 col-md-7">
-            <div>
-            <span class="hidden-sm-down" style="position:relative;top:-8px">
-                @if(isset($inFvlst))
-                    @if(count($inFvlst) == 0)
-                        <button class="fa fa-star-o btn btn-primary" onclick="add_favlist()" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
-                    @endif
-                    @if(count($inFvlst) != 0)
-                        <button class="fa fa-star btn btn-primary" onclick="del_favlist()" data-toggle="tooltip" data-placement="top" title="取消收藏QAQ"></button>
-                    @endif
-                @else
-                    <button class="fa fa-star-o btn btn-primary" onclick="window.location.href='/login'" data-toggle="tooltip" data-placement="top" title="收藏OvO"></button>
-                @endif
-            </span>
-                <h2 style="margin-left:10px;display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h2>
-            </div>
-            卖家：<a href="/user/{{ $user->id }}">@if(isset($user->nickname)){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif @if($user->baned)【已封禁】@endif</a> &nbsp;
-            @if(!$user->baned)
-                <a href="/message/startConversation/{{ $user->id }}">联系卖家</a>
-            @endif
-            <div><!-- 放tag 和更多图片缩略图 --></div>
-            <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
-            <p><div @if($good->count==0) class="text-danger" @endif>@if($good->count>0) @if($good->count > 1)(库存:{{ $good->count }}件)@else 仅一件 @endif @else 没库存了QAQ @endif</div></p>
-            @if (count($errors) > 0)
-                <div class="alert alert-danger" role="alert">
-                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
-                    {!! $errors->first() !!}
-                </div>
-            @endif
-            @if(($good->user_id) != Session::get('user_id') && !$good->baned)
-                <form action="/good/{{ $good->id }}/buy" method="post">
-                    <div class="input-group">
-                        <input type="number" name="count" value="1" class="form-control" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
-                        {!! csrf_field() !!}
-                        <span class="input-group-btn">
-                        <input type="submit" class="btn btn-primary" value="购买"/>
-                    </span>
-                    </div>
-                </form>
-            @endif
-            @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
-                <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
-                    <input type="submit" class="btn btn-primary" value="修改">
-                </form>
-                <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
-                    {!! csrf_field() !!}
-                    {!! method_field('DELETE') !!}
-                    <input type="submit" class="btn btn-primary" value="删除">
-                </form>
-            @endif
-            @if(Session::get('is_admin') >= 1 && !$good->baned)
-                <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
-                    {!! csrf_field() !!}
-                    <input type="submit" class="btn btn-primary" value="封禁">
-                </form>
-            @endif
-        </div>
-    </div>
-    </p>
-    <div class="card">
-        <div class="card-header">
-    <h4>商品介绍</h4>
-        </div>
-    <div class="card-block" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
-    </div>
-    <script>
-        function add_favlist() {
-            var str_data = $("#fav input").map(function () {
-                return ($(this).attr("name") + '=' + $(this).val());
-            }).get().join("&");
-            $.ajax({
-                type: "POST",
-                url: "/good/{{ $good->id }}/add_favlist",
-                data: str_data,
-                success: function (msg) {
-                    $('.fa-star-o').attr('title','取消收藏QAQ');
-                    $('.fa-star-o').attr('onclick', 'del_favlist()');
-                    $('.fa-star-o').tooltip('dispose');
-                    $('.fa-star-o').tooltip('show');
-                    $('.fa-star-o').attr('class','fa fa-star btn btn-primary');
-                }
-            });
-        }
-        function del_favlist() {
-            var str_data1 = $("#fav input").map(function () {
-                return ($(this).attr("name") + '=' + $(this).val());
-            }).get().join("&");
-            var str_data = str_data1 + '&_method=DELETE';
-            $.ajax({
-                type: "POST",
-                url: "/good/{{ $good->id }}/del_favlist",
-                data: str_data,
-                success: function (msg) {
-                    $('.fa-star').attr('title','收藏OvO');
-                    $('.fa-star').attr('onclick', 'add_favlist()');
-                    $('.fa-star').tooltip('dispose');
-                    $('.fa-star').tooltip('show');
-                    $('.fa-star').attr('class','fa fa-star-o btn btn-primary');
+                    $('.fa-star').attr('class','fa fa-star-o btn btn-primary btn-sm');
                 }
             });
         }
@@ -300,7 +205,7 @@
 @endsection
 
 @section('navbm')
-    <div class="hidden-md-up col-12" style="position:sticky;bottom:37px">
+    <!--<div class="d--block d-md-none col-12" style="position:sticky;bottom:37px">
         <div class="float-left">
             @if(isset($inFvlst))
                 @if(count($inFvlst) == 0)
@@ -325,5 +230,5 @@
                 </form>
             @endif
         </div>
-    </div>
+    </div>-->
 @endsection

@@ -19,7 +19,7 @@
             .col-card {
                 max-width:130px;
             }
-            .nav-pills {
+            .user-profile-pills {
                 width:100px;
             }
             .password-form {
@@ -76,14 +76,14 @@
 @section('content')
 
     <div class="row-first" style="margin-top:20px">
-        <div class="mx-auto col">
+        <div class="mx-auto">
             <div class="card main-card row">
-                <div class="card-block">
+                <div class="card-body">
                     <div class="row-card">
                         <div class="col col-card">
                             <div class="row paowa">
                                 <div class="mx-auto">
-                                    <ul class="nav nav-pills">
+                                    <ul class="nav nav-pills user-profile-pills">
                                         <li class="nav-item"><a class="nav-link @if(!isset($tab) || ($tab != 'account') && ($tab != 'contact')) active @endif" href="/user">个人信息</a></li>
                                         <li class="nav-item"><a class="nav-link @if($tab == 'account') active @endif" href="/user?tab=account">用户帐户</a></li>
                                         <li class="nav-item"><a class="nav-link @if($tab == 'contact') active @endif" href="/user?tab=contact">联系方式</a></li>

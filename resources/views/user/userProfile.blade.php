@@ -83,7 +83,7 @@
                 <li class="nav-item"><a class="nav-link" href="#tickets" aria-controls="tickets" role="tab" data-toggle="tab">历史评价</a></li>
             </ul>
         </div>
-        <div class="tab-content card-block">
+        <div class="tab-content card-body">
             <div role="tabpanel" class="tab-pane active" id="goods" style="min-height: 270px">
                 <div class="row">
                     @foreach($goods as $good)
@@ -94,7 +94,7 @@
                                         <div class="card-img-top">
                                             <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" style="width:100%"/>
                                         </div>
-                                        <div class="card-block">
+                                        <div class="card-body">
                                             <div style="word-break:break-all">{{ $good->good_name }}</div>
                                             <div class="text-warning"><b>￥{{ $good->price }}</b></div>
                                             @if($good->count==0)
@@ -119,7 +119,7 @@
                 <div class="card-section">
                     <div id="tickets-container" class="card-section">
                         @foreach($tickets as $ticket)
-                            <div class="card card-block" style="margin-bottom: 5px">
+                            <div class="card card-body" style="margin-bottom: 5px">
                                 <label>{{ $ticket->created_at }}
                                     @if($ticket->type == 1)
                                         一只小萌妹评价了TA说：
