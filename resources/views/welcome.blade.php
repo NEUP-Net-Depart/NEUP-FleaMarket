@@ -45,7 +45,7 @@
             } else {
                 $('.popular-col').attr('class','col popular-col d-none');
                 $('.popular-col2').attr('class','popular-col2 row mx-auto');
-                $('.goodinfo-col').attr('class','yesrpg goodinfo-col col-lg-4 col-md-6');
+                $('.goodinfo-col').attr('class','yesrpg goodinfo-col col-lg-2 col-md-4');
             }
         }
     </script>
