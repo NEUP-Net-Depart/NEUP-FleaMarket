@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-auto col-9" id="ds">
+                <div class="col-md-7 col-auto" id="ds">
                     <a>价格筛选</a> <input id="priceSet1" style="display:inline-block"maxlength="9" class="form-control" value="@if(isset($_GET['start_price'])){{ $_GET['start_price'] }}@endif"/> - <input id="priceSet2" class="form-control" style="display:inline-block" maxlength="9" value="@if(isset($_GET['end_price'])){{ $_GET['end_price'] }}@endif"/><button class="btn btn-primary" onclick="setc('a')">确定</button>
                 </div>
             </div>
