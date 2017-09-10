@@ -185,3 +185,14 @@ img {
 .dropdown-menu {
     margin: 0;
 }
+
+@media (max-width: 768px){
+    .hidden-xs-down{
+        display:none;
+    }
+}
+@media (min-width: 768px){
+    .hidden-sm-up{
+        display:none;
+    }
+}

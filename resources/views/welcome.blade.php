@@ -41,11 +41,11 @@
             if (mq.matches) {
                 $('.popular-col').attr('class','col popular-col');
                 $('.popular-col2').attr('class','col popular-col2 d-none');
-                $('.goodinfo-col').attr('class','col yesrpg goodinfo-col');
+                $('.goodinfo-col').attr('class','col-6 yesrpg goodinfo-col');
             } else {
                 $('.popular-col').attr('class','col popular-col d-none');
                 $('.popular-col2').attr('class','popular-col2 row mx-auto');
-                $('.goodinfo-col').attr('class','yesrpg goodinfo-col col-lg-4 col-md-6');
+                $('.goodinfo-col').attr('class','yesrpg goodinfo-col col-lg-4 col-md-6 col-6');
             }
         }
     </script>

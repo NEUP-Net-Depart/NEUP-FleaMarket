@@ -11,8 +11,8 @@
         @include('layout.catlist')
         <div class="col-12 col-md-10">
             <p>
-            <div class="row">
-                <div class="col-12 col-md-3">
+            <div class="row hidden-xs-down">
+                <div class="col-md-3 col-3">
                     <input type="hidden" id="nm" value="@if(isset($_GET['sort'])){{ $_GET['sort'] }}@endif" style="display: none" />
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" id="sort" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,12 +27,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-5" id="ds">
+                <div class="col-md-auto col-9" id="ds">
                     <a>价格筛选</a> <input id="priceSet1" style="display:inline-block"maxlength="9" class="form-control" value="@if(isset($_GET['start_price'])){{ $_GET['start_price'] }}@endif"/> - <input id="priceSet2" class="form-control" style="display:inline-block" maxlength="9" value="@if(isset($_GET['end_price'])){{ $_GET['end_price'] }}@endif"/><button class="btn btn-primary" onclick="setc('a')">确定</button>
                 </div>
-                <div class="col-12 col-lg-5" style="display:none">
-                    <a>库存下限</a> <input id="pricec" style="display:inline-block" maxlength="9" class="form-control" value="@if(isset($_GET['start_count'])){{ $_GET['start_count'] }}@endif"/><button class="btn btn-primary" id="subs" onclick="setc('a')">确定</button>
-                </div>
+            </div>
+            <div class="row hidden-sm-up">
+                <li class="nav-item dropdown" style="list-style-type:none;">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">综合排序</a>
+                    <div class="dropdown-menu">
+                        <a href="/good/" class="dropdown-item">综合排序</a>
+                        <a href="#" onclick="setc('p')" class="dropdown-item">按价格从低到高</a>
+                        <a href="#" onclick="setc('pd')" class="dropdown-item">按价格从高到低</a>
+                        <a href="#" onclick="setc('c')" class="dropdown-item">按库存从少到多</a>
+                        <a href="#" onclick="setc('cd')" class="dropdown-item">按库存从多到少</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" style="list-style-type:none;">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">价格区间</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" onclick="price(0,20)">0-20</a>
+                        <a class="dropdown-item" href="#" onclick="price(20,50)">20-50</a>
+                        <a class="dropdown-item" href="#" onclick="price(50,300)">50-300</a>
+                        <a class="dropdown-item" href="#" onclick="price2(300)">>300</a>
+                    </div>
+                </li>
             </div>
             </p>
             <div class="row">
