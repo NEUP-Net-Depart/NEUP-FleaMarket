@@ -28,13 +28,12 @@ class AdminController extends Controller
     public function adminIndex(Request $request, $tab = 'notice')
     {
         $data = [];
-        $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
         $data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
         $data['users'] = User::orderby('id', 'asc')->get();
-		$data['announcements'] = Announcement::orderby('id', 'dsc')->get();
-		$data['reports'] = Ticket::where('type', '2')->orWhere('type', '3')->orWhere('type', '4')->orWhere('type', '5')->orderby('id', 'dsc')->paginate(40);
-		$data['users'] = User::orderby('id', 'asc')->paginate(40);
-		$data['trans'] = Transaction::orderby('id', 'asc')->paginate(40);
+        $data['announcements'] = Announcement::orderby('id', 'dsc')->get();
+        $data['reports'] = Ticket::where('type', '2')->orWhere('type', '3')->orWhere('type', '4')->orWhere('type', '5')->orderby('id', 'dsc')->paginate(40);
+        $data['users'] = User::orderby('id', 'asc')->paginate(40);
+        $data['trans'] = Transaction::orderby('id', 'asc')->paginate(40);
         return View::make('admin.'.$tab)->with($data);
     }
 
@@ -82,6 +81,12 @@ class AdminController extends Controller
         return Redirect::to('/admin');
     }
 
+    public function getCategory(Request $request)
+    {
+        $data['cats'] = GoodCat::orderby('cat_name', 'asc')->get();
+        return json_encode($data);
+    }
+
     /**
      * @function AdminController@addCategory
      * @input Request $request
@@ -94,20 +99,7 @@ class AdminController extends Controller
         $cat = new GoodCat;
         $cat->cat_name = $input['cat_name'];
         $cat->save();
-        return Redirect::to('/admin/classify');
-    }
-
-    /**
-     * @function AdminController@deleteCategory
-     * @input Request $request, $cat_id
-     * @return Redirect
-     * @description Delete a specify category.
-     */
-    public function deleteCategory(Request $request, $cat_id)
-    {
-        $cat = GoodCat::find($cat_id);
-        $cat->delete();
-        return Redirect::to('/admin/classify');
+        return json_encode([ 'result' => true, 'data' => $cat ]);
     }
 
     /**
@@ -116,62 +108,68 @@ class AdminController extends Controller
      * @return Redirect
      * @description Edit a specify category.
      */
-    public function editCategory(Request $request, $cat_id)
+    public function editCategory(Request $request)
     {
         $input = $request->all();
-        $cat = GoodCat::find($cat_id);
-        $cat->cat_name = $input['cat_name'];
-        $cat->update();
-        return Redirect::to('/admin/classify');
+        if(count($input['cats']) <= 1) {
+            foreach ($input['cats'] as $cat_id) {
+                $cat = GoodCat::find($cat_id);
+                $cat->cat_name = $input['cat_name'];
+                $cat->save();
+            }
+        } else {
+            $cat = new GoodCat;
+            $cat->cat_name = $input['cat_name'];
+            $cat->save();
+            $goods = GoodInfo::whereIn('cat_id', $input['cats'])->get();
+            foreach ($goods as $good) {
+                $good->cat_id = $cat->id;
+                $good->save();
+            }
+            GoodCat::whereIn('id', $input['cats'])->delete();
+        }
+        return json_encode([ 'result' => true, 'data' => $input['cats'] ]);
     }
 
-    public function mergeCategory(Request $request)
+    public function getTag(Request $request)
     {
         $input = $request->all();
-        $base = $input['base_cat'];
-        $head = $input['head_cat'];
-        // Head cat will be terminated and all good of head cat will be catted base cat.
-        GoodInfo::where('good_cat', $head)
-            ->update(['good_cat' => $base]);
-        GoodCat::destroy($head);
-        return Redirect::to('/admin/classify');
+        $cat_id = $input['good_cat_id'];
+        $data['tags'] = Tag::where('good_cat_id', $cat_id)->get();
+        return json_encode($data);
     }
 
     public function addTag(Request $request)
     {
         $input = $request->all();
         $tag_name = $input['tag_name'];
-        $cat_id = $input['cat_id'];
-        Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $cat_id]);
-        return Redirect::to('/admin/classify');
+        $cat_id = $input['good_cat_id'];
+        $tag = Tag::firstOrCreate(['tag_name' => $tag_name, 'good_cat_id' => $cat_id]);
+        return json_encode([ 'result' => true, 'data' => $tag ]);
     }
 
-    public function editTag(Request $request, $tag_id)
+    public function editTag(Request $request)
     {
         $input = $request->all();
-        $tag = Tag::find($tag_id);
-        $tag->tag_name = $input['tag_name'];
-        $tag->update();
-        return Redirect::to('/admin/classify');
-    }
-
-    public function deleteTag(Request $request, $tag_id)
-    {
-        Tag::destroy($tag_id);
-        GoodTag::where('tag_id', $tag_id)->delete();
-        return Redirect::to('/admin/classify');
-    }
-
-    public function mergeTag(Request $request)
-    {
-        $input = $request->all();
-        $base = $input['base_tag'];
-        $head = $input['head_tag'];
-        // Head tag will be terminated and all good of head tag will be tagged base tag.
-        GoodTag::where('tag_id', $head)
-            ->update(['tag_id' => $base]);
-        Tag::destroy($head);
-        return Redirect::to('/admin/classify');
+        if(count($input['tags']) <= 1) {
+            foreach ($input['tags'] as $tag_id) {
+                $tag = Tag::find($tag_id);
+                $tag->tag_name = $input['tag_name'];
+                $tag->save();
+            }
+        } else {
+            $tag = new Tag();
+            $tag->tag_name = $input['tag_name'];
+            $tag->good_cat_id = $input['good_cat_id'];
+            $tag->save();
+            $good_tags = GoodTag::whereIn('tag_id', $input['tags'])->get();
+            foreach ($good_tags as $good_tag) {
+                $good_tag->tag_id = $tag->id;
+                $good_tag->save();
+            }
+            Tag::whereIn('id', $input['tags'])->delete();
+        }
+        return json_encode([ 'result' => true, 'data' => $input['tags'] ]);
     }
 
     /**

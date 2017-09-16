@@ -9,20 +9,20 @@
                 font-size: 30px;
             }
         }
-        @media (min-width: 1200px) {
+        @media (min-width: 768px) {
             .main-part {
                 width: 1200px;
             }
             .slide-col {
-                max-width: 410px;
+                max-width: 460px;
             }
             .carousel {
-                width: 369.77px;
-                height: 208px;
+                width: 444.44px;
+                height: 250px;
             }
             .slide-img {
-                width: 369.77px;
-                height: 208px;
+                width: 444.44px;
+                height: 250px;
             }
             .goodinfo-col {
                 max-width: 185px;
@@ -33,19 +33,43 @@
                 width: 165px;
             }
         }
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .slide-col {
+                max-width: 370px;
+            }
+            .carousel {
+                width: 355.56px;
+                height: 200px;
+            }
+            .slide-img {
+                width: 444.44px;
+                height: 200px;
+            }
+        }
+        @media (min-width: 768px) and (max-width: 991px) {
+            .slide-col {
+                max-width: 280px;
+            }
+            .carousel {
+                width: 266.67px;
+                height: 150px;
+            }
+            .slide-img {
+                width: 266.67px;
+                height: 150px;
+            }
+        }
     </style>
     <script>
-        match_media = "(min-width:1200px)";
+        match_media = "(min-width:768px)";
 
         function WidthChange(mq) {
             if (mq.matches) {
                 $('.popular-col').attr('class','col popular-col');
                 $('.popular-col2').attr('class','col popular-col2 d-none');
-                $('.goodinfo-col').attr('class','col yesrpg goodinfo-col');
             } else {
                 $('.popular-col').attr('class','col popular-col d-none');
                 $('.popular-col2').attr('class','popular-col2 row mx-auto');
-                $('.goodinfo-col').attr('class','yesrpg goodinfo-col col-lg-2 col-md-4');
             }
         }
     </script>

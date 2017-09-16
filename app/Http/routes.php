@@ -136,14 +136,20 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/', "ContentController@Mainpage");
 
     Route::get('/notice/{notice_id}', "ContentController@announcementPage");
-    Route::post('/cat/add', "AdminController@addCategory")->middleware('admin');
-    Route::post('/cat/{cat_id}/edit', "AdminController@editCategory")->middleware('admin');
-    Route::delete('/cat/{cat_id}/delete', "AdminController@deleteCategory")->middleware('admin');
     Route::post('/notice', "AdminController@sendAnnouncement")->middleware('admin');
     Route::delete('/notice/{ann_id}', "AdminController@delAnnouncement")->middleware('admin');
 
-    Route::get('/admin/{tab?}', "AdminController@adminIndex")->middleware('admin');
     Route::get('/test/email', "AdminController@testEmail")->middleware('su');
+
+    Route::get('/cat/get', "AdminController@getCategory")->middleware('admin');
+    Route::post('/cat/add', "AdminController@addCategory")->middleware('admin');
+    Route::put('/cat/edit', "AdminController@editCategory")->middleware('admin');
+
+    Route::get('/tag/get', "AdminController@getTag")->middleware('admin');
+    Route::post('/tag/add', "AdminController@addTag")->middleware('admin');
+    Route::put('/tag/edit', "AdminController@editTag")->middleware('admin');
+
+    Route::get('/admin/{tab?}', "AdminController@adminIndex")->middleware('admin');
 
     Route::post('/user/{user_id}/updatePriv', [
         "uses" => "AdminController@updateUserPriv",
@@ -156,6 +162,7 @@ Route::group(['middleware' => ['web']],function () {
     ]);
 
     Route::post('/captcha/sendText', "TelValidateController@sendRegTextCaptcha");
+    Route::post('/captcha/sendChangeText', "TelValidateController@sendChangeTextCaptcha");
     Route::post('/register/saveTel', "TelValidateController@saveUserTel");
 
     Route::get('/tos', "ContentController@tos");
