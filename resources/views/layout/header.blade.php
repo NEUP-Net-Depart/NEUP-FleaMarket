@@ -38,7 +38,7 @@
   @endif
   </div>
   </div>
-    <a class="navbar-brand" href="/">先锋市场首页</a>
+    <a class="navbar-brand" href="/">先锋市场</a>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav ml-auto">
         @if(Session::has('user_id'))

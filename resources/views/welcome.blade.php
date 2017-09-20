@@ -24,14 +24,6 @@
                 width: 444.44px;
                 height: 250px;
             }
-            .goodinfo-col {
-                max-width: 185px;
-                min-width: 185px;
-            }
-            .goodinfo-img {
-                height: 86.06px;
-                width: 165px;
-            }
         }
         @media (min-width: 992px) and (max-width: 1199px) {
             .slide-col {
