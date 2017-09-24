@@ -119,6 +119,9 @@ Route::group(['middleware' => ['web']],function () {
     Route::post('/good/{good_id}/add_favlist', "GoodController@addFavlist")->middleware('auth');
     Route::delete('/good/{good_id}/del_favlist', "GoodController@delFavList")->middleware('auth');
 
+    Route::post('/good/{good_id}/star', "GoodController@star")->middleware('admin');
+    Route::delete('/good/{good_id}/unstar', "GoodController@unstar")->middleware('admin');
+
     Route::post('/good/{good_id}/buy', "TransactionController@add")->middleware('regc');
     Route::post('/good/{good_id}/updateCat', "GoodController@updateCat")->middleware('auth');
 

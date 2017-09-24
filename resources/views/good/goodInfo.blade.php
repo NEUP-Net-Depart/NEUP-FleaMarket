@@ -91,6 +91,19 @@
                                 <input type="submit" class="btn btn-primary" value="删除" style="margin-left:5px;margin-right:5px">
                             </form>
                         @endif
+                        @if(Session::get('is_admin') >= 1 && !$good->stared)
+                            <form action="/good/{{ $good->id }}/star" method="POST" style="display:inline-block;">
+                                {!! csrf_field() !!}
+                                <input type="submit" class="btn btn-primary" value="置顶" style="margin-left:5px;margin-right:5px">
+                            </form>
+                        @endif
+                        @if(Session::get('is_admin') >= 1 && $good->stared)
+                            <form action="/good/{{ $good->id }}/unstar" method="POST" style="display:inline-block;">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                                <input type="submit" class="btn btn-primary" value="取下" style="margin-left:5px;margin-right:5px">
+                            </form>
+                        @endif
                         @if(Session::get('is_admin') >= 1 && !$good->baned)
                             <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
                                 {!! csrf_field() !!}
