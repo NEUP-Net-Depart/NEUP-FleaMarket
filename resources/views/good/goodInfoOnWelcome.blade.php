@@ -10,12 +10,13 @@
                     <div class="details" style="position:absolute;z-index:200;width:100%;display:none;">
                         <div class="det-d d-none d-md-block" style="position:absolute;z-index:200;top:-37px;left:5px;color:white;font-size:12px;">
                         售价：￥{{ $good->price }}
-                       <p> @if($good->count==0)
+                        <p></p>
+                            @if($good->count==0)
                                 无库存QAQ
                             @else
                                 库存：{{ $good->count }}
                             @endif
-                       </p>
+                            <p></p>
                         </div>
                     </div>
                 </div>

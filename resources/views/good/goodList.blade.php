@@ -10,7 +10,7 @@
     <div class="row">
         @include('layout.catlist')
         <div class="col-12 col-md-10">
-            <p>
+            <p></p>
             <div class="row">
                 <div class="col-12 col-md-3">
                     <input type="hidden" id="nm" value="@if(isset($_GET['sort'])){{ $_GET['sort'] }}@endif" style="display: none" />
@@ -34,7 +34,7 @@
                     <a>库存下限</a> <input id="pricec" style="display:inline-block" maxlength="9" class="form-control" value="@if(isset($_GET['start_count'])){{ $_GET['start_count'] }}@endif"/><button class="btn btn-primary" id="subs" onclick="setc('a')">确定</button>
                 </div>
             </div>
-            </p>
+            <p></p>
             <div class="row">
                 @foreach($goods as $good)
                     <div class="col-6 col-md-4 col-lg-3">

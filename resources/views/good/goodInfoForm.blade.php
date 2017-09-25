@@ -83,13 +83,15 @@
                     </div>
                 </div>
                 --}}
-                <p>
+                <p></p>
                 <div>
                     <label for="goodTitleUpload" class="btn btn-primary">上传封面</label>
-                    <p><div id="preview">
-                </div></p>
+                    <p></p>
+                    <div id="preview">
                 </div>
-                </p>
+                <p></p>
+                </div>
+                <p></p>
                 <div style="display: none">
                     <input type="file" id="goodTitleUpload" class="show-for-sr" name="goodTitlePic"
                             onchange="preview(this)"/>

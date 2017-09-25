@@ -31,12 +31,12 @@
         <div class="row">
             <div class="left-part col-xs-12 col-lg-8">
                 <div class="row"><div class="mx-auto"><a id="pic" href="/good/{{ sha1($good->id) }}/titlepic"><img src="/good/{{ sha1($good->id) }}/titlepic" style="width:100%;padding-left:15px;padding-right:15px"/></a></div></div>
-                <p>
+                <p></p>
                 <div class="card">
                     <div class="card-header">商品介绍</div>
                     <div class="card-body" style="word-break:break-all;min-height: 100px">{!! $good->description !!}</div>
                 </div>
-                </p>
+                <p></p>
             </div>
             <div class="col">
                 <table class="table" style="margin-bottom:0px">
@@ -44,7 +44,7 @@
                         <h4 style="display:inline-block;word-break:break-all">{{ $good->good_name }}@if($good->baned)【已封禁】@endif</h4>
                     </td>
                 </table>
-            <p>
+                <p></p>
             <div class="row">
             <div class="row mx-auto">
                 <div>售价：<h3 style="display:inline-block"><b class="text-warning">￥{{ $good->price }}</b></h3></div>
@@ -63,7 +63,7 @@
             <div class="row">
             <div class="row mx-auto">
             @if(($good->user_id) != Session::get('user_id') && !$good->baned)
-                <p>
+                <p></p>
                 <form action="/good/{{ $good->id }}/buy" method="post">
                     <div class="input-group">
                         <input type="number" name="count" value="1" class="form-control" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
@@ -73,12 +73,11 @@
                     </span>
                     </div>
                 </form>
-                </p>
+                <p></p>
             @endif
             </div>
             </div>
-            </p>
-            <p>
+            <p></p>
                         <div class="row">
                         <div class="row mx-auto">
                         @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)

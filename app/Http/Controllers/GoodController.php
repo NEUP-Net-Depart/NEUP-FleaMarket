@@ -35,7 +35,7 @@ class GoodController extends Controller
      */
     public function getList(Request $request)
     {
-        $paginate_limit = 16;
+        $paginate_limit = 18;
         $data = [];
         $input = $request->all();
         $query = "";
