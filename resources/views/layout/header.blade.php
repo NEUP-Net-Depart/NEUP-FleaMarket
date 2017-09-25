@@ -2,7 +2,7 @@
 
 <div class="navbar-back"><div class="navbar-bg"></div><div class="navbar-filter"></div></div>
 <div class="container navbar-container">
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-md navbar-dark">
         <div class="dropdown">
             <button class="navbar-toggler" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="navbar-toggler-icon"></span></button>
             <div class="dropdown-menu dropdown-menu-right">
@@ -18,7 +18,7 @@
                     <a href="/user/sell" class="dropdown-item">我的出售</a>
                     @if(Session::get('is_admin') >= 1) <a href="/admin" class="dropdown-item">管理中心</a> @endif
                     <div class="dropdown-divider"></div>
-                    <a href="/message" class="dropdown-item">消息 <span class='badge badge-warning message-num-tip' style='display:none'></span></a>
+                    <a href="/message" class="dropdown-item">消息 <span class='badge badge-warning message-num-tip' style='display: none'></span></a>
                     <a href="/good/add" class="dropdown-item">出售</a>
                 @else
                     <a href="/wx" class="dropdown-item bg-success text-light">微信快捷登录</a>
@@ -46,7 +46,7 @@
                             <a href="/logout" class="dropdown-item bg-danger text-light"><center>登出</center></a>
                         </div>
                     </li>
-                    <li class="nav-item"><a href="/message" class="nav-link nav-btn">消息 <span class='badge badge-warning message-num-tip' style='display:none'></span></a></li>
+                    <li class="nav-item"><a href="/message" class="nav-link nav-btn">消息 <span class='badge badge-warning message-num-tip' style='display: none'></span></a></li>
                     <li class="nav-item"><a href="/good/add" class="nav-link nav-btn">出售</a></li>
                 @else
                     <li class="nav-item dropdown">
@@ -64,13 +64,18 @@
 </div>
 
 <div class="container search-container">
-    <div class="col col-lg-3 ml-auto">
-        <form action="/good" method="GET">
-            <div class="input-group">
-                <input class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{urldecode($_GET['query'])}}@endif">
-                <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="G♂"></span>
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-8 col-lg-9 d-none d-md-block">
+            <a href="/"><img src="/img/logo.png" style="height:80px;margin-top:10px"/></a>
+        </div>
+        <div class="col col-md-4 col-lg-3 ml-auto">
+            <form action="/good" method="GET">
+                <div class="input-group">
+                    <input class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])) {{ urldecode($_GET['query']) }} @endif">
+                    <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="G♂"></span>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -84,7 +89,7 @@
     </ul>
 </div>
 
-<p></p>
+<br/>
 
 @if(Session::has('user_id'))
     <script>
@@ -102,14 +107,14 @@
                 success: function (msg) {
                     msg = parseInt(msg);
                     if(msg) {
-                        $(".navbar-toggler").html("<span class='badge badge-warning message-num-tip message-num-tip-toggle' style='display:none'></span>");
-                        $(".message-num-tip").attr("style", "display:inline-block");
+                        $(".navbar-toggler").html("<span class='badge badge-warning message-num-tip message-num-tip-toggle' style='display: none'></span>");
+                        $(".message-num-tip").attr("style", "display: inline-block");
                         if(msg > 99)
                             $(".message-num-tip").html("99+");
                         else
                             $(".message-num-tip").html(msg);
                     } else {
-                        $(".message-num-tip").attr("style", "display:none");
+                        $(".message-num-tip").attr("style", "display: none");
                     }
                 }
             })

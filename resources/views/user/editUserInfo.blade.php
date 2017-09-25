@@ -1,4 +1,4 @@
-<div class="row-form">
+<div class="row">
 <div class="mx-auto">
 <form id="modify_user_info_form">
     <input type="hidden" type="text" name="id" value="{{$userinfo[0]->id}}">

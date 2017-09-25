@@ -2,61 +2,9 @@
 
 @section('title', "首页")
 
-@section('asset')
-    <style>
-        @media (max-width: 640px){
-            .det-d{
-                font-size: 30px;
-            }
-        }
-        @media (min-width: 1200px) {
-            .main-part {
-                width: 1200px;
-            }
-            .slide-col {
-                max-width: 410px;
-            }
-            .carousel {
-                width: 369.77px;
-                height: 208px;
-            }
-            .slide-img {
-                width: 369.77px;
-                height: 208px;
-            }
-            .goodinfo-col {
-                max-width: 185px;
-                min-width: 185px;
-            }
-            .goodinfo-img {
-                height: 86.06px;
-                width: 165px;
-            }
-        }
-    </style>
-    <script>
-        match_media = "(min-width:1200px)";
-
-        function WidthChange(mq) {
-            if (mq.matches) {
-                $('.popular-col').attr('class','col popular-col');
-                $('.popular-col2').attr('class','col popular-col2 d-none');
-                $('.goodinfo-col').attr('class','col yesrpg goodinfo-col');
-            } else {
-                $('.popular-col').attr('class','col popular-col d-none');
-                $('.popular-col2').attr('class','popular-col2 row mx-auto');
-                $('.goodinfo-col').attr('class','yesrpg goodinfo-col col-lg-2 col-md-4');
-            }
-        }
-    </script>
-@endsection
-
-
 @section('content')
 <div class="row">
-<p>
-<div class="row main-part mx-auto">
-    <div class="col slide-col">
+    <div class="col-12 col-md-4">
     <div id="carouselStarGoodIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @if(count($stargoods) == 0)
@@ -74,7 +22,7 @@
             @endif
             @foreach($stargoods as $good)
                 <div class="carousel-item @if($loop->first) active @endif ">
-                    <a href="/good/{{ $good->id }}"><img class="d-block slide-img" src="/good/{{ sha1($good->id) }}/titlepic" alt="{{ $good->good_name }}"></a>
+                    <a href="/good/{{ $good->id }}"><img class="d-block slide-img" src="/good/{{ sha1($good->id) }}/titlepic" alt="{{ $good->good_name }}" style="width:100%"></a>
                 </div>
             @endforeach
         </div>
@@ -90,24 +38,23 @@
         @endif
     </div>
     </div>
-    <div class="col popular-col d-none">
+    <div class="col-8 d-none d-md-block">
         <div class="row">
         @foreach($populargoods as $good)
             @include('good.goodSimpleInfoOnWelcome')
         @endforeach
         </div>
     </div>
-</div>
-</p>
-<div class="popular-col2 row mx-auto" style="margin-top:12px;height:115px;overflow:hidden">
+<div class="row mx-auto d-md-none" style="margin-top:12px;height:115px;overflow:hidden">
     <div class="row">
     <div style="overflow-x: scroll;overflow-y: hidden;height:133px;white-space: nowrap;display:-webkit-box;display:-moz-box;">
     @foreach($populargoods as $good)
-        @include('good.goodSimpleInfoOnWelcome')
+        @include('good.goodSimpleInfoOnWelcome2')
     @endforeach
     </div>
     </div>
 </div>
+<br/>
 <div class="row main-part mx-auto">
     <div class="col">
         @if(count($newgoods)>0)

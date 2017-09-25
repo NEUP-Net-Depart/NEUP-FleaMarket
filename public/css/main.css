@@ -113,11 +113,22 @@ a:hover, a:focus {
     vertical-align: middle;
 }
 
+.banner-logo {
+    position: absolute;
+    top: 56px;
+    left: 0px;
+
+}
+
 .search-container {
     position: absolute;
-    top: 87px;
+    top: 56px;
     left: 0;
     right: 0;
+}
+
+.search-container .input-group {
+    margin-top: 31px;
 }
 
 #searchq {
