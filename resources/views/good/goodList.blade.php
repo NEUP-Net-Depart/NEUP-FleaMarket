@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         @include('layout.catlist')
-        <div class="col-12 col-md-10">
+        <div class="col-12">
             <p>
             <div class="row d-none d-md-flex">
                 <div class="col-md-3 col-3">
@@ -55,7 +55,7 @@
             </p>
             <div class="row">
                 @foreach($goods as $good)
-                    <div class="col-6 col-md-4 col-lg-3">
+                    <div class="col-6 col-sm-4 col-lg-2">
                         <div class="good" style="margin-bottom:20px;">
                             <a href="/good/{{ $good->id }}">
                                 <div class="card">
