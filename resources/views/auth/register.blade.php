@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', "登录")
+@section('title', "注册")
 
 @section('content')
 <br/>
@@ -17,7 +17,7 @@
     </div>
     <div class="col col-md-5">
         <div class="card">
-            <div class="card-header">登录</div>
+            <div class="card-header">注册</div>
             <div class="card-body">
                 @if (count($errors) > 0)
                     <div class="alert alert-danger" role="alert">
@@ -38,7 +38,7 @@
                     {!! csrf_field() !!}
                     <div class="row">
                         <div class="col-auto mr-auto">
-                            <input type="submit" class="btn btn-primary" value="登录">
+                            <input type="submit" class="btn btn-primary" value="注册">
                         </div>
                         <div class="col-auto ml-auto">
                             <input type="button" class="btn btn-success" value="校卡平台快捷登录" onclick="window.location.href='/sso'">

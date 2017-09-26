@@ -9,8 +9,7 @@
 @section('content')
     <div class="row">
         @include('layout.catlist')
-        <div class="col-12 col-md-10">
-            <p></p>
+        <div class="col">
             <div class="row">
                 <div class="col-12 col-md-3">
                     <input type="hidden" id="nm" value="@if(isset($_GET['sort'])){{ $_GET['sort'] }}@endif" style="display: none" />
