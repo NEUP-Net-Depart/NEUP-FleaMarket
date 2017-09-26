@@ -48,9 +48,6 @@
                                 <img class="mavatar" :src="'/avatar/' + contact.contact_id + '/64/64'"/>
                             </span>
                             </td>
-                            <span id="contact-closer" class="badge secondary" v-on:click="closeContact(index)">
-                                X
-                            </span>
                             <td>
                                 <p class="con-name"> @{{ contact.contact_id == 0 ? "系统消息" :
                                 (contact.contact.baned == 0 ? contact.contact.nickname :
