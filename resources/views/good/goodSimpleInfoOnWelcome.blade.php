@@ -1,4 +1,4 @@
-<div class="yesrpg col-md-3">
+<div class="yesrpg col-md-4">
     <div class="good" style="margin-bottom:20px;">
         <a href="/good/{{ $good->id }}">
             <div class="card">

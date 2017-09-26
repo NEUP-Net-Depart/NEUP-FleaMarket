@@ -66,7 +66,7 @@
                 <p></p>
                 <form action="/good/{{ $good->id }}/buy" method="post">
                     <div class="input-group">
-                        <input type="number" name="count" value="1" class="form-control" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                        <input type="number" name="count" value="1" class="form-control" min="1" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
                         {!! csrf_field() !!}
                         <span class="input-group-btn">
                         <input type="submit" class="btn btn-primary" value="购买"/>

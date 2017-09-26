@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-5">
     <div id="carouselStarGoodIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @if(count($stargoods) == 0)
@@ -38,7 +38,7 @@
         @endif
     </div>
     </div>
-    <div class="col-8 d-none d-md-block">
+    <div class="col-7 d-none d-md-block">
         <div class="row">
         @foreach($populargoods as $good)
             @include('good.goodSimpleInfoOnWelcome')
@@ -54,7 +54,6 @@
     </div>
     </div>
 </div>
-<br/>
 <div class="row main-part mx-auto">
     <div class="col">
         @if(count($newgoods)>0)
