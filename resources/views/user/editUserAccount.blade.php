@@ -1,5 +1,5 @@
 <div class="row">
-<div class="mx-auto">
+<div class="col mx-auto">
     @if (count($errors) > 0)
         <div class="alert alert-danger" role="alert">
             <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -9,34 +9,22 @@
 </div>
 </div>
 <div class="row">
-<div class="mx-auto">
+<div class="col mx-auto">
     @if($user->email=='' && $user->wechat_open_id=='' && $user->tel == '')
-        <div class="password-form">
-            <div class="input-group">
             <div class="alert alert-danger" role="alert">
                 <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
                 你没有绑定邮箱、微信、手机，这将导致你无法及时收到消息！
             </div>
-            </div>
-        </div>
     @elseif($user->wechat_open_id=='' && $user->tel == '')
-        <div class="password-form">
-            <div class="input-group">
                 <div class="alert alert-warning" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
                     你既没有绑定微信也没有绑定手机，这可能导致你无法及时收到消息！
                 </div>
-            </div>
-        </div>
     @elseif($user->email=='')
-        <div class="password-form">
-            <div class="input-group">
                 <div class="alert alert-info" role="alert">
                     <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
                     通过绑定邮箱，你可以通过邮箱登录和接收相关通知消息！
                 </div>
-            </div>
-        </div>
     @endif
     <p>
         @if($user->email=='')
@@ -60,22 +48,12 @@
     </p>
     <p>
         @if($user->wechat_open_id=='')
-            <div class="password-form">
-                <div class="input-group">
                     <label>微信：扫描二维码或在东大小秘书中点击“更多/先锋市场”链接来关联微信。
                         </label>
                     <img src="/img/wxqr.png" height="72px" width="72px">
-                </div>
-            </div>
         @else
-            <div class="password-form">
-                <div class="input-group">
                     <label>微信：已关联 <span class="nickname">{{$user->wechat->nick_name}}</span></label>
-                </div>
-                <div class="input-group">
                     <img class="head-img col-centered" src="{{$user->wechat->head_img_url}}" width="64px" height="64px">
-                </div>
-            </div>
         @endif
     </p>
     <p>
@@ -124,7 +102,7 @@
 </div>
 <hr>
 <div class="row">
-    <div class="mx-auto">
+    <div class="col-8 mx-auto">
         @if($user->username=='' || $user->stuid=='')
             <div class="alert alert-info" role="alert">
                 <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -167,7 +145,7 @@
 </div>
 <hr>
 <div class="row">
-<div class="mx-auto">
+<div class="col-8 mx-auto">
     @if($user->password=='')
         <div class="alert alert-warning" role="alert">
             <span class="fa fa-exclamation-circle" aria-hidden="true"></span>

@@ -25,7 +25,7 @@
                         {!! $errors->first() !!}
                     </div>
                 @endif
-                <form action="/login" method="POST">
+                <form action="/register" method="POST">
                     <div class="form-group">
                         <input type="text" name="email" id="username" class="form-control" placeholder="邮箱">
                     </div>
@@ -41,7 +41,7 @@
                             <input type="submit" class="btn btn-primary" value="注册">
                         </div>
                         <div class="col-auto ml-auto">
-                            <input type="button" class="btn btn-success" value="校卡平台快捷登录" onclick="window.location.href='/sso'">
+                            <input type="button" class="btn btn-success" value="校园统一身份认证" onclick="window.location.href='/sso'">
                         </div>
                     </div>
                 </form>
