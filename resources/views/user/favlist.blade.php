@@ -7,28 +7,24 @@
 @endsection
 
 @section('content')
-        <form method="POST" id="favdel">
-            <div class="row">
-            <div class="col-md-2">
-                <p><h4>收藏商品</h4></p>
-            </div>
-            <div class="col-md-7">
-            {!! csrf_field() !!}
-            {!! method_field('DELETE') !!}
-            <div class="row">
-            @foreach($goods as $good)
-                <?php $good = $good_info[$good->good_id] ?>
-                @include('good.goodInfoOnWelcome')
-            @endforeach
-            </div>
-            </div>
-            <div class="col-md-3">
-                <button type="button" class="btn btn-primary" onclick="editfav()" id="editbutton">编辑收藏夹</button>
-                <input type="button" id="del_submit" class="btn btn-primary" value="删除选中商品" style="display: none" onclick="submitdel()"  />
-            </div>
-            </div>
-        </form>
+<form method="POST" id="favdel">
+    <div class="row">
+        <div class="col-auto mr-auto"><h4>收藏商品</h4></div>
+        <div class="col-auto ml-auto">
+            <a href="#" class="btn btn-primary" onclick="editfav()" id="editbutton">编辑收藏夹</a>
+            <a href="#" class="btn btn-primary" onclick="submitdel()" style="display:none" id="del_submit">删除选中商品</a>
+        </div>
+    </div>
+    <div class="row">
+        {!! csrf_field() !!}
+        {!! method_field('DELETE') !!}
+        @foreach($goods as $good)
+            <?php $good = $good_info[$good->good_id] ?>
+            @include('good.goodInfoOnWelcome')
+        @endforeach
+    </div>
+</form>
 
-        <script src="/js/good/editfav.js"></script>
-        <script src="/js/good/ToolTip.js"></script>
+<script src="/js/good/editfav.js"></script>
+<script src="/js/good/ToolTip.js"></script>
 @endsection

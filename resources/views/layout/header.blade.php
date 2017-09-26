@@ -89,7 +89,7 @@
     </ul>
 </div>
 
-<br/>
+<p></p>
 
 @if(Session::has('user_id'))
     <script>

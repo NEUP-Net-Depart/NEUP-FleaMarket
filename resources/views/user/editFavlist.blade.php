@@ -32,8 +32,6 @@
 @endsection
 
 @section('content')
-
-    <div class="page-content" style="margin-top:0px">
         <a href="/user/fav" class="button">返回收藏夹</a>
         <form action="/user/fav/del" method="POST">
             {!! csrf_field() !!}
@@ -58,7 +56,6 @@
             </table>
             <input type="submit" name="del_submit" class="button" value="删除选中商品"/>
         </form>
-    </div>
     <script>
         function setValue(good_id) {
             if (document.getElementById("box" + good_id).value == good_id)

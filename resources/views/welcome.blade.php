@@ -6,14 +6,6 @@
 <div class="row">
     <div class="col-12 col-md-5">
     <div id="carouselStarGoodIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @if(count($stargoods) == 0)
-                <li data-target="#carouselStarGoodIndicators" data-slide-to="0" class="active"></li>
-            @endif
-            @foreach($stargoods as $good)
-                <li data-target="#carouselStarGoodIndicators" data-slide-to="{{ $good->id }}" @if($loop->first) class="active" @endif></li>
-            @endforeach
-        </ol>
         <div class="carousel-inner">
             @if(count($stargoods) == 0)
             <div class="carousel-item active">

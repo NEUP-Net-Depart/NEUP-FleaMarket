@@ -72,3 +72,17 @@ function getUrlParam(name)
         return r[2];
     return null;
 }
+
+function price(start, end)
+{
+    $('#priceSet1').val(start);
+    $('#priceSet2').val(end);
+    setc('a');
+}
+
+function price2(start)
+{
+    $('#priceSet1').val(start);
+    $('#priceSet2').val('2147483647');
+    setc('a');
+}

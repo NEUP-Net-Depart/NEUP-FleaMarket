@@ -1,4 +1,4 @@
-﻿﻿<br/><br/>
+﻿﻿<p></p>
 
 <div class="footer container">
     @if(env('APP_DEBUG')) <div class="row"><div class="mx-auto">当前处于调试模式</center></div></div> @endif

@@ -9,7 +9,7 @@
 </style>
 <div class="row">
     <div class="mx-auto">
-        <div id="preview"><img id="avatarpreview" class="avatar" height="200" src="/avatar/{{ Session::get('user_id') }}"/></div>
+        <div id="preview"><img id="avatarpreview" class="avatar" style="max-width:500px" src="/avatar/{{ Session::get('user_id') }}/200/200"/></div>
         <div style="display: none">
             <input type="file" id="avatarUpload" name="avatarPic" onchange="preview(this)"/>
         </div>
@@ -28,7 +28,7 @@
 </p>
 {!! csrf_field() !!}
 <div class="row">
-    <div class="col-4 mx-auto">
+    <div class="col-12 mx-auto">
         <div class="form-group">
             <label for="nickname">昵称</label>
             @if(isset($user->nickname))
