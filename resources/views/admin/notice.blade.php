@@ -10,6 +10,16 @@
 
 @section('tab-announcement')
         <div role="tabpanel" class="tab-pane active" id="announcement">
+            <h4>公告功能已下线</h4>
+            <p>要发布活动公告，如“先锋市场公测用户群成立啦！”“先锋市场六维邀请码放送活动”，请</p>
+            <ul>
+                <li>P一张好看的封面图</li>
+                <li>添加一个商品，描述写公告内容，将库存设置为零</li>
+                <li>置顶该商品</li>
+            </ul>
+            <p>要发布通知公告，如“xxx商品即日起禁止销售”，请</p>
+            <p>群发系统消息（开发中）</p>
+            <h4>下面是旧版公告入口</h4>
             <table class="table table-hover">
               <thead>
                 <tr>

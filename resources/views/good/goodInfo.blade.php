@@ -90,6 +90,19 @@
                                 <input type="submit" class="btn btn-primary" value="删除" style="margin-left:5px;margin-right:5px">
                             </form>
                         @endif
+                        @if(Session::get('is_admin') >= 1 && !$good->stared)
+                            <form action="/good/{{ $good->id }}/star" method="POST" style="display:inline-block;">
+                                {!! csrf_field() !!}
+                                <input type="submit" class="btn btn-primary" value="置顶" style="margin-left:5px;margin-right:5px">
+                            </form>
+                        @endif
+                        @if(Session::get('is_admin') >= 1 && $good->stared)
+                            <form action="/good/{{ $good->id }}/unstar" method="POST" style="display:inline-block;">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                                <input type="submit" class="btn btn-primary" value="取下" style="margin-left:5px;margin-right:5px">
+                            </form>
+                        @endif
                         @if(Session::get('is_admin') >= 1 && !$good->baned)
                             <form action="/good/{{ $good->id }}/ban" method="POST" style="display:inline-block;">
                                 {!! csrf_field() !!}
@@ -109,6 +122,11 @@
                         <th>卖家</th>
                         <td><a href="/user/{{ $user->id }}">@if($user->nickname!=""&&$user->nickname!=NULL){{ $user->nickname }} @else 还没有昵称&gt;_&lt; @endif @if($user->baned)【已封禁】@endif</a></td>
                     </tr>
+                    @if($user->user_rank == "Undergraduate" || $user->user_rank == "Graduate")
+                    <tr>
+                        <td style="color: red" colspan="2" align="middle"><strong>此卖家很可能已经毕业</strong></td>
+                    </tr>
+                    @endif
                     <tr>
                         <th>库存</th>
                         <td @if($good->count==0) class="text-danger" @endif>@if($good->count>0) @if($good->count > 1){{ $good->count }} 件@else 仅一件 @endif @else 没库存了QAQ @endif</td>

@@ -83,6 +83,19 @@ class TelValidateController extends Controller
         return $this->sendTextCaptcha($request);
     }
 
+    /**
+     * @param Request $request
+     * @return string(json)
+     */
+    public function sendChangeTextCaptcha(Request $request)
+    {
+        //Check if tel changed
+        $user = User::find($request->session()->get('user_id'));
+        if ($user->tel == $request->tel)
+            return json_encode(array('rst' => 'false', 'msg' => '新手机与旧手机不能相同'));
+        return $this->sendTextCaptcha($request);
+    }
+
     public function saveUserTel(Request $request)
     {
         if (env('APP_ENV') != 'testing')

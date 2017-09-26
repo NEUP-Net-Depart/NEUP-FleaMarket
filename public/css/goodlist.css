@@ -30,12 +30,10 @@
 }
 @media (max-width: 842px){
     #priceSet1{
-        width:20%;
         margin-left:2%;
         margin-right:2%;
     }
     #priceSet2{
-        width:20%;
         margin-left:2%;
     }
     .sub{

@@ -420,4 +420,24 @@ class GoodController extends Controller
         return Redirect::to('/good/' . $good_id);
     }
 
+    public function star(Request $request, $good_id)
+    {
+        $good = GoodInfo::find($good_id);
+        if ($good == NULL)
+            return View::make('common.errorPage')->withErrors('商品ID错误！');
+        $good->stared = true;
+        $good->save();
+        return Redirect::to('/good/' . $good_id);
+    }
+
+    public function unstar(Request $request, $good_id)
+    {
+        $good = GoodInfo::find($good_id);
+        if ($good == NULL)
+            return View::make('common.errorPage')->withErrors('商品ID错误！');
+        $good->stared = false;
+        $good->save();
+        return Redirect::to('/good/' . $good_id);
+    }
+
 }
