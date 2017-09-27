@@ -9,7 +9,7 @@
 </div>
 </div>
 <div class="row">
-<div class="col mx-auto">
+<div class="col-10 mx-auto">
     @if($user->email=='' && $user->wechat_open_id=='' && $user->tel == '')
             <div class="alert alert-danger" role="alert">
                 <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -102,7 +102,7 @@
 </div>
 <hr>
 <div class="row">
-    <div class="col-8 mx-auto">
+    <div class="col-10 mx-auto">
         @if($user->username=='' || $user->stuid=='')
             <div class="alert alert-info" role="alert">
                 <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
@@ -145,7 +145,7 @@
 </div>
 <hr>
 <div class="row">
-<div class="col-8 mx-auto">
+<div class="col-10 mx-auto">
     @if($user->password=='')
         <div class="alert alert-warning" role="alert">
             <span class="fa fa-exclamation-circle" aria-hidden="true"></span>

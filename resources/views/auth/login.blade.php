@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="col col-md-5">
+    <div class="col col-md-6 col-lg-5">
         <div class="card">
             <div class="card-header">登录</div>
             <div class="card-body">
