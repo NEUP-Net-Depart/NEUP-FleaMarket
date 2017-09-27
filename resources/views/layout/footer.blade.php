@@ -13,7 +13,7 @@
             <li><a href="/faq">帮助文档</a></li>
             <li><a href="/help#complain">申诉通道</a></li>
             <li><a href="/help#bug">意见反馈</a></li>
-            <li><a href="/">关于我们</a></li>
+            <li><a href="https://github.com/NEUP-Net-Depart/NEUP-FleaMarket">关于我们</a></li>
         </ul>
     </div>
     <!--<div class="row"><div class="mx-auto">© {{date("Y")}} 先锋网</div></div>-->
@@ -24,7 +24,7 @@
         </ul>
         <ul class="col-auto ml-auto">
             <li><a href="/help#bug">意见反馈</a></li>
-            <li><a href="/">关于我们</a></li>
+            <li><a href="https://github.com/NEUP-Net-Depart/NEUP-FleaMarket">关于我们</a></li>
         </ul>
     </div>
 </div>
