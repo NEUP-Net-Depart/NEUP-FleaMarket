@@ -14,7 +14,7 @@
             @endif
             @foreach($stargoods as $good)
                 <div class="carousel-item @if($loop->first) active @endif ">
-                    <a href="/good/{{ $good->id }}"><img class="d-block slide-img" src="/good/{{ sha1($good->id) }}/titlepic" alt="{{ $good->good_name }}" style="width:100%"></a>
+                    <a href="/good/{{ $good->id }}"><img class="d-block slide-img w-100" src="/good/{{ sha1($good->id) }}/titlepic" alt="{{ $good->good_name }}"></a>
                 </div>
             @endforeach
         </div>
@@ -37,6 +37,7 @@
         @endforeach
         </div>
     </div>
+</div>
 <div class="row mx-auto d-md-none" style="margin-top:12px;height:115px;overflow:hidden">
     <div class="row">
     <div style="overflow-x: scroll;overflow-y: hidden;height:133px;white-space: nowrap;display:-webkit-box;display:-moz-box;">
@@ -46,7 +47,8 @@
     </div>
     </div>
 </div>
-<div class="row main-part mx-auto">
+<br/>
+<div class="row">
     <div class="col">
         @if(count($newgoods)>0)
             <h3>新鲜上架</h3>
