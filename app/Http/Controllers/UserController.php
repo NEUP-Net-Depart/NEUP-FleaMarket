@@ -253,13 +253,22 @@ class UserController extends Controller
         return $image->response('jpg');
     }
 
-    public function mygoods(Request $request)
+    public function mygoods_on(Request $request)
     {
         $data = [];
         $user_id = $request->session()->get('user_id');
-        $data['goods'] = GoodInfo::where('user_id', $user_id)->orderby('id', 'desc')->paginate(15);
+        $data['goods'] = GoodInfo::where('user_id', $user_id)->where('count', '>', 0)->orderby('id', 'desc')->paginate(15);
 
-        return view::make('user.seller.mygoods')->with($data);
+        return view::make('user.seller.mygoods_on')->with($data);
+    }
+
+    public function mygoods_sold(Request $request)
+    {
+        $data = [];
+        $user_id = $request->session()->get('user_id');
+        $data['goods'] = GoodInfo::where('user_id', $user_id)->where('count', '<=', 0)->orderby('id', 'desc')->paginate(15);
+
+        return view::make('user.seller.mygoods_sold')->with($data);
     }
 
     public function sellerTrans(Request $request)

@@ -80,7 +80,8 @@ Route::group(['middleware' => ['web']],function () {
 	Route::get('/user/{user_id}/banpage', "UserController@banPage")->middleware('admin');
 	Route::post('/setBan/{user_id}', "UserController@setBan")->middleware('admin');
 
-    Route::get('/user/sell', "UserController@mygoods")->middleware('auth');
+    Route::get('/user/sell', "UserController@mygoods_on")->middleware('auth');
+    Route::get('/user/sell/sold', "UserController@mygoods_sold")->middleware('auth');
     Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
     Route::get('/user/sell/tickets', "UserController@tickets")->middleware('auth');
     Route::get('/user/trans', "UserController@buyer")->middleware('auth');

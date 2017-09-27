@@ -84,6 +84,8 @@
                             <form action="/good/{{ $good->id }}/edit" style="display:inline-block;" class="hidden-sm-down">
                                 <input type="submit" class="btn btn-primary" value="修改" style="margin-left:5px;margin-right:5px">
                             </form>
+                        @endif
+                        @if(Session::get('is_admin') == 2)
                             <form action="/good/{{ $good->id }}/delete" method="POST" style="display:inline-block;" onsubmit="return confirm('确定删除吗？');" class="hidden-sm-down">
                                 {!! csrf_field() !!}
                                 {!! method_field('DELETE') !!}
