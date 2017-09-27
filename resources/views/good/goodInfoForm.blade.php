@@ -192,15 +192,14 @@
                 };
                 prreader.onload = function (evt) {
                     var fileBuf = new Uint8Array(evt.target.result.slice(0, 11));
-                    /*var mime = isImage(fileBuf);
+                    var mime = isImage(fileBuf);
                     if (mime == null) {
-                        //This should be modified
-                        alert("Please open image!");
+                        alert("文件格式有误，请打开图片文件!");
                         return;
                     }
-                    else {*/
+                    else {
                         reader.readAsDataURL(file.files[0]);
-                    //}
+                    }
                 };
                 prreader.readAsArrayBuffer(file.files[0]);
             }

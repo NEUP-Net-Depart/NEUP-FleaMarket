@@ -17,6 +17,7 @@
         <script src="/js/cropper.min.js"></script>
         <script src="/js/jquery.slides.min.js"></script>
         <script src="/js/froala_editor.pkgd.min.js"></script>
+        <script src="/js/main.js"></script>
         @yield('asset')
         <title>@yield('title') ／ 先锋市场 ／ {{ "爱生活，爱先锋！" }}</title>
     </head>
