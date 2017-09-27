@@ -38,7 +38,7 @@
         </div>
     </div>
 </div>
-<div class="row mx-auto d-md-none" style="margin-top:12px;height:115px;overflow:hidden">
+<div class="row mx-auto d-md-none" style="margin-top:12px;height:65px;overflow:hidden">
     <div class="row">
     <div style="overflow-x: scroll;overflow-y: hidden;height:133px;white-space: nowrap;display:-webkit-box;display:-moz-box;">
     @foreach($populargoods as $good)
