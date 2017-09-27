@@ -232,6 +232,9 @@ class UserController extends Controller
             return Redirect::to('/user/fav/edit');
         foreach ($input['del_goods'] as $del_good) {
             FavList::where('user_id', $user_id)->where('good_id', $del_good)->delete();
+            $good = GoodInfo::find($del_good);
+            $good->fav_num--;
+            $good->save();
         }
         return Redirect::to('/user/fav/edit');
     }
