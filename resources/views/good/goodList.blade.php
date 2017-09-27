@@ -3,8 +3,8 @@
 @section('title', "商品列表")
 
 @section('asset')
-    <link rel="stylesheet" href="/css/goodlist.css"/>
-    <script src="/js/good/good_list.js"></script>
+    <link rel="stylesheet" href="/css/goodlist-20170927.css"/>
+    <script src="/js/good/good_list-20170927.js"></script>
 @endsection
 
 @section('content')

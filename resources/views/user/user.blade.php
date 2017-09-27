@@ -3,7 +3,7 @@
 @section('title', "用户")
 
 @section('asset')
-    <script src="/js/avatar_crop.js"></script>
+    <script src="/js/avatar_crop-20170927.js"></script>
 @endsection
 
 @section('content')

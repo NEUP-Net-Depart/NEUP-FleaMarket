@@ -10,7 +10,7 @@
             }
         }
     </style>
-    <script src="/js/good/good_list.js"></script>
+    <script src="/js/good/good_list-20170927.js"></script>
 @endsection
 
 @section('content')

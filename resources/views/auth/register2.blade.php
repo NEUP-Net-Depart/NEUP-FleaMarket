@@ -8,7 +8,7 @@
             $('.nickname-input').attr('placeholder','你可以随时修改你的昵称');
         });
     </script>
-    <script src="/js/avatar_crop.js"></script>
+    <script src="/js/avatar_crop-20170927.js"></script>
 @endsection
 
 @section('content')
