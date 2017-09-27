@@ -6,6 +6,10 @@ a:hover, a:focus {
     outline: none!important;
 }
 
+img {
+    max-width: 100%;
+}
+
 .banner {
     height: 196px;
     width: 100%;
