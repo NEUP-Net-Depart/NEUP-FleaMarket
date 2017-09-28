@@ -5,6 +5,7 @@
 @section('asset')
     <link rel="stylesheet" href="/css/goodlist-20170927.css"/>
     <script src="/js/good/good_list-20170927.js"></script>
+    <script src="/js/good/editfav.js"></script>
 @endsection
 
 @section('content')
@@ -44,9 +45,20 @@
         <div class="col-6 col-sm-4 col-lg-2">
             <div class="good">
                 <a href="/good/{{ $good->id }}">
-                    <div class="card" style="box-shadow:1px 1px 2px #aaaaaa;">
+                    <div class="card" style="box-shadow:1px 1px 2px #aaaaaa;border-style:none">
                         <div class="card-img-top">
                         <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" class="card-img-top"/>
+                            <div class="details" style="position:absolute;z-index:200;width:100%;display:none;">
+                                <div class="det-d d-none d-md-block" style="position:absolute;z-index:200;top:-37px;left:5px;color:lightgrey;font-size:12px;">
+                                    售价：￥{{ $good->price }}
+                                    <br/>
+                                    @if($good->count==0)
+                                        无库存QAQ
+                                    @else
+                                        库存：{{ $good->count }}
+                                    @endif
+                                </div>
+                            </div>
                             <div class="d-block d-sm-none" style="position:absolute;z-index:200;width:100%;height:25%;">
                                 <div class="det-d" style="position:absolute;z-index:200;top:-18px;color:black;font-size:12px;filter:opacity(50%);background-color: black;right:0;border-radius:5px 0px 0 0px;">
                                     ￥{{ $good->price }}&nbsp;

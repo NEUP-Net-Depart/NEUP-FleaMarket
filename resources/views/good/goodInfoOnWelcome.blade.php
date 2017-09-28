@@ -1,7 +1,7 @@
 <div class="yesrpg col-6 col-md-4 col-lg-2">
     <div class="good" style="margin-bottom:20px;">
         <a href="/good/{{ $good->id }}">
-            <div class="card" style="box-shadow:1px 1px 2px #aaaaaa;">
+            <div class="card" style="box-shadow:1px 1px 2px #aaaaaa;border-style:none">
                 <div class="card-img-top">
                     <div style="position:absolute;z-index:201">
                         <input type="checkBox" name="del_goods[]" value="0" id="box{{ $good->id }}" class="cb" onclick="{setValue({{ $good->id }})}" style="visibility:hidden;width:20%;z-index:203" />
