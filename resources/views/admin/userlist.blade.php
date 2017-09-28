@@ -20,9 +20,8 @@
                             <th>昵称</th>
 							<th>用户名</th>
 							<th>邮箱</th>
+							<th>手机</th>
 							<th>微信</th>
-							<th>微信·真</th>
-							<th>账号年审</th>
 							<th>是否封禁</th>
                             <th>注册时间</th>
 						</tr>
@@ -37,9 +36,8 @@
                             <td><a href="/user/{{$user->id}}">{{$user->nickname}}</a></td>
 							<td>{{$user->username}}</td>
                             <td>{{$user->email}}</td>
+							<td>{{$user->tel}}</td>
 							<td>{{$user->wechat_open_id != null ? 1 : 0}}</td>
-							<td>{{$user->wechat_flag}}</td>
-							<td>{{$user->sso_flag}}</td>
 							<td>
 								@if($user->baned == 0)
 									否
