@@ -3,6 +3,7 @@
 @section('title', "注册")
 
 @section('content')
+<!--2017/09/27 23:23 程序员因修改完login.blade.php后不肯修改未投入使用的register.blade.php而被祭天-->
 <br/>
 
 <div class="row">

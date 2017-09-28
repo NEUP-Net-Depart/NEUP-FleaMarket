@@ -28,14 +28,10 @@
 </p>
 {!! csrf_field() !!}
 <div class="row">
-    <div class="col-12 mx-auto">
+    <div class="col mx-auto">
         <div class="form-group">
             <label for="nickname">昵称</label>
-            @if(isset($user->nickname))
-                <input type="text" name="nickname" id="nickname" class="form-control nickname-input" value="{{ $user->nickname }}">
-            @else
-                <input type="text" name="nickname" id="nickname" class="form-control nickname-input">
-            @endif
+            <input type="text" name="nickname" id="nickname" class="form-control nickname-input" value="{{ $user->nickname }}">
         </div>
     </div>
 </div>
