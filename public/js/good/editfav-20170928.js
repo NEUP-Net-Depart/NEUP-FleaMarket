@@ -1,10 +1,12 @@
+$(document).ready(function(){
 $(".good").mouseenter(function(){
     $(".details",this).stop().fadeIn("fast");
-    $("img",this).css("filter","brightness(40%)");
+    $("img",this).css("filter","brightness(35%)");
 });
 $(".good").mouseleave(function(){
     $(".details",this).stop().fadeOut("fast");
     $("img",this).css("filter","brightness(100%)");
+});
 });
 function editfav(){
     $(".cb").attr("style","visibility:show;width:25px;height:25px;z-index:203;position:absolute;top:5px;left:5px");

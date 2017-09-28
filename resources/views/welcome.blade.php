@@ -85,6 +85,6 @@
 </div>
     </div>
 <script src="/js/good/cat.js"></script>
-<script src="/js/good/editfav.js"></script>
+<script src="/js/good/editfav-20170928.js"></script>
 <script src="/js/jquery.color.js"></script>
 @endsection

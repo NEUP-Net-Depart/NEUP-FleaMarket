@@ -4,7 +4,8 @@
 
 @section('asset')
     <link rel="stylesheet" href="/css/goodlist-20170927.css"/>
-    <script src="/js/good/good_list-20170927.js"></script>
+    <script src="/js/good/good_list-20170928.js"></script>
+    <script src="/js/good/editfav-20170928.js"></script>
 @endsection
 
 @section('content')
@@ -44,16 +45,56 @@
         <div class="col-6 col-sm-4 col-lg-2">
             <div class="good">
                 <a href="/good/{{ $good->id }}">
-                    <div class="card">
+                    <div class="card" style="box-shadow:1px 1px 2px #aaaaaa;border-style:none">
+                        <div class="card-img-top">
                         <img src="/good/{{ sha1($good->id) }}/titlepic" title="{{ $good->good_name }}" class="card-img-top"/>
-                        <div class="card-body">
-                            <div>{{ $good->good_name }}</div>
-                            <div class="text-warning" style="font-size:13px"><b>￥{{ $good->price }}</b></div>
-                            @if($good->count==0)
-                                <div class="text-dark" style="font-size:13px">无库存QAQ</div>
-                            @else
-                                <div class="text-dark" style="font-size:13px">库存：{{ $good->count }}</div>
-                            @endif
+                            <div class="details" style="position:absolute;z-index:200;width:100%;display:none;">
+                                <div class="det-d d-none d-md-block" style="position:absolute;z-index:200;top:-37px;left:5px;color:lightgrey;font-size:12px;">
+                                    售价：￥{{ $good->price }}
+                                    <br/>
+                                    @if($good->count==0)
+                                        无库存QAQ
+                                    @else
+                                        库存：{{ $good->count }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="d-block d-sm-none" style="position:absolute;z-index:200;width:100%;height:25%;">
+                                <div class="det-d" style="position:absolute;z-index:200;top:-18px;color:black;font-size:12px;filter:opacity(50%);background-color: black;right:0;border-radius:5px 0px 0 0px;">
+                                    ￥{{ $good->price }}&nbsp;
+                                </div>
+                                <div class="det-d" style="position:absolute;z-index:201;top:-18px;color:white;font-size:12px;right:0;">
+                                    <span>￥{{ $good->price }}&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="d-none d-sm-none" style="position:absolute;z-index:200;width:100%;height:25%;">
+                                <div class="det-d" style="position:absolute;z-index:200;top:-18px;color:black;font-size:12px;filter:opacity(50%);background-color: black;left:0;border-radius:0px 5px 0 0px;">
+                                    @if($good->count==0)
+                                        <span>无库存QAQ</span>
+                                    @else
+                                        <span>库存：{{ $good->count }}</span>
+                                    @endif
+                                </div>
+                                <div class="det-d" style="position:absolute;z-index:201;top:-18px;color:white;font-size:12px;left:0;">
+                                    @if($good->count==0)
+                                        <span>无库存QAQ</span>
+                                    @else
+                                        <span>库存：{{ $good->count }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="d-none">
+                                <div>{{ $good->good_name }}</div>
+                                <div class="text-warning" style="font-size:13px"><b>￥{{ $good->price }}</b></div>
+                                @if($good->count==0)
+                                    <div class="text-dark" style="font-size:13px">无库存QAQ</div>
+                                @else
+                                    <div class="text-dark" style="font-size:13px">库存：{{ $good->count }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-body" style="word-break:break-all;font-size:12px;padding:3px 7px;color:black;filter:opacity(90%);height:40px;">
+                            <p style="max-height:100%;margin:0; overflow:hidden;">{{ $good->good_name }}</p>
                         </div>
                     </div>
                 </a>
