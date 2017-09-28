@@ -50,8 +50,25 @@ class GoodController extends Controller
             $start_count = $input['start_count'];
         if(isset($input['sort']))
             $sort = $input['sort'];
-        if(isset($input['query'])) $query = $input['query'];
         $data['goods'] = GoodInfo::where('good_name', 'like', "%$query%");
+        //关键词搜索：多个关键词以空格分隔，默认排除以减号开头的关键词后，必须包含所有剩下的关键词
+        if(isset($input['query'])){
+            //将查询内容以一个或多个空格为界分隔开
+            $query = $input['query'];
+            $keywords = explode(' ', $query);
+            $keywords = array_filter($keywords);
+            foreach($keywords as $index=>$keyword){
+                if($keyword[0] == '-'){
+                    $keyword = ltrim($keyword, '-');
+                    $wheredata[$index] = array('good_name', 'not like', "%$keyword%");
+                }
+                else{
+                    $wheredata[$index] = array('good_name', 'like', "%$keyword%");
+                }
+            }
+            if(count($keywords) > 0)
+                $data['goods'] = $data['goods']->where($wheredata);
+        }
         //$data['cat_id'] = 0;
         if(isset($input['cat_id']) && $input['cat_id'] != ""){
             $data['goods'] = GoodInfo::where('cat_id', $input['cat_id']);
