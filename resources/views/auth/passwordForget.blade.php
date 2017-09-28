@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-12 col-md-6 col-lg-5 mx-auto">
+    <div class="col-12 col-md-7 col-lg-6 col-xl-5 mx-auto">
         <div class="card">
             <div class="card-header">忘记密码</div>
                 <div class="card-body">
@@ -12,7 +12,7 @@
                         <form action="/iforgotit" method="POST">
                             <div class="form-group">
                                 <label for="email">邮箱</label>
-                                <input type="email" name="email" placeholder="你账号绑定的邮箱" class="form-control">
+                                <input type="email" name="email" id="email" placeholder="你账号绑定的邮箱" class="form-control">
                             </div>
                             {!! csrf_field() !!}
                             <div class="row">

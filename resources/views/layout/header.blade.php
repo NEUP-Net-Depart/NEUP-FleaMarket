@@ -65,8 +65,8 @@
 
 <div class="container search-container">
     <div class="row">
-        <div class="col-md-8 col-lg-9 d-none d-md-block">
-            <a href="/"><img src="/img/null.png" style="height:80px;margin-top:10px"/></a>
+        <div class="col-md-8 col-lg-9 d-none //d-md-block">
+            <a href="/"><img src="/img/logo.png" style="height:80px;margin-top:10px"/></a>
         </div>
         <div class="col col-md-4 col-lg-3 ml-auto">
             <form action="/good" method="GET">

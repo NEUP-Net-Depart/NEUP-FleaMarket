@@ -25,7 +25,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="ml-auto">
+                        <div class="col-auto ml-auto">
                             <input class="btn btn-success" type="submit" name="submit" value="下一步">
                         </div>
                     </div>

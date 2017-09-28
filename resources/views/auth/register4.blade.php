@@ -23,13 +23,12 @@
             </div>
             <div class="card-footer">
                 <div class="row">
-                    <div class="ml-auto">
+                    <div class="col-auto ml-auto">
                         <button onclick="window.location.href='/'" class="btn btn-success">完成</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </div>
 

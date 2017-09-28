@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="/css/cropper.min.css">
         <link rel="stylesheet" href="/css/froala_editor.min.css">
         <link rel="stylesheet" href="/css/froala_editor.pkgd.min.css">
-        <link rel="stylesheet" href="/css/main-2017092701.css">
+        <link rel="stylesheet" href="/css/main-20170928.css">
         <script src="/js/jquery.min.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/tether.min.js"></script>
