@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Via;
 use Closure;
 
 class TrackHttpGet
@@ -37,6 +38,17 @@ class TrackHttpGet
             }
             if ($save) {
                 $request->session()->put('lastGetUri', $uri);
+            }
+            if(isset($request->via) && $request->via) {
+                if(Via::where('name', $request->via)->count() > 0) {
+                    $via = Via::where('name', $request->via)->first();
+                } else {
+                    $via = new Via();
+                    $via->name = $request->via;
+                    $via->count = 0;
+                }
+                $via->count++;
+                $via->save();
             }
         }
         return $next($request);
