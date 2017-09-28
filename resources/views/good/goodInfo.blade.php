@@ -57,15 +57,25 @@
             <div class="col col-lg-9 col-xl-8 mx-auto">
                 @if(($good->user_id) != Session::get('user_id') && !$good->baned)
                     <form action="/good/{{ $good->id }}/buy" method="post">
-                        <div class="input-group">
-                            <input type="number" name="count" value="1" class="form-control" min="1"/>
-                            {!! csrf_field() !!}
-                            <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="购买"/></span>
-                        </div>
+                        {!! csrf_field() !!}
+                        @if($good->count > 1)
+                            <div class="input-group">
+                                <input type="number" name="count" value="1" class="form-control" min="1" max="{{ $good->count }}"/>
+                                <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="购买"/></span>
+                            </div>
+                        @elseif($good->count == 1)
+                            <div class="row">
+                                <div class="mx-auto">
+                                    <input type="number" name="count" value="1" class="form-control d-none"/>
+                                    <input type="submit" class="btn btn-primary" value="购买"/>
+                                </div>
+                            </div>
+                        @endif
                     </form>
                 @endif
             </div>
         </div>
+        <p></p>
         <div class="row">
             <div class="col-auto mx-auto">
                 @if($good->user_id == Session::get('user_id') || Session::get('is_admin') == 2)
@@ -219,7 +229,7 @@
 @endsection
 
 @section('navbm')
-    <!--<div class="d--block d-md-none col-12" style="position:sticky;bottom:37px">
+    {{-- <div class="d--block d-md-none col-12" style="position:sticky;bottom:37px">
         <div class="float-left">
             @if(isset($inFvlst))
                 @if(count($inFvlst) == 0)
@@ -244,5 +254,5 @@
                 </form>
             @endif
         </div>
-    </div>-->
+    </div> --}}
 @endsection

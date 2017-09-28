@@ -25,7 +25,8 @@ class ContentController extends Controller
             $data['catgoods'][$cat->cat_name] = GoodInfo::where('cat_id', $cat->id)->where('baned', false)->where('count', '>', 0)->inRandomOrder()->limit(6)->get();
         }
         $data['announces'] = Announcement::orderby('id', 'dsc')->limit(5)->get();
-		$data['trans'] = Transaction::where('status', '>', 3)->orderby('id', 'dsc')->limit(20)->get();
+        $data['trans'] = Transaction::where('status', '>', 3)->orderby('id', 'dsc')->limit(20)->get();
+        $data['stargoodfirstid'] = rand(0,count($data['stargoods']) - 1);
         return View::make('welcome')->with($data);
     }
 

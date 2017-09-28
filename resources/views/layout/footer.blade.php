@@ -16,7 +16,7 @@
             <li><a href="https://github.com/NEUP-Net-Depart/NEUP-FleaMarket">关于我们</a></li>
         </ul>
     </div>
-    <!--<div class="row"><div class="mx-auto">© </div></div>-->
+    {{-- <div class="row"><div class="mx-auto">© </div></div> --}}
     <div class="d-md-none row">
         <ul class="col-auto mr-auto">
             <li>© {{date("Y")}} <a href="https://github.com/NEUP-Net-Depart/NEUP-FleaMarket">东北大学先锋网</a></li>

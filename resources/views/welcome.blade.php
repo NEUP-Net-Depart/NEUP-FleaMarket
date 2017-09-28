@@ -9,12 +9,12 @@
         <div class="carousel-inner">
             @if(count($stargoods) == 0)
             <div class="carousel-item active">
-                <a href="/"><img class="d-block" src="/good/{{ sha1(1) }}/titlepic" alt="先锋市场"></a>
+                <a href="/"><img class="d-block w-100" src="/good/{{ sha1(1) }}/titlepic" alt="先锋市场"></a>
             </div>
             @endif
             @foreach($stargoods as $good)
-                <div class="carousel-item @if($loop->first) active @endif ">
-                    <a href="/good/{{ $good->id }}"><img class="d-block slide-img w-100" src="/good/{{ sha1($good->id) }}/titlepic" alt="{{ $good->good_name }}"></a>
+                <div class="carousel-item @if($loop->index == $stargoodfirstid) active @endif ">
+                    <a href="/good/{{ $good->id }}"><img class="d-block w-100" src="/good/{{ sha1($good->id) }}/titlepic" alt="{{ $good->good_name }}"></a>
                 </div>
             @endforeach
         </div>
@@ -63,7 +63,7 @@
         <hr style="margin-top:0">
         @foreach($cats as $cat)
             @if(count($catgoods[$cat->cat_name]))
-                <p><h4>{{ $cat->cat_name }}</h4></p>
+                <p><h4 class="d-inline">{{ $cat->cat_name }}</h4>&nbsp;&nbsp;&nbsp;<a href="/good?cat_id={{ $cat->id }}"><h6 class="d-inline">更多<h6></a></p>
                 <div class="row">
                 @foreach($catgoods[$cat->cat_name] as $good)
                     @include('good.goodInfoOnWelcome')
@@ -72,7 +72,7 @@
             @endif
         @endforeach
     </div>
-<!--    <div class="col-12 col-md-3">
+{{--    <div class="col-12 col-md-3">
         <div class="card">
             <div class="card-header"><h4>公告</h4></div>
             <div class="list-group list-group-flush">
@@ -80,7 +80,7 @@
                 <a class="list-group-item" href="/notice/{{$announce->id}}">{{ $announce->title }}</a>
             @endforeach
             </div>
-        </div>-->
+        </div> --}}
     </div>
 </div>
     </div>
