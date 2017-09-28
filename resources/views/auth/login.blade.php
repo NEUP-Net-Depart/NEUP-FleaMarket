@@ -32,7 +32,7 @@
                         @endif
                         <form action="/login" method="POST">
                             <div class="form-group">
-                                <label for="username">用户名/邮箱</label>
+                                <label for="username">用户名/邮箱/手机号</label>
                                 <input type="text" name="username" id="username" class="form-control" placeholder="可以使用校卡平台登录" tabindex='1'>
                             </div>
                             <div class="form-group">

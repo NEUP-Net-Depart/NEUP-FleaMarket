@@ -188,7 +188,10 @@ class AuthController extends Controller
                 $this->log($user->id, "login_uncheckedmail", $request);
                 return Redirect::back()->withInput()->withErrors('未验证您的邮箱，请查收您的电子邮箱或<a href="/user/' . $user->id . '/sendCheckLetter">重新发送一封</a>');
             }
-        } else {
+        } elseif(filter_var($input['username'], FILTER_VALIDATE_INT)) {
+            $user = User::where('tel', $input['username'])->first();
+        }
+        else {
             $user = User::where('username', $input['username'])->first();
         }
 
