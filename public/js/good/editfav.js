@@ -1,6 +1,6 @@
 $(".good").mouseenter(function(){
     $(".details",this).stop().fadeIn("fast");
-    $("img",this).css("filter","brightness(40%)");
+    $("img",this).css("filter","brightness(35%)");
 });
 $(".good").mouseleave(function(){
     $(".details",this).stop().fadeOut("fast");
