@@ -53,21 +53,21 @@
         @if(count($newgoods)>0)
             <h3>新鲜上架</h3>
             <hr style="margin-top:0">
-                <div class="row">
+            <div class="row">
                 @foreach($newgoods as $good)
                     @include('good.goodInfoOnWelcome')
                 @endforeach
-                </div>
+            </div>
         @endif
         <h3>随便看看</h3>
         <hr style="margin-top:0">
         @foreach($cats as $cat)
             @if(count($catgoods[$cat->cat_name]))
-                <p><h4 class="d-inline">{{ $cat->cat_name }}</h4>&nbsp;&nbsp;&nbsp;<a href="/good?cat_id={{ $cat->id }}"><h6 class="d-inline">更多<h6></a></p>
+                <p><h4 class="d-inline">{{ $cat->cat_name }}</h4>&nbsp;&nbsp;&nbsp;<a href="/good?cat_id={{ $cat->id }}"><h6 class="d-inline">更多</h6></a></p>
                 <div class="row">
-                @foreach($catgoods[$cat->cat_name] as $good)
-                    @include('good.goodInfoOnWelcome')
-                @endforeach
+                    @foreach($catgoods[$cat->cat_name] as $good)
+                        @include('good.goodInfoOnWelcome')
+                    @endforeach
                 </div>
             @endif
         @endforeach

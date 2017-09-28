@@ -71,7 +71,7 @@
         <div class="col col-md-4 col-lg-3 ml-auto">
             <form action="/good" method="GET">
                 <div class="input-group">
-                    <input class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])) {{ urldecode($_GET['query']) }} @endif">
+                    <input class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{ urldecode($_GET['query']) }}@endif">
                     <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="G♂"></span>
                 </div>
             </form>
