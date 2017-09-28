@@ -22,8 +22,8 @@
                     <a href="/good/add" class="dropdown-item">出售</a>
                 @else
                     <a href="/wx" class="dropdown-item bg-success text-light">微信快捷登录</a>
-                    <a href="/login" class="dropdown-item">普通登录</a>
                     <a href="/sso" class="dropdown-item">校卡平台快捷登录</a>
+                    <a href="/login" class="dropdown-item">普通登录</a>
                     <div class="dropdown-divider"></div>
                     <a href="/register" class="dropdown-item">注册</a>
                 @endif
@@ -52,8 +52,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-btn" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">登录</a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="/login" class="dropdown-item">普通登录</a>
                             <a href="/sso" class="dropdown-item">校卡平台快捷登录</a>
+                            <a href="/login" class="dropdown-item">普通登录</a>
+                            <a href="/wx" class="dropdown-item bg-success text-light">微信快捷登录</a>
                         </div>
                     </li>
                     <li class="nav-item"><a href="/register" class="nav-link nav-btn">注册</a></li>

@@ -139,6 +139,9 @@ class AuthController extends Controller
                 return $this->afterLogin($user, $request);
             }
         }
+        else if(isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') === false) {
+            return View::make('common.wxua');
+        }
         return Redirect::to("https://api.xms.rmbz.net/open/auth/oauth?path=" . env("APP_URL") . "/wx&bizCode=market.neupioneer");
     }
 
