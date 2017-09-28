@@ -14,7 +14,7 @@
     <div class="col-auto nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" id="sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">商品排序</a>
         <div class="dropdown-menu" aria-labelledby="sort">
-            <a href="/good" class="dropdown-item">默认排序</a>
+            <a href="#" onclick="setc()" class="dropdown-item">默认排序</a>
             <a href="#" onclick="setc('p')" class="dropdown-item">按价格从低到高</a>
             <a href="#" onclick="setc('pd')" class="dropdown-item">按价格从高到低</a>
             <a href="#" onclick="setc('c')" class="dropdown-item">按库存从少到多</a>
