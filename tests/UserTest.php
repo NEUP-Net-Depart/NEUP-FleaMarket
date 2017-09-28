@@ -220,18 +220,6 @@ class UserTest extends BrowserKitTestCase
             ->type('admin@example.com', 'username')
             ->type('admin@example.com', 'password')
             ->press('登录');
-        
-        //test new notice
-        $this->visit('admin')
-            ->type('testnotice', 'title')
-            ->type('testnotice', 'content')
-            ->press('发布公告')
-            ->see('testnotice')
-            ->visit('/')
-            ->see('testnotice')
-            ->visit('admin')
-            ->press('删除')
-            ->dontSee('testnotice');
 
         //test cat
         //too lazy to test zzz

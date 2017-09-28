@@ -35,7 +35,7 @@
                 </form>
                 <br/>
                 <div class="row">
-                    <div class="col-md-auto mx-auto">
+                    <div class="col col-sm-7 col-md-6 col-lg-5 mx-auto">
                         @if($user->wechat_open_id=='')
                             <label>微信：扫描二维码或在东大小秘书中点击“更多/先锋市场”链接来关联微信。</label>
                             <img src="/img/wxqr.png" style="height:72px;width:72px">
@@ -49,34 +49,38 @@
                 @if($user->tel=='')
                     <div id="tel-region">
                         <form id="tel-form" action="" class="password-form"
-                                onkeydown="if(event.keyCode==13){return false;}">
-                            {{ csrf_field() }}
-                            <div id="tel-geetest-captcha">
-                                <p style="margin-bottom: 0.3em">若要绑定手机，请先完成人机验证...</p>
-                                {!! Geetest::render() !!}
-                            </div>
-                            <div id="tel-form-input" class="input-group hide">
-                                <span class="input-group-addon" id="tel-addon">(+86)</span>
-                                <input type="tel" name="tel" id="tel" class="form-control"
-                                        value="" placeholder="手机"
-                                        aria-describedby="tel-addon">
-                                <span class="input-group-btn">
+                              onkeydown="if(event.keyCode==13){return false;}">
+                            <div class="row">
+                                <div class="input-group col col-sm-7 col-md-6 col-lg-5 mx-auto">
+                                    {{ csrf_field() }}
+                                    <div id="tel-geetest-captcha">
+                                        <p style="margin-bottom: 0.3em">若要绑定手机，请先完成人机验证...</p>
+                                        {!! Geetest::render() !!}
+                                    </div>
+                                    <div id="tel-form-input" class="input-group hide">
+                                        <span class="input-group-addon" id="tel-addon">(+86)</span>
+                                        <input type="tel" name="tel" id="tel" class="form-control"
+                                               value="" placeholder="手机"
+                                               aria-describedby="tel-addon">
+                                        <span class="input-group-btn">
                                     <input id="tel-text-send-btn" type="button" class="btn btn-primary"
-                                            value="发送" onclick="sendMsg();">
+                                           value="发送" onclick="sendMsg();">
                                 </span>
-                            </div>
-                            <div id="tel-captcha-input" class="input-group hide" style="margin-top: 0.3em;">
-                                <span class="input-group-addon" id="captcha-addon">验证码</span>
-                                <input type="text" name="captcha" id="captcha" class="form-control"
-                                        value="" aria-describedby="captcha-addon">
-                                <span class="input-group-btn">
+                                    </div>
+                                    <div id="tel-captcha-input" class="input-group hide" style="margin-top: 0.3em;">
+                                        <span class="input-group-addon" id="captcha-addon">验证码</span>
+                                        <input type="text" name="captcha" id="captcha" class="form-control"
+                                               value="" aria-describedby="captcha-addon">
+                                        <span class="input-group-btn">
                                     <input id="tel-submit-btn" type="button" class="btn btn-primary"
-                                            value="绑定" onclick="bindTel();">
+                                           value="绑定" onclick="bindTel();">
                                 </span>
+                                    </div>
+                                </div>
+                                <div id="tel-form-toast" class="alert hide" role="alert"
+                                     style="margin-top: 0.3em;"></div>
                             </div>
                         </form>
-                        <div id="tel-form-toast" class="alert hide" role="alert"
-                                style="margin-top: 0.3em;"></div>
                     </div>
                 @else
                     <div id="tel-form-input" class="input-group" style="padding-top: 1em;">
