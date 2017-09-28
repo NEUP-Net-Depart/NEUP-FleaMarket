@@ -4,8 +4,8 @@
 
 @section('asset')
     <link rel="stylesheet" href="/css/goodlist-20170927.css"/>
-    <script src="/js/good/good_list-20170927.js"></script>
-    <script src="/js/good/editfav.js"></script>
+    <script src="/js/good/good_list-20170928.js"></script>
+    <script src="/js/good/editfav-20170928.js"></script>
 @endsection
 
 @section('content')
