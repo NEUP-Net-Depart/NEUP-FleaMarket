@@ -93,6 +93,8 @@ class AuthController extends Controller
 
         if ($user->registerCompletion() != 0)
             return Redirect::to('/register/' . $user->registerCompletion());
+        else if ($request->session()->has('lastGetUri'))
+            return Redirect::to($request->session()->get('lastGetUri'));
         else
             return Redirect::to('/');
     }
