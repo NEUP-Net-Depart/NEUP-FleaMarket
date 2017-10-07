@@ -17,7 +17,7 @@ img {
 }
 
 .banner-back {
-    background-image: url('/img/banner.jpg');
+    background-image: url('/img/banner-20171007.jpg');
     background-repeat: repeat-x;
     background-position: center 0;
     position: relative;
@@ -64,7 +64,7 @@ img {
 
 .navbar-bg {
     position: absolute;
-    background-image: url('/img/banner.jpg');
+    background-image: url('/img/banner-20171007.jpg');
     background-position: center 0;
     background-repeat: repeat-x;
     height: 100px;
@@ -156,7 +156,7 @@ img {
 
 .classbar-bg {
     position: absolute;
-    background-image: url('/img/banner.jpg');
+    background-image: url('/img/banner-20171007.jpg');
     background-position: center 0;
     background-repeat: repeat-x;
     height: 100px;

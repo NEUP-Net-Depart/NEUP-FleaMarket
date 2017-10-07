@@ -67,7 +67,7 @@
 <div class="container search-container">
     <div class="row">
         <div class="col-md-8 col-lg-9 d-none d-md-block">
-            <a href="/"><img src="/img/logo.png"/></a>
+            <a href="/"><img src="/img/logo-20171007.png"/></a>
         </div>
         <div class="col col-md-4 col-lg-3 ml-auto">
             <img src="/img/icon.png" class="banner-icon"/>
