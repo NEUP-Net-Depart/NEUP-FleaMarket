@@ -133,7 +133,7 @@
                                         <form method="POST" action="/trans/{{ $tran->id }}/confirm" style="float: right">
                                             {!! csrf_field() !!}
                                             <input type="hidden" name="result" value="0">
-                                            <input type="submit" class="btn btn-warning aban" value="交易失败" style="margin: 0;">
+                                            <input type="submit" class="btn btn-primary aban" value="交易失败" style="margin: 0;">
                                         </form>
                                     </td>
                                 @elseif($tran->status == 3)

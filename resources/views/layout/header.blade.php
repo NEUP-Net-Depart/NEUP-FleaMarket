@@ -29,7 +29,7 @@
                 @endif
             </div>
         </div>
-        <a class="navbar-brand" href="/">先锋市场</a>
+        <a class="navbar-brand" href="/">neup.market</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 @if(Session::has('user_id'))
@@ -66,21 +66,22 @@
 
 <div class="container search-container">
     <div class="row">
-        <div class="col-md-8 col-lg-9 d-none //d-md-block">
-            <a href="/"><img src="/img/logo.png" style="height:80px;margin-top:10px"/></a>
+        <div class="col-md-8 col-lg-9 d-none d-md-block">
+            <a href="/"><img src="/img/logo.png"/></a>
         </div>
         <div class="col col-md-4 col-lg-3 ml-auto">
+            <img src="/img/icon.png" class="banner-icon"/>
             <form action="/good" method="GET">
                 <div class="input-group">
                     <input class="form-control" name="query" id="searchq" placeholder="开始交易吧( '﹃'⑉)" value="@if(isset($_GET['query'])){{ urldecode($_GET['query']) }}@endif">
-                    <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="G♂"></span>
+                    <span class="input-group-btn"><input type="submit" class="btn btn-warning" value="G♂"></span>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<div class="classbar-back"><div class="classbar-bg"></div><div class="classbar-filter"></div></div>
+{{--<div class="classbar-back"><div class="classbar-bg"></div><div class="classbar-filter"></div></div>--}}
 <div class="container classbar-container">
     <ul class="nav nav-pills classbar-pills">
         <li class="nav-item"><a href="/good" class="nav-link classbar-btn @if(isset($cat_id)&&$cat_id == 0) classbar-btn-active @endif">所有商品</a></li>

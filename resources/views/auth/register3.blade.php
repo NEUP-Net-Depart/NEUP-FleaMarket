@@ -28,7 +28,7 @@
                             @else
                                 <input type="email" class="form-control" value="@if(!$user->havecheckedemail)[未验证]@endif{{$user->email}}" aria-describedby="email-addon" disabled>
                                 <input type="hidden" name="email" class="form-control" value="{{$user->email}}">
-                                <span class="input-group-btn"><input type="submit" class="btn btn-warning" name="email_submit" value="解绑"></span>
+                                <span class="input-group-btn"><input type="submit" class="btn btn-primary" name="email_submit" value="解绑"></span>
                             @endif
                         </div>
                     </div>

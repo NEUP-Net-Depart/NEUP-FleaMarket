@@ -11,23 +11,26 @@ img {
 }
 
 .banner {
-    height: 174px;
+    height: 240px;
     width: 100%;
     overflow: hidden;
 }
 
 .banner-back {
     background-image: url('/img/banner.jpg');
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
     background-position: center 0;
-    background-attachment: fixed;
     position: relative;
     top: -10px;
     left: -20px;
     padding: 0 20px;
-    height: 184px;
+    height: 250px;
     width: 100%;
     box-sizing: content-box;
+}
+
+.navbar-brand {
+    text-shadow: 0 0 3px #000000;
 }
 
 .navbar-container {
@@ -63,8 +66,7 @@ img {
     position: absolute;
     background-image: url('/img/banner.jpg');
     background-position: center 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-repeat: repeat-x;
     height: 100px;
     top: -10px;
     left: -20px;
@@ -76,9 +78,11 @@ img {
 }
 
 .nav-btn {
-    color: rgba(255,255,255,.75)!important;
+    color: #FFFFFF!important;
     padding-top: 16px;
     padding-bottom: 16px;
+    text-shadow: 0 0 3px #000000;
+    font-weight: bold;
 }
 
 .nav-btn:hover {
@@ -117,11 +121,8 @@ img {
     vertical-align: middle;
 }
 
-.banner-logo {
+.banner-icon {
     position: absolute;
-    top: 56px;
-    left: 0px;
-
 }
 
 .search-container {
@@ -135,13 +136,9 @@ img {
     margin-top: 20px;
 }
 
-#searchq {
-    border: #FFFFFF solid 1px;
-}
-
 .classbar-back {
     position: absolute;
-    top: 134px;
+    top: 200px;
     left: 0;
     width: 100%;
     height: 40px;
@@ -161,8 +158,7 @@ img {
     position: absolute;
     background-image: url('/img/banner.jpg');
     background-position: center 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-repeat: repeat-x;
     height: 100px;
     top: -10px;
     left: -20px;
@@ -175,7 +171,7 @@ img {
 
 .classbar-container {
     position: absolute;
-    top: 134px;
+    top: 200px;
     left: 0;
     right: 0;
     overflow: hidden;
@@ -196,16 +192,17 @@ img {
 }
 
 .classbar-btn {
-    color: rgba(255,255,255,.75);
+    color: #FFFFFF;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 8px;
     padding-bottom: 8px;
     border-radius: 0!important;
+    text-shadow: 0 0 3px #000000;
+    font-weight: bold;
 }
 
 .classbar-btn-active {
-    font-weight: bold;
 }
 
 .classbar-btn:hover {
