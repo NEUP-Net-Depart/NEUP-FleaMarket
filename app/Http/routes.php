@@ -28,6 +28,10 @@ use Illuminate\Support\Facades\Redirect;
 
 Route::group(['middleware' => ['web']],function () {
 
+    Route::get('/update-browser', function () {
+        return view('common.updateBrowser');
+    });
+
     Route::group(['middleware' => ['authredirect']], function() {
         Route::get('/login', "AuthController@showLogin");
         Route::get('/sso', "AuthController@cas");

@@ -3,13 +3,16 @@
 @section('title', "消息中心")
 
 @section('content')
-
+<style>
+    .hide {
+        display: none;
+    }
+</style>
 <div id="vue-error-msg" class="container hide">
     <div class="row col-xl-12 alert alert-danger" role="alert">
         <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
         <p>
-            如果您看到了这条消息，说明您使用的浏览器不兼容消息页面。建议您更换<strong>最新版Chrome浏览器</strong>
-            以获得最佳浏览体验，给您带来的不便敬请谅解。
+            如果您看到了这条消息，说明您使用的浏览器不兼容消息页面。请<strong><a href="/update-browser">升级您的浏览器</a></strong>以获得最佳浏览体验，给您带来的不便敬请谅解。
         </p>
         <img src="/img/sorry.png" class="img-responsive center-block"/>
     </div>

@@ -91,6 +91,15 @@
     </ul>
 </div>
 
+@if(Session::get('old_browser'))
+<div class="alert alert-danger" role="alert">
+    <div class="container">
+        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+        你的浏览器版本过低，请<a href="/update-browser">升级你的浏览器</a>来确保功能完整可用。
+    </div>
+</div>
+@endif
+
 <p></p>
 
 @if(Session::has('user_id'))

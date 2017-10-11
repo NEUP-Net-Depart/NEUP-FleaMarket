@@ -451,7 +451,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apereo/phpCAS/zipball/61c8899c8f91204e8b9135d795461e50fe5c2db0",
+                "url": "https://api.github.com/repos/Jasig/phpCAS/zipball/61c8899c8f91204e8b9135d795461e50fe5c2db0",
                 "reference": "61c8899c8f91204e8b9135d795461e50fe5c2db0",
                 "shasum": ""
             },
@@ -546,16 +546,16 @@
         },
         {
             "name": "jenssegers/agent",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/agent.git",
-                "reference": "68bef4f773933d33f9b6c8d1f2ff002f97a65b0b"
+                "reference": "faf85b10206478382ac93eda122430fee78c544e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/agent/zipball/68bef4f773933d33f9b6c8d1f2ff002f97a65b0b",
-                "reference": "68bef4f773933d33f9b6c8d1f2ff002f97a65b0b",
+                "url": "https://files.phpcomposer.com/files/jenssegers/agent/faf85b10206478382ac93eda122430fee78c544e.zip",
+                "reference": "faf85b10206478382ac93eda122430fee78c544e",
                 "shasum": ""
             },
             "require": {
@@ -572,6 +572,14 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "3.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Jenssegers\\Agent\\AgentServiceProvider"
+                    ],
+                    "aliases": {
+                        "Agent": "Jenssegers\\Agent\\Facades\\Agent"
+                    }
                 }
             },
             "autoload": {
@@ -601,7 +609,7 @@
                 "user agent",
                 "useragent"
             ],
-            "time": "2017-03-12T09:58:22+00:00"
+            "time": "2017-06-27T06:30:13+00:00"
         },
         {
             "name": "laravel/browser-kit-testing",
@@ -935,7 +943,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/f0896b5c7274d1450023b0b376240be902c3251c",
+                "url": "https://files.phpcomposer.com/files/serbanghita/Mobile-Detect/f0896b5c7274d1450023b0b376240be902c3251c.zip",
                 "reference": "f0896b5c7274d1450023b0b376240be902c3251c",
                 "shasum": ""
             },
@@ -2038,7 +2046,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f29dca382a6485c3cbe6379f0c61230167681937",
+                "url": "https://files.phpcomposer.com/files/symfony/polyfill-mbstring/f29dca382a6485c3cbe6379f0c61230167681937.zip",
                 "reference": "f29dca382a6485c3cbe6379f0c61230167681937",
                 "shasum": ""
             },
