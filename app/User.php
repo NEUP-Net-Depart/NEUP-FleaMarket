@@ -64,7 +64,7 @@ class User extends Model
         } else if(strlen($this->stuid) == 7) {
             if ($this->stuid[2] == '1' && env('FRESH_YEAR') - intval(substr($this->stuid, 0, 2)) < 5 )
                 return "Doctor";
-            else if(($this->stuid[2] == '0' || $this->stuid[2] == '7') && env('FRESH_YEAR') - intval(substr($this->stuid, 0, 2)) < 2 )
+            else if(($this->stuid[2] == '0' || $this->stuid[2] == '7') && env('FRESH_YEAR') - intval(substr($this->stuid, 0, 2)) < 3 )
                 return "Master";
             else
                 return "Graduate";

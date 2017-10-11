@@ -51,7 +51,7 @@
 <div class="row">
     <div class="col">
         @if(count($newgoods)>0)
-            <h3>新鲜上架</h3>
+            <h3>新鲜上架</h3> <a href="/good"><h6 class="d-inline">更多</h6></a>
             <hr style="margin-top:0">
             <div class="row">
                 @foreach($newgoods as $good)
