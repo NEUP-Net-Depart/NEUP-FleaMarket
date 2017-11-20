@@ -22,23 +22,23 @@ class TestUA
         $flag = false;
         switch($agent->browser()) {
             case "Chrome":
-                if($agent->version($agent->browser()) < 39)
+                if($agent->version($agent->browser()) < 24)
                     $flag = true;
                 break;
             case "Firefox":
-                if($agent->version($agent->browser()) < 34)
+                if($agent->version($agent->browser()) < 24)
                     $flag = true;
                 break;
             case "Opera":
-                if($agent->version($agent->browser()) < 26)
+                if($agent->version($agent->browser()) < 15)
                     $flag = true;
                 break;
             case "Safari":
-                if($agent->version($agent->browser()) < 8)
+                if($agent->version($agent->browser()) < 7)
                     $flag = true;
                 break;
             case "IE":
-                if($agent->version($agent->browser()) < 11)
+                if($agent->version($agent->browser()) < 10)
                     $flag = true;
                 break;
         }
