@@ -115,7 +115,7 @@
 <script src="/js/vue.min.js"></script>
 {{--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>--}}
 <script src="/js/axios.min.js"></script>
-<script src="/js/message-20170907.js"></script>
+<script src="/js/message-20171120.js"></script>
 <script>
     window.onload = function () {
         setTimeout("$('#vue-error-msg').removeClass('hide')", 3000);

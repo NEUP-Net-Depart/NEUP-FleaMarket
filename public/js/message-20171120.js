@@ -34,7 +34,9 @@ Vue.component('contact-list', {
                 this.getNewContact();
             });
             this.$on('topContactHandler', function (contact_id) {
-                this.setTop(this.contacts.filter(t => t.contact_id === contact_id));
+                this.setTop(this.contacts.filter(function (t) {
+                    return t.contact_id === contact_id;
+                }))
             });
         })
     },
@@ -71,7 +73,9 @@ Vue.component('contact-list', {
             var vm = this;
             for (var i in tops)
             {
-                vm.contacts = vm.contacts.filter(t => t.contact_id !== tops[i].contact_id);
+                vm.contacts = vm.contacts.filter(function (t) {
+                    return t.contact_id !== tops[i].contact_id;
+                });
                 if (tops[i].contact_id === vm.current_contact_id)
                     tops[i].unread_count = 0;
                 vm.contacts.unshift(tops[i]);
