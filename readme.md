@@ -23,10 +23,8 @@
 ### 鸣谢
 感谢东大小秘书提供的微信消息接口！
 
-Made with ❤ by NEUP Net Department
-
 ### 捐助我们
 短信消息通知给我们带来了不少的开支，
-如果你觉得这一功能给你带来了便利，欢迎捐助！所有的捐助将直接给予各位开发者。
+如果你觉得这一功能给你带来了便利，欢迎捐助！
 
-![avatar](http://lzw429.site/wp-content/uploads/2018/05/%E5%BE%AE%E4%BF%A1%E8%B5%9E%E8%B5%8F%E7%A0%81-e1526988937614.jpg)
+Made with ❤ by NEUP Net Department
