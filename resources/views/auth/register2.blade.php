@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <div class="alert alert-success" role="alert">
                         <span class="fa fa-check" aria-hidden="true"></span>
-                        你已经成为了先锋市场的一份子啦！现在你可以为自己上传一个头像，以及取一个昵称。
+                        你已经成为了先锋市场的用户啦！现在你可以为自己上传一个头像，并取一个昵称。
                     </div>
                     @include('user.editUserExtra')
                 </div>
