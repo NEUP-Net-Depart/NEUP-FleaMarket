@@ -9,6 +9,13 @@
 @endsection
 
 @section('tab-userlist')
+	<form action="/usersearch" method="GET">
+		<div class="input-group">
+			<input class="form-control" name="searchid" id="searchqx" placeholder="输入学号查询" value="@if(isset($_GET['search'])){{ urldecode($_GET['search']) }}@endif">
+			<span class="input-group-btn"><input type="submit" class="btn btn-info" value="Find"></span>
+		</div>
+	</form>
+
 		<div class="tab-pane active" id="userlist" role="tabpanel">
 			<table class="table table-hover">
 					<thead>

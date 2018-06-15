@@ -25,16 +25,29 @@ class AdminController extends Controller
      * @return View
      * @description The Index of administrator.
      */
-    public function adminIndex(Request $request, $tab = 'notice')
-    {
-        $data = [];
-        $data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
-        $data['users'] = User::orderby('id', 'asc')->get();
-        $data['announcements'] = Announcement::orderby('id', 'dsc')->get();
-        $data['reports'] = Ticket::where('type', '2')->orWhere('type', '3')->orWhere('type', '4')->orWhere('type', '5')->orderby('id', 'dsc')->paginate(40);
-        $data['users'] = User::orderby('id', 'asc')->paginate(40);
-        $data['trans'] = Transaction::orderby('id', 'asc')->paginate(40);
-        return View::make('admin.'.$tab)->with($data);
+	public function adminIndex(Request $request, $tab = 'notice')
+	{
+		$data = [];
+		$data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
+		$data['users'] = User::orderby('id', 'asc')->get();
+		$data['announcements'] = Announcement::orderby('id', 'dsc')->get();
+		$data['reports'] = Ticket::where('type', '2')->orWhere('type', '3')->orWhere('type', '4')->orWhere('type', '5')->orderby('id', 'dsc')->paginate(40);
+		$data['users'] = User::orderby('id', 'asc')->paginate(40);
+		$data['trans'] = Transaction::orderby('id', 'asc')->paginate(40);
+		return View::make('admin.'.$tab)->with($data);
+	}
+
+	public function userSearch(Request $request, $tab = 'userlist')
+	{
+		$input = $request->all();
+		$data = [];
+		$data['goods'] = GoodInfo::where('baned', '1')->orderby('id', 'asc')->get();
+		$data['users'] = User::orderby('id', 'asc')->get();
+		$data['announcements'] = Announcement::orderby('id', 'dsc')->get();
+		$data['reports'] = Ticket::where('type', '2')->orWhere('type', '3')->orWhere('type', '4')->orWhere('type', '5')->orderby('id', 'dsc')->paginate(40);
+		$data['users'] = User::where('stuid', $input['searchid'])->orderby('id', 'asc')->paginate(40);
+		$data['trans'] = Transaction::orderby('id', 'asc')->paginate(40);
+		return View::make('admin.'.$tab)->with($data);
     }
 
     /**

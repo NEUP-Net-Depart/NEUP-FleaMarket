@@ -62,13 +62,30 @@
                     </div>
                 </div>
                 <div class="col-md-5 col-sm-12" id="profile_bt">
+					@if(Session::get('is_admin') <= 1)
+					@elseif($user->privilege == 0)
+						<form action="/user/{{ $user->id }}/setadmin" method="GET">
+							<input type="submit" value="设置管理员" class="btn btn-info">
+						</form>
+					@elseif($user->privilege == 1)
+						<form action="/user/{{ $user->id }}/setsadmin" method="GET">
+							<input type="submit" value="设置超级管理员" class="btn btn-info">
+						</form><br>
+						<form action="/user/{{ $user->id }}/removeadmin" method="GET">
+							<input type="submit" value="解除管理员" class="btn btn-danger">
+						</form>
+					@elseif($user->privilege == 2)
+						<form action="/user/{{ $user->id }}/removesadmin" method="GET">
+							<input type="submit" value="解除超级管理员" class="btn btn-danger">
+						</form>
+					@endif
                     @if(Session::get('user_id') == $user->id)
                     @elseif(Session::get('is_admin') >= 1)
                         <form action="/user/{{ $user->id }}/banpage" method="GET" style="position:absolute;bottom:0px">
                             <input type="button" value="和他联系" class="btn btn-info"
                                    onclick="window.location.href='/message/startConversation/{{ $user->id }}'"/>
                             <input type="submit" class="btn btn-danger" value="封禁该用户">
-                        </form>
+						</form>
                     @else
                         <form action="/report/{{ $user->id }}" method="GET" style="position:absolute;bottom:0px">
                             <input type="button" value="和他联系" class="btn btn-info"

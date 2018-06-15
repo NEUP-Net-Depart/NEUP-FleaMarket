@@ -84,6 +84,11 @@ Route::group(['middleware' => ['web']],function () {
 	Route::get('/user/{user_id}/banpage', "UserController@banPage")->middleware('admin');
 	Route::post('/setBan/{user_id}', "UserController@setBan")->middleware('admin');
 
+	Route::get('/user/{user_id}/setadmin', "UserController@setAdmin")->middleware('admin');
+	Route::get('/user/{user_id}/setsadmin', "UserController@setSAdmin")->middleware('admin');
+	Route::get('/user/{user_id}/removeadmin', "UserController@removeAdmin")->middleware('admin');
+	Route::get('/user/{user_id}/removesadmin', "UserController@removeSAdmin")->middleware('admin');
+
     Route::get('/user/sell', "UserController@mygoods_on")->middleware('auth');
     Route::get('/user/sell/sold', "UserController@mygoods_sold")->middleware('auth');
     Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
@@ -158,6 +163,8 @@ Route::group(['middleware' => ['web']],function () {
     Route::put('/tag/edit', "AdminController@editTag")->middleware('admin');
 
     Route::get('/admin/{tab?}', "AdminController@adminIndex")->middleware('admin');
+
+	Route::get('/usersearch', "AdminController@userSearch")->middleware('admin');
 
     Route::post('/user/{user_id}/updatePriv', [
         "uses" => "AdminController@updateUserPriv",

@@ -382,4 +382,64 @@ class UserController extends Controller
 		return Redirect::to('/user/'.$user_id);
 	}
 
+	public function setAdmin(Request $request, $user_id)
+	{
+		$user = User::find($user_id);
+		$user->privilege = 1;
+		$user->update();
+
+		$event = new AdminEvent;
+		$event->admin_id = $request->session()->get('user_id');
+		$event->target_user = $user_id;
+		$event->event = "setadmin";
+		$event->save();
+
+		return Redirect::to('/user/'.$user_id);
+	}
+
+	public function setSAdmin(Request $request, $user_id)
+	{
+		$user = User::find($user_id);
+		$user->privilege = 2;
+		$user->update();
+
+		$event = new AdminEvent;
+		$event->admin_id = $request->session()->get('user_id');
+		$event->target_user = $user_id;
+		$event->event = "setsadmin";
+		$event->save();
+
+		return Redirect::to('/user/'.$user_id);
+	}
+
+	public function removeAdmin(Request $request, $user_id)
+	{
+		$user = User::find($user_id);
+		$user->privilege = 0;
+		$user->update();
+
+		$event = new AdminEvent;
+		$event->admin_id = $request->session()->get('user_id');
+		$event->target_user = $user_id;
+		$event->event = "removeadmin";
+		$event->save();
+
+		return Redirect::to('/user/'.$user_id);
+	}
+
+	public function removeSAdmin(Request $request, $user_id)
+	{
+		$user = User::find($user_id);
+		$user->privilege = 1;
+		$user->update();
+
+		$event = new AdminEvent;
+		$event->admin_id = $request->session()->get('user_id');
+		$event->target_user = $user_id;
+		$event->event = "removesadmin";
+		$event->save();
+
+		return Redirect::to('/user/'.$user_id);
+	}
+
 }
