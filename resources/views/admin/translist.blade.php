@@ -20,6 +20,7 @@
 					<th>交易数目</th>
 					<th>交易状态</th>
 					<th>评价</th>
+					<th>交易日期</th>
 				</tr>
 				</thead>
 				@foreach($trans as $tran)
@@ -60,6 +61,7 @@
 									无
 								@endif
 							</td>
+							<td>{{ $tran->updated_at }}</td>
 						</tr>
 						</tbody>
 					@endif
