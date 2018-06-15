@@ -30,7 +30,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\TrackHttpGet::class,
-            \App\Http\Middleware\TestUA::class
+            \App\Http\Middleware\TestUA::class,
         ],
 
         'api' => [
@@ -49,9 +49,9 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'authredirect' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'admin'=> \App\Http\Middleware\CheckAdmin::class,
-        'su'=> \App\Http\Middleware\CheckSu::class,
-        'regc'=> \App\Http\Middleware\RegisterComplete::class,
+        'admin' => \App\Http\Middleware\CheckAdmin::class,
+        'su' => \App\Http\Middleware\CheckSu::class,
+        'regc' => \App\Http\Middleware\RegisterComplete::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,

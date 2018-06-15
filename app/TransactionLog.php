@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionLog extends Model
 {
-    protected $table='transaction_log';
+    protected $table = 'transaction_log';
 }

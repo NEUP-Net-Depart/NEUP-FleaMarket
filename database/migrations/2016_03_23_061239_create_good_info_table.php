@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateGoodInfoTable extends Migration
 {
@@ -12,7 +12,7 @@ class CreateGoodInfoTable extends Migration
      */
     public function up()
     {
-        Schema::create('good_info',function(Blueprint $table){
+        Schema::create('good_info', function (Blueprint $table) {
             $table->increments('id');
             $table->string('good_name');
             $table->integer('cat_id');
@@ -25,7 +25,7 @@ class CreateGoodInfoTable extends Migration
             $table->boolean('stared');
             $table->integer('fav_num')->default(0);
             $table->timestamps();
-      });
+        });
     }
 
     /**

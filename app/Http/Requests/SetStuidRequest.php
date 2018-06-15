@@ -24,13 +24,16 @@ class SetStuidRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == 'GET') return [];
+        if ($this->method() == 'GET') {
+            return [];
+        }
+
         return [
             'stuid' => [
                 'required',
                 'integer',
-                Rule::unique('users')->ignore($this->session()->get('user_id'))
-            ]
+                Rule::unique('users')->ignore($this->session()->get('user_id')),
+            ],
         ];
     }
 

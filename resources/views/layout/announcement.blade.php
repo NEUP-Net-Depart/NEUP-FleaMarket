@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h2>{{ $announcement->title }}</h2>
-    {!! $announcement->content !!}
+  <h2>{{ $announcement->title }}</h2>
+  {!! $announcement->content !!}
 
 @endsection

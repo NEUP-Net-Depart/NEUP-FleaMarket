@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class AuthLog extends Model
 {
-    protected $table='auth_log';
+    protected $table = 'auth_log';
 }

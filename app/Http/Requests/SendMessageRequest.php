@@ -24,16 +24,17 @@ class SendMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'content'=>'max:65535',
-            'receiver'=>'required|integer',
+            'content' => 'max:65535',
+            'receiver' => 'required|integer',
         ];
     }
 
-    public function messages() {
+    public function messages()
+    {
         return [
             'content.max' => '内容长度不能超过65535个字符',
             'receiver.required' => '收件人不可为空',
-            'receiver.integer' => '收件人格式不正确！'
+            'receiver.integer' => '收件人格式不正确！',
         ];
     }
 }

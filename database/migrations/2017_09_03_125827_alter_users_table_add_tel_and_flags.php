@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AlterUsersTableAddTelAndFlags extends Migration
 {
@@ -46,7 +46,7 @@ class AlterUsersTableAddTelAndFlags extends Migration
                     'tel',
                     'tel_notify',
                     'email_notify',
-                    'wechat_notify'
+                    'wechat_notify',
                 ]);
             });
         }

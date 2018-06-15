@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $table='transactions';
+    protected $table = 'transactions';
 
     public function good()
     {
@@ -20,8 +20,9 @@ class Transaction extends Model
 
     public function getSellerIdAttribute()
     {
-		if($this->good != NULL)
-			return $this->good->user_id;
+        if ($this->good != null) {
+            return $this->good->user_id;
+        }
     }
 
     public function seller()
@@ -29,9 +30,9 @@ class Transaction extends Model
         return $this->belongsTo('App\User', 'seller_id');
     }
 
-	public function feedback()
-	{
-		return $this->hasOne('App\Ticket', 'trans_id');
-	}
+    public function feedback()
+    {
+        return $this->hasOne('App\Ticket', 'trans_id');
+    }
 
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AlterUsersTableAddLocker extends Migration
 {
@@ -14,7 +14,7 @@ class AlterUsersTableAddLocker extends Migration
     public function up()
     {
         if (Schema::hasTable('users') && !Schema::hasColumn('users', 'last_get_new_message_time')
-         && !Schema::hasColumn('users', 'last_send_email_time')) {
+            && !Schema::hasColumn('users', 'last_send_email_time')) {
             Schema::table('users', function (Blueprint $table) {
                 $table->integer('last_get_new_message_time')->nullable()->default(0);
                 $table->integer('last_send_email_time')->nullable()->default(0);

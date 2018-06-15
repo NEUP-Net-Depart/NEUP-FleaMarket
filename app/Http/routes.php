@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -26,13 +27,13 @@ use Illuminate\Support\Facades\Redirect;
 */
 
 
-Route::group(['middleware' => ['web']],function () {
+Route::group(['middleware' => ['web']], function () {
 
     Route::get('/update-browser', function () {
         return view('common.updateBrowser');
     });
 
-    Route::group(['middleware' => ['authredirect']], function() {
+    Route::group(['middleware' => ['authredirect']], function () {
         Route::get('/login', "AuthController@showLogin");
         Route::get('/sso', "AuthController@cas");
         Route::get('/wx', "AuthController@wx");
@@ -47,8 +48,8 @@ Route::group(['middleware' => ['web']],function () {
     });
 
     Route::group(['middleware' => ['auth']], function () {
-        Route::get('/user',"UserController@getList");
-        Route::post('/user',"UserController@editList");
+        Route::get('/user', "UserController@getList");
+        Route::post('/user', "UserController@editList");
         Route::post('/user/edit/username', "AuthController@setUsername");
         Route::post('/user/edit/stuid', "AuthController@setStuid");
         Route::post('/user/edit/email', "AuthController@setEmail");
@@ -77,39 +78,39 @@ Route::group(['middleware' => ['web']],function () {
         Route::get('/message/getNewMessageContact', "MessageController@getNewMessageContact");
         Route::get('/message/getHistoryMessage', "MessageController@getHistoryMessage");
         Route::get('/message/getNewMessage', "MessageController@getNewMessage");
-		Route::get('/message/startConversation/{receiver}', "MessageController@startConversation");
+        Route::get('/message/startConversation/{receiver}', "MessageController@startConversation");
         Route::get('/message/closeConversation/{receiver}', "MessageController@closeConversation");
-	});
+    });
 
-	Route::get('/user/{user_id}/banpage', "UserController@banPage")->middleware('admin');
-	Route::post('/setBan/{user_id}', "UserController@setBan")->middleware('admin');
+    Route::get('/user/{user_id}/banpage', "UserController@banPage")->middleware('admin');
+    Route::post('/setBan/{user_id}', "UserController@setBan")->middleware('admin');
 
-	Route::get('/user/{user_id}/setadmin', "UserController@setAdmin")->middleware('admin');
-	Route::get('/user/{user_id}/setsadmin', "UserController@setSAdmin")->middleware('admin');
-	Route::get('/user/{user_id}/removeadmin', "UserController@removeAdmin")->middleware('admin');
-	Route::get('/user/{user_id}/removesadmin', "UserController@removeSAdmin")->middleware('admin');
+    Route::get('/user/{user_id}/setadmin', "UserController@setAdmin")->middleware('admin');
+    Route::get('/user/{user_id}/setsadmin', "UserController@setSAdmin")->middleware('admin');
+    Route::get('/user/{user_id}/removeadmin', "UserController@removeAdmin")->middleware('admin');
+    Route::get('/user/{user_id}/removesadmin', "UserController@removeSAdmin")->middleware('admin');
 
     Route::get('/user/sell', "UserController@mygoods_on")->middleware('auth');
     Route::get('/user/sell/sold', "UserController@mygoods_sold")->middleware('auth');
     Route::get('/user/sell/trans', "UserController@sellerTrans")->middleware('auth');
     Route::get('/user/sell/tickets', "UserController@tickets")->middleware('auth');
     Route::get('/user/trans', "UserController@buyer")->middleware('auth');
-	Route::get('/comment/{trans_id}', "TransactionController@comment")->middleware('auth');
-	Route::post('/sendComment/{trans_id}', "TransactionController@sendComment")->middleware('auth');
+    Route::get('/comment/{trans_id}', "TransactionController@comment")->middleware('auth');
+    Route::post('/sendComment/{trans_id}', "TransactionController@sendComment")->middleware('auth');
 
     Route::get('/user/checkEmail/{token}', "AuthController@checkEmail");
     Route::get('/user/unbindEmail/{token}', "AuthController@unbindEmail");
     Route::get('/user/{user_id}/sendCheckLetter', "AuthController@sendCheckLetter");
 
-    Route::get('/user/{user_id}',"UserController@userProfile");
+    Route::get('/user/{user_id}', "UserController@userProfile");
 
     Route::get('/avatar/{user_id}', "UserController@getAvatar");
     Route::get('/avatar/{user_id}/{width}/{height}', "UserController@getAvatar");
 
-	Route::get('/report/{seller_id}', "UserController@reportSeller")->middleware('auth');
-	Route::post('/sendRepo/{seller_id}', "UserController@sendRepo");
+    Route::get('/report/{seller_id}', "UserController@reportSeller")->middleware('auth');
+    Route::post('/sendRepo/{seller_id}', "UserController@sendRepo");
     Route::post('/repo/{repo_id}/assign', "AdminController@assignReport")->middleware('admin');
-	Route::post('/repo/{repo_id}/solve', "AdminController@solveReport")->middleware('admin');
+    Route::post('/repo/{repo_id}/solve', "AdminController@solveReport")->middleware('admin');
 
     Route::get('/good', "GoodController@getList");
 
@@ -119,7 +120,7 @@ Route::group(['middleware' => ['web']],function () {
     Route::get('/good/{good_id}', "GoodController@getInfo");
     Route::get('/good/{good_id}/edit', "GoodController@showEditGood")->middleware('auth');
     Route::post('/good/{good_id}/edit', "GoodController@editGood")->middleware('auth');
-	Route::post('/good/{good_id}/ban', "GoodController@banGood")->middleware('admin');
+    Route::post('/good/{good_id}/ban', "GoodController@banGood")->middleware('admin');
 
     Route::delete('/good/{good_id}/delete', "GoodController@deleteGood")->middleware('auth');
 
@@ -164,16 +165,16 @@ Route::group(['middleware' => ['web']],function () {
 
     Route::get('/admin/{tab?}', "AdminController@adminIndex")->middleware('admin');
 
-	Route::get('/usersearch', "AdminController@userSearch")->middleware('admin');
+    Route::get('/usersearch', "AdminController@userSearch")->middleware('admin');
 
     Route::post('/user/{user_id}/updatePriv', [
         "uses" => "AdminController@updateUserPriv",
-        "middleware" => "su"
+        "middleware" => "su",
     ]);
 
     Route::post('/user/{user_id}/updateRole', [
         "uses" => "AdminController@updateUserRole",
-        "middleware" => "admin"
+        "middleware" => "admin",
     ]);
 
     Route::post('/captcha/sendText', "TelValidateController@sendRegTextCaptcha");

@@ -24,14 +24,17 @@ class SetEmailRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == 'GET') return [];
+        if ($this->method() == 'GET') {
+            return [];
+        }
+
         return [
             'email' => [
                 'required',
                 'email',
                 'max:64',
-                Rule::unique('users')->ignore($this->session()->get('user_id'))
-            ]
+                Rule::unique('users')->ignore($this->session()->get('user_id')),
+            ],
         ];
     }
 
@@ -41,7 +44,7 @@ class SetEmailRequest extends FormRequest
             'email.required' => '邮箱不能为空！',
             'email.max' => '邮箱长度不能超过64个字符！',
             'email.email' => '邮箱格式不正确！',
-            'email.unique' => '已有用户使用该邮箱注册！'
+            'email.unique' => '已有用户使用该邮箱注册！',
         ];
     }
 }

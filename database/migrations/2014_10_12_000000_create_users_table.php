@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateUsersTable extends Migration
 {
@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->boolean('havecheckedemail');
             $table->tinyInteger('role');
             $table->boolean('baned');
-			$table->integer('banedtime');
-			$table->integer('banedstart');
+            $table->integer('banedtime');
+            $table->integer('banedstart');
             $table->timestamps();
         });
     }

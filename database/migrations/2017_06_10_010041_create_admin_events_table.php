@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAdminEventsTable extends Migration
 {
@@ -13,17 +13,17 @@ class CreateAdminEventsTable extends Migration
      */
     public function up()
     {
-		Schema::create('admin_events', function (Blueprint $table) {
-			$table->increments('id');
-			$table->integer('admin_id');
-			$table->integer('target_user');
-			$table->string('event');
-			$table->integer('ticket_id')->nullable();
-			$table->text('message');
-			$table->integer('banedtime');
-			$table->integer('banedstart');
-			$table->timestamps();
-		});
+        Schema::create('admin_events', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('admin_id');
+            $table->integer('target_user');
+            $table->string('event');
+            $table->integer('ticket_id')->nullable();
+            $table->text('message');
+            $table->integer('banedtime');
+            $table->integer('banedstart');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -33,6 +33,6 @@ class CreateAdminEventsTable extends Migration
      */
     public function down()
     {
-		Schema::drop('admin_events');
+        Schema::drop('admin_events');
     }
 }

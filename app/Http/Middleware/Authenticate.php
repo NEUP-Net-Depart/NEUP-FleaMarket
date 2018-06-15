@@ -12,24 +12,22 @@ class Authenticate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('user_id'))
-        {
+        if ($request->session()->has('user_id')) {
             return $next($request);
-        }
-        else
-        {
+        } else {
             $agent = new Agent();
             if (strpos($agent->getUserAgent(), 'MicroMessenger') !== false
                 && !$request->session()->has('wechat_open_id')
             ) {
                 return Redirect::to('/wx');
             }
+
             return Redirect::to('/login');
         }
     }

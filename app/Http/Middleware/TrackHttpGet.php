@@ -10,8 +10,8 @@ class TrackHttpGet
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     private $blacklist = [
@@ -22,12 +22,12 @@ class TrackHttpGet
         "/sso",
         "/message/get",
         "/titlepic",
-        "/avatar"
+        "/avatar",
     ];
 
     public function handle($request, Closure $next)
     {
-        if($request->isMethod("GET")) {
+        if ($request->isMethod("GET")) {
             $uri = $request->getRequestUri();
             $save = true;
             foreach ($this->blacklist as $b) {
@@ -39,8 +39,8 @@ class TrackHttpGet
             if ($save) {
                 $request->session()->put('lastGetUri', $uri);
             }
-            if(isset($request->via) && $request->via) {
-                if(Via::where('name', $request->via)->count() > 0) {
+            if (isset($request->via) && $request->via) {
+                if (Via::where('name', $request->via)->count() > 0) {
                     $via = Via::where('name', $request->via)->first();
                 } else {
                     $via = new Via();
@@ -51,6 +51,7 @@ class TrackHttpGet
                 $via->save();
             }
         }
+
         return $next($request);
     }
 }

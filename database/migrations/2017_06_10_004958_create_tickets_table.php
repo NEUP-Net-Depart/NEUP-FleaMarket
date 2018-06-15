@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTicketsTable extends Migration
 {
@@ -13,17 +13,17 @@ class CreateTicketsTable extends Migration
      */
     public function up()
     {
-		Schema::create('tickets', function (Blueprint $table) {
-			$table->increments('id');
-			$table->integer('sender_id');
-			$table->integer('trans_id')->nullable();
-			$table->integer('receiver_id');
-			$table->tinyInteger('type');
-			$table->string('message')->nullable();
-			$table->integer('assignee')->nullable();
-			$table->integer('state')->nullable();
-			$table->timestamps();
-		});
+        Schema::create('tickets', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('sender_id');
+            $table->integer('trans_id')->nullable();
+            $table->integer('receiver_id');
+            $table->tinyInteger('type');
+            $table->string('message')->nullable();
+            $table->integer('assignee')->nullable();
+            $table->integer('state')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -33,6 +33,6 @@ class CreateTicketsTable extends Migration
      */
     public function down()
     {
-		Schema::drop('tickets');
+        Schema::drop('tickets');
     }
 }

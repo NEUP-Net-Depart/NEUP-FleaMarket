@@ -1,13 +1,13 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use App\FavList;
+use App\GoodInfo;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Hash;
 use Tests\BrowserKitTestCase;
-use App\User;
-use App\GoodInfo;
-use App\FavList;
 
 class UserTest extends BrowserKitTestCase
 {
@@ -30,7 +30,7 @@ class UserTest extends BrowserKitTestCase
             ])
             ->seeJson([
                 'result' => 'true',
-                'msg' => 'success'
+                'msg' => 'success',
             ]);
     }
 
@@ -75,7 +75,7 @@ class UserTest extends BrowserKitTestCase
 
         $nu = new User();
         $nu->privilege = 0;
-        $nu->baned =  false;
+        $nu->baned = false;
         $nu->havecheckedemail = false;
         $nu->role = 0;
         $nu->save();
@@ -114,22 +114,22 @@ class UserTest extends BrowserKitTestCase
             ->dontsee('当前密码')
             ->press('password_submit')
             ->see('密码不能为空')
-            ->type('newpassword','newPassword')
+            ->type('newpassword', 'newPassword')
             ->type('newpasswordn', 'newPassword_confirmation')
             ->press('password_submit')
             ->see('两次输入的密码不一致')
-            ->type('newpassword','newPassword')
+            ->type('newpassword', 'newPassword')
             ->type('newpassword', 'newPassword_confirmation')
             ->press('password_submit')
             ->see('密码已变更')
             ->see('当前密码')
-            ->type('wrongpassword','password')
-            ->type('newpassword2','newPassword')
+            ->type('wrongpassword', 'password')
+            ->type('newpassword2', 'newPassword')
             ->type('newpassword2', 'newPassword_confirmation')
             ->press('password_submit')
             ->see('旧密码错误')
-            ->type('newpassword','password')
-            ->type('newpassword2','newPassword')
+            ->type('newpassword', 'password')
+            ->type('newpassword2', 'newPassword')
             ->type('newpassword2', 'newPassword_confirmation')
             ->press('password_submit')
             ->see('密码已变更');
@@ -223,7 +223,7 @@ class UserTest extends BrowserKitTestCase
 
         //test cat
         //too lazy to test zzz
-        
+
         //test report
         $this->withSession(['user_id' => 1, 'is_admin' => 0])
             ->visit('/user/2')
@@ -246,7 +246,7 @@ class UserTest extends BrowserKitTestCase
             ->see('驳回此条')
             ->press('批准显示')
             ->see('已批准');
-        
+
         //test list all users
         $this->visit('admin/userlist')
             ->see('test@example.com')

@@ -1,195 +1,195 @@
 .mavatar {
-    -webkit-border-radius: 32px;
-    -moz-border-radius: 32px;
-    border-radius: 32px;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  border-radius: 32px;
 }
 
 .msg {
-    margin-top: 0.5em;
-    padding: 0.1em;
-    list-style-type: none;
+  margin-top: 0.5em;
+  padding: 0.1em;
+  list-style-type: none;
 }
 
 .msg.box {
-    border-style: solid;
-    border-width: 1px;
-    border-color: #cccccc;
-    border-top-left-radius: 32px;
-    border-bottom-right-radius: 32px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #cccccc;
+  border-top-left-radius: 32px;
+  border-bottom-right-radius: 32px;
 }
 
 .con {
-    padding-right: 1.25em;
-    list-style-type: none;
-    cursor: pointer;
-    transition: background-color 0.2s, border-radius 0.5s, 1s;
+  padding-right: 1.25em;
+  list-style-type: none;
+  cursor: pointer;
+  transition: background-color 0.2s, border-radius 0.5s, 1s;
 }
 
 .con.active {
-    background-color: #eeeeee;
-    border-radius: 32px;
+  background-color: #eeeeee;
+  border-radius: 32px;
 }
 
 .con:hover {
-    background-color: #eeeeee;
-    border-radius: 32px;
+  background-color: #eeeeee;
+  border-radius: 32px;
 }
 
 .con-name {
-    float: none;
-    margin-left: 0.5em;
+  float: none;
+  margin-left: 0.5em;
 }
 
 .con-wrapper {
-    vertical-align: middle;
-    text-align: center;
-    width: 100%;
+  vertical-align: middle;
+  text-align: center;
+  width: 100%;
 }
 
 .balloon-tip {
-    font-style: normal;
-    font-weight: bold;
-    color: white;
-    display: inline-block;
-    background: rgba(255, 0, 0, 0.8);
-    border-radius: 50%;
-    width: 2em;
-    height: 2em;
-    padding-top: 0.2em;
-    position: absolute;
-    left: 0em;
-    z-index: 10;
+  font-style: normal;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+  background: rgba(255, 0, 0, 0.8);
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  padding-top: 0.2em;
+  position: absolute;
+  left: 0em;
+  z-index: 10;
 }
 
 .message-container {
-    overflow: auto;
-    overflow-x: hidden;
-    max-height: 500px;
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 500px;
 }
 
 .contact-container {
-    overflow: auto;
-    overflow-x: hidden;
-    max-height: 500px;
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 500px;
 }
 
 .message-list-item {
-    transition: all 1s;
+  transition: all 1s;
 }
 
 .message-list-enter, .message-list-leave-active {
-    opacity: 0;
+  opacity: 0;
 }
 
 .message-content {
-    word-break:break-all;
-    display: inline;
+  word-break: break-all;
+  display: inline;
 }
 
 .contact-list-item {
-    transition: all 1s;
+  transition: all 1s;
 }
 
 .contact-list-enter, .contact-list-leave-active {
-    opacity: 0;
+  opacity: 0;
 }
 
 .center-block {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .err-msg {
-    color: red;
-    font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 
 .time-tag {
-    color: #7b7a80;
-    margin: 1px;
-    font-size: 10px;
-    float: right;
-    position: relative;
-    top: -2em;
-    left: -2em;
+  color: #7b7a80;
+  margin: 1px;
+  font-size: 10px;
+  float: right;
+  position: relative;
+  top: -2em;
+  left: -2em;
 }
 
 .history-text {
-    color: #7b7a80;
-    float: right;
+  color: #7b7a80;
+  float: right;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .secondary {
-    background-color: #c5c5ca
+  background-color: #c5c5ca
 }
 
 #message-container::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+  width: 10px;
+  height: 10px;
 }
 
 #message-container::-webkit-scrollbar-button {
-    background-color: #efefff;
+  background-color: #efefff;
 }
 
 #message-container::-webkit-scrollbar-track {
-    background: #efefef;
+  background: #efefef;
 }
 
 #message-container::-webkit-scrollbar-thumb {
-    background: #aaaaaa;
-    border-radius: 4px;
+  background: #aaaaaa;
+  border-radius: 4px;
 }
 
 #message-container::-webkit-scrollbar-corner {
-    background: #82AFFF;
+  background: #82AFFF;
 }
 
 #message-container::-webkit-scrollbar-resizer {
-    background: #efefff;
+  background: #efefff;
 }
 
 #contact-container::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+  width: 10px;
+  height: 10px;
 }
 
 #contact-container::-webkit-scrollbar-button {
-    background-color: #efefff;
+  background-color: #efefff;
 }
 
 #contact-container::-webkit-scrollbar-track {
-    background: #efefef;
+  background: #efefef;
 }
 
 #contact-container::-webkit-scrollbar-thumb {
-    background: #aaaaaa;
-    border-radius: 4px;
+  background: #aaaaaa;
+  border-radius: 4px;
 }
 
 #contact-container::-webkit-scrollbar-corner {
-    background: #82AFFF;
+  background: #82AFFF;
 }
 
 #contact-container::-webkit-scrollbar-resizer {
-    background: #efefff;
+  background: #efefff;
 }
 
 #contact-closer {
-    position: relative;
-    top: -5em;
-    float: right;
+  position: relative;
+  top: -5em;
+  float: right;
 }
 
 #contact-closer:hover {
-    background-color: #b42600;
+  background-color: #b42600;
 }
 
 ul {
-    padding-left: 0 !important;
+  padding-left: 0 !important;
 }

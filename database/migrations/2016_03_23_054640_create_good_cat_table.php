@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateGoodCatTable extends Migration
 {
@@ -12,11 +12,11 @@ class CreateGoodCatTable extends Migration
      */
     public function up()
     {
-        Schema::create('good_cat',function(Blueprint $table){
+        Schema::create('good_cat', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cat_name');
             $table->integer('cat_index');
-            $table->timestamps();  
+            $table->timestamps();
         });
     }
 

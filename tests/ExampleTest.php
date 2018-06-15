@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\BrowserKitTestCase;
 
 class ExampleTest extends BrowserKitTestCase
@@ -15,6 +15,6 @@ class ExampleTest extends BrowserKitTestCase
     public function testBasicExample()
     {
         $this->visit('/')
-             ->see('市场');
+            ->see('市场');
     }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
 class RegisterRequest extends Request
 {
     /**
@@ -23,16 +21,20 @@ class RegisterRequest extends Request
      */
     public function rules()
     {
-        if($this->method()=='GET') return [];
+        if ($this->method() == 'GET') {
+            return [];
+        }
+
         return [
             //'username'=>'required|alpha_dash|between:3,64|unique:users,username',
-            'email'=>'required|email|unique:users,email|max:64',
-            'password'=>'required|confirmed|between:6,128',
+            'email' => 'required|email|unique:users,email|max:64',
+            'password' => 'required|confirmed|between:6,128',
             //'nickname'=>'max:128',
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
             //'username.required' => '用户名不能为空！',
             //'username.between' => '用户名长度必须为3-64个字符！',

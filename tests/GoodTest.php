@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use App\GoodCat;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\BrowserKitTestCase;
-use App\GoodCat;
 
 class GoodTest extends BrowserKitTestCase
 {
@@ -39,10 +39,10 @@ class GoodTest extends BrowserKitTestCase
             ->type('10', 'count')
             ->press('添加')
             ->see('必须为商品上传封面')
-            ->attach(__DIR__ . '/resources/good.jpg', 'goodTitlePic')
+            ->attach(__DIR__.'/resources/good.jpg', 'goodTitlePic')
             ->press('添加')
             ->see('请按要求裁剪图片')
-            ->attach(__DIR__ . '/resources/good.jpg', 'goodTitlePic')
+            ->attach(__DIR__.'/resources/good.jpg', 'goodTitlePic')
             ->type('400', 'crop_width')
             ->type('225', 'crop_height')
             ->type('50', 'crop_x')
@@ -53,9 +53,9 @@ class GoodTest extends BrowserKitTestCase
 
     public function testGoodPic()
     {
-        $this->visit('/good/'. sha1(1) .'/titlepic')
+        $this->visit('/good/'.sha1(1).'/titlepic')
             ->seeHeader('Content-Type', 'image/jpeg')
-            ->visit('/good/'. sha1(1) .'/titlepic/640/480')
+            ->visit('/good/'.sha1(1).'/titlepic/640/480')
             ->seeHeader('Content-Type', 'image/jpeg');
     }
 
@@ -82,7 +82,7 @@ class GoodTest extends BrowserKitTestCase
             ->type('50', 'price')
             ->select('1', 'type')
             ->type('20', 'count')
-            ->attach(__DIR__ . '/resources/good.jpg', 'goodTitlePic')
+            ->attach(__DIR__.'/resources/good.jpg', 'goodTitlePic')
             ->type('400', 'crop_width')
             ->type('225', 'crop_height')
             ->type('50', 'crop_x')
@@ -153,19 +153,18 @@ class GoodTest extends BrowserKitTestCase
             ->type('10', 'count')
             ->type('666', 'price')
             ->type('10', 'count')
-            ->attach(__DIR__ . '/resources/good.jpg', 'goodTitlePic')
+            ->attach(__DIR__.'/resources/good.jpg', 'goodTitlePic')
             ->type('500', 'crop_width')
             ->type('281', 'crop_height')
             ->type('0', 'crop_x')
             ->type('108', 'crop_y')
             ->press('更改')
             ->see('￥666')
-            ->visit('/good/'. sha1(1) .'/titlepic')
+            ->visit('/good/'.sha1(1).'/titlepic')
             ->seeHeader('Content-Type', 'image/jpeg')
-            ->visit('/good/'. sha1(1) .'/titlepic/640/480')
+            ->visit('/good/'.sha1(1).'/titlepic/640/480')
             ->seeHeader('Content-Type', 'image/jpeg');
     }
-
 
 
     public function testUnauthorized()

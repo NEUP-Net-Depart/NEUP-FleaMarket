@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'nickname' => '超级管理员',
             'email' => 'admin@admin',
             'stuid' => '00000000',
-            'havecheckedemail' => 1
+            'havecheckedemail' => 1,
         ]);
     }
 }

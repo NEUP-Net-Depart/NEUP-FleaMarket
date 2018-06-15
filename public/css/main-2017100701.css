@@ -1,230 +1,230 @@
 a:hover, a:focus {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 * {
-    outline: none!important;
+  outline: none !important;
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .banner {
-    height: 240px;
-    width: 100%;
-    overflow: hidden;
+  height: 240px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .banner-back {
-    background-image: url('/img/banner-20171007.jpg');
-    background-repeat: repeat-x;
-    background-position: center 0;
-    position: relative;
-    top: -10px;
-    left: -20px;
-    padding: 0 20px;
-    height: 250px;
-    width: 100%;
-    box-sizing: content-box;
+  background-image: url('/img/banner-20171007.jpg');
+  background-repeat: repeat-x;
+  background-position: center 0;
+  position: relative;
+  top: -10px;
+  left: -20px;
+  padding: 0 20px;
+  height: 250px;
+  width: 100%;
+  box-sizing: content-box;
 }
 
 .navbar-brand {
-    text-shadow: 0 0 3px #000000;
+  text-shadow: 0 0 3px #000000;
 }
 
 .navbar-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .navbar {
-    padding: 0;
+  padding: 0;
 }
 
 .navbar-back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 56px;
-    overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 56px;
+  overflow: hidden;
 }
 
 .navbar-filter {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.25);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .navbar-bg {
-    position: absolute;
-    background-image: url('/img/banner-20171007.jpg');
-    background-position: center 0;
-    background-repeat: repeat-x;
-    height: 100px;
-    top: -10px;
-    left: -20px;
-    padding: 0 20px;
-    width: 100%;
-    margin: 0;
-    filter: blur(5px);
-    box-sizing: content-box;
+  position: absolute;
+  background-image: url('/img/banner-20171007.jpg');
+  background-position: center 0;
+  background-repeat: repeat-x;
+  height: 100px;
+  top: -10px;
+  left: -20px;
+  padding: 0 20px;
+  width: 100%;
+  margin: 0;
+  filter: blur(5px);
+  box-sizing: content-box;
 }
 
 .nav-btn {
-    color: #FFFFFF!important;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    text-shadow: 0 0 3px #000000;
-    font-weight: bold;
+  color: #FFFFFF !important;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  text-shadow: 0 0 3px #000000;
+  font-weight: bold;
 }
 
 .nav-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .nav-btn:active {
-    background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .navbar-avatar {
-    padding-top: 8px;
-    padding-bottom: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .navbar-brand {
-    padding-top: 13px;
-    padding-bottom: 13px;
+  padding-top: 13px;
+  padding-bottom: 13px;
 }
 
 .navbar-toggler {
-    margin-top: 8px;
-    margin-bottom: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .avatar {
-    border: 0;
-    border-radius: 50%;
+  border: 0;
+  border-radius: 50%;
 }
 
 .message-num-tip-toggle {
-    width: 30px;
-    margin: auto 0;
-    padding-top: 7.5px;
-    padding-bottom: 7.5px;
-    vertical-align: middle;
+  width: 30px;
+  margin: auto 0;
+  padding-top: 7.5px;
+  padding-bottom: 7.5px;
+  vertical-align: middle;
 }
 
 .banner-icon {
-    position: absolute;
+  position: absolute;
 }
 
 .search-container {
-    position: absolute;
-    top: 56px;
-    left: 0;
-    right: 0;
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
 }
 
 .search-container .input-group {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .classbar-back {
-    position: absolute;
-    top: 200px;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    overflow: hidden;
+  position: absolute;
+  top: 200px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
 }
 
 .classbar-filter {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.25);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .classbar-bg {
-    position: absolute;
-    background-image: url('/img/banner-20171007.jpg');
-    background-position: center 0;
-    background-repeat: repeat-x;
-    height: 100px;
-    top: -10px;
-    left: -20px;
-    padding: 0 20px;
-    width: 100%;
-    margin: 0;
-    filter: blur(5px);
-    box-sizing: content-box;
+  position: absolute;
+  background-image: url('/img/banner-20171007.jpg');
+  background-position: center 0;
+  background-repeat: repeat-x;
+  height: 100px;
+  top: -10px;
+  left: -20px;
+  padding: 0 20px;
+  width: 100%;
+  margin: 0;
+  filter: blur(5px);
+  box-sizing: content-box;
 }
 
 .classbar-container {
-    position: absolute;
-    top: 200px;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    height: 40px;
+  position: absolute;
+  top: 200px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  height: 40px;
 }
 
 .classbar-pills {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    height: 58px;
-    display: -webkit-box;
-    display: -moz-box;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  height: 58px;
+  display: -webkit-box;
+  display: -moz-box;
 }
 
 .classbar-pills > .nav-item {
-    float: none;
+  float: none;
 }
 
 .classbar-btn {
-    color: #FFFFFF;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border-radius: 0!important;
-    text-shadow: 0 0 3px #000000;
-    font-weight: bold;
+  color: #FFFFFF;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 0 !important;
+  text-shadow: 0 0 3px #000000;
+  font-weight: bold;
 }
 
 .classbar-btn-active {
 }
 
 .classbar-btn:hover {
-    color: rgba(255,255,255,.75);
-    background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, .75);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .classbar-btn:active {
-    color: rgba(255,255,255,.75);
-    background: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, .75);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .footer li {
-    display: inline-block;
-    margin-left: 5px;
-    margin-right: 5px;
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .footer {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .dropdown-menu {
-    margin: 0;
+  margin: 0;
 }

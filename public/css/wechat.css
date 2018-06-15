@@ -1,22 +1,22 @@
 .head-img {
-    border-style: solid;
-    border-width: 0.3em;
-    border-color: #cccccc;
-    border-radius: 15%;
-    margin-bottom: 1em;
+  border-style: solid;
+  border-width: 0.3em;
+  border-color: #cccccc;
+  border-radius: 15%;
+  margin-bottom: 1em;
 }
 
 .nickname {
-    background: #f9fafa;
-    padding: 3px 6px;
-    border-radius: 3px;
-    color: #f4645f;
-    margin: 5px;
-    border: 1px solid #ded9d9;
-    overflow-x: auto;
-    font-size: 0.9em;
+  background: #f9fafa;
+  padding: 3px 6px;
+  border-radius: 3px;
+  color: #f4645f;
+  margin: 5px;
+  border: 1px solid #ded9d9;
+  overflow-x: auto;
+  font-size: 0.9em;
 }
 
 .content-wrapper {
-    margin-top: 3em;
+  margin-top: 3em;
 }

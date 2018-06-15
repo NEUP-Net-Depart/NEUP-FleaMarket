@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
 class ResetPassRequest extends Request
 {
     /**
@@ -23,13 +21,17 @@ class ResetPassRequest extends Request
      */
     public function rules()
     {
-        if($this->method()=='GET') return [];
+        if ($this->method() == 'GET') {
+            return [];
+        }
+
         return [
-            'password'=>'required|confirmed|between:6,128',
+            'password' => 'required|confirmed|between:6,128',
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
             'password.required' => '密码不能为空！',
             'password.confirmed' => '两次输入的密码不一致！',

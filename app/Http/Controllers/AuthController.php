@@ -2,102 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\AuthLog;
+use App\CheckEmail;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ResetPassRequest;
 use App\Http\Requests\SetEmailRequest;
 use App\Http\Requests\SetPasswordRequest;
 use App\Http\Requests\SetStuidRequest;
 use App\Http\Requests\SetUsernameRequest;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\ResetPassRequest;
-use App\User;
-use App\CheckEmail;
 use App\PasswordReset;
-use JsonRpcClient;
-use Illuminate\Support\Facades\Storage;
-use App\AuthLog;
-use phpCAS;
+use App\User;
 use App\Wechat;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
+use JsonRpcClient;
+use phpCAS;
 
 class AuthController extends Controller
 {
-
-    static private function log($user_id, $event, $request) {
-        $log = new AuthLog();
-        $log->user_id = $user_id;
-        $log->ip = $request->ip();
-        $log->event = $event;
-        $log->save();
-    }
-
-    function http_get_data($url) {
-
-        $ch = curl_init ();
-        curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
-        curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, false );
-        curl_setopt ( $ch, CURLOPT_URL, $url );
-        ob_start ();
-        curl_exec ( $ch );
-        $return_content = ob_get_contents ();
-        ob_end_clean ();
-
-        $return_code = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
-        return $return_content;
-    }
-
-    private function wechatReg($user, $request) {
-        if($request->session()->has('wechat_open_id') && !$user->baned) {
-            $user->wechat_open_id = $request->session()->get('wechat_open_id');
-            $user->save();
-
-            $wechat = Wechat::where('open_id', $user->wechat_open_id)->first();
-            if($wechat && !Storage::exists('avatar/' . $user->id))
-                Storage::put('avatar/' . $user->id, $this->http_get_data($wechat->head_img_url));
-            if($wechat && !$user->nickname) {
-                $user->nickname = $wechat->nick_name;
-                $user->save();
-            }
-
-            $this->log($user->id, "WechatBind_Success", $request);
-        }
-    }
-
-    private function afterLogin($user, $request) {
-        if ($user->baned) {
-            $nowdate = time();
-            $banedstart = $user->banedstart;
-            $date = $nowdate - $banedstart;
-            if ($date > ($user->banedtime) * 86400 && $user->banedtime != -1) {
-                $user->baned = 0;
-                $user->save();
-                return Redirect::to('/');
-            }
-
-            $this->log($user->id, "AfterLogin_Banned", $request);
-
-            if ($user->banedtime == -1)
-                return Redirect::to('/login')->withInput()->withErrors('你已经被永久封禁!');
-            return Redirect::to('/login')->withInput()->withErrors('你已经被封禁!' . ceil($user->banedtime - ($date / 86400)) . '天后解禁!');
-        }
-
-        $this->log($user->id, "AfterLogin_Success", $request);
-
-        $request->session()->put('user_id', $user->id);
-        $request->session()->put('username', $user->username);
-        $request->session()->put('nickname', $user->nickname);
-        if ($user->privilege)
-            $request->session()->put('is_admin', $user->privilege);
-
-        if ($user->registerCompletion() != 0)
-            return Redirect::to('/register/' . $user->registerCompletion());
-        else if ($request->session()->has('lastGetUri'))
-            return Redirect::to($request->session()->get('lastGetUri'));
-        else
-            return Redirect::to('/');
-    }
 
     public function showLogin()
     {
@@ -106,16 +32,15 @@ class AuthController extends Controller
 
     public function wx(Request $request)
     {
-        if(isset($request->data) && $request->sign == substr(md5($request->data . env('WECHAT_KEY')), 8, 16))
-        {
+        if (isset($request->data) && $request->sign == substr(md5($request->data.env('WECHAT_KEY')), 8, 16)) {
             $data['wechat'] = json_decode(($request->data));
             $user = User::where('wechat_open_id', $data['wechat']->openId)->first();
             $request->session()->put('wechat_open_id', $data['wechat']->openId);
 
             $cnt = Wechat::where('open_id', $data['wechat']->openId)->count();
-            if ($cnt != 0)
+            if ($cnt != 0) {
                 $wechat = Wechat::where('open_id', $data['wechat']->openId)->first();
-            else {
+            } else {
                 $wechat = new Wechat();
                 $wechat->open_id = $data['wechat']->openId;
             }
@@ -131,18 +56,71 @@ class AuthController extends Controller
             $wechat->sex = $data['wechat']->sex;
             $wechat->save();*/
 
-            if(!$user) {
+            if (!$user) {
                 return view('auth.wechatGuide')->with($data);
-            }
-            else {
+            } else {
                 $this->log($user->id, "Wechat_Login", $request);
+
                 return $this->afterLogin($user, $request);
             }
+        } else {
+            if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') === false) {
+                return View::make('common.wxua');
+            }
         }
-        else if(isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') === false) {
-            return View::make('common.wxua');
+
+        return Redirect::to("https://api.xms.rmbz.net/open/auth/oauth?path=".env("APP_URL")."/wx&bizCode=market.neupioneer");
+    }
+
+    static private function log($user_id, $event, $request)
+    {
+        $log = new AuthLog();
+        $log->user_id = $user_id;
+        $log->ip = $request->ip();
+        $log->event = $event;
+        $log->save();
+    }
+
+    private function afterLogin($user, $request)
+    {
+        if ($user->baned) {
+            $nowdate = time();
+            $banedstart = $user->banedstart;
+            $date = $nowdate - $banedstart;
+            if ($date > ($user->banedtime) * 86400 && $user->banedtime != -1) {
+                $user->baned = 0;
+                $user->save();
+
+                return Redirect::to('/');
+            }
+
+            $this->log($user->id, "AfterLogin_Banned", $request);
+
+            if ($user->banedtime == -1) {
+                return Redirect::to('/login')->withInput()->withErrors('你已经被永久封禁!');
+            }
+
+            return Redirect::to('/login')->withInput()->withErrors('你已经被封禁!'.ceil($user->banedtime - ($date / 86400)).'天后解禁!');
         }
-        return Redirect::to("https://api.xms.rmbz.net/open/auth/oauth?path=" . env("APP_URL") . "/wx&bizCode=market.neupioneer");
+
+        $this->log($user->id, "AfterLogin_Success", $request);
+
+        $request->session()->put('user_id', $user->id);
+        $request->session()->put('username', $user->username);
+        $request->session()->put('nickname', $user->nickname);
+        if ($user->privilege) {
+            $request->session()->put('is_admin', $user->privilege);
+        }
+
+        if ($user->registerCompletion() != 0) {
+            return Redirect::to('/register/'.$user->registerCompletion());
+        } else {
+            if ($request->session()->has('lastGetUri')) {
+                return Redirect::to($request->session()->get('lastGetUri'));
+            } else {
+                return Redirect::to('/');
+            }
+        }
     }
 
     public function cas(Request $request)
@@ -152,8 +130,7 @@ class AuthController extends Controller
         phpCAS::forceAuthentication();
         $stuid = phpCAS::getUser();
         $user = User::where('stuid', $stuid)->first();
-        if(!$user)
-        {
+        if (!$user) {
             $user = new User;
             $user->privilege = 0;
             $user->stuid = $stuid;
@@ -168,14 +145,49 @@ class AuthController extends Controller
 
             $request->session()->put('user_id', $user->id);
 
-            return Redirect::to('/register/' . $user->registerCompletion());
-        }
-        else
-        {
+            return Redirect::to('/register/'.$user->registerCompletion());
+        } else {
             $this->log($user->id, "Cas_Login", $request);
             $this->wechatReg($user, $request);
+
             return $this->afterLogin($user, $request);
         }
+    }
+
+    private function wechatReg($user, $request)
+    {
+        if ($request->session()->has('wechat_open_id') && !$user->baned) {
+            $user->wechat_open_id = $request->session()->get('wechat_open_id');
+            $user->save();
+
+            $wechat = Wechat::where('open_id', $user->wechat_open_id)->first();
+            if ($wechat && !Storage::exists('avatar/'.$user->id)) {
+                Storage::put('avatar/'.$user->id, $this->http_get_data($wechat->head_img_url));
+            }
+            if ($wechat && !$user->nickname) {
+                $user->nickname = $wechat->nick_name;
+                $user->save();
+            }
+
+            $this->log($user->id, "WechatBind_Success", $request);
+        }
+    }
+
+    function http_get_data($url)
+    {
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        ob_start();
+        curl_exec($ch);
+        $return_content = ob_get_contents();
+        ob_end_clean();
+
+        $return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        return $return_content;
     }
 
     public function login(LoginRequest $request)
@@ -184,18 +196,18 @@ class AuthController extends Controller
 
         if (filter_var($input['username'], FILTER_VALIDATE_EMAIL)) {
             $user = User::where('email', $input['username'])->first();
-            if ($user != NULL && !$user->havecheckedemail) {
+            if ($user != null && !$user->havecheckedemail) {
                 $this->log($user->id, "login_uncheckedmail", $request);
-                return Redirect::back()->withInput()->withErrors('未验证您的邮箱，请查收您的电子邮箱或<a href="/user/' . $user->id . '/sendCheckLetter">重新发送一封</a>');
+
+                return Redirect::back()->withInput()->withErrors('未验证您的邮箱，请查收您的电子邮箱或<a href="/user/'.$user->id.'/sendCheckLetter">重新发送一封</a>');
             }
-        } elseif(filter_var($input['username'], FILTER_VALIDATE_INT)) {
+        } elseif (filter_var($input['username'], FILTER_VALIDATE_INT)) {
             $user = User::where('tel', $input['username'])->first();
-        }
-        else {
+        } else {
             $user = User::where('username', $input['username'])->first();
         }
 
-        if ($user != NULL && Hash::check($input['password'], $user->password)) {
+        if ($user != null && Hash::check($input['password'], $user->password)) {
             if (Hash::needsRehash($user->password)) {
                 $user->password = Hash::make($request->password);
                 $user->save();
@@ -203,19 +215,21 @@ class AuthController extends Controller
 
             $this->log($user->id, "Normal_Login", $request);
             $this->wechatReg($user, $request);
+
             return $this->afterLogin($user, $request);
 
         } else {
-            $this->log($user == NULL ? "" : $user->id, "login_authfail", $request);
+            $this->log($user == null ? "" : $user->id, "login_authfail", $request);
+
             return Redirect::back()->withInput()->withErrors('用户名或者密码错误！<a href="/iforgotit">忘记密码？</a>');
         }
     }
 
     public function showRegister()
     {
-        if (!env('ALLOW_REG', false)){
+        if (!env('ALLOW_REG', false)) {
             return View::make('auth.ssoGuide');
-        }else{
+        } else {
             return View::make('auth.register');
         }
     }
@@ -235,26 +249,16 @@ class AuthController extends Controller
         $user->save();
 
         $this->log($user->id, "reg_success", $request);
+
         return $this->sendCheckLetter($request, $user->id);
-    }
-
-    public function logOut(Request $request)
-    {
-        $this->log($request->session()->get('user_id'), "logout", $request);
-
-        $request->session()->forget('user_id');
-        $request->session()->forget('username');
-        $request->session()->forget('nickname');
-        $request->session()->forget('is_admin');
-        $request->session()->forget('wechat_open_id');
-
-        return Redirect::to('/');
     }
 
     public function sendCheckLetter(Request $request, $user_id)
     {
-        if(self::doSendCheckLetter($request, $user_id))
+        if (self::doSendCheckLetter($request, $user_id)) {
             return Redirect::to('/login')->withErrors('该用户已经验证过邮箱。');
+        }
+
         return Redirect::to('/login')->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可登录先锋市场。');
     }
 
@@ -262,25 +266,27 @@ class AuthController extends Controller
     {
         $data = [];
         $user = User::where('id', $user_id)->first();
-        if ($user == NULL)
+        if ($user == null) {
             abort(404);
-        if ($user->havecheckedemail)
+        }
+        if ($user->havecheckedemail) {
             return true;
+        }
         $email = $user->email;
 
         $check_email = CheckEmail::where('user_id', $user_id)->first();
 
-        if ($check_email != NULL) {
+        if ($check_email != null) {
             $token = $check_email->token;
         } else {
             $new_check_email = new CheckEmail;
             $new_check_email->user_id = $user_id;
-            $token = md5($email . time());
+            $token = md5($email.time());
             $new_check_email->token = $token;
             $new_check_email->save();
         }
         $time = time();
-        $data['token'] = base64_encode($token . "#" . $time . "#" . $email . "#" . substr(sha1($time . $email . env('APP_KEY')), 0, 6));
+        $data['token'] = base64_encode($token."#".$time."#".$email."#".substr(sha1($time.$email.env('APP_KEY')), 0, 6));
         $data['host'] = $request->server("HTTP_HOST");
         if (env('APP_ENV') != "testing") {
             $conn = new JsonRpcClient(env('MAIL_RPC_HOST', "127.0.0.1"), env('MAIL_RPC_PORT', 65525));
@@ -296,32 +302,104 @@ class AuthController extends Controller
         self::log($user->id, "sendcheckletter", $request);
     }
 
+    public function logOut(Request $request)
+    {
+        $this->log($request->session()->get('user_id'), "logout", $request);
+
+        $request->session()->forget('user_id');
+        $request->session()->forget('username');
+        $request->session()->forget('nickname');
+        $request->session()->forget('is_admin');
+        $request->session()->forget('wechat_open_id');
+
+        return Redirect::to('/');
+    }
+
+    public function setUsername(SetUsernameRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
+        if ($user->username == '') {
+            $user->username = $input['username'];
+            $user->save();
+            if (!$user->password) {
+                return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！但是你必须设置密码才可以使用用户名登录。');
+            } else {
+                return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！');
+            }
+        } else {
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('用户名不能更改');
+        }
+    }
+
+    public function setStuid(SetStuidRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
+        if ($user->stuid == '') {
+            $user->stuid = $input['stuid'];
+            $user->save();
+
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！');
+        } else {
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('学号一旦设置不能更改，请联系管理员');
+        }
+    }
+
+    public function setEmail(SetEmailRequest $request)
+    {
+        $input = $request->all();
+        $user_id = $request->session()->get('user_id');
+        $user = User::find($user_id);
+        if ($user->email == '') {
+            $user->email = $input['email'];
+            $user->havecheckedemail = false;
+            $user->save();
+            self::doSendCheckLetter($request, $user_id);
+            if (!$user->password) {
+                return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。请注意，你必须先设置密码才可以使用邮箱登录。');
+            } else {
+                return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。');
+            }
+        } else {
+            if (self::doSendUnbindLetter($request, $user_id)) {
+                return Redirect::to('/user?tab=account')->withErrors('解绑成功。');
+            }
+
+            return Redirect::to('/user?tab=account')->withInput()->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可解绑此邮箱。');
+        }
+    }
+
     static private function doSendUnbindLetter(Request $request, $user_id)
     {
         $data = [];
         $user = User::where('id', $user_id)->first();
-        if ($user == NULL)
+        if ($user == null) {
             abort(404);
+        }
         if (!$user->havecheckedemail) {
             $user->email = null;
             $user->save();
+
             return true;
         }
         $email = $user->email;
 
         $check_email = CheckEmail::where('user_id', $user_id)->first();
 
-        if ($check_email != NULL) {
+        if ($check_email != null) {
             $token = $check_email->token;
         } else {
             $new_check_email = new CheckEmail;
             $new_check_email->user_id = $user_id;
-            $token = md5($email . time());
+            $token = md5($email.time());
             $new_check_email->token = $token;
             $new_check_email->save();
         }
         $time = time();
-        $data['token'] = base64_encode($token . "#" . $time . "#" . $email . "#" . substr(sha1($time . $email . env('APP_KEY')), 0, 6));
+        $data['token'] = base64_encode($token."#".$time."#".$email."#".substr(sha1($time.$email.env('APP_KEY')), 0, 6));
         $data['host'] = $request->server("HTTP_HOST");
         if (env('APP_ENV') != "testing") {
             $conn = new JsonRpcClient(env('MAIL_RPC_HOST', "127.0.0.1"), env('MAIL_RPC_PORT', 65525));
@@ -337,68 +415,17 @@ class AuthController extends Controller
         self::log($user->id, "sendunbindletter", $request);
     }
 
-    public function setUsername(SetUsernameRequest $request)
-    {
-        $input = $request->all();
-        $user_id = $request->session()->get('user_id');
-        $user = User::find($user_id);
-        if ($user->username == '') {
-            $user->username = $input['username'];
-            $user->save();
-            if(!$user->password)
-                return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！但是你必须设置密码才可以使用用户名登录。');
-            else
-                return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！');
-        }
-        else
-            return Redirect::to('/user?tab=account')->withInput()->withErrors('用户名不能更改');
-    }
-
-    public function setStuid(SetStuidRequest $request)
-    {
-        $input = $request->all();
-        $user_id = $request->session()->get('user_id');
-        $user = User::find($user_id);
-        if ($user->stuid == '') {
-            $user->stuid = $input['stuid'];
-            $user->save();
-            return Redirect::to('/user?tab=account')->withInput()->withErrors('设置成功！');
-        }
-        else
-            return Redirect::to('/user?tab=account')->withInput()->withErrors('学号一旦设置不能更改，请联系管理员');
-    }
-
-    public function setEmail(SetEmailRequest $request)
-    {
-        $input = $request->all();
-        $user_id = $request->session()->get('user_id');
-        $user = User::find($user_id);
-        if ($user->email == '') {
-            $user->email = $input['email'];
-            $user->havecheckedemail = false;
-            $user->save();
-            self::doSendCheckLetter($request, $user_id);
-            if(!$user->password)
-                return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。请注意，你必须先设置密码才可以使用邮箱登录。');
-            else
-                return Redirect::to('/user?tab=account')->withErrors('已向您的邮箱发送一封验证邮件，请查收。');
-        }
-        else {
-            if(self::doSendUnbindLetter($request, $user_id))
-                return Redirect::to('/user?tab=account')->withErrors('解绑成功。');
-            return Redirect::to('/user?tab=account')->withInput()->withErrors('已向您的邮箱发送一封验证邮件，请查收。验证完成后即可解绑此邮箱。');
-        }
-    }
-
     public function setPassword(SetPasswordRequest $request)
     {
         $input = $request->all();
         $user_id = $request->session()->get('user_id');
         $user = User::find($user_id);
-        if ($user->password != '' && !Hash::check($input['password'], $user->password))
+        if ($user->password != '' && !Hash::check($input['password'], $user->password)) {
             return Redirect::to('/user?tab=account')->withErrors('旧密码错误');
+        }
         $user->password = Hash::make($input['newPassword']);
         $user->update();
+
         return Redirect::to('/user?tab=account')->withErrors('密码已变更。');
     }
 
@@ -407,11 +434,13 @@ class AuthController extends Controller
     {
         $token = explode('#', base64_decode($token));
         $check_email = CheckEmail::where('token', $token[0])->first();
-        if ($check_email == NULL || substr(sha1($token[1] . $token[2] . env('APP_KEY')), 0, 6) != $token[3])
+        if ($check_email == null || substr(sha1($token[1].$token[2].env('APP_KEY')), 0, 6) != $token[3]) {
             return Redirect::to('/login')->withErrors('无效的链接');
+        }
         $user = User::find($check_email->user_id);
-        if($user->email != $token[2])
+        if ($user->email != $token[2]) {
             return Redirect::to('/login')->withErrors('此链接已失效。');
+        }
         $user->havecheckedemail = true;
         $user->update();
         $check_email->delete();
@@ -425,11 +454,13 @@ class AuthController extends Controller
     {
         $token = explode('#', base64_decode($token));
         $check_email = CheckEmail::where('token', $token[0])->first();
-        if ($check_email == NULL || substr(sha1($token[1] . $token[2] . env('APP_KEY')), 0, 6) != $token[3])
+        if ($check_email == null || substr(sha1($token[1].$token[2].env('APP_KEY')), 0, 6) != $token[3]) {
             return Redirect::to('/login')->withErrors('无效的链接');
+        }
         $user = User::find($check_email->user_id);
-        if($user->email != $token[2])
+        if ($user->email != $token[2]) {
             return Redirect::to('/login')->withErrors('此链接已失效。');
+        }
         $user->email = null;
         $user->update();
         $check_email->delete();
@@ -442,6 +473,7 @@ class AuthController extends Controller
     public function showPasswordForget()
     {
         $data['method'] = 'GET';
+
         return View::make('auth.passwordForget')->with($data);
     }
 
@@ -453,7 +485,7 @@ class AuthController extends Controller
         $data['fa'] = '';
         $input = $request->all();
         $user = User::where('email', $input['email'])->first();
-        if ($user == NULL) {
+        if ($user == null) {
             $data['sentence'] = '已向你的邮箱发送一份包含重置密码的链接的邮件。';
             $data['alert'] = 'success';
             $data['fa'] = 'check';
@@ -463,17 +495,17 @@ class AuthController extends Controller
             $data['fa'] = 'check';
             $password_reset = PasswordReset::where('user_id', $user->id)->first();
             $email = $user->email;
-            if ($password_reset != NULL) {
+            if ($password_reset != null) {
                 $token = $password_reset->token;
             } else {
                 $new_password_reset = new PasswordReset;
                 $new_password_reset->user_id = $user->id;
-                $token = md5($email . time());
+                $token = md5($email.time());
                 $new_password_reset->token = $token;
                 $new_password_reset->save();
             }
             $time = time();
-            $data['token'] = base64_encode($token . "#" . $time . "#" . substr(sha1($time . env('APP_KEY')), 0, 6));
+            $data['token'] = base64_encode($token."#".$time."#".substr(sha1($time.env('APP_KEY')), 0, 6));
             $data['host'] = $request->server("HTTP_HOST");
             if (env('APP_ENV') != "testing") {
                 $conn = new JsonRpcClient(env('MAIL_RPC_HOST', "127.0.0.1"), env('MAIL_RPC_PORT', 65525));
@@ -489,6 +521,7 @@ class AuthController extends Controller
             $this->log($user->id, "sendpwdresetletter", $request);
 
         }
+
         return View::make('auth.passwordForget')->with($data);
     }
 
@@ -496,6 +529,7 @@ class AuthController extends Controller
     {
         $data['method'] = 'GET';
         $data['token'] = $token;
+
         return view::make('auth.resetPassword')->with($data);
     }
 
@@ -507,18 +541,22 @@ class AuthController extends Controller
         $data['alert'] = '';
         $data['fa'] = '';
         $password_reset = PasswordReset::where('token', $token[0])->first();
-        if ($password_reset == NULL || substr(sha1($token[1] . env('APP_KEY')), 0, 6) != $token[2]) {
+        if ($password_reset == null || substr(sha1($token[1].env('APP_KEY')), 0, 6) != $token[2]) {
             $data['sentence'] = '无效的链接';
             $data['alert'] = 'danger';
             $data['fa'] = 'exclamation-circle';
             $this->log("", "resetpwd_invalid", $request);
+
             return View::make('user.resetPassword')->with($data);
-        } else if (time() - $token[1] > 48 * 60 * 60) {
-            $data['sentence'] = '此链接已过期';
-            $data['alert'] = 'danger';
-            $data['fa'] = 'exclamation-circle';
-            $this->log("", "resetpwd_expired", $request);
-            return View::make('user.resetPassword')->with($data);
+        } else {
+            if (time() - $token[1] > 48 * 60 * 60) {
+                $data['sentence'] = '此链接已过期';
+                $data['alert'] = 'danger';
+                $data['fa'] = 'exclamation-circle';
+                $this->log("", "resetpwd_expired", $request);
+
+                return View::make('user.resetPassword')->with($data);
+            }
         }
         $input = $request->all();
         $user = User::find($password_reset->user_id);

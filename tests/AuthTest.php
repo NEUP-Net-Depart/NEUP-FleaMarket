@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\BrowserKitTestCase;
 use App\User;
 use App\UserInfo;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Hash;
+use Tests\BrowserKitTestCase;
 
 class AuthTest extends BrowserKitTestCase
 {
@@ -84,7 +84,7 @@ class AuthTest extends BrowserKitTestCase
             ->type('test@example.com', 'password')
             ->press('登录')
             ->seePageIs('/register/2')
-            ->attach(__DIR__ . '/resources/good.jpg', 'avatarPic')
+            ->attach(__DIR__.'/resources/good.jpg', 'avatarPic')
             ->type('500', 'crop_width')
             ->type('500', 'crop_height')
             ->type('0', 'crop_x')

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class GoodTag extends Model
 {
-    protected $table='good_tags';
+    protected $table = 'good_tags';
 }

@@ -24,9 +24,12 @@ class SetPasswordRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == 'GET') return [];
+        if ($this->method() == 'GET') {
+            return [];
+        }
+
         return [
-            'newPassword' => 'required|confirmed|between:6,128'
+            'newPassword' => 'required|confirmed|between:6,128',
         ];
     }
 
