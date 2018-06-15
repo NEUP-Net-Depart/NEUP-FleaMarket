@@ -14,8 +14,8 @@
 				<thead>
 				<tr>
 					<th>交易单号</th>
-					<th>卖家学号</th>
-					<th>买家学号</th>
+					<th>卖家</th>
+					<th>买家</th>
 					<th>商品ID</th>
 					<th>交易数目</th>
 					<th>交易状态</th>
@@ -28,8 +28,22 @@
 						<tbody>
 						<tr>
 							<td>{{$tran->id}}</td>
-							<td><a href="/user/{{$tran->seller->id}}">{{$tran->seller->stuid}}</a></td>
-							<td><a href="/user/{{$tran->buyer_id}}">{{$tran->buyer->stuid}}</a></td>
+							<td>
+								<a href="/user/{{$tran->seller->id}}">学号{{$tran->seller->stuid}}</a>
+								@foreach($tran->seller->user_infos()->get() as $user)
+									<br/>手机{{$user->tel_num}}
+									<br/>QQ{{$user->QQ}}
+									<br/>微信{{$user->wechat}}
+								@endforeach
+							</td>
+							<td>
+								<a href="/user/{{$tran->buyer_id}}">学号{{$tran->buyer->stuid}}</a>
+								@foreach($tran->buyer->user_infos()->get() as $user)
+									<br/>手机{{$tran->buyer->user_infos()->first()->tel_num}}
+									<br/>QQ{{$tran->buyer->user_infos()->first()->QQ}}
+									<br/>微信{{$tran->buyer->user_infos()->first()->wechat}}
+								@endforeach
+							</td>
 							<td><a href="/good/{{$tran->good_id}}"
 										onMouseOver="toolTip('<img src=/good/{{ sha1($tran->good_id) }}/titlepic/>')"
 										onMouseOut="toolTip()">{{$tran->good_id}}</a></td>
