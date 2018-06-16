@@ -75,7 +75,7 @@
                 无
               @endif
             </td>
-            <td>{{ $tran->updated_at }}</td>
+            <td>{{ $tran->created_at }}</td>
           </tr>
           </tbody>
         @endif
